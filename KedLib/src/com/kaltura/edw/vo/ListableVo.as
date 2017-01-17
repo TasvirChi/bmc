@@ -1,6 +1,6 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
-	import com.kaltura.controls.Paging;
+	import com.borhan.controls.Paging;
 	
 	import mx.collections.ArrayCollection;
 	

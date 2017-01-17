@@ -1,13 +1,13 @@
-package com.kaltura.kmc.business.module
+package com.borhan.bmc.business.module
 {
-	import com.kaltura.kmc.modules.KmcModule;
-	import com.kaltura.kmc.utils.XMLUtils;
+	import com.borhan.bmc.modules.BmcModule;
+	import com.borhan.bmc.utils.XMLUtils;
 	
 	import flexunit.framework.Assert;
 	
 	import org.flexunit.asserts.assertEquals;
 	
-	public class TestKMCModule extends KmcModule
+	public class TestBMCModule extends BmcModule
 	{		
 //		[Before]
 //		public function setUp():void

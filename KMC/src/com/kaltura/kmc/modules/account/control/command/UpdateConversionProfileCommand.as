@@ -1,18 +1,18 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.conversionProfile.ConversionProfileUpdate;
-	import com.kaltura.commands.conversionProfileAssetParams.ConversionProfileAssetParamsUpdate;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileAssetParams;
+	import com.borhan.BorhanClient;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.conversionProfile.ConversionProfileUpdate;
+	import com.borhan.commands.conversionProfileAssetParams.ConversionProfileAssetParamsUpdate;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.control.events.ConversionSettingsEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.bmc.modules.account.vo.ConversionProfileVO;
+	import com.borhan.vo.BorhanConversionProfile;
+	import com.borhan.vo.BorhanConversionProfileAssetParams;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -32,9 +32,9 @@ package com.kaltura.kmc.modules.account.control.command {
 			var mr:MultiRequest = new MultiRequest();
 
 			var id:int = cProfile.profile.id;
-			var updateProfile:KalturaConversionProfile = cProfile.profile; //prepareForUpdate(profileVo.profile);
+			var updateProfile:BorhanConversionProfile = cProfile.profile; //prepareForUpdate(profileVo.profile);
 			if (updateProfile.flavorParamsIds == null) {
-				updateProfile.flavorParamsIds = KalturaClient.NULL_STRING;
+				updateProfile.flavorParamsIds = BorhanClient.NULL_STRING;
 			}
 			updateProfile.setUpdatedFieldsOnly(true);
 			var cpu:ConversionProfileUpdate = new ConversionProfileUpdate(cProfile.profile.id, updateProfile);
@@ -42,7 +42,7 @@ package com.kaltura.kmc.modules.account.control.command {
 
 			var cpapu:ConversionProfileAssetParamsUpdate;
 			// see if any conversion flavours need to be updated:
-			for each (var cpap:KalturaConversionProfileAssetParams in cProfile.flavors) {
+			for each (var cpap:BorhanConversionProfileAssetParams in cProfile.flavors) {
 				if (cpap.dirty) {
 					cpap.setUpdatedFieldsOnly(true);
 					cpapu = new ConversionProfileAssetParamsUpdate(id, cpap.assetParamsId, cpap);
@@ -51,8 +51,8 @@ package com.kaltura.kmc.modules.account.control.command {
 			}
 
 
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);
 		}
 

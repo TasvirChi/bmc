@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.vo.ads
+package com.borhan.bmc.modules.studio.vo.ads
 {
 	[Bindable]
 	/**

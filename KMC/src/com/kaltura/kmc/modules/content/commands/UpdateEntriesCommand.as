@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.borhan.bmc.modules.content.commands {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.baseEntry.BaseEntryUpdate;
-	import com.kaltura.commands.playlist.PlaylistUpdate;
-	import com.kaltura.edw.business.EntryUtil;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-	import com.kaltura.kmc.modules.content.events.WindowEvent;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaMixEntry;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.baseEntry.BaseEntryUpdate;
+	import com.borhan.commands.playlist.PlaylistUpdate;
+	import com.borhan.edw.business.EntryUtil;
+	import com.borhan.edw.control.events.SearchEvent;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.bmc.modules.content.events.BMCSearchEvent;
+	import com.borhan.bmc.modules.content.events.WindowEvent;
+	import com.borhan.types.BorhanEntryStatus;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanMixEntry;
+	import com.borhan.vo.BorhanPlaylist;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.content.commands {
 	/**
 	 * This class is the Cairngorm command for updating multiple entries, or playlist.
 	 * */
-	public class UpdateEntriesCommand extends KalturaCommand {
+	public class UpdateEntriesCommand extends BorhanCommand {
 
 		/**
 		 * the updated entries.
@@ -51,26 +51,26 @@ package com.kaltura.kmc.modules.content.commands {
 				_model.increaseLoadCounter();
 				var mr:MultiRequest = new MultiRequest();
 				for (var i:uint = 0; i < e.entries.length; i++) {
-					var keepId:String = (e.entries[i] as KalturaBaseEntry).id;
+					var keepId:String = (e.entries[i] as BorhanBaseEntry).id;
 
 					// only send conversionProfileId if the entry is in no_content status
-					if (e.entries[i].status != KalturaEntryStatus.NO_CONTENT) {
+					if (e.entries[i].status != BorhanEntryStatus.NO_CONTENT) {
 						e.entries[i].conversionProfileId = int.MIN_VALUE;
 					}
 					
 					//handle playlist items
-					if (e.entries[i] is KalturaPlaylist) {
+					if (e.entries[i] is BorhanPlaylist) {
 						_isPlaylist = true;
-						var plE:KalturaPlaylist = e.entries[i] as KalturaPlaylist;
+						var plE:BorhanPlaylist = e.entries[i] as BorhanPlaylist;
 						plE.setUpdatedFieldsOnly(true);
 						var updatePlEntry:PlaylistUpdate = new PlaylistUpdate(keepId, plE);
 						mr.addAction(updatePlEntry);
 					}
 					else {
-						var be:KalturaBaseEntry = e.entries[i] as KalturaBaseEntry;
+						var be:BorhanBaseEntry = e.entries[i] as BorhanBaseEntry;
 						be.setUpdatedFieldsOnly(true);
-						if (be is KalturaMixEntry)
-							(be as KalturaMixEntry).dataContent = null;
+						if (be is BorhanMixEntry)
+							(be as BorhanMixEntry).dataContent = null;
 						// don't send categories - we use categoryEntry service to update them in EntryData panel
 						be.categories = null;
 						be.categoriesIds = null;
@@ -80,8 +80,8 @@ package com.kaltura.kmc.modules.content.commands {
 					}
 				}
 
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(BorhanEvent.COMPLETE, result);
+				mr.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(mr);
 				
 			}
@@ -104,18 +104,18 @@ package com.kaltura.kmc.modules.content.commands {
 				var mr:MultiRequest;
 				for (var groupIndex:int = 0; groupIndex < numOfGroups; groupIndex++) {
 					mr = new MultiRequest();
-					mr.addEventListener(KalturaEvent.COMPLETE, result);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(BorhanEvent.COMPLETE, result);
+					mr.addEventListener(BorhanEvent.FAILED, fault);
 					mr.queued = false;
 
 					groupSize = (groupIndex < (numOfGroups - 1)) ? 50 : lastGroupSize;
 					for (var entryIndexInGroup:int = 0; entryIndexInGroup < groupSize; entryIndexInGroup++) {
 						var index:int = ((groupIndex * 50) + entryIndexInGroup);
-						var keepId:String = (_entries[index] as KalturaBaseEntry).id;
-						var be:KalturaBaseEntry = _entries[index] as KalturaBaseEntry;
+						var keepId:String = (_entries[index] as BorhanBaseEntry).id;
+						var be:BorhanBaseEntry = _entries[index] as BorhanBaseEntry;
 						be.setUpdatedFieldsOnly(true);
 						// only send conversionProfileId if the entry is in no_content status
-						if (be.status != KalturaEntryStatus.NO_CONTENT) {
+						if (be.status != BorhanEntryStatus.NO_CONTENT) {
 							be.conversionProfileId = int.MIN_VALUE;
 						}
 						// don't send categories - we use categoryEntry service to update them in EntryData panel
@@ -142,17 +142,17 @@ package com.kaltura.kmc.modules.content.commands {
 		 * */
 		override public function result(data:Object):void {
 			super.result(data);
-			var searchEvent:KMCSearchEvent;
+			var searchEvent:BMCSearchEvent;
 			if (!checkError(data)) {
 				if (_isPlaylist) {
 					// refresh playlists list
-					searchEvent = new KMCSearchEvent(KMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
+					searchEvent = new BMCSearchEvent(BMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
 					searchEvent.dispatch();
 					var cgEvent:WindowEvent = new WindowEvent(WindowEvent.CLOSE);
 					cgEvent.dispatch();
 				}
 				else {
-					for each (var entry:KalturaBaseEntry in data.data) {
+					for each (var entry:BorhanBaseEntry in data.data) {
 						EntryUtil.updateSelectedEntryInList(entry, _model.listableVo.arrayCollection); 
 					}
 				}
@@ -160,11 +160,11 @@ package com.kaltura.kmc.modules.content.commands {
 			else {
 				// reload data to reset changes that weren't made
 				if (_isPlaylist) {
-					searchEvent = new KMCSearchEvent(KMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
+					searchEvent = new BMCSearchEvent(BMCSearchEvent.SEARCH_PLAYLIST, _model.listableVo);
 					searchEvent.dispatch();
 				}
 				else {
-					searchEvent = new KMCSearchEvent(KMCSearchEvent.DO_SEARCH_ENTRIES, _model.listableVo);
+					searchEvent = new BMCSearchEvent(BMCSearchEvent.DO_SEARCH_ENTRIES, _model.listableVo);
 					searchEvent.dispatch();
 				}
 			}

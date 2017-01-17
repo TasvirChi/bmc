@@ -1,10 +1,10 @@
-package com.kaltura.autocomplete.controllers.base
+package com.borhan.autocomplete.controllers.base
 {
 	import com.hillelcoren.components.AutoComplete;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.core.KClassFactory;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.net.KalturaCall;
+	import com.borhan.BorhanClient;
+	import com.borhan.core.KClassFactory;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.net.BorhanCall;
 	
 	import flash.events.Event;
 	import flash.utils.setTimeout;
@@ -17,11 +17,11 @@ package com.kaltura.autocomplete.controllers.base
 		
 		protected var _elementSelection:ArrayCollection;
 		protected var _autoComp:AutoComplete;
-		protected var _client:KalturaClient;
+		protected var _client:BorhanClient;
 		
-		private var _pendingCall:KalturaCall;
+		private var _pendingCall:BorhanCall;
 		
-		public function KACControllerBase(autoComp:AutoComplete, client:KalturaClient)
+		public function KACControllerBase(autoComp:AutoComplete, client:BorhanClient)
 		{
 			_elementSelection = new ArrayCollection();
 			_autoComp = autoComp;
@@ -39,8 +39,8 @@ package com.kaltura.autocomplete.controllers.base
 		private function onSearchChange(event:Event):void{
 			if (_autoComp.searchText != null){
 				if (_pendingCall != null){
-					_pendingCall.removeEventListener(KalturaEvent.COMPLETE, result);
-					_pendingCall.removeEventListener(KalturaEvent.FAILED, fault);
+					_pendingCall.removeEventListener(BorhanEvent.COMPLETE, result);
+					_pendingCall.removeEventListener(BorhanEvent.FAILED, fault);
 				}
 				
 				_autoComp.clearSuggestions();
@@ -48,10 +48,10 @@ package com.kaltura.autocomplete.controllers.base
 				if (_autoComp.searchText.length > (minPrefixLength - 1)){
 					_elementSelection.removeAll();
 					
-					var call:KalturaCall = createCallHook();
+					var call:BorhanCall = createCallHook();
 					
-					call.addEventListener(KalturaEvent.COMPLETE, result);
-					call.addEventListener(KalturaEvent.FAILED, fault);
+					call.addEventListener(BorhanEvent.COMPLETE, result);
+					call.addEventListener(BorhanEvent.FAILED, fault);
 					call.queued = false;
 					_autoComp.notifySearching();
 					_pendingCall = call;
@@ -71,7 +71,7 @@ package com.kaltura.autocomplete.controllers.base
 			_autoComp.search();
 		}
 		
-		protected function fault(info:KalturaEvent):void{
+		protected function fault(info:BorhanEvent):void{
 			throw new Error(info.error.errorMsg);
 		}
 		
@@ -79,7 +79,7 @@ package com.kaltura.autocomplete.controllers.base
 			return null;
 		}
 		
-		protected function createCallHook():KalturaCall{
+		protected function createCallHook():BorhanCall{
 			return null;
 		}
 	}

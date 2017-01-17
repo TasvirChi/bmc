@@ -1,4 +1,4 @@
-package com.kaltura.kmvc.model
+package com.borhan.bmvc.model
 {
 	public interface IDataPackRepository
 	{

@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,14 +25,14 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaHttpNotificationData;
+	import com.borhan.vo.BorhanHttpNotificationData;
 
-	import com.kaltura.vo.KalturaEventNotificationTemplate;
+	import com.borhan.vo.BorhanEventNotificationTemplate;
 
 	[Bindable]
-	public dynamic class KalturaHttpNotificationTemplate extends KalturaEventNotificationTemplate
+	public dynamic class BorhanHttpNotificationTemplate extends BorhanEventNotificationTemplate
 	{
 		/**
 		* Remote server URL
@@ -41,14 +41,14 @@ package com.kaltura.vo
 
 		/**
 		* Request method.
-		* @see com.kaltura.types.KalturaHttpNotificationMethod
+		* @see com.borhan.types.BorhanHttpNotificationMethod
 		**/
 		public var method : int = int.MIN_VALUE;
 
 		/**
 		* Data to send.
 		**/
-		public var data : KalturaHttpNotificationData;
+		public var data : BorhanHttpNotificationData;
 
 		/**
 		* The maximum number of seconds to allow cURL functions to execute.
@@ -73,14 +73,14 @@ package com.kaltura.vo
 
 		/**
 		* The HTTP authentication method to use.
-		* @see com.kaltura.types.KalturaHttpNotificationAuthenticationMethod
+		* @see com.borhan.types.BorhanHttpNotificationAuthenticationMethod
 		**/
 		public var authenticationMethod : int = int.MIN_VALUE;
 
 		/**
 		* The SSL version (2 or 3) to use.
 		* By default PHP will try to determine this itself, although in some cases this must be set manually.
-		* @see com.kaltura.types.KalturaHttpNotificationSslVersion
+		* @see com.borhan.types.BorhanHttpNotificationSslVersion
 		**/
 		public var sslVersion : int = int.MIN_VALUE;
 
@@ -91,7 +91,7 @@ package com.kaltura.vo
 
 		/**
 		* The format of the certificate.
-		* @see com.kaltura.types.KalturaHttpNotificationCertificateType
+		* @see com.borhan.types.BorhanHttpNotificationCertificateType
 		**/
 		public var sslCertificateType : String = null;
 
@@ -112,7 +112,7 @@ package com.kaltura.vo
 
 		/**
 		* The key type of the private SSL key specified in ssl key - PEM / DER / ENG.
-		* @see com.kaltura.types.KalturaHttpNotificationSslKeyType
+		* @see com.borhan.types.BorhanHttpNotificationSslKeyType
 		**/
 		public var sslKeyType : String = null;
 
@@ -171,7 +171,7 @@ package com.kaltura.vo
 					result = '';
 					break;
 				case 'customHeaders':
-					result = 'KalturaKeyValue';
+					result = 'BorhanKeyValue';
 					break;
 				default:
 					result = super.getElementType(arrayName);

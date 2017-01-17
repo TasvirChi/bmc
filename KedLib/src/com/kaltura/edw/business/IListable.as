@@ -1,6 +1,6 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
-	import com.kaltura.controls.Paging;
+	import com.borhan.controls.Paging;
 	
 	public interface IListable
 	{

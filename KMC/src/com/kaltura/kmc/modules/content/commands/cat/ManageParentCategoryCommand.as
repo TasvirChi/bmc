@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryGet;
-	import com.kaltura.commands.user.UserGet;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.types.KalturaInheritanceType;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.category.CategoryGet;
+	import com.borhan.commands.user.UserGet;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.types.BorhanInheritanceType;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanUser;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
-	public class ManageParentCategoryCommand extends KalturaCommand{
+	public class ManageParentCategoryCommand extends BorhanCommand{
 		
 		private var _eventType:String;
 		
@@ -32,7 +32,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 					_model.increaseLoadCounter();
 					var mr:MultiRequest = new MultiRequest();
 					
-					var selectedCat:KalturaCategory = event.data as KalturaCategory;
+					var selectedCat:BorhanCategory = event.data as BorhanCategory;
 					var req:CategoryGet;
 					if (event.type == CategoryEvent.GET_PARENT_CATEGORY) {
 						req = new CategoryGet(selectedCat.parentId);
@@ -48,8 +48,8 @@ package com.kaltura.kmc.modules.content.commands.cat
 					mr.addAction(getOwner);
 					mr.mapMultiRequestParam(1, "owner", 2, "userId");
 					
-					mr.addEventListener(KalturaEvent.COMPLETE, result);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(BorhanEvent.COMPLETE, result);
+					mr.addEventListener(BorhanEvent.FAILED, fault);
 		
 					_model.context.kc.post(mr);
 					
@@ -64,13 +64,13 @@ package com.kaltura.kmc.modules.content.commands.cat
 			
 			if (!checkError(data)) {
 				//inheritedOwner
-				if (data.data[1] is KalturaUser) {
-					_model.categoriesModel.inheritedOwner = data.data[1] as KalturaUser;
+				if (data.data[1] is BorhanUser) {
+					_model.categoriesModel.inheritedOwner = data.data[1] as BorhanUser;
 				}
 				
 				// category
-				if (data.data[0] is KalturaCategory){
-					_model.categoriesModel.inheritedParentCategory = data.data[0] as KalturaCategory;
+				if (data.data[0] is BorhanCategory){
+					_model.categoriesModel.inheritedParentCategory = data.data[0] as BorhanCategory;
 				}
 				else {
 					Alert.show(ResourceManager.getInstance().getString('cms', 'error') + ": " +

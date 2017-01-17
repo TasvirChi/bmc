@@ -1,24 +1,24 @@
-package com.kaltura.edw.control.commands
+package com.borhan.edw.control.commands
 {
-	import com.kaltura.commands.accessControl.AccessControlAdd;
-	import com.kaltura.edw.control.events.AccessControlEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.borhan.commands.accessControl.AccessControlAdd;
+	import com.borhan.edw.control.events.AccessControlEvent;
+	import com.borhan.edw.model.datapacks.ContextDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.AccessControlProfileVO;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
 	public class AddNewAccessControlProfileCommand extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_dispatcher = event.dispatcher;
 			var accessControl:AccessControlProfileVO = event.data;
 			var addNewAccessControl:AccessControlAdd = new AccessControlAdd(accessControl.profile);
-		 	addNewAccessControl.addEventListener(KalturaEvent.COMPLETE, result);
-			addNewAccessControl.addEventListener(KalturaEvent.FAILED, fault);
+		 	addNewAccessControl.addEventListener(BorhanEvent.COMPLETE, result);
+			addNewAccessControl.addEventListener(BorhanEvent.FAILED, fault);
 			var context:ContextDataPack = _model.getDataPack(ContextDataPack) as ContextDataPack;
 			context.kc.post(addNewAccessControl);
 		}

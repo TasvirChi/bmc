@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 
-	public class ProfileEvent extends KMvCEvent
+	public class ProfileEvent extends BMvCEvent
 	{
 		/**
 		 * create new conversion profile

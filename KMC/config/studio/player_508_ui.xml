@@ -1,7 +1,7 @@
-<layout id="full" skinPath="/content/uiconf/kaltura/kmc/appstudio/kdp3/falcon/skin/v3.6.13/skin508.swf">
+<layout id="full" skinPath="/content/uiconf/borhan/bmc/appstudio/bdp3/falcon/skin/v3.6.13/skin508.swf">
   <HBox id="topLevel" width="100%" height="100%">
     <VBox id="player" width="100%" height="100%" styleName="black">
-      <Plugin id="kalturaMix" width="0%" height="0%" includeInLayout="false" loadingPolicy="onDemand"/>
+      <Plugin id="borhanMix" width="0%" height="0%" includeInLayout="false" loadingPolicy="onDemand"/>
       <Plugin id="captureThumbnail" width="0%" height="0%" includeInLayout="false"/>
       <Plugin id="statistics" width="0%" height="0%" includeInLayout="false"/>
 	  <Plugin id="widevine" width="0%" height="0%" includeInLayout="false" asyncInit="true" loadInIframe="true" loadingPolicy="preInitialize" 
@@ -30,13 +30,13 @@
           <Plugin id="closedCaptionsOverPlayer" width="100%" height="15%" fontsize="15" bg="0x000000" type="{mediaProxy.entryMetadata.CaptionsType}" ccUrl="{mediaProxy.entryMetadata.CaptionsUrl}" fontFamily="Arial" fontColor="0xFFFFFF" opacity="0" path="closedCaptionsPlugin.swf"/>
         </VBox>
         <Screens id="screensLayer" width="100%" height="100%" mouseOverTarget="{PlayerHolder}" styleName="clickThrough" startScreenId="startScreen" startScreenOverId="startScreen" pauseScreenOverId="startScreen" pauseScreenId="startScreen" playScreenOverId="startScreen" endScreenId="startScreen" endScreenOverId="startScreen"/>
-        <Watermark id="watermark" width="100%" height="100%" watermarkPath="http://www.kaltura.com/content/uiconf/kaltura/kmc/appstudio/kdp3/exampleWatermark.png" watermarkClickPath="http://www.kaltura.com/" watermarkPosition="topLeft"/>
+        <Watermark id="watermark" width="100%" height="100%" watermarkPath="http://www.borhan.com/content/uiconf/borhan/bmc/appstudio/bdp3/exampleWatermark.png" watermarkClickPath="http://www.borhan.com/" watermarkPosition="topLeft"/>
         <!-- notice message -->
         <Label id="noticeMessage" text="Video starts in {sequenceProxy.timeRemaining} seconds" height="18" width="100%" font="TimesNewRoman" styleName="movieName" dynamicColor="true" color1="0xFF0000" visible="{sequenceProxy.isAdLoaded}" includeInLayout="{sequenceProxy.isAdLoaded}"/>
         <!-- overlay plugin -->
         <Plugin id="overlay" swfUrls="{vast.overlays}" overlayStartAt="{vast.overlayStartAt}" overlayInterval="{vast.overlayInterval}" displayDuration="" width="100%" height="100%"/>
         <!-- bumper plugin -->
-        <Plugin id="bumper" bumperEntryID="0_c2gx2xjm" clickurl="http://www.kaltura.com" lockUI="true" playOnce="false" preSequence="1" postSequence="1" width="100%" height="100%"/>
+        <Plugin id="bumper" bumperEntryID="0_c2gx2xjm" clickurl="http://www.borhan.com" lockUI="true" playOnce="false" preSequence="1" postSequence="1" width="100%" height="100%"/>
         <!-- skip button -->
         <VBox id="skipBtnHolder" width="100%" height="100%">
           <Spacer height="100%"/>
@@ -102,7 +102,7 @@
   </screens>
   <extraData/>
   <uiVars>
-    <!--var key="adFile" value="http://212.143.222.226:8080/kaltura/snd.mp3" overrideFlashvar="true"/-->
+    <!--var key="adFile" value="http://212.143.222.226:8080/borhan/snd.mp3" overrideFlashvar="true"/-->
     <var key="requiredMetadataFields" value="true" overrideFlashvar="true"/>
   </uiVars>
 </layout>

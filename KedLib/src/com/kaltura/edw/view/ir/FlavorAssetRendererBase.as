@@ -1,9 +1,9 @@
-package com.kaltura.edw.view.ir
+package com.borhan.edw.view.ir
 {
-	import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-	import com.kaltura.managers.FileUploadManager;
-	import com.kaltura.vo.FileUploadVO;
-	import com.kaltura.vo.KalturaFlavorAssetWithParams;
+	import com.borhan.edw.vo.FlavorAssetWithParamsVO;
+	import com.borhan.managers.FileUploadManager;
+	import com.borhan.vo.FileUploadVO;
+	import com.borhan.vo.BorhanFlavorAssetWithParams;
 	
 	import mx.containers.HBox;
 	import mx.events.FlexEvent;
@@ -19,7 +19,7 @@ package com.kaltura.edw.view.ir
 		protected function onCreatoinComplete(e:FlexEvent):void
 		{
 			/* var obj:FlavorAssetWithParamsVO = data as FlavorAssetWithParamsVO;
-			var bgColor:String = (obj.kalturaFlavorAssetWithParams.flavorAsset != null) ? '#FFFFFF' : '#DED2D2';
+			var bgColor:String = (obj.borhanFlavorAssetWithParams.flavorAsset != null) ? '#FFFFFF' : '#DED2D2';
 			
 			this.setStyle("backgroundColor", bgColor); */
 			

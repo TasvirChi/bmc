@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanBaseEntry;
 	
-	public class KedEntryEvent extends KMvCEvent {
+	public class KedEntryEvent extends BMvCEvent {
 		
 		// ======================================================
 		// Event Names
@@ -89,7 +89,7 @@ package com.kaltura.edw.control.events
 		// Private Members
 		// ======================================================
 		
-		private var _entryVo : KalturaBaseEntry;
+		private var _entryVo : BorhanBaseEntry;
 		private var _entryId : String;
 		private var _entryIndex: int;
 		private var _reloadEntry:Boolean;
@@ -97,7 +97,7 @@ package com.kaltura.edw.control.events
 		// ======================================================
 		// Constructor
 		// ======================================================
-		public function KedEntryEvent(type:String, entryVo:KalturaBaseEntry, entryId:String = '', entryIIndex:int = -1, reloadEntry:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function KedEntryEvent(type:String, entryVo:BorhanBaseEntry, entryId:String = '', entryIIndex:int = -1, reloadEntry:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_entryVo = entryVo;
@@ -110,7 +110,7 @@ package com.kaltura.edw.control.events
 		// Getters
 		// ======================================================
 		
-		public function get entryVo():KalturaBaseEntry
+		public function get entryVo():BorhanBaseEntry
 		{
 			return _entryVo;
 		}

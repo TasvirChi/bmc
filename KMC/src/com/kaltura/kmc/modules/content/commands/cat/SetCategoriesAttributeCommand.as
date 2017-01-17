@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.CategoryUtils;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.types.KalturaInheritanceType;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.category.CategoryUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.CategoryUtils;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.types.BorhanInheritanceType;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class SetCategoriesAttributeCommand extends KalturaCommand {
+	public class SetCategoriesAttributeCommand extends BorhanCommand {
 		
 		private var _type:String;	// event type
 		
@@ -33,7 +33,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 		{
 			_type = event.type;
 			_kCats = [];
-			var kCat:KalturaCategory;
+			var kCat:BorhanCategory;
 			var cats:Array = _model.categoriesModel.selectedCategories;
 			
 			// process cats before update
@@ -53,7 +53,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 					kCat.privacy = event.data as int;
 				} 
 				else if (_type == CategoryEvent.SET_CATEGORIES_OWNER) {
-//					if (kCat.inheritanceType == KalturaInheritanceType.INHERIT) {
+//					if (kCat.inheritanceType == BorhanInheritanceType.INHERIT) {
 //						_nonUpdate = true;
 //						continue;
 //					}
@@ -80,8 +80,8 @@ package com.kaltura.kmc.modules.content.commands.cat
 				}
 				
 				_model.increaseLoadCounter();
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(BorhanEvent.COMPLETE, result);
+				mr.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(mr);
 			}
 			
@@ -113,15 +113,15 @@ package com.kaltura.kmc.modules.content.commands.cat
 				var mr:MultiRequest;
 				for (var groupIndex:int = 0; groupIndex < _numOfGroups; groupIndex++) {
 					mr = new MultiRequest();
-					mr.addEventListener(KalturaEvent.COMPLETE, result);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(BorhanEvent.COMPLETE, result);
+					mr.addEventListener(BorhanEvent.FAILED, fault);
 					mr.queued = false;
 					
 					groupSize = (groupIndex < (_numOfGroups - 1)) ? 50 : lastGroupSize;
 					for (var entryIndexInGroup:int = 0; entryIndexInGroup < groupSize; entryIndexInGroup++) {
 						var index:int = ((groupIndex * 50) + entryIndexInGroup);
-						var keepId:int = (_kCats[index] as KalturaCategory).id;
-						var kCat:KalturaCategory = _kCats[index] as KalturaCategory;
+						var keepId:int = (_kCats[index] as BorhanCategory).id;
+						var kCat:BorhanCategory = _kCats[index] as BorhanCategory;
 						kCat.setUpdatedFieldsOnly(true);
 						CategoryUtils.resetUnupdateableFields(kCat);
 						

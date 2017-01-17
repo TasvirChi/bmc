@@ -1,8 +1,8 @@
-package com.kaltura.edw.components.fltr.cat.data
+package com.borhan.edw.components.fltr.cat.data
 {
-	import com.kaltura.edw.control.CategoriesTreeController;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.vo.CategoryVO;
+	import com.borhan.edw.control.CategoriesTreeController;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.vo.CategoryVO;
 	
 	import flash.events.IEventDispatcher;
 	

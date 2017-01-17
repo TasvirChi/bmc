@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--- Represents the check box for "Distribute Automatically" column. only one component can appear: check box OR label -->
 <distribution:CBLabelComponent xmlns:mx="http://www.adobe.com/2006/mxml" 
-							 xmlns:components="com.kaltura.kmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.kaltura.edw.view.distribution.*">
+							 xmlns:components="com.borhan.bmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.borhan.edw.view.distribution.*">
 	<mx:Metadata>
 		[ResourceBundle("drilldown")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.model.EntryDistributionWithProfile;
-			import com.kaltura.types.KalturaDistributionProfileActionStatus;
-			import com.kaltura.types.KalturaEntryDistributionStatus;
-			import com.kaltura.vo.KalturaEntryDistribution;
+			import com.borhan.edw.model.EntryDistributionWithProfile;
+			import com.borhan.types.BorhanDistributionProfileActionStatus;
+			import com.borhan.types.BorhanEntryDistributionStatus;
+			import com.borhan.vo.BorhanEntryDistribution;
 			
 			import mx.binding.utils.BindingUtils;
 			private var _distributionWithProfile:EntryDistributionWithProfile
@@ -18,20 +18,20 @@
 			override public function set data(value:Object):void {
 				_distributionWithProfile = value as EntryDistributionWithProfile;
 
-				switch (_distributionWithProfile.kalturaEntryDistribution.status) {
-					case KalturaEntryDistributionStatus.READY:
-					case KalturaEntryDistributionStatus.ERROR_DELETING:
-					case KalturaEntryDistributionStatus.ERROR_UPDATING:
+				switch (_distributionWithProfile.borhanEntryDistribution.status) {
+					case BorhanEntryDistributionStatus.READY:
+					case BorhanEntryDistributionStatus.ERROR_DELETING:
+					case BorhanEntryDistributionStatus.ERROR_UPDATING:
 						this.labelVisible = true;
 						this.labelText = resourceManager.getString('drilldown','distributed');
 						break;
-					case KalturaEntryDistributionStatus.SUBMITTING:
-					case KalturaEntryDistributionStatus.DELETING:
-					case KalturaEntryDistributionStatus.UPDATING:
+					case BorhanEntryDistributionStatus.SUBMITTING:
+					case BorhanEntryDistributionStatus.DELETING:
+					case BorhanEntryDistributionStatus.UPDATING:
 						this.labelVisible = true;
 						this.labelText = resourceManager.getString('drilldown','inProgress');
 						break;
-					case KalturaEntryDistributionStatus.ERROR_SUBMITTING:
+					case BorhanEntryDistributionStatus.ERROR_SUBMITTING:
 						this.labelVisible = true;
 						this.labelText = resourceManager.getString('drilldown','distributionError');
 						break;
@@ -49,8 +49,8 @@
 			 * distribute automatically
 			 * */
 			private function setCBEnabled(value:Boolean) : void {
-				if ((_distributionWithProfile.kalturaDistributionProfile.submitEnabled != KalturaDistributionProfileActionStatus.AUTOMATIC) &&
-					(_distributionWithProfile.kalturaEntryDistribution.status != KalturaEntryDistributionStatus.QUEUED))
+				if ((_distributionWithProfile.borhanDistributionProfile.submitEnabled != BorhanDistributionProfileActionStatus.AUTOMATIC) &&
+					(_distributionWithProfile.borhanEntryDistribution.status != BorhanEntryDistributionStatus.QUEUED))
 					cbEnabled = value && parentDocument.enableDistribution;
 				else
 					cbEnabled = false;

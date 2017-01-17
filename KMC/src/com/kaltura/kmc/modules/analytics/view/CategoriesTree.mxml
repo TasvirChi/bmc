@@ -14,10 +14,10 @@
 	 </mx:Metadata>      	
 	 <mx:Script>
 	 	<![CDATA[
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.view.renderers.CategoryTreeItemRenderer;
+			import com.borhan.dataStructures.HashMap;
+			import com.borhan.edw.vo.CategoryVO;
+			import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.borhan.bmc.modules.analytics.view.renderers.CategoryTreeItemRenderer;
 	 	
 	 	
 	        private var _selectedFilterCategories:String = null;

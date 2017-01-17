@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.admin.control.events
+package com.borhan.bmc.modules.admin.control.events
 {
 	import flash.events.Event;
 	

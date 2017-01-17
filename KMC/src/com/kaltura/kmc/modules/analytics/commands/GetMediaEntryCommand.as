@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.analytics.commands
+package com.borhan.bmc.modules.analytics.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.analytics.control.DrillDownEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.commands.baseEntry.BaseEntryGet;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaMixEntry;
+	import com.borhan.bmc.modules.analytics.control.DrillDownEvent;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.commands.baseEntry.BaseEntryGet;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanMediaEntry;
+	import com.borhan.vo.BorhanMixEntry;
 	
 	import mx.rpc.IResponder;
 
@@ -25,8 +25,8 @@ package com.kaltura.kmc.modules.analytics.commands
 				_model.reportDataMap[_model.currentScreenState].selectedMediaEntry = null;
 				
 			var baseEntryGet : BaseEntryGet = new BaseEntryGet( (event as DrillDownEvent).subjectId );
-			baseEntryGet.addEventListener( KalturaEvent.COMPLETE , result );
-			baseEntryGet.addEventListener( KalturaEvent.FAILED , fault );
+			baseEntryGet.addEventListener( BorhanEvent.COMPLETE , result );
+			baseEntryGet.addEventListener( BorhanEvent.FAILED , fault );
 			_model.kc.post( baseEntryGet );
 		}
 		
@@ -35,12 +35,12 @@ package com.kaltura.kmc.modules.analytics.commands
 			_model.loadingEntryFlag = false;
 			_model.checkLoading();
 			
-			var kme : KalturaBaseEntry; 
+			var kme : BorhanBaseEntry; 
 			
-			if( result.data is KalturaMediaEntry )
-				 kme = (result.data as KalturaMediaEntry);
-			else if( result.data is KalturaMixEntry )
-				 kme = (result.data as KalturaMixEntry);
+			if( result.data is BorhanMediaEntry )
+				 kme = (result.data as BorhanMediaEntry);
+			else if( result.data is BorhanMixEntry )
+				 kme = (result.data as BorhanMixEntry);
 			else
 				kme = result.data;
 
@@ -53,7 +53,7 @@ package com.kaltura.kmc.modules.analytics.commands
 		{
 			//Test the drill down
 			///////////////////////////////////////	
-/* 			var kme : KalturaBaseEntry = new KalturaMediaEntry();
+/* 			var kme : BorhanBaseEntry = new BorhanMediaEntry();
 			kme.id = "00_e6cf46wd"; //TESTING!!!!!!
 			_model.reportDataMap[_model.currentScreenState].selectedMediaEntry = kme; */
 			///////////////////////////////////////	

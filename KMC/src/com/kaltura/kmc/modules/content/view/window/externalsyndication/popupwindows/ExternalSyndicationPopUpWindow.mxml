@@ -2,9 +2,9 @@
 <!---
 	 This is the window in which you add a new syndication.
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
-				 xmlns:exts="com.kaltura.kmc.modules.content.view.window.externalsyndication.popupwindows.externalsyndicationsections.*"
-				 xmlns:validators="com.kaltura.validators.*" width="690" height="570" verticalScrollPolicy="off"
+<HelpTitleWindow xmlns="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+				 xmlns:exts="com.borhan.bmc.modules.content.view.window.externalsyndication.popupwindows.externalsyndicationsections.*"
+				 xmlns:validators="com.borhan.validators.*" width="690" height="570" verticalScrollPolicy="off"
 				 paddingTop="20" title="{resourceManager.getString('cms','addNewFeedTitle')}" showCloseButton="true"
 				 help="onHelp()" creationComplete="setData()" close="closeWindow(event)" initialize="{init()}">
 	<states>
@@ -17,19 +17,19 @@
 	</states>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-			import com.kaltura.edw.control.events.SearchEvent;
-			import com.kaltura.kmc.modules.content.events.UIConfEvent;
-			import com.kaltura.kmc.modules.content.model.ExtSynModel;
-			import com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed;
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
-			import com.kaltura.types.KalturaSyndicationFeedType;
-			import com.kaltura.types.KalturaUiConfObjType;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaPlaylist;
-			import com.kaltura.vo.KalturaUiConfFilter;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.content.events.ExternalSyndicationEvent;
+			import com.borhan.edw.control.events.SearchEvent;
+			import com.borhan.bmc.modules.content.events.UIConfEvent;
+			import com.borhan.bmc.modules.content.model.ExtSynModel;
+			import com.borhan.bmc.modules.content.view.interfaces.IExternalSyndicationFeed;
+			import com.borhan.bmc.modules.content.vo.ExternalSyndicationVO;
+			import com.borhan.types.BorhanSyndicationFeedType;
+			import com.borhan.types.BorhanUiConfObjType;
+			import com.borhan.vo.BorhanBaseSyndicationFeed;
+			import com.borhan.vo.BorhanPlaylist;
+			import com.borhan.vo.BorhanUiConfFilter;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -54,9 +54,9 @@
 			 * optional syndication feed types
 			 * */
 			[ArrayElementType("Object")]
-			private const FEED_TYPES:Array = [{label: 'Google', code: KalturaSyndicationFeedType.GOOGLE_VIDEO}, 
-				{label: 'Yahoo!', code: KalturaSyndicationFeedType.YAHOO}, {label: 'ITunes', code: KalturaSyndicationFeedType.ITUNES}, 
-				{label: 'TubeMogul', code: KalturaSyndicationFeedType.TUBE_MOGUL}, {label: ResourceManager.getInstance().getString('cms','flexibleFormatFeed'), code: KalturaSyndicationFeedType.KALTURA_XSLT}];
+			private const FEED_TYPES:Array = [{label: 'Google', code: BorhanSyndicationFeedType.GOOGLE_VIDEO}, 
+				{label: 'Yahoo!', code: BorhanSyndicationFeedType.YAHOO}, {label: 'ITunes', code: BorhanSyndicationFeedType.ITUNES}, 
+				{label: 'TubeMogul', code: BorhanSyndicationFeedType.TUBE_MOGUL}, {label: ResourceManager.getInstance().getString('cms','flexibleFormatFeed'), code: BorhanSyndicationFeedType.BORHAN_XSLT}];
 
 			[Bindable]
 			public var flavorParams:ArrayCollection;
@@ -91,8 +91,8 @@
 //				var listPlayList:SearchEvent = new SearchEvent(SearchEvent.SEARCH_PLAYLIST, null);
 //				listPlayList.dispatch();
 
-				var filter:KalturaUiConfFilter = new KalturaUiConfFilter();
-				filter.objTypeEqual = KalturaUiConfObjType.PLAYER;
+				var filter:BorhanUiConfFilter = new BorhanUiConfFilter();
+				filter.objTypeEqual = BorhanUiConfObjType.PLAYER;
 				filter.tagsMultiLikeAnd = 'player';
 
 				var listUIConfEvent:UIConfEvent = new UIConfEvent(UIConfEvent.LIST_UI_CONFS, filter);
@@ -104,7 +104,7 @@
 			 * open help page
 			 * */
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_ExternalSyndicationPopup'));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_ExternalSyndicationPopup'));
 			}
 
 
@@ -116,7 +116,7 @@
 					// content:
 					setFeedContent();
 					// feed type:
-					if (selectedExSynVo.kSyndicationFeed.type == KalturaSyndicationFeedType.KALTURA_XSLT)
+					if (selectedExSynVo.kSyndicationFeed.type == BorhanSyndicationFeedType.BORHAN_XSLT)
 						feedTypeComboBox.selectedIndex = selectedExSynVo.kSyndicationFeed.type - 2;
 					else
 						feedTypeComboBox.selectedIndex = selectedExSynVo.kSyndicationFeed.type - 1;
@@ -149,7 +149,7 @@
 					playlistsRadioBtn.selected = true;
 					var index:uint;
 					// select the correct playlist from the playlist combobox
-					for each (var pl:KalturaPlaylist in _playlistsProvider) {
+					for each (var pl:BorhanPlaylist in _playlistsProvider) {
 						if (pl && plId == pl.id) {		
 							playListComboBox.selectedIndex = index;
 							return;
@@ -197,7 +197,7 @@
 
 			private function addNewFeed():void {
 				var syndicationFeedTemplate:IExternalSyndicationFeed = syndicationTypeOptions.selectedChild as IExternalSyndicationFeed;
-				var newFeed:KalturaBaseSyndicationFeed = syndicationFeedTemplate.syndication;
+				var newFeed:BorhanBaseSyndicationFeed = syndicationFeedTemplate.syndication;
 				newFeed.name = StringUtil.trim(generalFeedNameTextInput.text);
 				newFeed.playlistId = getPlaylistID();
 
@@ -209,13 +209,13 @@
 
 
 			private function getPlaylistID():String {
-				return allcontentRadioBtn.selected ? '' : (playListComboBox.selectedItem as KalturaPlaylist).id + '';
+				return allcontentRadioBtn.selected ? '' : (playListComboBox.selectedItem as BorhanPlaylist).id + '';
 			}
 
 
 			private function saveFeedChanges():void {
 				var syndicationFeedTemplate:IExternalSyndicationFeed = syndicationTypeOptions.selectedChild as IExternalSyndicationFeed;
-				var editedFeed:KalturaBaseSyndicationFeed = syndicationFeedTemplate.syndication;
+				var editedFeed:BorhanBaseSyndicationFeed = syndicationFeedTemplate.syndication;
 				editedFeed.name = StringUtil.trim(generalFeedNameTextInput.text);
 				editedFeed.playlistId = getPlaylistID();
 

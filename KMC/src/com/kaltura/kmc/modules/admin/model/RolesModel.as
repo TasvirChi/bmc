@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.admin.model
+package com.borhan.bmc.modules.admin.model
 {
-	import com.kaltura.types.KalturaPermissionStatus;
-	import com.kaltura.types.KalturaPermissionType;
-	import com.kaltura.types.KalturaUserRoleOrderBy;
-	import com.kaltura.types.KalturaUserRoleStatus;
-	import com.kaltura.vo.KalturaPermissionFilter;
-	import com.kaltura.vo.KalturaUserRole;
-	import com.kaltura.vo.KalturaUserRoleFilter;
+	import com.borhan.types.BorhanPermissionStatus;
+	import com.borhan.types.BorhanPermissionType;
+	import com.borhan.types.BorhanUserRoleOrderBy;
+	import com.borhan.types.BorhanUserRoleStatus;
+	import com.borhan.vo.BorhanPermissionFilter;
+	import com.borhan.vo.BorhanUserRole;
+	import com.borhan.vo.BorhanUserRoleFilter;
 	
 	import mx.collections.ArrayCollection;
 
@@ -15,24 +15,24 @@ package com.kaltura.kmc.modules.admin.model
 		
 		public function RolesModel(){
 			// get only active roles (not deleted)
-			rolesFilter = new KalturaUserRoleFilter();
-			rolesFilter.statusEqual = KalturaUserRoleStatus.ACTIVE;
-			rolesFilter.orderBy = KalturaUserRoleOrderBy.ID_ASC;
-			rolesFilter.tagsMultiLikeOr = 'kmc';
+			rolesFilter = new BorhanUserRoleFilter();
+			rolesFilter.statusEqual = BorhanUserRoleStatus.ACTIVE;
+			rolesFilter.orderBy = BorhanUserRoleOrderBy.ID_ASC;
+			rolesFilter.tagsMultiLikeOr = 'bmc';
 			// only get speacial, non-deleted features
-			permissionsFilter = new KalturaPermissionFilter();
-			permissionsFilter.typeIn = KalturaPermissionType.SPECIAL_FEATURE + ',' + KalturaPermissionType.PLUGIN;
-			permissionsFilter.statusEqual = KalturaPermissionStatus.ACTIVE;
+			permissionsFilter = new BorhanPermissionFilter();
+			permissionsFilter.typeIn = BorhanPermissionType.SPECIAL_FEATURE + ',' + BorhanPermissionType.PLUGIN;
+			permissionsFilter.statusEqual = BorhanPermissionStatus.ACTIVE;
 		}
 		
 		/**
 		 * the active role entry.
 		 * */
-		public var selectedRole:KalturaUserRole;
+		public var selectedRole:BorhanUserRole;
 		
-		[ArrayElementType("KalturaUserRole")]
+		[ArrayElementType("BorhanUserRole")]
 		/**
-		 * list of all roles (KalturaRole objects) 
+		 * list of all roles (BorhanRole objects) 
 		 */
 		public var roles:ArrayCollection;
 		
@@ -44,13 +44,13 @@ package com.kaltura.kmc.modules.admin.model
 		/**
 		 * the filter used for listing roles. 
 		 */		
-		public var rolesFilter:KalturaUserRoleFilter;
+		public var rolesFilter:BorhanUserRoleFilter;
 		
 		/**
 		 * the filter used for listing partner permissions
 		 * (only get speacial features). 
 		 */		
-		public var permissionsFilter:KalturaPermissionFilter;
+		public var permissionsFilter:BorhanPermissionFilter;
 		
 		
 		/**
@@ -65,7 +65,7 @@ package com.kaltura.kmc.modules.admin.model
 		 * drilldown window for it. since the only way to trigger ui actions
 		 * is via binding, we'll use this propoerty.    
 		 */		
-		public var newRole:KalturaUserRole;
+		public var newRole:BorhanUserRole;
 		
 		
 		/**
@@ -74,7 +74,7 @@ package com.kaltura.kmc.modules.admin.model
 		public var partnerPermissionsUiconf:XML;
 		
 		/**
-		 * a list of permissions ids from the KalturaPartner data (features, plugins)
+		 * a list of permissions ids from the BorhanPartner data (features, plugins)
 		 */
 		public var partnerPermissions:String;
 	}

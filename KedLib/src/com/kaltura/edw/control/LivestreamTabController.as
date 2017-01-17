@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.ListLiveConversionProfilesCommand;
-	import com.kaltura.edw.control.commands.RegenerateLiveTokenCommand;
-	import com.kaltura.edw.control.events.LiveEvent;
-	import com.kaltura.edw.control.events.ProfileEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.ListLiveConversionProfilesCommand;
+	import com.borhan.edw.control.commands.RegenerateLiveTokenCommand;
+	import com.borhan.edw.control.events.LiveEvent;
+	import com.borhan.edw.control.events.ProfileEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class LivestreamTabController extends KMvCController {
+	public class LivestreamTabController extends BMvCController {
 		
 		public function LivestreamTabController()
 		{

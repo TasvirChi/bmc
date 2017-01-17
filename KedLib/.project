@@ -6,7 +6,7 @@
 		<project>as3corelib</project>
 		<project>as3FlexClient</project>
 		<project>Cairngorm</project>
-		<project>KalturaLib</project>
+		<project>BorhanLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -23,7 +23,7 @@
 		<link>
 			<name>[source path] content</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC/locale/%7Blocale%7D/content</locationURI>
+			<locationURI>DOCUMENTS/BMC/locale/%7Blocale%7D/content</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -1,25 +1,25 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.business.IDataOwner;
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+	import com.borhan.edw.business.IDataOwner;
+	import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
 
-	public class KMCFilterEvent extends CairngormEvent
+	public class BMCFilterEvent extends CairngormEvent
 	{
 		public static const SET_FILTER_TO_MODEL : String = "content_setFilterToModel";
 		
 		
-		private var _filterVo : KalturaMediaEntryFilterForPlaylist;
+		private var _filterVo : BorhanMediaEntryFilterForPlaylist;
 		
 		
 		
-		public function KMCFilterEvent(type:String, filterVo : KalturaMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function BMCFilterEvent(type:String, filterVo : BorhanMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_filterVo = filterVo;
 		}
 
-		public function get filterVo():KalturaMediaEntryFilterForPlaylist
+		public function get filterVo():BorhanMediaEntryFilterForPlaylist
 		{
 			return _filterVo;
 		}

@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.borhan.bmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetUrlForReportAsCsv;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.view.core.FileManager;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaReportInputFilter;
+	import com.borhan.commands.report.ReportGetUrlForReportAsCsv;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.bmc.modules.analytics.model.types.ScreenTypes;
+	import com.borhan.bmc.modules.analytics.view.core.FileManager;
+	import com.borhan.vo.BorhanEndUserReportInputFilter;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanReportInputFilter;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
@@ -62,7 +62,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 				_model.selectedReportData.title = ResourceManager.getInstance().getString('analytics', 'no_ttl');
 
 			
-			var krif:KalturaReportInputFilter;
+			var krif:BorhanReportInputFilter;
 			
 			switch (_model.currentScreenState) {
 				case ScreenTypes.END_USER_ENGAGEMENT:
@@ -94,7 +94,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 			}
 			
 			// create a pager to add all entries to log, regardless of viewed entries
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var pager:BorhanFilterPager = new BorhanFilterPager();
 			pager.pageIndex = 1;
 			if (_model.selectedReportData.totalCount > 0) {
 				pager.pageSize = _model.selectedReportData.totalCount;
@@ -109,8 +109,8 @@ package com.kaltura.kmc.modules.analytics.commands {
 					message2Send, headers, _model.selectedReportData.type, krif, _model.selectedReportData.selectedDim,
 					pager, _model.selectedReportData.orderBy, _model.selectedReportData.objectIds);
 
-			export2Csv.addEventListener(KalturaEvent.COMPLETE, result);
-			export2Csv.addEventListener(KalturaEvent.FAILED, fault);
+			export2Csv.addEventListener(BorhanEvent.COMPLETE, result);
+			export2Csv.addEventListener(BorhanEvent.FAILED, fault);
 			_model.kc.post(export2Csv);
 		}
 
@@ -118,9 +118,9 @@ package com.kaltura.kmc.modules.analytics.commands {
 		public function result(data:Object):void {
 			_model.processingCSVFlag = false;
 			_model.checkLoading();
-			var kEvent:KalturaEvent = data as KalturaEvent;
-			kEvent.target.removeEventListener(KalturaEvent.COMPLETE, result);
-			kEvent.target.removeEventListener(KalturaEvent.FAILED, fault);
+			var kEvent:BorhanEvent = data as BorhanEvent;
+			kEvent.target.removeEventListener(BorhanEvent.COMPLETE, result);
+			kEvent.target.removeEventListener(BorhanEvent.FAILED, fault);
 			_fileUrl = kEvent.data as String;
 			Alert.show(ResourceManager.getInstance().getString('analytics', 'csvReady'),
 				ResourceManager.getInstance().getString('analytics', 'csvReadyTitle'), Alert.OK, null, onClose);
@@ -137,9 +137,9 @@ package com.kaltura.kmc.modules.analytics.commands {
 		public function fault(info:Object):void {
 			_model.processingCSVFlag = false;
 			_model.checkLoading();
-			var kEvent:KalturaEvent = info as KalturaEvent;
-			kEvent.target.removeEventListener(KalturaEvent.COMPLETE, result);
-			kEvent.target.removeEventListener(KalturaEvent.FAILED, fault);
+			var kEvent:BorhanEvent = info as BorhanEvent;
+			kEvent.target.removeEventListener(BorhanEvent.COMPLETE, result);
+			kEvent.target.removeEventListener(BorhanEvent.FAILED, fault);
 			if (kEvent.error.errorCode == "POST_TIMEOUT" || kEvent.error.errorCode == "CONNECTION_TIMEOUT") {
 				// report is taking more than client-timeout to process
 				Alert.show(ResourceManager.getInstance().getString('analytics', 'csvProcessTimeout'),

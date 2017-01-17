@@ -1,7 +1,7 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
-	import com.kaltura.edw.model.MetadataDataObject;
-	import com.kaltura.vo.KalturaMetadata;
+	import com.borhan.edw.model.MetadataDataObject;
+	import com.borhan.vo.BorhanMetadata;
 
 	[Bindable]
 	/**
@@ -18,7 +18,7 @@ package com.kaltura.edw.vo
 		
 		public var finalViewMxml:XML;
 		
-		public var metadata:KalturaMetadata;
+		public var metadata:BorhanMetadata;
 		
 	}
 }

@@ -1,19 +1,19 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.CategoryUtils;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.category.CategoryUpdate;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.CategoryUtils;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class UpdateSubCategoriesCommand extends KalturaCommand {
+	public class UpdateSubCategoriesCommand extends BorhanCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
@@ -23,13 +23,13 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var catUpdate:CategoryUpdate;
 			for (var i:int = 0; i<ar.length; i++) {
 				ar[i].setUpdatedFieldsOnly(true);
-				CategoryUtils.resetUnupdateableFields(ar[i] as KalturaCategory);
+				CategoryUtils.resetUnupdateableFields(ar[i] as BorhanCategory);
 				catUpdate = new CategoryUpdate(ar[i].id, ar[i]);
 				mr.addAction(catUpdate);
 			}
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);
 		}
 		
@@ -40,7 +40,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var rm:IResourceManager = ResourceManager.getInstance();
 			
 			// check for errors
-			var er:KalturaError = (data as KalturaEvent).error;
+			var er:BorhanError = (data as BorhanEvent).error;
 			if (er) { 
 				Alert.show(getErrorText(er), rm.getString('cms', 'error'));
 				return;
@@ -48,7 +48,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 			else {
 				// look iside MR
 				for each (var o:Object in data.data) {
-					er = o as KalturaError;
+					er = o as BorhanError;
 					if (er) {
 						Alert.show(getErrorText(er), rm.getString('cms', 'error'));
 					}

@@ -1,10 +1,10 @@
-package com.kaltura.edw.components.fltr.panels
+package com.borhan.edw.components.fltr.panels
 {
-	import com.kaltura.edw.components.fltr.IAdvancedSearchFilterComponent;
-	import com.kaltura.types.KalturaSearchOperatorType;
-	import com.kaltura.vo.KalturaContentDistributionSearchItem;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaSearchOperator;
+	import com.borhan.edw.components.fltr.IAdvancedSearchFilterComponent;
+	import com.borhan.types.BorhanSearchOperatorType;
+	import com.borhan.vo.BorhanContentDistributionSearchItem;
+	import com.borhan.vo.BorhanDistributionProfile;
+	import com.borhan.vo.BorhanSearchOperator;
 	
 	import mx.collections.ArrayCollection;
 	import mx.events.FlexEvent;
@@ -19,7 +19,7 @@ package com.kaltura.edw.components.fltr.panels
 		/**
 		 * container for initial filter if buttons not created yet 
 		 */
-		protected var _initialFilter:KalturaSearchOperator;
+		protected var _initialFilter:BorhanSearchOperator;
 		
 		
 		override public function set filter(value:Object):void {
@@ -35,11 +35,11 @@ package com.kaltura.edw.components.fltr.panels
 				}
 				else {
 					_buttons[0].selected = false;
-					var profiles:Array = (value as KalturaSearchOperator).items;
-					for each (var searchItem:KalturaContentDistributionSearchItem in profiles) {
+					var profiles:Array = (value as BorhanSearchOperator).items;
+					for each (var searchItem:BorhanContentDistributionSearchItem in profiles) {
 						// find a matching checkbox and mark it
 						for (i = 1; i < _buttons.length; i++) {
-							if ((_buttons[i].data as KalturaDistributionProfile).id == searchItem.distributionProfileId) {
+							if ((_buttons[i].data as BorhanDistributionProfile).id == searchItem.distributionProfileId) {
 								_buttons[i].selected = true;
 								break;
 							}
@@ -48,21 +48,21 @@ package com.kaltura.edw.components.fltr.panels
 				}
 			}
 			else {
-				_initialFilter = value as KalturaSearchOperator;
+				_initialFilter = value as BorhanSearchOperator;
 			}
 		}
 		
 		
 		override public function get filter():Object {
 			if (_buttons) {
-				var searchItem:KalturaContentDistributionSearchItem;
-				var distributionSearchOperator:KalturaSearchOperator = new KalturaSearchOperator();
-				distributionSearchOperator.type = KalturaSearchOperatorType.SEARCH_OR;
+				var searchItem:BorhanContentDistributionSearchItem;
+				var distributionSearchOperator:BorhanSearchOperator = new BorhanSearchOperator();
+				distributionSearchOperator.type = BorhanSearchOperatorType.SEARCH_OR;
 				distributionSearchOperator.items = new Array();
 				for (var i:int = 1; i < _buttons.length; i++) {
 					if (_buttons[i].selected) {
-						searchItem = new KalturaContentDistributionSearchItem();
-						searchItem.distributionProfileId = (_buttons[i].data as KalturaDistributionProfile).id;
+						searchItem = new BorhanContentDistributionSearchItem();
+						searchItem.distributionProfileId = (_buttons[i].data as BorhanDistributionProfile).id;
 						distributionSearchOperator.items.push(searchItem);
 					}
 				}

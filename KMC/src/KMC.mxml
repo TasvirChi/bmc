@@ -3,46 +3,46 @@
 				minWidth="955" minHeight="600" creationComplete="creationCompleteHandler(event)" paddingLeft="0"
 				paddingRight="0" paddingBottom="0" paddingTop="0" verticalGap="0" backgroundColor="0xFFFFFF" >
 	<mx:Metadata>
-		[ResourceBundle("kmc")]
+		[ResourceBundle("bmc")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.commands.MultiRequest;
-			import com.kaltura.commands.permission.PermissionList;
-			import com.kaltura.commands.session.SessionGet;
-			import com.kaltura.commands.uiConf.UiConfGet;
-			import com.kaltura.commands.user.UserGet;
-			import com.kaltura.commands.userRole.UserRoleGet;
-			import com.kaltura.config.KalturaConfig;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.events.KedErrorEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.types.APIErrorCode;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.business.Helpist;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.business.KmcModuleLoader;
-			import com.kaltura.kmc.business.KmcPluginManager;
-			import com.kaltura.kmc.events.KmcErrorEvent;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.events.KmcModuleEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.model.KmcModelLocator;
-			import com.kaltura.kmc.modules.KmcModule;
-			import com.kaltura.kmc.utils.XMLUtils;
-			import com.kaltura.kmc.vo.UserVO;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.utils.KUtils;
-			import com.kaltura.utils.ObjectHelpers;
-			import com.kaltura.vo.KalturaFilterPager;
-			import com.kaltura.vo.KalturaPermissionListResponse;
-			import com.kaltura.vo.KalturaSessionInfo;
-			import com.kaltura.vo.KalturaUiConf;
-			import com.kaltura.vo.KalturaUser;
-			import com.kaltura.vo.KalturaUserRole;
+			import com.borhan.BorhanClient;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.commands.MultiRequest;
+			import com.borhan.commands.permission.PermissionList;
+			import com.borhan.commands.session.SessionGet;
+			import com.borhan.commands.uiConf.UiConfGet;
+			import com.borhan.commands.user.UserGet;
+			import com.borhan.commands.userRole.UserRoleGet;
+			import com.borhan.config.BorhanConfig;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.events.KedErrorEvent;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.edw.model.types.APIErrorCode;
+			import com.borhan.events.BorhanEvent;
+			import com.borhan.bmc.business.Helpist;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.business.BmcModuleLoader;
+			import com.borhan.bmc.business.BmcPluginManager;
+			import com.borhan.bmc.events.BmcErrorEvent;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.events.BmcModuleEvent;
+			import com.borhan.bmc.events.BmcNavigationEvent;
+			import com.borhan.bmc.model.BmcModelLocator;
+			import com.borhan.bmc.modules.BmcModule;
+			import com.borhan.bmc.utils.XMLUtils;
+			import com.borhan.bmc.vo.UserVO;
+			import com.borhan.bmvc.model.BMvCModel;
+			import com.borhan.managers.FileUploadManager;
+			import com.borhan.utils.KUtils;
+			import com.borhan.utils.ObjectHelpers;
+			import com.borhan.vo.BorhanFilterPager;
+			import com.borhan.vo.BorhanPermissionListResponse;
+			import com.borhan.vo.BorhanSessionInfo;
+			import com.borhan.vo.BorhanUiConf;
+			import com.borhan.vo.BorhanUser;
+			import com.borhan.vo.BorhanUserRole;
 			
 			import mx.controls.Alert;
 			import mx.core.Application;
@@ -56,7 +56,7 @@
 
 
 			/**
-			 * KMC version
+			 * BMC version
 			 * */
 
 			public static var VERSION:String = "5.41.2";
@@ -76,15 +76,15 @@
 			/**
 			 * application model
 			 * */
-			private var _modelLocator:KmcModelLocator = KmcModelLocator.getInstance();
+			private var _modelLocator:BmcModelLocator = BmcModelLocator.getInstance();
 
 			/**
 			 * module loader
 			 * */
-			private var _kmcModuleLoader:KmcModuleLoader;
+			private var _bmcModuleLoader:BmcModuleLoader;
 
 			/**
-			 * KMC UIConf
+			 * BMC UIConf
 			 * */
 			private var _uiconf:XML;
 
@@ -94,7 +94,7 @@
 			private var _cm:ContextMenu;
 
 			/**
-			 * the module KMC should start with, as determined by the url hash
+			 * the module BMC should start with, as determined by the url hash
 			 * */
 			private var _startModule:Object;
 
@@ -115,18 +115,18 @@
 			private var _currentObject:Object;
 
 			/**
-			 * _kmcFunction.module: module on which we expect to find the following function. <br>
-			 * _kmcFunction.funcName: name of function to execute when the requested module is loaded. <br>
-			 * _kmcFunction.arg: (optional) a single string argument for the function
+			 * _bmcFunction.module: module on which we expect to find the following function. <br>
+			 * _bmcFunction.funcName: name of function to execute when the requested module is loaded. <br>
+			 * _bmcFunction.arg: (optional) a single string argument for the function
 			 * */
-			private var _kmcFunction:Object;
+			private var _bmcFunction:Object;
 
 			/**
-			 * plugins are FlexModules which do not function as KmcModules.
+			 * plugins are FlexModules which do not function as BmcModules.
 			 * they are loaded as simple flex modules and can be refered to
 			 * by their id, via the plugins manager.
 			 * */
-			private var _pluginManager:KmcPluginManager;
+			private var _pluginManager:BmcPluginManager;
 
 
 			// ==============================================================================
@@ -150,23 +150,23 @@
 			 * */
 			protected function onSkinLoaded(event:StyleEvent):void {
 				if (event.type == StyleEvent.ERROR) {
-					alert(event.errorText, ResourceManager.getInstance().getString('kmc', 'skin_load_error_title'));
+					alert(event.errorText, ResourceManager.getInstance().getString('bmc', 'skin_load_error_title'));
 				}
 				
 				// title fonts 
-				var titleFont:String = resourceManager.getString('kmc', 'title_font'); 
+				var titleFont:String = resourceManager.getString('bmc', 'title_font'); 
 				if (titleFont){
 					StyleManager.getStyleDeclaration(".pageTitle2").setStyle("fontFamily", titleFont);
 					StyleManager.getStyleDeclaration(".filterTitleHeader").setStyle("fontFamily", titleFont);
 				}
 				
 				// alert buttons width
-				var alertButtonWidth:int = resourceManager.getInt('kmc', 'alert_button_width');
+				var alertButtonWidth:int = resourceManager.getInt('bmc', 'alert_button_width');
 				if (alertButtonWidth) {
 					Alert.buttonWidth = alertButtonWidth;
 				}
 
-				// remove modules that should not be loaded from the KMC uiconf
+				// remove modules that should not be loaded from the BMC uiconf
 				var tabsToHide:Array = permissionManager.getRelevantSubTabsToHide(null);
 				for each (var moduleName:String in tabsToHide) {
 					removeModule(_uiconf, moduleName);
@@ -176,14 +176,14 @@
 				setHtmlTabs();
 
 				// switch to needed tab
-				gotoPage(ExternalInterface.call("kmc.mediator.readUrlHash"));
+				gotoPage(ExternalInterface.call("bmc.mediator.readUrlHash"));
 			}
 
 			protected function loadPlugins():void {
 				var handlers:Object = {};
-				handlers[KmcNavigationEvent.NAVIGATE] = navigateToModule;
-				_pluginManager = new KmcPluginManager(this, _modelLocator.kalturaClient, _flashvars, handlers);
-				_pluginManager.addEventListener(KmcErrorEvent.ERROR, onError);
+				handlers[BmcNavigationEvent.NAVIGATE] = navigateToModule;
+				_pluginManager = new BmcPluginManager(this, _modelLocator.borhanClient, _flashvars, handlers);
+				_pluginManager.addEventListener(BmcErrorEvent.ERROR, onError);
 				_pluginManager.loadPlugins(_uiconf);
 			}
 
@@ -199,13 +199,13 @@
 			protected function overrideDataByFlashvars(conf:String, flashvars:Object):String {
 				var confFile:XML = new XML(conf);
 				// override with general language definition
-				if (flashvars.language && !flashvars["kmc.locale.language"]) {
-					flashvars["kmc.locale.language"] = flashvars.language;
+				if (flashvars.language && !flashvars["bmc.locale.language"]) {
+					flashvars["bmc.locale.language"] = flashvars.language;
 				}
 				// process
 				for (var key:String in flashvars) {
 					var elements:Array = key.split(".");
-					if (elements[0] == 'kmc') {
+					if (elements[0] == 'bmc') {
 						// need to process
 						// get to the node we need to edit
 						var xml:XML = XMLUtils.getElement(confFile, elements);
@@ -232,7 +232,7 @@
 				for each (var xmltab:XML in xmltabs) {
 					jstab = new Object();
 					tabKey = xmltab.@displayName.toString();
-					tabName = resourceManager.getString('kmc', tabKey);
+					tabName = resourceManager.getString('bmc', tabKey);
 					if (!tabName) {
 						tabName = tabKey;
 					}
@@ -240,7 +240,7 @@
 					jstab.module_name = xmltab.@id.toString();
 					jstab.subtab = xmltab.@subtab.toString();
 
-					if (xmltab.@kmcFunction.toString().length > 0) {
+					if (xmltab.@bmcFunction.toString().length > 0) {
 						jstab.type = "action";
 					}
 					else {
@@ -257,7 +257,7 @@
 
 
 			/**
-			 * remove a module from the KMC uiconf
+			 * remove a module from the BMC uiconf
 			 * @param moduleId	id of module to remove
 			 * */
 			protected function removeModule(uiconf:XML, moduleId:String):void {
@@ -269,7 +269,7 @@
 			
 
 			/**
-			 * process flashvars and load KMC uiconf
+			 * process flashvars and load BMC uiconf
 			 **/
 			protected function creationCompleteHandler(event:FlexEvent):void {
 				Security.allowDomain('*');
@@ -277,15 +277,15 @@
 				_cm = new ContextMenu();
 				_cm.hideBuiltInItems();
 
-				var version:ContextMenuItem = new ContextMenuItem("KMC version:" + VERSION);
+				var version:ContextMenuItem = new ContextMenuItem("BMC version:" + VERSION);
 				_cm.customItems.push(version);
 
 				this.contextMenu = _cm;
 
 				// listen to module/popup/plugin requests
-				systemManager.addEventListener(KmcNavigationEvent.NAVIGATE, navigateToModule);
-				systemManager.addEventListener(KmcErrorEvent.ERROR, onError);
-				systemManager.addEventListener(KmcHelpEvent.HELP, Helpist.showHelp);
+				systemManager.addEventListener(BmcNavigationEvent.NAVIGATE, navigateToModule);
+				systemManager.addEventListener(BmcErrorEvent.ERROR, onError);
+				systemManager.addEventListener(BmcHelpEvent.HELP, Helpist.showHelp);
 				systemManager.addEventListener(/* EntryDetailsWin.HELP_REQUEST */ "helpRequest", Helpist.showHelp);
 
 				// save flashvars (keep original keys as well as lowercased keys)
@@ -309,34 +309,34 @@
 					GoogleAnalyticsTracker.getInstance().enabled = false;
 				}
 
-				// create KalturaClient:
-				var configuration:KalturaConfig = new KalturaConfig();
+				// create BorhanClient:
+				var configuration:BorhanConfig = new BorhanConfig();
 				configuration.partnerId = objParam.partnerid;
 				configuration.ignoreNull = 1;
 				configuration.protocol = objParam.protocol ? objParam.protocol : "http://";
 				configuration.domain = KUtils.hostFromCode(objParam.host);
 				configuration.srvUrl = objParam.srvurl;
-				configuration.clientTag = "kmc:" + VERSION;
+				configuration.clientTag = "bmc:" + VERSION;
 				configuration.ks = objParam.ks;
 
-				_modelLocator.kalturaClient = new KalturaClient(configuration);
-				_modelLocator.kalturaClient.queueing = true;
-				_modelLocator.kalturaClient.addEventListener(KalturaClient.CALL_QUEUED, setTimer);
-				_modelLocator.kalturaClient.addEventListener(KalturaClient.QUEUE_FLUSHED, setTimer);
+				_modelLocator.borhanClient = new BorhanClient(configuration);
+				_modelLocator.borhanClient.queueing = true;
+				_modelLocator.borhanClient.addEventListener(BorhanClient.CALL_QUEUED, setTimer);
+				_modelLocator.borhanClient.addEventListener(BorhanClient.QUEUE_FLUSHED, setTimer);
 
-				var contextData:ContextDataPack = KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack;
+				var contextData:ContextDataPack = BMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack;
 				contextData.sourceUrl = systemManager.loaderInfo.url.substr(0, systemManager.loaderInfo.url.lastIndexOf("/"));
 				contextData.protocol = configuration.protocol;
 
 				// create a module loader:
-				_kmcModuleLoader = new KmcModuleLoader();
-				_kmcModuleLoader.addEventListener(KmcModuleEvent.MODULE_LOAD_ERROR, onModuleLoadError, false, 0, true);
-				_kmcModuleLoader.addEventListener(KmcModuleEvent.MODULE_LOADED, onModuleReady, false, 0, true);
+				_bmcModuleLoader = new BmcModuleLoader();
+				_bmcModuleLoader.addEventListener(BmcModuleEvent.MODULE_LOAD_ERROR, onModuleLoadError, false, 0, true);
+				_bmcModuleLoader.addEventListener(BmcModuleEvent.MODULE_LOADED, onModuleReady, false, 0, true);
 
-				// load KMC uiconf and roles and permission uiConf  
+				// load BMC uiconf and roles and permission uiConf  
 				var mr:MultiRequest = new MultiRequest();
 
-				var uiconf:UiConfGet = new UiConfGet(objParam.kmcuiconf);
+				var uiconf:UiConfGet = new UiConfGet(objParam.bmcuiconf);
 				var permissions:UiConfGet = new UiConfGet(objParam.permissionuiconf);
 
 				// get user id from service
@@ -348,7 +348,7 @@
 				mr.mapMultiRequestParam(4, "roleIds", 5, "userRoleId");
 				// get dummy, the real role id param is passed from the multirequest
 				var roleGet:UserRoleGet = new UserRoleGet(1);
-				var p:KalturaFilterPager = new KalturaFilterPager();
+				var p:BorhanFilterPager = new BorhanFilterPager();
 				p.pageSize = 500;
 				var perms:PermissionList = new PermissionList(_modelLocator.permissionsListFilter, p);
 
@@ -359,9 +359,9 @@
 				mr.addAction(roleGet);
 				mr.addAction(perms);
 
-				mr.addEventListener(KalturaEvent.COMPLETE, dataLoadHandler, false, 0, true);
-				mr.addEventListener(KalturaEvent.FAILED, dataLoadFailedHandler, false, 0, true);
-				_modelLocator.kalturaClient.post(mr);
+				mr.addEventListener(BorhanEvent.COMPLETE, dataLoadHandler, false, 0, true);
+				mr.addEventListener(BorhanEvent.FAILED, dataLoadFailedHandler, false, 0, true);
+				_modelLocator.borhanClient.post(mr);
 			}
 
 
@@ -370,7 +370,7 @@
 			 * */
 			private function setTimer(e:Event):void {
 				switch (e.type) {
-					case KalturaClient.CALL_QUEUED:
+					case BorhanClient.CALL_QUEUED:
 						if (!_kcTimer) {
 							_kcTimer = new Timer(250);
 							_kcTimer.addEventListener(TimerEvent.TIMER, handleTimer, false, 0, true);
@@ -379,7 +379,7 @@
 							_kcTimer.start();
 						}
 						break;
-					case KalturaClient.QUEUE_FLUSHED:
+					case BorhanClient.QUEUE_FLUSHED:
 						if (_kcTimer) {
 							_kcTimer.stop();
 						}
@@ -392,27 +392,27 @@
 			 * flush client calls.
 			 * */
 			private function handleTimer(e:TimerEvent):void {
-				_modelLocator.kalturaClient.flush();
+				_modelLocator.borhanClient.flush();
 			}
 
 
 			/**
 			 * UiConf failed to load, alert user
 			 */
-			protected function dataLoadFailedHandler(event:KalturaEvent):void {
+			protected function dataLoadFailedHandler(event:BorhanEvent):void {
 				var rm:IResourceManager = ResourceManager.getInstance();
-				var s:String = rm.getString('kmc', 'uiconf_load_fail', [event.error.errorMsg]);
-				alert(s, rm.getString('kmc', 'error_title'));
+				var s:String = rm.getString('bmc', 'uiconf_load_fail', [event.error.errorMsg]);
+				alert(s, rm.getString('bmc', 'error_title'));
 			}
 
 
 			/**
 			 * module failed to load, alert user
 			 */
-			protected function onModuleLoadError(event:KmcModuleEvent):void {
+			protected function onModuleLoadError(event:BmcModuleEvent):void {
 				var rm:IResourceManager = ResourceManager.getInstance();
-				var s:String = rm.getString('kmc', 'module_load_fail', [event.errorText]);
-				alert(s, rm.getString('kmc', 'error_title'));
+				var s:String = rm.getString('bmc', 'module_load_fail', [event.errorText]);
+				alert(s, rm.getString('bmc', 'error_title'));
 				if (progressbar.source == event.moduleLoader) {
 					hideProgressBar();
 				}
@@ -427,11 +427,11 @@
 			protected function isError(errorObj:Object):Boolean {
 				if (errorObj) {
 					if (errorObj.code == APIErrorCode.INVALID_KS) {
-//						alert(errorObj.message, ResourceManager.getInstance().getString('kmc', 'error_title'), Alert.OK, null, expired);
+//						alert(errorObj.message, ResourceManager.getInstance().getString('bmc', 'error_title'), Alert.OK, null, expired);
 						JSGate.expired();
 					}
 					else {
-						alert(errorObj.message, ResourceManager.getInstance().getString('kmc', 'error_title'));
+						alert(errorObj.message, ResourceManager.getInstance().getString('bmc', 'error_title'));
 					}
 					return true;
 				}
@@ -445,16 +445,16 @@
 
 
 			/**
-			 * Kmc uiConf and RolesAndPermissions loaded. Parse it and load skin and relevant modules.
+			 * Bmc uiConf and RolesAndPermissions loaded. Parse it and load skin and relevant modules.
 			 */
-			protected function dataLoadHandler(event:KalturaEvent):void {
-				// [0] KMC uiconf:
+			protected function dataLoadHandler(event:BorhanEvent):void {
+				// [0] BMC uiconf:
 				if (isError(event.data[0].error))
 					return;
 
-				_uiconf = new XML(overrideDataByFlashvars((event.data[0] as KalturaUiConf).confFile, _flashvars));
+				_uiconf = new XML(overrideDataByFlashvars((event.data[0] as BorhanUiConf).confFile, _flashvars));
 				if (_uiconf.descendants().length() == 0) {
-					Alert.show("KMC UIConf is empty", "Error");
+					Alert.show("BMC UIConf is empty", "Error");
 					return;
 				}
 				// help url
@@ -464,10 +464,10 @@
 				// [1] permissions:
 				if (isError(event.data[1].error))
 					return;
-				var uidefinition:XML = new XML((event.data[1] as KalturaUiConf).confFile); // all permissions
+				var uidefinition:XML = new XML((event.data[1] as BorhanUiConf).confFile); // all permissions
 				// [2] SessionInfo (only used for getting user id, which is already used in the user.get call)
 				if (isError(event.data[2].error)) {
-					KalturaSessionInfo;
+					BorhanSessionInfo;
 					return;
 				}
 				// [3, 4] user and role:
@@ -476,8 +476,8 @@
 				if (isError(event.data[4].error))
 					return;
 				var uvo:UserVO = new UserVO();
-				uvo.user = event.data[3] as KalturaUser;
-				uvo.role = event.data[4] as KalturaUserRole;
+				uvo.user = event.data[3] as BorhanUser;
+				uvo.role = event.data[4] as BorhanUserRole;
 				_modelLocator.userInfo = uvo;
 
 				var roleOfCurrentUser:String;
@@ -489,26 +489,26 @@
 
 				permissionManager = PermissionManager.getInstance();
 				permissionManager.addEventListener(KedErrorEvent.ERROR, onError);
-				permissionManager.init(uidefinition, roleOfCurrentUser, event.data[5] as KalturaPermissionListResponse);
+				permissionManager.init(uidefinition, roleOfCurrentUser, event.data[5] as BorhanPermissionListResponse);
 
 				// GAtracking
 				var ga:GoogleAnalyticsTracker = GoogleAnalyticsTracker.getInstance();
 				if (ga.enabled) {
 					// only if we didn't disable before..
-					ga.init(_modelLocator.userInfo.user.partnerId.toString(), _modelLocator.userInfo.user.id, this, "KMC", _flashvars.urchinnumber, "AS3", _flashvars.gaDebug == "true" ? true : false);
+					ga.init(_modelLocator.userInfo.user.partnerId.toString(), _modelLocator.userInfo.user.id, this, "BMC", _flashvars.urchinnumber, "AS3", _flashvars.gaDebug == "true" ? true : false);
 				}
 
 				// load locale
 				loadLocale(getUrl(_uiconf.locale.path.toString()), _uiconf.locale.language.toString());
 
 				// file uploader
-				FileUploadManager.getInstance().kc = _modelLocator.kalturaClient;
+				FileUploadManager.getInstance().kc = _modelLocator.borhanClient;
 				FileUploadManager.getInstance().debugMode = _flashvars.debugmode;
 				if (!_flashvars.maxuploadsize) {
 					_flashvars.maxuploadsize = parseFloat(_uiconf.upload.maxSize.toString());
 					_flashvars.maxUploadSize = _flashvars.maxuploadsize;
 				} 
-				// get the concurrentuploads param from kmc uiconf 
+				// get the concurrentuploads param from bmc uiconf 
 				FileUploadManager.getInstance().concurrentUploads = parseInt(_uiconf.upload.concurrent.toString());
 
 			}
@@ -557,13 +557,13 @@
 			 * initialize module: set its size and id, trigger its init method
 			 * and switch to its needed subtab.
 			 * */
-			protected function onModuleReady(event:KmcModuleEvent):void {
+			protected function onModuleReady(event:BmcModuleEvent):void {
 				// use the moduleLoader to get module load identifier
 				var ml:ModuleLoader = event.moduleLoader;
-				var moduleid:String = _kmcModuleLoader.getModuleLoadId(ml);
+				var moduleid:String = _bmcModuleLoader.getModuleLoadId(ml);
 
 				// get the loaded module
-				var mod:KmcModule = ml.child as KmcModule;
+				var mod:BmcModule = ml.child as BmcModule;
 
 				// fix size:
 				mod.percentHeight = 100;
@@ -574,7 +574,7 @@
 				var uiconfid:String = _uiconf.modules.module.(@id == moduleid)[0].@uiconf;
 
 				// init:
-				mod.init(_modelLocator.kalturaClient, uiconfid, _flashvars, _modelLocator.userInfo, _cm);
+				mod.init(_modelLocator.borhanClient, uiconfid, _flashvars, _modelLocator.userInfo, _cm);
 
 				// if we need to start with a module, see if it's this one
 				if (_startModule && _startModule.moduleName == mod.id) {
@@ -591,7 +591,7 @@
 
 			/**
 			 * get the default page for this user according to their permissions:
-			 * the first module in the KMCUiconf that is not hidden.
+			 * the first module in the BMCUiconf that is not hidden.
 			 * @return 	an object {moduleName:String}, where moduleName is an id of
 			 * 			a module this user is allowed to see.
 			 * */
@@ -641,7 +641,7 @@
 
 
 			/**
-			 * Switch to a different KMC module (tab).
+			 * Switch to a different BMC module (tab).
 			 * Can also include subtab on the new module.
 			 * This method can be triggered from JS using ExternalInterface.
 			 * @param o		{moduleName:String, subtab:String, extra:Object}
@@ -655,14 +655,14 @@
 					mInfo = _uiconf.modules.module.(@id == o.moduleName)[0];
 				}
 				else {
-					// take the first on the KMC uiconf
+					// take the first on the BMC uiconf
 					mInfo = _uiconf.modules.module[0];
 					o = {moduleName: mInfo.@id.toString(), subtab: mInfo.@subtab.toString()};
 					_currentObject = o;
 				}
 				if (!mInfo) {
-					var s:String = ResourceManager.getInstance().getString('kmc', 'module_unavailable', [o.moduleName]);
-//					dispatchEvent(new KmcErrorEvent(KmcErrorEvent.ERROR, s));
+					var s:String = ResourceManager.getInstance().getString('bmc', 'module_unavailable', [o.moduleName]);
+//					dispatchEvent(new BmcErrorEvent(BmcErrorEvent.ERROR, s));
 					trace(s);
 					gotoPage(getDefaultPage());
 					return;
@@ -679,9 +679,9 @@
 				if (!o.extra.htmlUrl) {
 					o.extra.htmlUrl = mInfo.@htmlUrl.toString();
 				}
-				// if no kmc function, use the one from uiconf
-				if (!o.extra.kmcFunction) {
-					o.extra.kmcFunction = mInfo.@kmcFunction.toString();
+				// if no bmc function, use the one from uiconf
+				if (!o.extra.bmcFunction) {
+					o.extra.bmcFunction = mInfo.@bmcFunction.toString();
 				}
 
 				// actual navigation part:
@@ -700,19 +700,19 @@
 					JSGate.writeUrlHash(o.moduleName, o.subtab);
 					JSGate.setTab(o.moduleName, true);
 				}
-				// check for action tabs (kmcFunction="module_id.function_name")
-				else if (o.extra.kmcFunction) {
-					handleKmcFunction(o);
+				// check for action tabs (bmcFunction="module_id.function_name")
+				else if (o.extra.bmcFunction) {
+					handleBmcFunction(o);
 					// tell html
 //					JSGate.setTab(o.moduleName, false);
 					return;
 				}
 				else {
-					// load KMC module
+					// load BMC module
 					loadModule(mInfo);
 				}
 				// tell app
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATION_COMPLETE, o.moduleName, o.subtab)); 
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATION_COMPLETE, o.moduleName, o.subtab)); 
 			}
 
 			
@@ -720,7 +720,7 @@
 			 * input: [module.]funcName[(singleStringArg)]
 			 * output: {module, funcName, arg}
 			 * */
-			private function parseKmcFunction(func:String):Object {
+			private function parseBmcFunction(func:String):Object {
 				var regex:RegExp = /((\w+)\.)?(\w+)(\((\w*)\))?/g ;
 				var result:Object = regex.exec(func);
 				var o:Object = {};
@@ -731,13 +731,13 @@
 			}
 
 			/**
-			 * execute given function either on KMC itself, a module or a plugin
+			 * execute given function either on BMC itself, a module or a plugin
 			 * */
-			private function handleKmcFunction(moduleInfo:Object):void {
+			private function handleBmcFunction(moduleInfo:Object):void {
 				
-				var o:Object = parseKmcFunction(moduleInfo.extra.kmcFunction);
+				var o:Object = parseBmcFunction(moduleInfo.extra.bmcFunction);
 				
-				// triggering KMC method
+				// triggering BMC method
 				if (!o.module) {
 					if (o.arg) {
 						this[o.funcName](o.arg);
@@ -747,7 +747,7 @@
 					}
 				}
 				// triggering ready module method
-				else if (getModuleParent(o.module) && (getModuleParent(o.module).child as KmcModule).isModuleReady) {
+				else if (getModuleParent(o.module) && (getModuleParent(o.module).child as BmcModule).isModuleReady) {
 					try {
 						if (o.arg) {
 							getModuleParent(o.module).child[o.funcName](o.arg);
@@ -757,7 +757,7 @@
 						}
 					}
 					catch (e:Error) {
-						alert(resourceManager.getString('kmc', 'method_dont_exist', [o.module, o.funcName]), resourceManager.getString('kmc', 'error_title'));
+						alert(resourceManager.getString('bmc', 'method_dont_exist', [o.module, o.funcName]), resourceManager.getString('bmc', 'error_title'));
 						trace("error: ", e.name);
 						trace("error: ", e.errorID, e.message);
 						trace(e.getStackTrace());
@@ -773,9 +773,9 @@
 							return;
 						}
 						// save func_name
-						_kmcFunction = o;
+						_bmcFunction = o;
 						// add listener to moduleReady event
-						addEventListener(KmcModule.MODULE_READY, handleSavedKmcFunction, false, 0, true);
+						addEventListener(BmcModule.MODULE_READY, handleSavedBmcFunction, false, 0, true);
 						// start loading the relevant module
 						_currentObject = {moduleName: o.module, subtab: mInfo.@subtab.toString()};
 						loadModule(mInfo);
@@ -784,45 +784,45 @@
 					// no module, try triggering plugin method
 					else {
 						_pluginManager.executePluginMethod(o.module, o.funcName);
-							// this is our last option, and if it fails a KmcErrorEvent is dispatched
+							// this is our last option, and if it fails a BmcErrorEvent is dispatched
 							// so basically, wer'e good.
 					}
 				}
 			}
 
 			/**
-			 * if a kmcFunction is waiting to execute for the ready module, execute it.
+			 * if a bmcFunction is waiting to execute for the ready module, execute it.
 			 * */
-			private function handleSavedKmcFunction(e:Event):void {
-				if (_kmcFunction && (e.target as KmcModule).getModuleName() == _kmcFunction.module) {
-					removeEventListener(KmcModule.MODULE_READY, handleSavedKmcFunction, false);
+			private function handleSavedBmcFunction(e:Event):void {
+				if (_bmcFunction && (e.target as BmcModule).getModuleName() == _bmcFunction.module) {
+					removeEventListener(BmcModule.MODULE_READY, handleSavedBmcFunction, false);
 					// try to trigger func_name on relevant module
 					try {
-						if (_kmcFunction.arg) {
-							(e.target as KmcModule)[_kmcFunction.funcName](_kmcFunction.arg);
+						if (_bmcFunction.arg) {
+							(e.target as BmcModule)[_bmcFunction.funcName](_bmcFunction.arg);
 						}
 						else {
-							(e.target as KmcModule)[_kmcFunction.funcName]();
+							(e.target as BmcModule)[_bmcFunction.funcName]();
 						}
 					}
 					catch (er:Error) {
-						alert(resourceManager.getString('kmc', 'method_dont_exist', [_kmcFunction.module, _kmcFunction.funcName]), resourceManager.getString('kmc', 'error_title'));
+						alert(resourceManager.getString('bmc', 'method_dont_exist', [_bmcFunction.module, _bmcFunction.funcName]), resourceManager.getString('bmc', 'error_title'));
 						trace("error: ", er.name);
 						trace("error: ", er.errorID, er.message);
 						trace(er.getStackTrace());
 						trace('-----------------------------------');
 					}
-					_kmcFunction = null;
+					_bmcFunction = null;
 				}
 			}
 
 			/**
-			 * load KMC module
+			 * load BMC module
 			 * @param mInfo		module info from uiconf
 			 * */
 			private function loadModule(mInfo:XML):void {
 				var url:String = getUrl(mInfo.@path.toString());
-				_moduleLoader = _kmcModuleLoader.loadKmcModule(url, mInfo.@id);
+				_moduleLoader = _bmcModuleLoader.loadBmcModule(url, mInfo.@id);
 				if (!_moduleLoader.parent) {
 					// this is the first time we load this module.
 					// add to the viewstack if needed
@@ -833,8 +833,8 @@
 				}
 
 				if ((mainViewStack.selectedChild) && (mainViewStack.selectedChild as ModuleLoader).child) {
-					this.addEventListener(KmcModule.FINISHED_SAVING, onModuleReadyToNavigate);
-					((mainViewStack.selectedChild as ModuleLoader).child as KmcModule).checkForSaveSubTab();
+					this.addEventListener(BmcModule.FINISHED_SAVING, onModuleReadyToNavigate);
+					((mainViewStack.selectedChild as ModuleLoader).child as BmcModule).checkForSaveSubTab();
 				}
 				else {
 					changeSelectedTab();
@@ -847,7 +847,7 @@
 				_startModule = _currentObject;
 				JSGate.showFlash();
 				if (_moduleLoader.child && _currentObject.subtab) {
-					(_moduleLoader.child as KmcModule).showSubtab(_currentObject.subtab, _currentObject.extra);
+					(_moduleLoader.child as BmcModule).showSubtab(_currentObject.subtab, _currentObject.extra);
 				}
 				// tell html
 				JSGate.writeUrlHash(_currentObject.moduleName, _currentObject.subtab);
@@ -856,7 +856,7 @@
 
 
 			private function onModuleReadyToNavigate(event:Event):void {
-				this.removeEventListener(KmcModule.FINISHED_SAVING, onModuleReadyToNavigate);
+				this.removeEventListener(BmcModule.FINISHED_SAVING, onModuleReadyToNavigate);
 				changeSelectedTab();
 			}
 
@@ -872,7 +872,7 @@
 				var ml:ModuleLoader;
 				for (var i:int = 0; i < children; i++) {
 					ml = mainViewStack.getChildAt(i) as ModuleLoader;
-					if (ml.child && (ml.child as KmcModule).getModuleName() == moduleName) {
+					if (ml.child && (ml.child as BmcModule).getModuleName() == moduleName) {
 						return ml;
 					}
 				}
@@ -888,10 +888,10 @@
 
 
 			/**
-			 * Trigger module switching, triggerd in response to <code>KmcNavigationEvent.NAVIGATE</code>
+			 * Trigger module switching, triggerd in response to <code>BmcNavigationEvent.NAVIGATE</code>
 			 * @param e		event holding navigation request info.
 			 * */
-			protected function navigateToModule(e:KmcNavigationEvent):void {
+			protected function navigateToModule(e:BmcNavigationEvent):void {
 				e.stopImmediatePropagation();
 				var o:Object = {moduleName: e.module, subtab: e.subtab, extra: e.data};
 				gotoPage(o);
@@ -903,7 +903,7 @@
 			 * */
 			protected function onPermissionError(e:KedErrorEvent):void {
 				e.stopImmediatePropagation();
-				alert(e.error, ResourceManager.getInstance().getString('kmc', 'error_title'));
+				alert(e.error, ResourceManager.getInstance().getString('bmc', 'error_title'));
 			}
 
 			/**
@@ -914,13 +914,13 @@
 			protected function onError(e:Event):void {
 				e.stopImmediatePropagation();
 				var error:String;
-				if (e is KmcErrorEvent) {
-					error = (e as KmcErrorEvent).error;
+				if (e is BmcErrorEvent) {
+					error = (e as BmcErrorEvent).error;
 				}
 				else if (e is KedErrorEvent) {
 					error = (e as KedErrorEvent).error;
 				}
-				alert(error, ResourceManager.getInstance().getString('kmc', 'error_title'));
+				alert(error, ResourceManager.getInstance().getString('bmc', 'error_title'));
 			}
 
 
@@ -935,12 +935,12 @@
 
 			/**
 			 * check if any processes are going on that will
-			 * stop upon navigating away from the KMC.
+			 * stop upon navigating away from the BMC.
 			 * */
 			protected function hasOngoingProcess():String {
 				var result:String;
 				if (FileUploadManager.getInstance().getAllFiles().length > 0) {
-					result = resourceManager.getString('kmc', 'ongoing_uploads');
+					result = resourceManager.getString('bmc', 'ongoing_uploads');
 				}
 				return result;
 			}

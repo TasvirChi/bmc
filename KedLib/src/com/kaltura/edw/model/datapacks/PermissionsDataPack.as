@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.borhan.bmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
@@ -23,7 +23,7 @@ package com.kaltura.edw.model.datapacks
 		
 		/**
 		 * R&P: for image entries, add size params when requesting image
-		 * (for accounts who use remote storage, then images don't use kaltura service)
+		 * (for accounts who use remote storage, then images don't use borhan service)
 		 * */
 		public var enableThumbResize:Boolean = false;
 		
@@ -43,19 +43,19 @@ package com.kaltura.edw.model.datapacks
 		public var enableAkamaiLive:Boolean = true;
 		
 		/**
-		 * RnP: provision Kaltura live streams
+		 * RnP: provision Borhan live streams
 		 * */
-		public var enableKalturaLive:Boolean = true;
+		public var enableBorhanLive:Boolean = true;
 		
 		/**
-		 * RnP: by default record Kaltura live streams
+		 * RnP: by default record Borhan live streams
 		 * */
-		public var enableKalturaRecording:Boolean = true;
+		public var enableBorhanRecording:Boolean = true;
 		
 		/**
-		 * RnP: create Kaltura multicast live streams
+		 * RnP: create Borhan multicast live streams
 		 * */
-		public var enableKalturaMulticast:Boolean = true;
+		public var enableBorhanMulticast:Boolean = true;
 		
 	}
 }

@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.view.window.cdw
+package com.borhan.bmc.modules.content.view.window.cdw
 {
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
+	import com.borhan.bmc.modules.content.model.CategoriesModel;
 	
 	import flash.events.IEventDispatcher;
 

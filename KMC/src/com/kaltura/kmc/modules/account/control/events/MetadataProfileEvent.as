@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.borhan.bmc.modules.account.control.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KMCMetadataProfileVO;
+	import com.borhan.vo.BMCMetadataProfileVO;
 	
 	/**
 	 * this class represents events related to metadataProfile
@@ -16,11 +16,11 @@ package com.kaltura.kmc.modules.account.control.events
 		public static const SELECT : String = "account_selectMetadataProfile";
 		public static const DELETE : String = "account_deleteMetadataProfile";
 		
-		public var profile:KMCMetadataProfileVO;
+		public var profile:BMCMetadataProfileVO;
 		public var profilesArray:Array;
 		
 		public function MetadataProfileEvent( type:String,
-											  profile:KMCMetadataProfileVO = null,
+											  profile:BMCMetadataProfileVO = null,
 											  profilesArray:Array = null,
 											  bubbles:Boolean=false, 
 											  cancelable:Boolean=false)

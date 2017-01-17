@@ -1,4 +1,4 @@
-package com.kaltura.controls.text
+package com.borhan.controls.text
 {
 	import mx.core.UITextField;
 	

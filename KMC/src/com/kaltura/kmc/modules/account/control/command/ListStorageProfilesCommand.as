@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.borhan.bmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.storageProfile.StorageProfileList;
-	import com.kaltura.edw.business.ClientUtil;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.types.KalturaStorageProfileStatus;
-	import com.kaltura.vo.KalturaFilter;
-	import com.kaltura.vo.KalturaStorageProfile;
-	import com.kaltura.vo.KalturaStorageProfileFilter;
+	import com.borhan.BorhanClient;
+	import com.borhan.commands.storageProfile.StorageProfileList;
+	import com.borhan.edw.business.ClientUtil;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.types.BorhanStorageProfileStatus;
+	import com.borhan.vo.BorhanFilter;
+	import com.borhan.vo.BorhanStorageProfile;
+	import com.borhan.vo.BorhanStorageProfileFilter;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -24,11 +24,11 @@ package com.kaltura.kmc.modules.account.control.command
 		
 		public function execute(event:CairngormEvent):void {
 			_model.loadingFlag = true;
-			var f:KalturaStorageProfileFilter = new KalturaStorageProfileFilter();
-			f.statusIn = KalturaStorageProfileStatus.AUTOMATIC + "," + KalturaStorageProfileStatus.MANUAL;
+			var f:BorhanStorageProfileFilter = new BorhanStorageProfileFilter();
+			f.statusIn = BorhanStorageProfileStatus.AUTOMATIC + "," + BorhanStorageProfileStatus.MANUAL;
 			var list:StorageProfileList = new StorageProfileList(f);
-			list.addEventListener(KalturaEvent.COMPLETE, result);
-			list.addEventListener(KalturaEvent.FAILED, fault);
+			list.addEventListener(BorhanEvent.COMPLETE, result);
+			list.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(list);
 		}
 		
@@ -36,14 +36,14 @@ package com.kaltura.kmc.modules.account.control.command
 			_model.loadingFlag = false;
 			var temp:Array = new Array();
 			// add the "none" object
-			var rs:KalturaStorageProfile = new KalturaStorageProfile();
-			rs.id = KalturaClient.NULL_INT; // same as "delete value" of the client
+			var rs:BorhanStorageProfile = new BorhanStorageProfile();
+			rs.id = BorhanClient.NULL_INT; // same as "delete value" of the client
 			rs.name = ResourceManager.getInstance().getString('account', 'n_a');
 			temp.push(rs);
 			// add the rest of the storages
 			for each (var o:Object in event.data.objects) {
-				if (!(o is KalturaStorageProfile)) {
-					o = ClientUtil.createClassInstanceFromObject(KalturaStorageProfile, o);
+				if (!(o is BorhanStorageProfile)) {
+					o = ClientUtil.createClassInstanceFromObject(BorhanStorageProfile, o);
 				}
 				temp.push(o);
 			} 

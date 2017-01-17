@@ -1,4 +1,4 @@
-package com.kaltura.events
+package com.borhan.events
 {
 	import flash.events.Event;
 

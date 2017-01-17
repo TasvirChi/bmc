@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.borhan.bmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetTable;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.types.KalturaReportType;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaReportInputFilter;
-	import com.kaltura.vo.KalturaReportTable;
+	import com.borhan.commands.report.ReportGetTable;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.types.BorhanReportType;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanReportInputFilter;
+	import com.borhan.vo.BorhanReportTable;
 	
 	import mx.collections.ArrayCollection;
 	import mx.resources.ResourceManager;
@@ -23,20 +23,20 @@ package com.kaltura.kmc.modules.analytics.commands {
 
 			ExecuteReportHelper.reportSetupBeforeExecution();
 
-			var applicationPager : KalturaFilterPager = new KalturaFilterPager();
+			var applicationPager : BorhanFilterPager = new BorhanFilterPager();
 			applicationPager.pageSize = 10000;
 			applicationPager.pageIndex = 1;
 	
 			var reportGetTable:ReportGetTable;
 
-			var krif : KalturaReportInputFilter = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
-			reportGetTable = new ReportGetTable(KalturaReportType.APPLICATIONS,
+			var krif : BorhanReportInputFilter = ExecuteReportHelper.createFilterFromCurrentReport(_model.filter);
+			reportGetTable = new ReportGetTable(BorhanReportType.APPLICATIONS,
 												krif, 
 												applicationPager);
 			 
 			reportGetTable.queued = false;
-			reportGetTable.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetTable.addEventListener(KalturaEvent.FAILED, fault);
+			reportGetTable.addEventListener(BorhanEvent.COMPLETE, result);
+			reportGetTable.addEventListener(BorhanEvent.FAILED, fault);
 			_model.kc.post(reportGetTable);
 		}
 
@@ -46,7 +46,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingApplicationsFlag = false;
 			_model.checkLoading();
 			
-			var krt:KalturaReportTable = KalturaReportTable(result.data);
+			var krt:BorhanReportTable = BorhanReportTable(result.data);
 
 			// spread received data through the model
 			var tablesArr:Array;

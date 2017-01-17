@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.kaltura.edw.components.fltr.*"
-				 xmlns:cat="com.kaltura.edw.components.fltr.cat.*" xmlns:filter="com.kaltura.edw.components.filter.*"
+<fltr:BaseFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fltr="com.borhan.edw.components.fltr.*"
+				 xmlns:cat="com.borhan.edw.components.fltr.cat.*" xmlns:filter="com.borhan.edw.components.filter.*"
 				 creationComplete="creationCompleteHandler(event)" 
-				 xmlns:panels="com.kaltura.edw.components.fltr.panels.*">
+				 xmlns:panels="com.borhan.edw.components.fltr.panels.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.base.types.MetadataCustomFieldTypes;
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.components.fltr.panels.MetadataProfileFilter;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaSearchOperatorType;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaFilter;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
-			import com.kaltura.vo.KalturaMetadataSearchItem;
-			import com.kaltura.vo.KalturaPlayableEntryFilter;
-			import com.kaltura.vo.KalturaSearchItem;
-			import com.kaltura.vo.KalturaSearchOperator;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.borhan.base.types.MetadataCustomFieldTypes;
+			import com.borhan.dataStructures.HashMap;
+			import com.borhan.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.borhan.edw.components.fltr.panels.MetadataProfileFilter;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.types.BorhanEntryStatus;
+			import com.borhan.types.BorhanMediaType;
+			import com.borhan.types.BorhanSearchOperatorType;
+			import com.borhan.vo.BMCMetadataProfileVO;
+			import com.borhan.vo.BorhanFilter;
+			import com.borhan.vo.BorhanMediaEntryFilter;
+			import com.borhan.vo.BorhanMetadataSearchItem;
+			import com.borhan.vo.BorhanPlayableEntryFilter;
+			import com.borhan.vo.BorhanSearchItem;
+			import com.borhan.vo.BorhanSearchOperator;
+			import com.borhan.vo.MetadataFieldVO;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -138,14 +138,14 @@
 				
 				
 				// build panels
-				var profileVo:KMCMetadataProfileVO;
+				var profileVo:BMCMetadataProfileVO;
 				var metadataTab:MetadataProfileFilter;
 				var field:MetadataFieldVO;
 				var hasSearchableFields:Boolean = false;
 				var hasSearchableListFields:Boolean = false;
 				
 				for (i = _metadataProfiles.length-1; i>=0; i--) {
-					profileVo = _metadataProfiles.getItemAt(i) as KMCMetadataProfileVO;
+					profileVo = _metadataProfiles.getItemAt(i) as BMCMetadataProfileVO;
 					if (profileVo.metadataFieldVOArray && profileVo.metadataFieldVOArray.length) {
 						// look for searchable fields of type list:
 						hasSearchableFields = false;						
@@ -172,8 +172,8 @@
 						
 						else if (hasSearchableFields) {
 							// add item to advanced search
-							var profileSearchItem:KalturaMetadataSearchItem = new KalturaMetadataSearchItem();
-							profileSearchItem.type = KalturaSearchOperatorType.SEARCH_AND;
+							var profileSearchItem:BorhanMetadataSearchItem = new BorhanMetadataSearchItem();
+							profileSearchItem.type = BorhanSearchOperatorType.SEARCH_AND;
 							profileSearchItem.metadataProfileId = profileVo.profile.id;
 							handelAdvancedSearchComponent(profileSearchItem, profileVo.profile.id.toString());
 						}
@@ -189,14 +189,14 @@
 			[Bindable]
 			/**
 			 * initial selection mode for categories tree, if not selected by user
-			 * @see com.kaltura.edw.components.fltr.cat.CatTree#selectionMode
+			 * @see com.borhan.edw.components.fltr.cat.CatTree#selectionMode
 			 * */
 			public var categoriesTreeSelectionMode:int = CatTreeSelectionMode.MULTIPLE_SELECT_PLUS;
 			
 			[Bindable]
 			/**
 			 * the attribute used to mark selection of categories in categories tree
-			 * @see com.kaltura.edw.components.fltr.cat.CatTree#selectionAttribute
+			 * @see com.borhan.edw.components.fltr.cat.CatTree#selectionAttribute
 			 * */
 			public var categoriesTreeSelectionAttribute:String = "selectedEntries";
 			
@@ -218,29 +218,29 @@
 			/**
 			 * create a filter with all basic attributes
 			 * */
-			public static function generateBaseFilter():KalturaMediaEntryFilter {
-				var _kalturaFilter:KalturaMediaEntryFilter = new KalturaMediaEntryFilter();
+			public static function generateBaseFilter():BorhanMediaEntryFilter {
+				var _borhanFilter:BorhanMediaEntryFilter = new BorhanMediaEntryFilter();
 				
-				_kalturaFilter.mediaTypeIn = KalturaMediaType.VIDEO + "," + KalturaMediaType.IMAGE + "," + 
-					KalturaMediaType.AUDIO + ",6," + KalturaMediaType.LIVE_STREAM_FLASH;
+				_borhanFilter.mediaTypeIn = BorhanMediaType.VIDEO + "," + BorhanMediaType.IMAGE + "," + 
+					BorhanMediaType.AUDIO + ",6," + BorhanMediaType.LIVE_STREAM_FLASH;
 				
-				_kalturaFilter.statusIn = KalturaEntryStatus.ERROR_CONVERTING + "," + KalturaEntryStatus.ERROR_IMPORTING + "," +
-					KalturaEntryStatus.IMPORT + "," + KalturaEntryStatus.PRECONVERT + "," + KalturaEntryStatus.READY + "," + 
-					KalturaEntryStatus.NO_CONTENT + "," + KalturaEntryStatus.PENDING;
+				_borhanFilter.statusIn = BorhanEntryStatus.ERROR_CONVERTING + "," + BorhanEntryStatus.ERROR_IMPORTING + "," +
+					BorhanEntryStatus.IMPORT + "," + BorhanEntryStatus.PRECONVERT + "," + BorhanEntryStatus.READY + "," + 
+					BorhanEntryStatus.NO_CONTENT + "," + BorhanEntryStatus.PENDING;
 				
-				return _kalturaFilter;
+				return _borhanFilter;
 			}
 			
 			
 			protected function creationCompleteHandler(event:FlexEvent):void {
-				if (!_kalturaFilter) {
-					_kalturaFilter = EntriesFilter.generateBaseFilter();
+				if (!_borhanFilter) {
+					_borhanFilter = EntriesFilter.generateBaseFilter();
 				}
 				BindingUtils.bindSetter(wrapInAC, this, "distributionProfiles");
 			}
 			
 			
-			override public function set kalturaFilter(value:KalturaFilter):void {
+			override public function set borhanFilter(value:BorhanFilter):void {
 				// fix the attribute for categoriesTree if needed, then call super()
 				if (catTree.selectionMode == CatTreeSelectionMode.MULTIPLE_SELECT_PLUS) {
 					if (value[catTree.exactAttribute]) {
@@ -254,12 +254,12 @@
 						value[catTree.plusAttribute] = null;
 					}
 				}
-				super.kalturaFilter = value;
+				super.borhanFilter = value;
 			}
 			
 			
 			/**
-			 * reset kalturaFilter so any values that apply 
+			 * reset borhanFilter so any values that apply 
 			 * to the accordion components will be set
 			 * */
 			private function setFilterValues():void {

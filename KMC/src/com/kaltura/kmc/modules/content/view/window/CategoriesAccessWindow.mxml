@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.borhan.containers.*"
 							layout="vertical" width="400" height="220"
 							showCloseButton="true" showHelpButton="true" help="helpHandler(event)"
 							title="{resourceManager.getString('cms', 'catAcTitle')}">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.types.KalturaAppearInListType;
-			import com.kaltura.types.KalturaPrivacyType;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.types.BorhanAppearInListType;
+			import com.borhan.types.BorhanPrivacyType;
 			
 			
 			
@@ -28,7 +28,7 @@
 
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_cats_access", true));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, "section_cats_access", true));
 			}
 
 		]]>
@@ -38,11 +38,11 @@
 	
 	<mx:RadioButtonGroup id="myGroup" change="myGroup_changeHandler(event)"/>
 	<mx:RadioButton label="{resourceManager.getString('cms', 'catAcPublic')}" 
-					value="{KalturaPrivacyType.ALL}" groupName="myGroup" />
+					value="{BorhanPrivacyType.ALL}" groupName="myGroup" />
 	<mx:RadioButton label="{resourceManager.getString('cms', 'catAcAutho')}" 
-					value="{KalturaPrivacyType.AUTHENTICATED_USERS}" groupName="myGroup" />
+					value="{BorhanPrivacyType.AUTHENTICATED_USERS}" groupName="myGroup" />
 	<mx:RadioButton label="{resourceManager.getString('cms', 'catAcPrivate')}" 
-					value="{KalturaPrivacyType.MEMBERS_ONLY}" groupName="myGroup" />
+					value="{BorhanPrivacyType.MEMBERS_ONLY}" groupName="myGroup" />
 	
 	
 	<mx:ControlBar>

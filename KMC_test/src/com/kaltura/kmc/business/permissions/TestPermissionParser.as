@@ -1,6 +1,6 @@
-package com.kaltura.kmc.business.permissions {
-	import com.kaltura.edw.business.permissions.PermissionsParser;
-	import com.kaltura.edw.vo.PermissionVo;
+package com.borhan.bmc.business.permissions {
+	import com.borhan.edw.business.permissions.PermissionsParser;
+	import com.borhan.edw.vo.PermissionVo;
 	
 	import flexunit.framework.Assert;
 
@@ -20,7 +20,7 @@ package com.kaltura.kmc.business.permissions {
 						</permission>
 					</permissionGroup>
 					<permissionGroup text="Content Ingestion" id="CONTENT_INGEST_BASE">
-						<permission text="KCW" id="CONTENT_INGEST_UPLOAD">
+						<permission text="BCW" id="CONTENT_INGEST_UPLOAD">
 							<ui id="content.manage.createManualBtn" enabled="false" />
 							<ui id="content.manage.createRulebasedBtn" visible="false" includeInLayout="false" />
 						</permission>
@@ -387,7 +387,7 @@ package com.kaltura.kmc.business.permissions {
 				</permission>;
 
 			// two items - regular
-			var instruction2:XML = <permission text="KCW" id="3321">
+			var instruction2:XML = <permission text="BCW" id="3321">
 					<ui id="content.manage.createManualBtn" enabled="false" />
 					<ui id="content.manage.createRulebasedBtn" visible="false" includeInLayout="false" />
 					<ui id="content.manage.createRulebasedBtn.label" visible="false" includeInLayout="false" />

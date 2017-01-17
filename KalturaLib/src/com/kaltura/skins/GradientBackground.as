@@ -1,4 +1,4 @@
-package com.kaltura.skins
+package com.borhan.skins
 {
 	import flash.geom.Matrix;
 

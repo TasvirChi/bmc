@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.admin.business {
+package com.borhan.bmc.modules.admin.business {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	

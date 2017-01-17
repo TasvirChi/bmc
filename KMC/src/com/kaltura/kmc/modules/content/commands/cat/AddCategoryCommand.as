@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.content.commands.cat {
+package com.borhan.bmc.modules.content.commands.cat {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryAdd;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.category.CategoryAdd;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.utils.ObjectUtil;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.events.PropertyChangeEvent;
 
-	public class AddCategoryCommand extends KalturaCommand {
+	public class AddCategoryCommand extends BorhanCommand {
 		
 		/**
 		 * should (custom) metadata be saved after category creation
@@ -21,17 +21,17 @@ package com.kaltura.kmc.modules.content.commands.cat {
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 			_saveMetadata = event.data[1];
-			var newCategory:KalturaCategory = event.data[0] as KalturaCategory;
+			var newCategory:BorhanCategory = event.data[0] as BorhanCategory;
 			var addCategory:CategoryAdd = new CategoryAdd(newCategory);
-			addCategory.addEventListener(KalturaEvent.COMPLETE, result);
-			addCategory.addEventListener(KalturaEvent.FAILED, fault);
+			addCategory.addEventListener(BorhanEvent.COMPLETE, result);
+			addCategory.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(addCategory);
 		}
 
 
 		override public function result(data:Object):void {
 			super.result(data);
-			if (!checkError(data) && data.data is KalturaCategory) {
+			if (!checkError(data) && data.data is BorhanCategory) {
 				// addition worked out fine
 				_model.categoriesModel.processingNewCategory = false;
 
@@ -44,7 +44,7 @@ package com.kaltura.kmc.modules.content.commands.cat {
 				}
 				if (_saveMetadata) {
 					cgEvent = new CategoryEvent(CategoryEvent.UPDATE_CATEGORY_METADATA_DATA);
-					cgEvent.data = (data.data as KalturaCategory).id;
+					cgEvent.data = (data.data as BorhanCategory).id;
 					cgEvent.dispatch();
 				}
 				

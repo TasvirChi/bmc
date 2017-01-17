@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.view.categories
+package com.borhan.bmc.modules.content.view.categories
 {
 	public class CategoriesTableActions {
 		

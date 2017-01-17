@@ -14,25 +14,25 @@
 		[Style(name="selectRowsLable",type="String")]
 		
 		[Event(name="change",type="flash.events.Event")]
-		[Event(name="nextPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="prvPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="firstPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="lastPage", type="com.kaltura.events.PagingEvent")]
-		[Event(name="getPageNum", type="com.kaltura.events.PagingEvent")]
-		[Event(name="rowsInPageChange", type="com.kaltura.events.PagingEvent")]
+		[Event(name="nextPage", type="com.borhan.events.PagingEvent")]
+		[Event(name="prvPage", type="com.borhan.events.PagingEvent")]
+		[Event(name="firstPage", type="com.borhan.events.PagingEvent")]
+		[Event(name="lastPage", type="com.borhan.events.PagingEvent")]
+		[Event(name="getPageNum", type="com.borhan.events.PagingEvent")]
+		[Event(name="rowsInPageChange", type="com.borhan.events.PagingEvent")]
 		
 		[ResourceBundle("windows")]
 	</mx:Metadata>
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.controls.pagingClasses.IPagingBehavior;
-			import com.kaltura.controls.pagingClasses.MissingTotalPaging;
-			import com.kaltura.controls.pagingClasses.PagingBehaviorEvent;
-			import com.kaltura.controls.pagingClasses.PlaceHolderPagingBehavior;
-			import com.kaltura.controls.pagingClasses.StandardPaging;
-			import com.kaltura.events.PagingEvent;
-			import com.kaltura.vo.KalturaFilterPager;
+			import com.borhan.controls.pagingClasses.IPagingBehavior;
+			import com.borhan.controls.pagingClasses.MissingTotalPaging;
+			import com.borhan.controls.pagingClasses.PagingBehaviorEvent;
+			import com.borhan.controls.pagingClasses.PlaceHolderPagingBehavior;
+			import com.borhan.controls.pagingClasses.StandardPaging;
+			import com.borhan.events.PagingEvent;
+			import com.borhan.vo.BorhanFilterPager;
 			
 			import mx.controls.Button;
 			import mx.controls.LinkButton;
@@ -76,7 +76,7 @@
 			public var doubleEnd:Boolean = true;
 
 			[Bindable]
-			public var kalturaFilterPager:KalturaFilterPager;
+			public var borhanFilterPager:BorhanFilterPager;
 			
 			[Bindable]
 			public var rowsInPage:Array = [25, 50, 100, 250, 500];
@@ -155,7 +155,7 @@
 			}
 			
 			private function onSelectedPageChanged(evt:PagingBehaviorEvent = null):void{
-				kalturaFilterPager.pageIndex = _behavior.selectedPage;
+				borhanFilterPager.pageIndex = _behavior.selectedPage;
 				updatePaging();
 				
 				dispatchEvent(new Event(Event.CHANGE));
@@ -179,7 +179,7 @@
 			 */
 			public function set pageSize(value:int):void {
 				_behavior.pageSize = value;
-				kalturaFilterPager.pageSize = value;
+				borhanFilterPager.pageSize = value;
 				updatePaging();
 			}
 
@@ -227,10 +227,10 @@
 			 * @ListEvent
 			 */
 			protected function resultSizeChange(event:ListEvent = null):void {
-				var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
+				var bmcSO:SharedObject = SharedObject.getLocal("bmcSO");
 				pageSize = int(rowInPageCb.selectedItem);
-				kmcSO.data.rowInPage = pageSize;
-				kmcSO.flush();
+				bmcSO.data.rowInPage = pageSize;
+				bmcSO.flush();
 				selectedPage = 1;
 
 				//only if not manually executed dispatch it
@@ -251,9 +251,9 @@
 
 			protected function creationCompleteHandler(event:FlexEvent):void {
 				// pager:
-				kalturaFilterPager = new KalturaFilterPager();
-				kalturaFilterPager.pageIndex = 1;
-				kalturaFilterPager.pageSize = pageSize;
+				borhanFilterPager = new BorhanFilterPager();
+				borhanFilterPager.pageIndex = 1;
+				borhanFilterPager.pageSize = pageSize;
 				
 				// texts:
 				resourcesChanged();
@@ -263,8 +263,8 @@
 				var defaultInd:int = 0;
 				// if page size selection available, used saved value:
 				if (showRowsInPage) {
-					var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
-					var soRowInPage:int = kmcSO.data.rowInPage;
+					var bmcSO:SharedObject = SharedObject.getLocal("bmcSO");
+					var soRowInPage:int = bmcSO.data.rowInPage;
 					
 					if (soRowInPage != rowInPageCb.selectedItem) {
 						selectedFromSO = false;

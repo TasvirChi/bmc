@@ -1,15 +1,15 @@
-package com.kaltura.edw.business {
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.base.FormBuilderBase;
-	import com.kaltura.edw.model.MetadataDataObject;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.model.types.CustomMetadataConstantTypes;
-	import com.kaltura.edw.view.customData.EntryIDLinkTable;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.vo.KMCMetadataProfileVO;
+package com.borhan.edw.business {
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.business.base.FormBuilderBase;
+	import com.borhan.edw.model.MetadataDataObject;
+	import com.borhan.edw.model.datapacks.ContextDataPack;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.model.datapacks.FilterDataPack;
+	import com.borhan.edw.model.types.CustomMetadataConstantTypes;
+	import com.borhan.edw.view.customData.EntryIDLinkTable;
+	import com.borhan.bmvc.model.BMvCModel;
+	import com.borhan.vo.BMCMetadataProfileVO;
 	
 	import mx.core.UIComponent;
 
@@ -20,7 +20,7 @@ package com.kaltura.edw.business {
 	[Bindable]
 	public class EntryFormBuilder extends FormBuilderBase{
 		
-		private var _model:KMvCModel = KMvCModel.getInstance();
+		private var _model:BMvCModel = BMvCModel.getInstance();
 		
 
 
@@ -30,7 +30,7 @@ package com.kaltura.edw.business {
 		 * UI components
 		 *
 		 */
-		public function EntryFormBuilder(metadataProfile:KMCMetadataProfileVO) {
+		public function EntryFormBuilder(metadataProfile:BMCMetadataProfileVO) {
 			var dummyTable:EntryIDLinkTable;
 			
 			super(metadataProfile);

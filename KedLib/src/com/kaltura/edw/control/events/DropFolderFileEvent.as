@@ -1,10 +1,10 @@
-package com.kaltura.edw.control.events {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaAssetsParamsResourceContainers;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaResource;
+package com.borhan.edw.control.events {
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanAssetsParamsResourceContainers;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanResource;
 
-	public class DropFolderFileEvent extends KMvCEvent {
+	public class DropFolderFileEvent extends BMvCEvent {
 
 		/**
 		 * reset the drop folder files list on the model
@@ -31,13 +31,13 @@ package com.kaltura.edw.control.events {
 //		 * */
 //		public static const DELETE_FILES:String = "delete_files";
 
-		private var _entry:KalturaBaseEntry;
+		private var _entry:BorhanBaseEntry;
 		private var _slug:String;
-		private var _resources:KalturaResource;
+		private var _resources:BorhanResource;
 		private var _selectedFiles:Array;
 
 
-		public function DropFolderFileEvent(type:String, entry:KalturaBaseEntry=null, slug:String=null, resource:KalturaResource=null, selectedFiles:Array=null, bubbles:Boolean = false, cancelable:Boolean = false) {
+		public function DropFolderFileEvent(type:String, entry:BorhanBaseEntry=null, slug:String=null, resource:BorhanResource=null, selectedFiles:Array=null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
 			_entry = entry;
 			_slug = slug;
@@ -46,7 +46,7 @@ package com.kaltura.edw.control.events {
 		}
 
 
-		public function get entry():KalturaBaseEntry {
+		public function get entry():BorhanBaseEntry {
 			return _entry;
 		}
 
@@ -56,7 +56,7 @@ package com.kaltura.edw.control.events {
 		}
 
 
-		public function get resource():KalturaResource {
+		public function get resource():BorhanResource {
 			return _resources;
 		}
 		

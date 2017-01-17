@@ -1,9 +1,9 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
-	import com.kaltura.vo.KalturaAttachmentAsset;
+	import com.borhan.vo.BorhanAttachmentAsset;
 	
 	import flash.net.FileReference;
-	import com.kaltura.edw.vo.AssetVO;
+	import com.borhan.edw.vo.AssetVO;
 
 	[Bindable]
 	/**
@@ -17,7 +17,7 @@ package com.kaltura.edw.vo
 		/**
 		 * file asset
 		 * */
-		public var file:KalturaAttachmentAsset;
+		public var file:BorhanAttachmentAsset;
 		
 		public var fileReference:FileReference;
 	

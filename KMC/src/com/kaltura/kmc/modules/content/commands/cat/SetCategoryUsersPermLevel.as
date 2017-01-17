@@ -1,26 +1,26 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.categoryUser.CategoryUserUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.utils.CategoryUserUtil;
-	import com.kaltura.vo.KalturaCategoryUser;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.categoryUser.CategoryUserUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.bmc.modules.content.utils.CategoryUserUtil;
+	import com.borhan.vo.BorhanCategoryUser;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class SetCategoryUsersPermLevel extends KalturaCommand {
+	public class SetCategoryUsersPermLevel extends BorhanCommand {
 		
 		private var _usrs:Array;
 		private var _perm:int;
 		
 		override public function execute(event:CairngormEvent):void {
-			// event.data is [desired perm lvl, [KalturaCategoryUser]]
+			// event.data is [desired perm lvl, [BorhanCategoryUser]]
 			_perm = event.data[0];
 			_usrs = event.data[1];
 			
@@ -42,16 +42,16 @@ package com.kaltura.kmc.modules.content.commands.cat
 			_model.increaseLoadCounter();
 			
 			var mr:MultiRequest = new MultiRequest();
-			var cu:KalturaCategoryUser;
+			var cu:BorhanCategoryUser;
 			for (var i:int = 0; i<_usrs.length; i++) {
-				cu = _usrs[i] as KalturaCategoryUser;
+				cu = _usrs[i] as BorhanCategoryUser;
 				cu.permissionLevel = _perm;
 				cu.permissionNames = CategoryUserUtil.getPermissionNames(_perm);
 				cu.setUpdatedFieldsOnly(true);
 				mr.addAction(new CategoryUserUpdate(cu.categoryId, cu.userId, cu, true));
 			} 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);	   
 		}
 		

@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.categoryEntry.CategoryEntryAdd;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryEntry;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.categoryEntry.CategoryEntryAdd;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryEntry;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class AddCategoriesEntriesCommand extends KalturaCommand {
+	public class AddCategoriesEntriesCommand extends BorhanCommand {
 		
 		
 		private var _eventType:String;
@@ -31,7 +31,7 @@ package com.kaltura.kmc.modules.content.commands
 			_eventType = event.type;
 			
 			var e:EntriesEvent = event as EntriesEvent;
-			_categories = e.data as Array; // elements are KalturaCategories
+			_categories = e.data as Array; // elements are BorhanCategories
 			// for each entry, add the category.
 			if (event.type == EntriesEvent.ADD_ON_THE_FLY_CATEGORY) {
 				_entries = _model.categoriesModel.onTheFlyCategoryEntries;
@@ -41,12 +41,12 @@ package com.kaltura.kmc.modules.content.commands
 			}
 			
 			var cea:CategoryEntryAdd;
-			var kce:KalturaCategoryEntry;
+			var kce:BorhanCategoryEntry;
 			var mr:MultiRequest = new MultiRequest();
 			_catents = new Array();
-			for each (var kbe:KalturaBaseEntry in _entries) {
-				for each (var kc:KalturaCategory in _categories) {
-					kce = new KalturaCategoryEntry();
+			for each (var kbe:BorhanBaseEntry in _entries) {
+				for each (var kc:BorhanCategory in _categories) {
+					kce = new BorhanCategoryEntry();
 					kce.entryId = kbe.id;
 					kce.categoryId = kc.id;
 					cea = new CategoryEntryAdd(kce);
@@ -56,8 +56,8 @@ package com.kaltura.kmc.modules.content.commands
 			}
 			
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);
 			
 		}
@@ -86,7 +86,7 @@ package com.kaltura.kmc.modules.content.commands
 			// look for error
 			var str:String = '';
 			var o:Object;
-			var er:KalturaError = (resultData as KalturaEvent).error;
+			var er:BorhanError = (resultData as BorhanEvent).error;
 			if (er) {
 				str = getMessageFromError(er.errorCode, er.errorMsg);
 				Alert.show(str, header);

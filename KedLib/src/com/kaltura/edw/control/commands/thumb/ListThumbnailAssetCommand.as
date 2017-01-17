@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.commands.thumb
+package com.borhan.edw.control.commands.thumb
 {
-	import com.kaltura.commands.thumbAsset.ThumbAssetGetByEntryId;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaDistributionThumbDimensions;
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.borhan.commands.thumbAsset.ThumbAssetGetByEntryId;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.vo.ThumbnailWithDimensions;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanDistributionProfile;
+	import com.borhan.vo.BorhanDistributionThumbDimensions;
+	import com.borhan.vo.BorhanThumbAsset;
 	
 	import flash.events.Event;
 	
@@ -20,13 +20,13 @@ package com.kaltura.edw.control.commands.thumb
 		
 		private var _ddp:DistributionDataPack;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_ddp = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
 			var listThumbnailAsset:ThumbAssetGetByEntryId = new ThumbAssetGetByEntryId((_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id);
-			listThumbnailAsset.addEventListener(KalturaEvent.COMPLETE, result);
-			listThumbnailAsset.addEventListener(KalturaEvent.FAILED, fault);
+			listThumbnailAsset.addEventListener(BorhanEvent.COMPLETE, result);
+			listThumbnailAsset.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(listThumbnailAsset);
 		}
 		
@@ -56,15 +56,15 @@ package com.kaltura.edw.control.commands.thumb
 			// will indicate if the requiredthumbs of these profiles exist
 			var isRequiredThumbsExistArray:Array = new Array();
 			// initilize with all false values
-			for each (var currentProfile:KalturaDistributionProfile in profilesArray) {
+			for each (var currentProfile:BorhanDistributionProfile in profilesArray) {
 				var currentArray:Array = new Array();
-				for each (var currentDimension:KalturaDistributionThumbDimensions in currentProfile.requiredThumbDimensions) {
+				for each (var currentDimension:BorhanDistributionThumbDimensions in currentProfile.requiredThumbDimensions) {
 					currentArray.push(false);
 				}
 				isRequiredThumbsExistArray.push(currentArray);
 			}
 			
-			for each (var currentThumb:KalturaThumbAsset in thumbsArray) {
+			for each (var currentThumb:BorhanThumbAsset in thumbsArray) {
 				var curUsedProfiles:Array = new Array();
 				var curThumbExist:Boolean = false;
 				//search for thumb with identical dimensions, to copy the used profiles from it
@@ -82,10 +82,10 @@ package com.kaltura.edw.control.commands.thumb
 				//search for all profiles that require the thumb dimensions
 				if (curUsedProfiles.length == 0) {
 					for (var i:int=profilesArray.length-1; i>=0; i--) {
-						var distributionProfile:KalturaDistributionProfile = profilesArray[i] as KalturaDistributionProfile;
+						var distributionProfile:BorhanDistributionProfile = profilesArray[i] as BorhanDistributionProfile;
 						if (distributionProfile.requiredThumbDimensions) {
 							for (var j:int=0; j<distributionProfile.requiredThumbDimensions.length; j++) {
-								var dim:KalturaDistributionThumbDimensions = distributionProfile.requiredThumbDimensions[j] as KalturaDistributionThumbDimensions;
+								var dim:BorhanDistributionThumbDimensions = distributionProfile.requiredThumbDimensions[j] as BorhanDistributionThumbDimensions;
 								if ((dim.width==currentThumb.width) && (dim.height==currentThumb.height)) {
 									curUsedProfiles.push(distributionProfile);
 									isRequiredThumbsExistArray[i][j] = true;
@@ -112,8 +112,8 @@ package com.kaltura.edw.control.commands.thumb
 				for (var l:int=0; l<array.length; l++) {
 					
 					if (!array[l]) {
-						var profile:KalturaDistributionProfile = profilesArray[k] as KalturaDistributionProfile;
-						var requireDimensions:KalturaDistributionThumbDimensions = profile.requiredThumbDimensions[l] as KalturaDistributionThumbDimensions;
+						var profile:BorhanDistributionProfile = profilesArray[k] as BorhanDistributionProfile;
+						var requireDimensions:BorhanDistributionThumbDimensions = profile.requiredThumbDimensions[l] as BorhanDistributionThumbDimensions;
 						var profileExist:Boolean = false;
 						var leftUsedProfiles:Array = new Array();
 						for each (var thumbnail:ThumbnailWithDimensions in remainingProfilesArray) {

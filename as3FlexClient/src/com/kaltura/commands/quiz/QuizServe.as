@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,17 +25,17 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.quiz
+package com.borhan.commands.quiz
 {
-	import com.kaltura.delegates.quiz.QuizServeDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.borhan.delegates.quiz.QuizServeDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* creates a pdf from quiz object
 	* The Output type defines the file format in which the quiz will be generated
 	* Currently only PDF files are supported
 	**/
-	public class QuizServe extends KalturaCall
+	public class QuizServe extends BorhanCall
 	{
 		public var filterFields : String;
 		

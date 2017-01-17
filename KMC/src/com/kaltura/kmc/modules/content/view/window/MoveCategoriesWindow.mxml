@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.hillelcoren.components.*"
-							xmlns:containers="com.kaltura.containers.*" xmlns:cat="com.kaltura.edw.components.fltr.cat.*" 
+							xmlns:containers="com.borhan.containers.*" xmlns:cat="com.borhan.edw.components.fltr.cat.*" 
 							layout="vertical" width="400" height="400"
 							showCloseButton="true" close="closeHandler(event)" showHelpButton="true" help="helpHandler(event)"
 							title="{_windowTitle}" 
@@ -8,15 +8,15 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACCategoryController;
-			import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.BorhanClient;
+			import com.borhan.autocomplete.controllers.KACCategoryController;
+			import com.borhan.autocomplete.itemRenderers.selection.CategorySelectedItem;
+			import com.borhan.edw.components.fltr.FilterComponentEvent;
+			import com.borhan.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.vo.CategoryVO;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.core.mx_internal;
 			import mx.events.CloseEvent;
@@ -36,7 +36,7 @@
 			/**
 			 * client for autocomplete calls
 			 * */
-			public var kClient:KalturaClient;
+			public var kClient:BorhanClient;
 
 
 			[Bindable]
@@ -47,7 +47,7 @@
 
 			/**
 			 * list of categories to move
-			 * KalturaCategory objects
+			 * BorhanCategory objects
 			 * */
 			public function setCategories(value:Array):void {
 				_categories = value;
@@ -78,15 +78,15 @@
 			/**
 			 * get new parent category
 			 * */
-			public function getParent():KalturaCategory {
-				var kCat:KalturaCategory;
+			public function getParent():BorhanCategory {
+				var kCat:BorhanCategory;
 				if (none.selected) {
 					// return the "root"
-					kCat = new KalturaCategory();
+					kCat = new BorhanCategory();
 					kCat.id = 0;
 				}
 				else if (catComplete.selectedItem) {
-					kCat = catComplete.selectedItem as KalturaCategory;
+					kCat = catComplete.selectedItem as BorhanCategory;
 				}
 				else {
 					kCat = (catTree.getSelectedCategories()[0] as CategoryVO).category;
@@ -102,7 +102,7 @@
 
 
 			private function helpHandler(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_cat_move", true));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, "section_cat_move", true));
 			}
 
 

@@ -1,17 +1,17 @@
-package com.kaltura.edw.control.commands.categories
+package com.borhan.edw.control.commands.categories
 {
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaCategoryOrderBy;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.model.datapacks.FilterDataPack;
+	import com.borhan.edw.vo.CategoryVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanCategoryOrderBy;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
 	
 	import mx.collections.ArrayCollection;
 
@@ -23,18 +23,18 @@ package com.kaltura.edw.control.commands.categories
 		
 		private var _filterModel:FilterModel;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
 			
 			_source = event.source;
 			_onComplete = event.onComplete;
 			
-			var f:KalturaCategoryFilter = new KalturaCategoryFilter();
-			f.orderBy = KalturaCategoryOrderBy.NAME_ASC;
+			var f:BorhanCategoryFilter = new BorhanCategoryFilter();
+			f.orderBy = BorhanCategoryOrderBy.NAME_ASC;
 			var listCategories:CategoryList = new CategoryList(f);
 			// listeners
-			listCategories.addEventListener(KalturaEvent.COMPLETE, result);
-			listCategories.addEventListener(KalturaEvent.FAILED, fault);
+			listCategories.addEventListener(BorhanEvent.COMPLETE, result);
+			listCategories.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(listCategories);
 		}
@@ -43,13 +43,13 @@ package com.kaltura.edw.control.commands.categories
 			super.result(data);
 			_filterModel = (_model.getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 			// set root level categories to the model
-			_filterModel.categoriesForEntries = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
+			_filterModel.categoriesForEntries = buildCategoriesHyrarchy((data.data as BorhanCategoryListResponse).objects, _filterModel.categoriesMapForEntries);
 			// set root level categories to the model
-			_filterModel.categoriesForMod = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForMod);
+			_filterModel.categoriesForMod = buildCategoriesHyrarchy((data.data as BorhanCategoryListResponse).objects, _filterModel.categoriesMapForMod);
 			// set root level categories to the model
-			_filterModel.categoriesForCats = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapForCats);
+			_filterModel.categoriesForCats = buildCategoriesHyrarchy((data.data as BorhanCategoryListResponse).objects, _filterModel.categoriesMapForCats);
 			// set root level categories to the model
-			_filterModel.categoriesGeneral = buildCategoriesHyrarchy((data.data as KalturaCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
+			_filterModel.categoriesGeneral = buildCategoriesHyrarchy((data.data as BorhanCategoryListResponse).objects, _filterModel.categoriesMapGeneral);
 			_model.decreaseLoadCounter();
 		}
 		
@@ -58,7 +58,7 @@ package com.kaltura.edw.control.commands.categories
 			var rootLevel:ArrayCollection = new ArrayCollection();	// categories in the root level
 			var category:CategoryVO;
 			// create category VOs and add to hashmap
-			for each (var kCat:KalturaCategory in kCats) {
+			for each (var kCat:BorhanCategory in kCats) {
 				category = new CategoryVO(kCat.id, kCat.name, kCat);
 				catMap.put(kCat.id + '', category);
 				allCategories.addItem(category)

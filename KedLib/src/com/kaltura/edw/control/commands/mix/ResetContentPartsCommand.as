@@ -1,12 +1,12 @@
-package com.kaltura.edw.control.commands.mix
+package com.borhan.edw.control.commands.mix
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.ContentDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.ContentDataPack;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	public class ResetContentPartsCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 //			_model.increaseLoadCounter();		
 			var cdp:ContentDataPack = _model.getDataPack(ContentDataPack) as ContentDataPack;
@@ -15,8 +15,8 @@ package com.kaltura.edw.control.commands.mix
 //			var e : KedEntryEvent = event as KedEntryEvent;
 //			var getMixUsingEntry:MixingGetMixesByMediaId = new MixingGetMixesByMediaId(e.entryVo.id);
 //			
-//			getMixUsingEntry.addEventListener(KalturaEvent.COMPLETE, result);
-//			getMixUsingEntry.addEventListener(KalturaEvent.FAILED, fault);
+//			getMixUsingEntry.addEventListener(BorhanEvent.COMPLETE, result);
+//			getMixUsingEntry.addEventListener(BorhanEvent.FAILED, fault);
 //			
 //			_client.post(getMixUsingEntry);
 		}

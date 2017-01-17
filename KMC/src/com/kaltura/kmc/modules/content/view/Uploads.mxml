@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" verticalGap="0"
 		 creationComplete="creationCompleteHandler(event)"
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel"
-		 xmlns:content="com.kaltura.kmc.modules.content.view.content.*"
-		 xmlns:view="com.kaltura.kmc.modules.content.view.*">
+		 implements="com.borhan.bmc.modules.content.business.IContentPanel"
+		 xmlns:content="com.borhan.bmc.modules.content.view.content.*"
+		 xmlns:view="com.borhan.bmc.modules.content.view.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.content.model.BulkUploadModel;
-			import com.kaltura.vo.FileUploadVO;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.modules.content.model.BulkUploadModel;
+			import com.borhan.vo.FileUploadVO;
+			import com.borhan.vo.BorhanBaseEntryFilter;
 
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
@@ -31,7 +31,7 @@
 			}
 
 
-			public function init(kbef:KalturaBaseEntryFilter = null):void {
+			public function init(kbef:BorhanBaseEntryFilter = null):void {
 			}
 
 

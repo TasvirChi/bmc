@@ -1,41 +1,41 @@
-package com.kaltura.edw.control.commands.flavor
+package com.borhan.edw.control.commands.flavor
 {
-	import com.kaltura.commands.flavorAsset.FlavorAssetAdd;
-	import com.kaltura.commands.flavorAsset.FlavorAssetSetContent;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.MediaEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaContentResource;
-	import com.kaltura.vo.KalturaFlavorAsset;
-	import com.kaltura.edw.control.commands.KedCommand;
+	import com.borhan.commands.flavorAsset.FlavorAssetAdd;
+	import com.borhan.commands.flavorAsset.FlavorAssetSetContent;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.control.events.MediaEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanContentResource;
+	import com.borhan.vo.BorhanFlavorAsset;
+	import com.borhan.edw.control.commands.KedCommand;
 	
 	public class AddFlavorCommand extends KedCommand {
 		
-		private var _resource:KalturaContentResource;
+		private var _resource:BorhanContentResource;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_dispatcher = event.dispatcher;
 			_model.increaseLoadCounter();
 			var e:MediaEvent = event as MediaEvent;
-			_resource = e.data.resource as KalturaContentResource;
-			var flavorAsset:KalturaFlavorAsset = new KalturaFlavorAsset()
+			_resource = e.data.resource as BorhanContentResource;
+			var flavorAsset:BorhanFlavorAsset = new BorhanFlavorAsset()
 			flavorAsset.flavorParamsId = e.data.flavorParamsId;
 			flavorAsset.setUpdatedFieldsOnly(true);
 			flavorAsset.setInsertedFields(true);
 			var fau:FlavorAssetAdd = new FlavorAssetAdd(e.entry.id, flavorAsset);
-			fau.addEventListener(KalturaEvent.COMPLETE, setResourceContent);
-			fau.addEventListener(KalturaEvent.FAILED, fault);
+			fau.addEventListener(BorhanEvent.COMPLETE, setResourceContent);
+			fau.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(fau);
 		}
 		
-		protected function setResourceContent(e:KalturaEvent):void {
+		protected function setResourceContent(e:BorhanEvent):void {
 			super.result(e);
 			var fasc:FlavorAssetSetContent = new FlavorAssetSetContent(e.data.id, _resource);
-			fasc.addEventListener(KalturaEvent.COMPLETE, result);
-			fasc.addEventListener(KalturaEvent.FAILED, fault);
+			fasc.addEventListener(BorhanEvent.COMPLETE, result);
+			fasc.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(fasc);
 		} 
 		

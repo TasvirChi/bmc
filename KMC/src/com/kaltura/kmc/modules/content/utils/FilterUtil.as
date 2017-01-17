@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.content.utils
+package com.borhan.bmc.modules.content.utils
 {
-	import com.kaltura.kmc.modules.account.view.CustomData;
-	import com.kaltura.types.KalturaSearchOperatorType;
-	import com.kaltura.vo.KalturaBaseEntryFilter;
-	import com.kaltura.vo.KalturaMediaEntryFilter;
-	import com.kaltura.vo.KalturaMetadataSearchItem;
-	import com.kaltura.vo.KalturaPlaylistFilter;
-	import com.kaltura.vo.KalturaSearchCondition;
-	import com.kaltura.vo.KalturaSearchOperator;
+	import com.borhan.bmc.modules.account.view.CustomData;
+	import com.borhan.types.BorhanSearchOperatorType;
+	import com.borhan.vo.BorhanBaseEntryFilter;
+	import com.borhan.vo.BorhanMediaEntryFilter;
+	import com.borhan.vo.BorhanMetadataSearchItem;
+	import com.borhan.vo.BorhanPlaylistFilter;
+	import com.borhan.vo.BorhanSearchCondition;
+	import com.borhan.vo.BorhanSearchOperator;
 	
 	import mx.utils.Base64Decoder;
 
@@ -20,25 +20,25 @@ package com.kaltura.kmc.modules.content.utils
 	public class FilterUtil
 	{
 		/**
-		 * creates a KalturaMediaEntryFilter from encoded data
+		 * creates a BorhanMediaEntryFilter from encoded data
 		 * @param filter	encoded filter data
 		 * */
-		public static function createFilterFromString(filter:String):KalturaBaseEntryFilter {
+		public static function createFilterFromString(filter:String):BorhanBaseEntryFilter {
 			var dec:Base64Decoder = new Base64Decoder();
 			dec.decode(filter);
 			var filterString:String = dec.toByteArray().toString();
 			var filterArray:Array = filterString.split("&");
 			
 			// distinguish between playlist and entry:
-			var kmef:KalturaBaseEntryFilter;
+			var kmef:BorhanBaseEntryFilter;
 			for (var j:int = 0; j < filterArray.length; j++) {
 				if (filterArray[j].indexOf("objectType") == 0) {
 					var cls:String = filterArray[j].split("=")[1];
-					if (cls == "KalturaPlaylistFilter") {
-						kmef = new KalturaPlaylistFilter();
+					if (cls == "BorhanPlaylistFilter") {
+						kmef = new BorhanPlaylistFilter();
 					}
 					else {
-						kmef = new KalturaMediaEntryFilter();
+						kmef = new BorhanMediaEntryFilter();
 					}
 					break;
 				}
@@ -53,7 +53,7 @@ package com.kaltura.kmc.modules.content.utils
 						saveCustomDataValue(customDataFilters, filterArray[i]);
 					}
 					else {
-						// KalturaMediaEntryFilter is dynamic, ok to put all values without testing
+						// BorhanMediaEntryFilter is dynamic, ok to put all values without testing
 						kmef[att[0]] = att[1];
 					}
 				}
@@ -90,19 +90,19 @@ package com.kaltura.kmc.modules.content.utils
 		 * @param value	value for the given attribute
 		 * 
 		 */
-		public static function handleCustomDataFilter(kmef:KalturaBaseEntryFilter, customDataFilters:Array):void {
+		public static function handleCustomDataFilter(kmef:BorhanBaseEntryFilter, customDataFilters:Array):void {
 			if (!kmef.advancedSearch) {
 				// create advanced search component
-				kmef.advancedSearch = new KalturaSearchOperator();
-				kmef.advancedSearch.type = KalturaSearchOperatorType.SEARCH_AND;
+				kmef.advancedSearch = new BorhanSearchOperator();
+				kmef.advancedSearch.type = BorhanSearchOperatorType.SEARCH_AND;
 				kmef.advancedSearch.items = new Array();
 			}
 			
 			
 			for (var i:int = 0; i<customDataFilters.length; i++) {
 				var cdvo:CustomDataVo = customDataFilters[i] as CustomDataVo;
-				var profileSearchItem:KalturaMetadataSearchItem = getMetadataProfileSearchItem(kmef.advancedSearch.items, cdvo.profileId);
-				var fieldSearchCondition:KalturaSearchCondition = getMetadataFieldSearchCondition(profileSearchItem, cdvo.field);
+				var profileSearchItem:BorhanMetadataSearchItem = getMetadataProfileSearchItem(kmef.advancedSearch.items, cdvo.profileId);
+				var fieldSearchCondition:BorhanSearchCondition = getMetadataFieldSearchCondition(profileSearchItem, cdvo.field);
 				fieldSearchCondition.value = cdvo.value;
 			}
 		}
@@ -115,9 +115,9 @@ package com.kaltura.kmc.modules.content.utils
 		 * @param field		x-path of the field as in schema
 		 * @return 	search condition that matches the given field
 		 */
-		public static function getMetadataFieldSearchCondition(profileSearchItem:KalturaMetadataSearchItem, field:String):KalturaSearchCondition {
-			var searchItem:KalturaMetadataSearchItem;
-			var searchCond:KalturaSearchCondition;
+		public static function getMetadataFieldSearchCondition(profileSearchItem:BorhanMetadataSearchItem, field:String):BorhanSearchCondition {
+			var searchItem:BorhanMetadataSearchItem;
+			var searchCond:BorhanSearchCondition;
 			var found:Boolean;
 			
 			for each (searchItem in profileSearchItem.items) {	
@@ -135,15 +135,15 @@ package com.kaltura.kmc.modules.content.utils
 			} 
 			if (!found) {
 				// create searchItem for the field
-				searchItem = new KalturaMetadataSearchItem();
+				searchItem = new BorhanMetadataSearchItem();
 				searchItem.metadataProfileId = profileSearchItem.metadataProfileId;
-				searchItem.type = KalturaSearchOperatorType.SEARCH_OR;
+				searchItem.type = BorhanSearchOperatorType.SEARCH_OR;
 				searchItem.items = [];
 				profileSearchItem.items.push(searchItem);
 			}
 			
 			// create a searchCondition
-			searchCond = new KalturaSearchCondition();
+			searchCond = new BorhanSearchCondition();
 			searchCond.field = field;
 			searchItem.items.push(searchCond);
 			
@@ -159,8 +159,8 @@ package com.kaltura.kmc.modules.content.utils
 		 * @param profileId
 		 * @return metadata profile searchItem corresponding to the given profile id
 		 */
-		public static function getMetadataProfileSearchItem(items:Array, profileId:int):KalturaMetadataSearchItem {
-			var searchItem:KalturaMetadataSearchItem;
+		public static function getMetadataProfileSearchItem(items:Array, profileId:int):BorhanMetadataSearchItem {
+			var searchItem:BorhanMetadataSearchItem;
 			var found:Boolean;
 			
 			for each (searchItem in items) {
@@ -171,9 +171,9 @@ package com.kaltura.kmc.modules.content.utils
 			} 
 			if (!found) {
 				// create serachItem for the profile
-				searchItem = new KalturaMetadataSearchItem();
+				searchItem = new BorhanMetadataSearchItem();
 				searchItem.metadataProfileId = profileId;
-				searchItem.type = KalturaSearchOperatorType.SEARCH_AND;
+				searchItem.type = BorhanSearchOperatorType.SEARCH_AND;
 				searchItem.items = [];
 				items.push(searchItem);
 			}

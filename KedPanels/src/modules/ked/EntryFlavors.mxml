@@ -2,50 +2,50 @@
 <!---
 Flavours tab of EntryDetailsWin
 -->
-<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:entryDetails="com.kaltura.edw.view.*" width="100%"
-		   height="100%" creationComplete="onCreationComplete()" implements="com.kaltura.edw.business.IDrilldownPanel"
-		   xmlns:edw="com.kaltura.edw.*" xmlns:view="com.kaltura.edw.view.*" xmlns:control="com.kaltura.edw.control.*"
+<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:entryDetails="com.borhan.edw.view.*" width="100%"
+		   height="100%" creationComplete="onCreationComplete()" implements="com.borhan.edw.business.IDrilldownPanel"
+		   xmlns:edw="com.borhan.edw.*" xmlns:view="com.borhan.edw.view.*" xmlns:control="com.borhan.edw.control.*"
 		   label="{resourceManager.getString('drilldown', 'videoFiles')}" >
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.borhan.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.borhan.edw.events.InternalKedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.FileTypes;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.DropFolderEvent;
-			import com.kaltura.edw.control.events.FlavorAssetEvent;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.MediaEvent;
-			import com.kaltura.edw.control.events.ProfileEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.DistributionDataPack;
-			import com.kaltura.edw.model.datapacks.DropFolderDataPack;
-			import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-			import com.kaltura.edw.model.datapacks.PermissionsDataPack;
-			import com.kaltura.edw.model.types.DropFolderListType;
-			import com.kaltura.edw.view.window.flavors.AddFlavorAssetsWindow;
-			import com.kaltura.edw.view.window.flavors.MatchFromDropFolderWindow;
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-			import com.kaltura.edw.vo.UploadFileVo;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.KalturaEntryReplacementStatus;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaFlavorAssetWithParams;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMixEntry;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.constants.FileTypes;
+			import com.borhan.edw.constants.PanelConsts;
+			import com.borhan.edw.control.events.DropFolderEvent;
+			import com.borhan.edw.control.events.FlavorAssetEvent;
+			import com.borhan.edw.control.events.KedEntryEvent;
+			import com.borhan.edw.control.events.MediaEvent;
+			import com.borhan.edw.control.events.ProfileEvent;
+			import com.borhan.edw.events.InternalKedEvent;
+			import com.borhan.edw.events.KedDataEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.edw.model.datapacks.DistributionDataPack;
+			import com.borhan.edw.model.datapacks.DropFolderDataPack;
+			import com.borhan.edw.model.datapacks.FlavorsDataPack;
+			import com.borhan.edw.model.datapacks.PermissionsDataPack;
+			import com.borhan.edw.model.types.DropFolderListType;
+			import com.borhan.edw.view.window.flavors.AddFlavorAssetsWindow;
+			import com.borhan.edw.view.window.flavors.MatchFromDropFolderWindow;
+			import com.borhan.edw.vo.FlavorAssetWithParamsVO;
+			import com.borhan.edw.vo.UploadFileVo;
+			import com.borhan.bmvc.model.IDataPackRepository;
+			import com.borhan.types.BorhanEntryReplacementStatus;
+			import com.borhan.types.BorhanEntryStatus;
+			import com.borhan.types.BorhanMediaType;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanFlavorAssetWithParams;
+			import com.borhan.vo.BorhanMediaEntry;
+			import com.borhan.vo.BorhanMixEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -60,14 +60,14 @@ Flavours tab of EntryDetailsWin
 			// Data
 			// =====================================================================
 			[Bindable]
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 			
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
 			
 			
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:BorhanBaseEntry):void {
 				if (!value)
 					return;
 				
@@ -169,7 +169,7 @@ Flavours tab of EntryDetailsWin
 			/**
 			 * the flavour selected for "edit"
 			 * */
-			private var _selectedFlavorWithParams:KalturaFlavorAssetWithParams;
+			private var _selectedFlavorWithParams:BorhanFlavorAssetWithParams;
 			
 			
 			// =====================================================================
@@ -228,17 +228,17 @@ Flavours tab of EntryDetailsWin
 					_approveEnabled = true;
 					
 					switch (_selectedEntry.replacementStatus) {
-						case KalturaEntryReplacementStatus.APPROVED_BUT_NOT_READY:
+						case BorhanEntryReplacementStatus.APPROVED_BUT_NOT_READY:
 							_approveEnabled = false;
-						case KalturaEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED:
+						case BorhanEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED:
 							stateLabel.text = resourceManager.getString('drilldown', 'readyState') + resourceManager.getString('drilldown', 'replacementProcessState');
 							replacementStatusBtn.label = resourceManager.getString('drilldown', 'processClickToReview');
 							break;
-						case KalturaEntryReplacementStatus.READY_BUT_NOT_APPROVED:
+						case BorhanEntryReplacementStatus.READY_BUT_NOT_APPROVED:
 							stateLabel.text = resourceManager.getString('drilldown', 'readyState') + resourceManager.getString('drilldown', 'replacementRFRState');
 							replacementStatusBtn.label = resourceManager.getString('drilldown', 'readyClickToReview');
 							break;
-						case KalturaEntryReplacementStatus.FAILED:
+						case BorhanEntryReplacementStatus.FAILED:
 							stateLabel.text = resourceManager.getString('drilldown', 'readyState') + resourceManager.getString('drilldown', 'replacementErrState');
 							replacementStatusBtn.label = resourceManager.getString('drilldown', 'errorClickToReview');
 							_approveEnabled = false;
@@ -249,11 +249,11 @@ Flavours tab of EntryDetailsWin
 					_showReplacenentInfo = false;
 					// sets labels according to entry's status
 					switch (_selectedEntry.status) {
-						case KalturaEntryStatus.NO_CONTENT:
+						case BorhanEntryStatus.NO_CONTENT:
 							stateLabel.text = resourceManager.getString('drilldown', 'noContentState');
-							setActionsLabel((_selectedEntry as KalturaMediaEntry).mediaType, _selectedEntry.status);
+							setActionsLabel((_selectedEntry as BorhanMediaEntry).mediaType, _selectedEntry.status);
 							break;
-						case KalturaEntryStatus.READY:
+						case BorhanEntryStatus.READY:
 							// if this is a replacement entry
 							if (_selectedEntry.replacedEntryId) {
 								stateLabel.text = resourceManager.getString('drilldown', 'replacementReadyState');
@@ -261,13 +261,13 @@ Flavours tab of EntryDetailsWin
 							}
 							else {
 								stateLabel.text = resourceManager.getString('drilldown', 'readyState');
-								setActionsLabel((_selectedEntry as KalturaMediaEntry).mediaType, _selectedEntry.status);
+								setActionsLabel((_selectedEntry as BorhanMediaEntry).mediaType, _selectedEntry.status);
 							}
 							break;
-						case KalturaEntryStatus.ERROR_CONVERTING:
-						case KalturaEntryStatus.ERROR_IMPORTING:
+						case BorhanEntryStatus.ERROR_CONVERTING:
+						case BorhanEntryStatus.ERROR_IMPORTING:
 							stateLabel.text = resourceManager.getString('drilldown', 'errorState');
-							setActionsLabel((_selectedEntry as KalturaMediaEntry).mediaType, _selectedEntry.status);
+							setActionsLabel((_selectedEntry as BorhanMediaEntry).mediaType, _selectedEntry.status);
 							if (_selectedEntry.replacedEntryId) {
 								_showActions = false;
 							}
@@ -303,8 +303,8 @@ Flavours tab of EntryDetailsWin
 			
 			
 			public function clear():void {
-				if ((_selectedEntry is KalturaMixEntry || 
-					(_selectedEntry is KalturaMediaEntry && (_selectedEntry as KalturaMediaEntry).mediaType == KalturaMediaType.IMAGE))) {
+				if ((_selectedEntry is BorhanMixEntry || 
+					(_selectedEntry is BorhanMediaEntry && (_selectedEntry as BorhanMediaEntry).mediaType == BorhanMediaType.IMAGE))) {
 					_distributionData.clearFlavorUpdates();
 				}
 				
@@ -365,7 +365,7 @@ Flavours tab of EntryDetailsWin
 			public function set replacementStatus(value:String):void {
 				// if replacement status was not changed, this binding won't fire. 
 				if (_drillDownClicked) {
-					if (value && (value != KalturaEntryReplacementStatus.NONE)) {
+					if (value && (value != BorhanEntryReplacementStatus.NONE)) {
 						openReplacementDrilldown();
 					}
 					//if replacement entry doesn't exist anymore
@@ -500,21 +500,21 @@ Flavours tab of EntryDetailsWin
 				var faEvent:FlavorAssetEvent;
 				switch (event.type) {
 					case FlavorsTable.CONVERT_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.CREATE_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.CREATE_FLAVOR_ASSET, flavorWithParams.borhanFlavorAssetWithParams);
 						break;
 					case FlavorsTable.DELETE_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DELETE_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DELETE_FLAVOR_ASSET, flavorWithParams.borhanFlavorAssetWithParams);
 						break;
 					case FlavorsTable.DOWNLOAD_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DOWNLOAD_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_DOWNLOAD, "EntryDrillDown>FlavorTab>DownloadAsset", flavorWithParams.kalturaFlavorAssetWithParams.entryId);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.DOWNLOAD_FLAVOR_ASSET, flavorWithParams.borhanFlavorAssetWithParams);
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_DOWNLOAD, "EntryDrillDown>FlavorTab>DownloadAsset", flavorWithParams.borhanFlavorAssetWithParams.entryId);
 						break;
 					case FlavorsTable.PREVIEW_FLAVOR:
-						faEvent = new FlavorAssetEvent(FlavorAssetEvent.PREVIEW_FLAVOR_ASSET, flavorWithParams.kalturaFlavorAssetWithParams);
+						faEvent = new FlavorAssetEvent(FlavorAssetEvent.PREVIEW_FLAVOR_ASSET, flavorWithParams.borhanFlavorAssetWithParams);
 						break;
 					case FlavorsTable.WV_FLAVOR_DETAILS:
 						faEvent = new FlavorAssetEvent(FlavorAssetEvent.VIEW_WV_ASSET_DETAILS, null);
-						// the constructor takes KalturaFlavorAssetWithParams as data, we override here:
+						// the constructor takes BorhanFlavorAssetWithParams as data, we override here:
 						faEvent.data = flavorWithParams;
 						break;
 				}
@@ -529,7 +529,7 @@ Flavours tab of EntryDetailsWin
 			 * handler for dropdown "import" selection
 			 * */
 			private function onFlavorImportSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams;
 				var uploadFile:UploadFileVo = new UploadFileVo();
 				if (_selectedFlavorWithParams) {
 					if (_selectedFlavorWithParams.flavorAsset)
@@ -550,7 +550,7 @@ Flavours tab of EntryDetailsWin
 			 * handler for dropdown "link" selection
 			 * */
 			private function onFlavorLinkSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams;
 				var uploadFile:UploadFileVo = new UploadFileVo();
 				if (_selectedFlavorWithParams) {
 					if (_selectedFlavorWithParams.flavorAsset)
@@ -569,7 +569,7 @@ Flavours tab of EntryDetailsWin
 			 * will be called when selecting to upload a specific flavor
 			 * */
 			private function onFlavorUploadSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams;
 				uploadSingleFlavor();
 			}
 			
@@ -615,7 +615,7 @@ Flavours tab of EntryDetailsWin
 			 * user selects to match from a drop folder a selected flavor
 			 * */
 			private function onFlavorMatchSelected(event:Event):void {
-				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams;
+				_selectedFlavorWithParams = (event.target.data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams;
 				openMatchFromDropFolderWindow();
 			}
 			
@@ -648,16 +648,16 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function setActionsLabel(mediaType:int, entryStatus:String):void {
 				_showActions = true;
-				if (mediaType == KalturaMediaType.VIDEO) {
-					if (entryStatus == KalturaEntryStatus.NO_CONTENT) {
+				if (mediaType == BorhanMediaType.VIDEO) {
+					if (entryStatus == BorhanEntryStatus.NO_CONTENT) {
 						actionLabel.text = resourceManager.getString('drilldown', 'addVideo');
 					}
 					else {
 						actionLabel.text = resourceManager.getString('drilldown', 'replaceVideo');
 					}
 				}
-				else if (mediaType == KalturaMediaType.AUDIO) {
-					if (entryStatus == KalturaEntryStatus.NO_CONTENT) {
+				else if (mediaType == BorhanMediaType.AUDIO) {
+					if (entryStatus == BorhanEntryStatus.NO_CONTENT) {
 						actionLabel.text = resourceManager.getString('drilldown', 'addAudio');
 					}
 					else {
@@ -695,9 +695,9 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function getTypeFilter(mediaType:int):FileFilter {
 				var fileFilter:FileFilter;
-				if (mediaType == KalturaMediaType.VIDEO)
+				if (mediaType == BorhanMediaType.VIDEO)
 					fileFilter = new FileFilter(resourceManager.getString('drilldown', 'video') + "(" + FileTypes.VIDEO_TYPES + ")", FileTypes.VIDEO_TYPES);
-				else if (mediaType == KalturaMediaType.AUDIO)
+				else if (mediaType == BorhanMediaType.AUDIO)
 					fileFilter = new FileFilter(resourceManager.getString('drilldown', 'audio') + "(" + FileTypes.AUDIO_TYPES + ")", FileTypes.AUDIO_TYPES);
 				
 				return fileFilter;
@@ -764,7 +764,7 @@ Flavours tab of EntryDetailsWin
 			 * */
 			private function onReplacementStatusBtnClick():void {
 				//replacement entry is processing - check for updates (Atar: this happens anyway when opening replacement, in WindowsManager)
-//				if ((_selectedEntry.replacementStatus == KalturaEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED) || (_selectedEntry.replacementStatus == KalturaEntryReplacementStatus.APPROVED_BUT_NOT_READY)) {
+//				if ((_selectedEntry.replacementStatus == BorhanEntryReplacementStatus.NOT_READY_AND_NOT_APPROVED) || (_selectedEntry.replacementStatus == BorhanEntryReplacementStatus.APPROVED_BUT_NOT_READY)) {
 //					_drillDownClicked = true;
 //					var entryid:String = (_dpModel.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id;
 //					var getSelectedEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.UPDATE_SELECTED_ENTRY_REPLACEMENT_STATUS, null, entryid);
@@ -789,7 +789,7 @@ Flavours tab of EntryDetailsWin
 			 * cancel entry replacement
 			 * */
 			private function onCancelReplacementClick():void {
-				var cancelReplacement:MediaEvent = new MediaEvent(MediaEvent.CANCEL_REPLACEMENT, (_selectedEntry as KalturaMediaEntry));
+				var cancelReplacement:MediaEvent = new MediaEvent(MediaEvent.CANCEL_REPLACEMENT, (_selectedEntry as BorhanMediaEntry));
 				controller.dispatch(cancelReplacement);
 				
 				// analytics
@@ -801,7 +801,7 @@ Flavours tab of EntryDetailsWin
 			 * approve replacement
 			 * */
 			private function onApproveReplacementClick():void {
-				var approveReplacement:MediaEvent = new MediaEvent(MediaEvent.APPROVE_REPLACEMENT, (_selectedEntry as KalturaMediaEntry));
+				var approveReplacement:MediaEvent = new MediaEvent(MediaEvent.APPROVE_REPLACEMENT, (_selectedEntry as BorhanMediaEntry));
 				controller.dispatch(approveReplacement);
 				
 				// analytics
@@ -860,9 +860,9 @@ Flavours tab of EntryDetailsWin
 			 * @param allowAdd		allow adding media to a no_content entry
 			 * @param allowReplace	allow replacing media of a ready entry
 			 * */
-			private function showActionsBox(entryState:Boolean, allowAdd:Boolean, allowReplace:Boolean, entry:KalturaBaseEntry):Boolean {
+			private function showActionsBox(entryState:Boolean, allowAdd:Boolean, allowReplace:Boolean, entry:BorhanBaseEntry):Boolean {
 				var result:Boolean = entryState;
-				if (entry && (entry.status == KalturaEntryStatus.NO_CONTENT)) {
+				if (entry && (entry.status == BorhanEntryStatus.NO_CONTENT)) {
 					result &&= allowAdd;
 				}
 				else {

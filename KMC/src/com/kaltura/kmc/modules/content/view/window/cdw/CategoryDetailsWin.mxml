@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation:ChangeableDataViewer xmlns:navigation="com.kaltura.edw.business.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+<navigation:ChangeableDataViewer xmlns:navigation="com.borhan.edw.business.*" xmlns:mx="http://www.adobe.com/2006/mxml"
 								 height="595" width="890" showCloseButton="true" showHelpButton="true" help="helpHandler(event)"
 								 close="onClose(event)" layout="horizontal" horizontalScrollPolicy="off" paddingTop="18"
-								 xmlns:components="com.kaltura.kmc.modules.content.view.window.cdw.components.*"
+								 xmlns:components="com.borhan.bmc.modules.content.view.window.cdw.components.*"
 								 initialize="onInitialize(event)" paddingBottom="0" paddingLeft="0" paddingRight="0"
 								 title="{setTitle(_undoCategory)}"
 								 styleName="WinTitleStyle">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.kmc.business.CategoryUtils;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.model.CategoriesModel;
-			import com.kaltura.types.KalturaInheritanceType;
-			import com.kaltura.utils.ObjectHelpers;
-			import com.kaltura.utils.ObjectUtil;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.BorhanClient;
+			import com.borhan.edw.events.KedDataEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.vo.CategoryVO;
+			import com.borhan.bmc.business.CategoryUtils;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.content.events.CategoryEvent;
+			import com.borhan.bmc.modules.content.model.CategoriesModel;
+			import com.borhan.types.BorhanInheritanceType;
+			import com.borhan.utils.ObjectHelpers;
+			import com.borhan.utils.ObjectUtil;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -46,7 +46,7 @@
 			/**
 			 * client for autocomplete calls
 			 * */
-			public var kClient:KalturaClient;
+			public var kClient:BorhanClient;
 
 
 			[Bindable]
@@ -66,10 +66,10 @@
 			}
 
 
-			private var _origCategory:KalturaCategory;
+			private var _origCategory:BorhanCategory;
 
 			[Bindable]
-			private var _undoCategory:KalturaCategory;
+			private var _undoCategory:BorhanCategory;
 
 			private var _nextPendingCategory:int;
 
@@ -114,7 +114,7 @@
 			/**
 			 * set window title according to category
 			 * */
-			private function setTitle(cat:KalturaCategory):String {
+			private function setTitle(cat:BorhanCategory):String {
 				var title:String = '';
 				if (_isNewCategory) {
 					title = resourceManager.getString('cms', 'newCategoryTitle');
@@ -159,7 +159,7 @@
 
 
 			private function onParentSelected(event:Event):void {
-				var parentCategory:KalturaCategory = parentSelect.selectedCategory;
+				var parentCategory:BorhanCategory = parentSelect.selectedCategory;
 				_undoCategory.parentId = parentCategory.id;
 				if (parentCategory.privacyContexts) {
 					// little hack to show the end users tab if it is needed: simulate inheriting privacy contexts
@@ -281,7 +281,7 @@
 			
 
 			private function hasChanged():Boolean {
-				var res:Boolean = !ObjectHelpers.compareKalturaObjects(_origCategory, _undoCategory);
+				var res:Boolean = !ObjectHelpers.compareBorhanObjects(_origCategory, _undoCategory);
 				if (!res) {
 					res = tabsNav.isChanged();
 				}
@@ -306,7 +306,7 @@
 			/**
 			 * if the next category has edit warn tags, warn
 			 * */
-			private function editWarn(kCat:KalturaCategory):void {
+			private function editWarn(kCat:BorhanCategory):void {
 				if (kCat.tags && kCat.tags.indexOf(CategoriesModel.EDIT_WARN_TAG) > -1) {
 					var txt:String = resourceManager.getString('cms', 'editCategoryWarning');
 					Alert.show(txt, resourceManager.getString('cms', 'attention'), Alert.YES|Alert.NO, null, showNextCategory);
@@ -344,13 +344,13 @@
 				}
 				if ((event == null || event.detail == Alert.YES)) {
 					var localItemIndex:int = getNavigatableItemIndex(_nextPendingCategory == 1, itemIndex);
-					var kCat:KalturaCategory = _itemsAC.getItemAt(localItemIndex) as KalturaCategory; 
+					var kCat:BorhanCategory = _itemsAC.getItemAt(localItemIndex) as BorhanCategory; 
 					editWarn(kCat);
 				}
 			}
 
 
-			private function setCategory(selectedCategory:KalturaCategory):void {
+			private function setCategory(selectedCategory:BorhanCategory):void {
 				// clear any previous
 				if (_origCategory) {
 					_origCategory.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, copyToUndoTo);
@@ -359,7 +359,7 @@
 				_origCategory = selectedCategory;
 				_origCategory.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, copyToUndoTo, false, 0, true);
 				// create copy
-				var kCat:KalturaCategory = new KalturaCategory();
+				var kCat:BorhanCategory = new BorhanCategory();
 				ObjectUtil.copyObject(_origCategory, kCat);
 				_undoCategory = kCat;
 				// set paging
@@ -386,7 +386,7 @@
 					anchor = tabsNav.helpAnchor;
 				}
 
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor, true));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, anchor, true));
 			}
 
 			
@@ -398,7 +398,7 @@
 
 			private function tabsNav_validationCompleteHandler(event:ValidationResultEvent):void {
 				// if referenceId was changed
-				if (_undoCategory.referenceId && _undoCategory.referenceId != KalturaClient.NULL_STRING && _origCategory.referenceId != _undoCategory.referenceId) {
+				if (_undoCategory.referenceId && _undoCategory.referenceId != BorhanClient.NULL_STRING && _origCategory.referenceId != _undoCategory.referenceId) {
 					// list all entries with the same refid , if any - show message
 					if (!_sameRefidWatcher) {
 						_model.categoriesWSameRefidAsSelected = new Array();
@@ -421,7 +421,7 @@
 				if (value && value.length > 0) {
 					// we have categories with the same refid
 					var str:String = '';
-					for each (var o:KalturaCategory in value) {
+					for each (var o:BorhanCategory in value) {
 						str += resourceManager.getString('cms', 'existingRefidCat', [o.fullName, o.id]);
 					}
 					Alert.show(resourceManager.getString('cms', 'existingRefid', [_undoCategory.referenceId, str]),

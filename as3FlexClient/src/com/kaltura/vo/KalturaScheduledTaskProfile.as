@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,14 +25,14 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaFilter;
+	import com.borhan.vo.BorhanFilter;
 
-	import com.kaltura.vo.BaseFlexVo;
+	import com.borhan.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaScheduledTaskProfile extends BaseFlexVo
+	public dynamic class BorhanScheduledTaskProfile extends BaseFlexVo
 	{
 		/**
 		**/
@@ -55,20 +55,20 @@ package com.kaltura.vo
 		public var description : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaScheduledTaskProfileStatus
+		* @see com.borhan.types.BorhanScheduledTaskProfileStatus
 		**/
 		public var status : int = int.MIN_VALUE;
 
 		/**
 		* The type of engine to use to list objects using the given "objectFilter"
-		* @see com.kaltura.types.KalturaObjectFilterEngineType
+		* @see com.borhan.types.BorhanObjectFilterEngineType
 		**/
 		public var objectFilterEngineType : String = null;
 
 		/**
-		* A filter object (inherits KalturaFilter) that is used to list objects for scheduled tasks
+		* A filter object (inherits BorhanFilter) that is used to list objects for scheduled tasks
 		**/
-		public var objectFilter : KalturaFilter;
+		public var objectFilter : BorhanFilter;
 
 		/**
 		* A list of tasks to execute on the founded objects
@@ -134,7 +134,7 @@ package com.kaltura.vo
 					result = '';
 					break;
 				case 'objectTasks':
-					result = 'KalturaObjectTask';
+					result = 'BorhanObjectTask';
 					break;
 			}
 			return result;

@@ -1,7 +1,7 @@
-package com.kaltura.edw.model
+package com.borhan.edw.model
 {
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.borhan.vo.BorhanDistributionProfile;
+	import com.borhan.vo.BorhanEntryDistribution;
 
 	/**
 	 * This class represents an entry distribution 
@@ -14,11 +14,11 @@ package com.kaltura.edw.model
 		/**
 		 * describes the entry distribution 
 		 */		
-		public var kalturaEntryDistribution:KalturaEntryDistribution;
+		public var borhanEntryDistribution:BorhanEntryDistribution;
 		/**
 		 * describes the distribution profile for current entry distribution 
 		 */		
-		public var kalturaDistributionProfile:KalturaDistributionProfile;
+		public var borhanDistributionProfile:BorhanDistributionProfile;
 		/**
 		 * whether the entry will be automatic distributed or not 
 		 * In case this value is true but the profile is configured otherwhise, this parameter has no meaning 

@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.borhan.bmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.CategoryUtils;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.types.KalturaCategoryOrderBy;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.vo.CategoryVO;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.CategoryUtils;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.types.BorhanCategoryOrderBy;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -26,12 +26,12 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingFlag = true;
 			_model.loadingCategories = true;
 
-			var f:KalturaCategoryFilter = new KalturaCategoryFilter();
-			f.orderBy = KalturaCategoryOrderBy.NAME_ASC;
+			var f:BorhanCategoryFilter = new BorhanCategoryFilter();
+			f.orderBy = BorhanCategoryOrderBy.NAME_ASC;
 			var listCategories:CategoryList = new CategoryList(f);
 
-			listCategories.addEventListener(KalturaEvent.COMPLETE, result);
-			listCategories.addEventListener(KalturaEvent.FAILED, fault);
+			listCategories.addEventListener(BorhanEvent.COMPLETE, result);
+			listCategories.addEventListener(BorhanEvent.FAILED, fault);
 			_model.kc.post(listCategories);
 		}
 
@@ -47,14 +47,14 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingCategories = true;
 			_model.checkLoading();
 
-			var kclr:KalturaCategoryListResponse;
-			var kc:KalturaCategory;
+			var kclr:BorhanCategoryListResponse;
+			var kc:BorhanCategory;
 
-			if (event.data[0] is KalturaError) {
-				Alert.show((event.data[0] as KalturaError).errorMsg, ResourceManager.getInstance().getString('analytics', 'error'));
+			if (event.data[0] is BorhanError) {
+				Alert.show((event.data[0] as BorhanError).errorMsg, ResourceManager.getInstance().getString('analytics', 'error'));
 			}
 			else {
-				_model.categories = buildCategoriesHyrarchy((event.data as KalturaCategoryListResponse).objects, _model.categoriesMap);
+				_model.categories = buildCategoriesHyrarchy((event.data as BorhanCategoryListResponse).objects, _model.categoriesMap);
 			}
 
 		}
@@ -64,7 +64,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 			var rootLevel:ArrayCollection = new ArrayCollection();	// categories in the root level
 			var category:CategoryVO;
 			// create category VOs and add to hashmap
-			for each (var kCat:KalturaCategory in kCats) {
+			for each (var kCat:BorhanCategory in kCats) {
 				category = new CategoryVO(kCat.id, kCat.name, kCat);
 				catMap.put(kCat.id + '', category);
 				allCategories.addItem(category)

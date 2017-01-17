@@ -1,6 +1,6 @@
-package com.kaltura.edw.model
+package com.borhan.edw.model
 {
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+	import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
 	
 	import mx.collections.ArrayCollection;
 
@@ -14,7 +14,7 @@ package com.kaltura.edw.model
 		/**
 		 * filter for rulebased playlists
 		 * */
-		public var onTheFlyFilter:KalturaMediaEntryFilterForPlaylist;
+		public var onTheFlyFilter:BorhanMediaEntryFilterForPlaylist;
 		
 		/**
 		 * number of entries in a rule-based playlist

@@ -3,14 +3,14 @@
 		 creationComplete="onCreationComplete(event)" width="100%"
 		 horizontalScrollPolicy="off" styleName="tableCellBoxRendererStyle" paddingLeft="4"
 		 verticalAlign="middle"
-		 xmlns:renderers="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.*">
+		 xmlns:renderers="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCountryRestrictionType;
-			import com.kaltura.utils.KCountriesUtil;
-			import com.kaltura.vo.AccessControlProfileVO;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaCountryRestriction;
+			import com.borhan.types.BorhanCountryRestrictionType;
+			import com.borhan.utils.KCountriesUtil;
+			import com.borhan.vo.AccessControlProfileVO;
+			import com.borhan.vo.BorhanBaseRestriction;
+			import com.borhan.vo.BorhanCountryRestriction;
 			
 			import mx.controls.Image;
 
@@ -19,14 +19,14 @@
 				var acProfile:AccessControlProfileVO = this.data as AccessControlProfileVO;
 				if (acProfile != null) {
 					var foundRestriction:Boolean = false;
-					for each (var restriction:KalturaBaseRestriction in acProfile.profile.restrictions) {
-						if (restriction is KalturaCountryRestriction) {
+					for each (var restriction:BorhanBaseRestriction in acProfile.profile.restrictions) {
+						if (restriction is BorhanCountryRestriction) {
 							foundRestriction = true;
-							countryLabel.text = (restriction as KalturaCountryRestriction).countryRestrictionType == KalturaCountryRestrictionType.ALLOW_COUNTRY_LIST ? resourceManager.getString('account', 'ALLOW_COUNTRIES') + ":  " : resourceManager.getString('account', 'RESTRICT_COUNTRIES') + ":  ";
+							countryLabel.text = (restriction as BorhanCountryRestriction).countryRestrictionType == BorhanCountryRestrictionType.ALLOW_COUNTRY_LIST ? resourceManager.getString('account', 'ALLOW_COUNTRIES') + ":  " : resourceManager.getString('account', 'RESTRICT_COUNTRIES') + ":  ";
 
-							//		countryLabel.text += getCountriesList((restriction as KalturaCountryRestriction).countryList);
+							//		countryLabel.text += getCountriesList((restriction as BorhanCountryRestriction).countryList);
 
-							setCountriesFlags((restriction as KalturaCountryRestriction).countryList);
+							setCountriesFlags((restriction as BorhanCountryRestriction).countryList);
 
 							break;
 						}

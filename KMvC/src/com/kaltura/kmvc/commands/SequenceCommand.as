@@ -30,9 +30,9 @@ POSSIBILITY OF SUCH DAMAGE.
 @ignore
 */
 
-package com.kaltura.kmvc.commands
+package com.borhan.bmvc.commands
 {
-   import com.kaltura.kmvc.control.KMvCEvent;
+   import com.borhan.bmvc.control.BMvCEvent;
    
    import flash.events.IEventDispatcher;
 
@@ -95,7 +95,7 @@ package com.kaltura.kmvc.commands
       /**
        * The next event in the sequence.
        */
-      public var nextEvent : KMvCEvent;   
+      public var nextEvent : BMvCEvent;   
 	  
 	  
 	  /**
@@ -107,7 +107,7 @@ package com.kaltura.kmvc.commands
        /**
        * Constructor, with optional nextEvent.
        */
-      public function SequenceCommand( nextEvent : KMvCEvent = null ) : void
+      public function SequenceCommand( nextEvent : BMvCEvent = null ) : void
       {
          super();
          this.nextEvent = nextEvent;
@@ -120,7 +120,7 @@ package com.kaltura.kmvc.commands
 	   * or otherwise popuplate the _dispatcher attribute.</p>
        * 
        */ 
-      public function execute( event : KMvCEvent ) : void 
+      public function execute( event : BMvCEvent ) : void 
       {
           _dispatcher = event.target as IEventDispatcher;
       }

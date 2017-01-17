@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.account.vo {
+package com.borhan.bmc.modules.account.vo {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.kmc.modules.account.model.Notifications;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaPartner;
+	import com.borhan.bmc.modules.account.model.Notifications;
+	import com.borhan.utils.ObjectUtil;
+	import com.borhan.vo.BorhanPartner;
 	
 	import mx.collections.ArrayCollection;
 
@@ -21,9 +21,9 @@ package com.kaltura.kmc.modules.account.vo {
 
 
 		/**
-		 * KalturaPartner object with relevant data
+		 * BorhanPartner object with relevant data
 		 */
-		public var partner:KalturaPartner;
+		public var partner:BorhanPartner;
 
 		/**
 		 * NotificationVO objects
@@ -46,7 +46,7 @@ package com.kaltura.kmc.modules.account.vo {
 			var newPVo:PartnerVO = new PartnerVO();
 			newPVo.partnerId = this.partnerId;
 			
-			newPVo.partner = new KalturaPartner();
+			newPVo.partner = new BorhanPartner();
 			ObjectUtil.copyObject(partner, newPVo.partner);
 			
 			newPVo.notifications = new ArrayCollection(new Array(int(this.notifications.length)));

@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
-	public class CuePointEvent extends KMvCEvent {
+	public class CuePointEvent extends BMvCEvent {
 		
 		/**
 		 * reset cuepoints count on model.

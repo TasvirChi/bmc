@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()"
-		 implements="com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel" 
-		 xmlns:components="com.kaltura.kmc.modules.account.components.*">
+		 implements="com.borhan.bmc.modules.account.view.interfaces.IAccountPanel" 
+		 xmlns:components="com.borhan.bmc.modules.account.components.*">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.account.components.EntitlementActionsRenderer;
-			import com.kaltura.kmc.modules.account.control.events.IntegrationEvent;
-			import com.kaltura.kmc.modules.account.control.events.PartnerEvent;
-			import com.kaltura.kmc.modules.account.view.windows.SetEntitlementsWindow;
-			import com.kaltura.kmc.modules.account.vo.PartnerVO;
-			import com.kaltura.types.KalturaAppearInListType;
-			import com.kaltura.types.KalturaContributionPolicyType;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.types.KalturaPrivacyType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.KArrayUtil;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.BorhanClient;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.account.components.EntitlementActionsRenderer;
+			import com.borhan.bmc.modules.account.control.events.IntegrationEvent;
+			import com.borhan.bmc.modules.account.control.events.PartnerEvent;
+			import com.borhan.bmc.modules.account.view.windows.SetEntitlementsWindow;
+			import com.borhan.bmc.modules.account.vo.PartnerVO;
+			import com.borhan.types.BorhanAppearInListType;
+			import com.borhan.types.BorhanContributionPolicyType;
+			import com.borhan.types.BorhanNullableBoolean;
+			import com.borhan.types.BorhanPrivacyType;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.utils.KArrayUtil;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -88,7 +88,7 @@
 				if (pvo) {
 					_clonedPartnerData = pvo.clone();
 
-					if (partnerData.partner.notify == KalturaNullableBoolean.TRUE_VALUE)
+					if (partnerData.partner.notify == BorhanNullableBoolean.TRUE_VALUE)
 						yesGetNoti.selected = true;
 					else
 						noGetNoti.selected = true;
@@ -130,7 +130,7 @@
 
 
 			public function saveChanges():void {
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_SAVE_SERVER_SETTINGS, "Account>Save Server Settings");
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, BorhanStatsBmcEventType.ACCOUNT_SAVE_SERVER_SETTINGS, "Account>Save Server Settings");
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.ACCOUNT_UPDATE_INTEGRATION, GoogleAnalyticsConsts.ACCOUNT);
 				savePartnerInfo();
 			}
@@ -180,9 +180,9 @@
 
 			private function onNotificationsConfigChange(event:Event):void {
 				if (event.target == yesGetNoti)
-					partnerData.partner.notify = KalturaNullableBoolean.TRUE_VALUE; 
+					partnerData.partner.notify = BorhanNullableBoolean.TRUE_VALUE; 
 				else
-					partnerData.partner.notify = KalturaNullableBoolean.FALSE_VALUE;
+					partnerData.partner.notify = BorhanNullableBoolean.FALSE_VALUE;
 			}
 
 
@@ -200,25 +200,25 @@
 				e.stopImmediatePropagation();
 				switch (e.type) {
 					case EntitlementActionsRenderer.REMOVE_CONTEXT:
-						catToClearContext = e.target.data as KalturaCategory;
+						catToClearContext = e.target.data as BorhanCategory;
 						Alert.show(resourceManager.getString('account', 'removeEntNote', [catToClearContext.name]), resourceManager.getString('account', 'important'), Alert.OK|Alert.CANCEL, null, removePrivacyContext);
 						break;
 					case EntitlementActionsRenderer.CHANGE_CONTEXT:
-						openSetEntitlementWindow(e.target.data as KalturaCategory);
+						openSetEntitlementWindow(e.target.data as BorhanCategory);
 						break;
 				}
 			}
 			
-			private var catToClearContext:KalturaCategory;
+			private var catToClearContext:BorhanCategory;
 			
 			private function removePrivacyContext(e:CloseEvent):void {
 				if (e.detail == Alert.OK) {
 					if (getInheritedPrivacyContexts(catToClearContext.privacyContext, catToClearContext.privacyContexts)) {
-						catToClearContext.privacy = KalturaPrivacyType.ALL;
-						catToClearContext.appearInList = KalturaAppearInListType.PARTNER_ONLY;
-						catToClearContext.contributionPolicy = KalturaContributionPolicyType.ALL;
+						catToClearContext.privacy = BorhanPrivacyType.ALL;
+						catToClearContext.appearInList = BorhanAppearInListType.PARTNER_ONLY;
+						catToClearContext.contributionPolicy = BorhanContributionPolicyType.ALL;
 					}
-					catToClearContext.privacyContext = KalturaClient.NULL_STRING;
+					catToClearContext.privacyContext = BorhanClient.NULL_STRING;
 					var cge:CairngormEvent = new IntegrationEvent(IntegrationEvent.UPDATE_CATEGORY);
 					cge.data = catToClearContext;
 					cge.dispatch();
@@ -251,7 +251,7 @@
 				
 			}
 			
-			private function openSetEntitlementWindow(kCat:KalturaCategory = null):void {
+			private function openSetEntitlementWindow(kCat:BorhanCategory = null):void {
 				var popup:SetEntitlementsWindow = new SetEntitlementsWindow();
 				if (kCat) {
 					popup.category = kCat;
@@ -265,7 +265,7 @@
 
 			private function readMore_linkHandler(event:TextEvent):void {
 //				navigateToURL(new URLRequest(evt.text));
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_entitlement_more'));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_entitlement_more'));
 			}
 
 		]]>
@@ -355,7 +355,7 @@
 					<mx:ComboBox id="appearInUploader" change="onAppearInUploaderChange( event )"
 								 enabled="{advCont.enabled}">
 						<mx:dataProvider>
-							<mx:String>{resourceManager.getString('account', 'kalturaNetwork')}</mx:String>
+							<mx:String>{resourceManager.getString('account', 'borhanNetwork')}</mx:String>
 							<mx:String>{resourceManager.getString('account', 'siteSearch')}</mx:String>
 							<mx:String>{resourceManager.getString('account', 'doesntAppearInCW')}</mx:String>
 						</mx:dataProvider>

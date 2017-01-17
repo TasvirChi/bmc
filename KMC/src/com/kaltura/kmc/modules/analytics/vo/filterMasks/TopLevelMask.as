@@ -1,5 +1,5 @@
-package com.kaltura.kmc.modules.analytics.vo.filterMasks {
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
+package com.borhan.bmc.modules.analytics.vo.filterMasks {
+	import com.borhan.bmc.modules.analytics.vo.FilterVo;
 
 	public class TopLevelMask extends BaseMask {
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--- Category selection tool for analytics 
- @see com.kaltura.kmc.modules.analytics.view.Filter
+ @see com.borhan.bmc.modules.analytics.view.Filter
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="350" height="450"
-				 xmlns:view="com.kaltura.kmc.modules.analytics.view.*" showCloseButton="true" close="closeWindow(event)"
-				 title="{resourceManager.getString('analytics', 'categoriesTitle')}" showHelpButton="false" xmlns:cat="com.kaltura.edw.components.fltr.cat.*">
+<HelpTitleWindow xmlns="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="350" height="450"
+				 xmlns:view="com.borhan.bmc.modules.analytics.view.*" showCloseButton="true" close="closeWindow(event)"
+				 title="{resourceManager.getString('analytics', 'categoriesTitle')}" showHelpButton="false" xmlns:cat="com.borhan.edw.components.fltr.cat.*">
 	
 	<mx:Metadata>
 		
@@ -18,15 +18,15 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.modules.analytics.business.AnalyticsCategoriesDataManager;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.dataStructures.HashMap;
+			import com.borhan.edw.components.fltr.FilterComponentEvent;
+			import com.borhan.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.borhan.edw.components.fltr.indicators.IndicatorVo;
+			import com.borhan.edw.vo.CategoryVO;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.modules.analytics.business.AnalyticsCategoriesDataManager;
+			import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
@@ -103,7 +103,7 @@
 				// this way onSubmitClick will find it there, and hopefully use it wisely.
 				var catvo:CategoryVO = _model.categoriesMap.getValue(ivo.value.toString());
 				if (!catvo){
-					var kCat:KalturaCategory = new KalturaCategory();
+					var kCat:BorhanCategory = new BorhanCategory();
 					kCat.id = ivo.value;
 					kCat.name = ivo.label;
 					kCat.fullName = ivo.tooltip;

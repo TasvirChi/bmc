@@ -1,4 +1,4 @@
-package com.kaltura.edw.events
+package com.borhan.edw.events
 {
 	import flash.events.Event;
 	

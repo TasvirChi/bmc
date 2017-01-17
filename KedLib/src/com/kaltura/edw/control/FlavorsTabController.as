@@ -1,17 +1,17 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.*;
-	import com.kaltura.edw.control.commands.dropFolder.*;
-	import com.kaltura.edw.control.commands.flavor.*;
-	import com.kaltura.edw.control.events.DropFolderEvent;
-	import com.kaltura.edw.control.events.DropFolderFileEvent;
-	import com.kaltura.edw.control.events.FlavorAssetEvent;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.MediaEvent;
-	import com.kaltura.edw.control.events.ProfileEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.*;
+	import com.borhan.edw.control.commands.dropFolder.*;
+	import com.borhan.edw.control.commands.flavor.*;
+	import com.borhan.edw.control.events.DropFolderEvent;
+	import com.borhan.edw.control.events.DropFolderFileEvent;
+	import com.borhan.edw.control.events.FlavorAssetEvent;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.control.events.MediaEvent;
+	import com.borhan.edw.control.events.ProfileEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class FlavorsTabController extends KMvCController {
+	public class FlavorsTabController extends BMvCController {
 		
 		public function FlavorsTabController()
 		{

@@ -1,10 +1,10 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.*;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.*;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.bmvc.control.BMvCController;
 
-	public class EDWController extends KMvCController {
+	public class EDWController extends BMvCController {
 		
 		public function EDWController()
 		{

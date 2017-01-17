@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<modules:KmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.kaltura.kmc.modules.*"
-				   xmlns:view="com.kaltura.kmc.modules.account.view.*"
-				   xmlns:business="com.kaltura.kmc.modules.account.business.*"
-				   xmlns:control="com.kaltura.kmc.modules.account.control.*"
-				   preloader="com.kaltura.preloaders.KmcPreloader" backgroundColor="#FFFFFF" layout="vertical"
+<modules:BmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.borhan.bmc.modules.*"
+				   xmlns:view="com.borhan.bmc.modules.account.view.*"
+				   xmlns:business="com.borhan.bmc.modules.account.business.*"
+				   xmlns:control="com.borhan.bmc.modules.account.control.*"
+				   preloader="com.borhan.preloaders.BmcPreloader" backgroundColor="#FFFFFF" layout="vertical"
 				   minHeight="520" minWidth="950" borderThickness="0" borderStyle="solid" paddingLeft="0"
 				   paddingRight="0" paddingTop="0" paddingBottom="0">
 
@@ -14,18 +14,18 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.kmc.modules.account.view.CustomData;
-			import com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel;
-			import com.kaltura.kmc.modules.account.view.interfaces.IUndoable;
-			import com.kaltura.kmc.modules.account.vo.AdminVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.account.model.AccountModelLocator;
+			import com.borhan.bmc.modules.account.view.CustomData;
+			import com.borhan.bmc.modules.account.view.interfaces.IAccountPanel;
+			import com.borhan.bmc.modules.account.view.interfaces.IUndoable;
+			import com.borhan.bmc.modules.account.vo.AdminVO;
+			import com.borhan.types.BorhanStatsBmcEventType;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
@@ -35,7 +35,7 @@
 			import mx.events.ItemClickEvent;
 
 			/**
-			 * KMC is responsible to use the value of
+			 * BMC is responsible to use the value of
 			 * this const as the id of this module.
 			 * */
 			public static const NAME:String = "account";
@@ -86,7 +86,7 @@
 					Alert.show(resourceManager.getString('account', 'saveChangesQ'), "", Alert.YES | Alert.NO, null, saveBeforeChangingModule);
 				}
 				else {
-					dispatchEvent(new Event(KmcModule.FINISHED_SAVING, true));
+					dispatchEvent(new Event(BmcModule.FINISHED_SAVING, true));
 				}
 			}
 
@@ -173,7 +173,7 @@
 				if (this.willTrigger(Event.ADDED_TO_STAGE)) {
 					removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				}
-				GoogleAnalyticsTracker.getInstance().setBasePath("KMC/Settings");
+				GoogleAnalyticsTracker.getInstance().setBasePath("BMC/Settings");
 				
 				if (_initialTab) {
 					switchToTab(_initialTab);
@@ -205,19 +205,19 @@
 			private function onTabChange(event:IndexChangedEvent):void {
 				switch (contentView.selectedChild) {
 					case overview:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_ACCOUNT_OVERVIEW, "Account>Account Overview");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, BorhanStatsBmcEventType.ACCOUNT_ACCOUNT_OVERVIEW, "Account>Account Overview");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_ACCOUNT_INFO, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case integration:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_UPDATE_SERVER_SETTINGS, "Account>Update Server Settings");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, BorhanStatsBmcEventType.ACCOUNT_UPDATE_SERVER_SETTINGS, "Account>Update Server Settings");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_INTEGRATION, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case accessControl:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_ACCESS_CONTROL, "Account>Access Control");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, BorhanStatsBmcEventType.ACCOUNT_ACCESS_CONTROL, "Account>Access Control");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_ACCESS_CONTROL, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case transcoding:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_TRANSCODING_SETTINGS, "Account>Transcoding Settings");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, BorhanStatsBmcEventType.ACCOUNT_TRANSCODING_SETTINGS, "Account>Transcoding Settings");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_TRANSCODING_SETTINGS, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case metadata:
@@ -227,7 +227,7 @@
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_MY_USER, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 					case upgrade:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_ACCOUNT_UPGRADE, "Account>Account Upgrade");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, BorhanStatsBmcEventType.ACCOUNT_ACCOUNT_UPGRADE, "Account>Account Upgrade");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.ACCOUNT_ACCOUNT_UPGRADE, GoogleAnalyticsConsts.ACCOUNT);
 						break;
 
@@ -254,7 +254,7 @@
 			 * */
 			private function saveBeforeChangingModule(event:CloseEvent):void {
 				handleSaveAlert(event);
-				dispatchEvent(new Event(KmcModule.FINISHED_SAVING, true));
+				dispatchEvent(new Event(BmcModule.FINISHED_SAVING, true));
 			}
 
 
@@ -329,7 +329,7 @@
 					anchor = 'section_acc_upgrade';
 				}
 
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, anchor));
 			}
 		]]>
 	</mx:Script>
@@ -375,4 +375,4 @@
 
 	</mx:VBox>
 
-</modules:KmcModule>
+</modules:BmcModule>

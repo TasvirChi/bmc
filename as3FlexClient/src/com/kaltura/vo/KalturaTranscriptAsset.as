@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaAttachmentAsset;
+	import com.borhan.vo.BorhanAttachmentAsset;
 
 	[Bindable]
-	public dynamic class KalturaTranscriptAsset extends KalturaAttachmentAsset
+	public dynamic class BorhanTranscriptAsset extends BorhanAttachmentAsset
 	{
 		/**
 		* The accuracy of the transcript - values between 0 and 1
@@ -39,13 +39,13 @@ package com.kaltura.vo
 
 		/**
 		* Was verified by human or machine
-		* @see com.kaltura.types.KalturaNullableBoolean
+		* @see com.borhan.types.BorhanNullableBoolean
 		**/
 		public var humanVerified : int = int.MIN_VALUE;
 
 		/**
 		* The language of the transcript
-		* @see com.kaltura.types.KalturaLanguage
+		* @see com.borhan.types.BorhanLanguage
 		**/
 		public var language : String = null;
 

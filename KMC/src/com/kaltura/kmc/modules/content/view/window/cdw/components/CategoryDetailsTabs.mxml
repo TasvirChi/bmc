@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:tabbar="com.kaltura.controls.tabbar.*"
-		 xmlns:categoryTabs="com.kaltura.kmc.modules.content.view.window.cdw.components.categoryTabs.*"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:tabbar="com.borhan.controls.tabbar.*"
+		 xmlns:categoryTabs="com.borhan.bmc.modules.content.view.window.cdw.components.categoryTabs.*"
 		 horizontalAlign="center" styleName="noPadding" creationComplete="creationCompleteHandler(event)">
 	<mx:Metadata>
-		[Event(name="validationComplete",type="com.kaltura.edw.events.ValidationResultEvent")]
+		[Event(name="validationComplete",type="com.borhan.edw.events.ValidationResultEvent")]
 		[Event(name="saved",type="flash.events.Event")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.kmc.modules.content.model.CategoriesModel;
-			import com.kaltura.kmc.modules.content.view.window.cdw.ICategoryDrilldownPanel;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.events.InternalKedEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.bmc.modules.content.model.CategoriesModel;
+			import com.borhan.bmc.modules.content.view.window.cdw.ICategoryDrilldownPanel;
+			import com.borhan.vo.BorhanCategory;
 			
 			import flash.utils.setTimeout;
 			
@@ -32,7 +32,7 @@
 
 			public var isNewCategory:Boolean;
 
-			private var _category:KalturaCategory;
+			private var _category:BorhanCategory;
 
 			private var _tabs:Vector.<ICategoryDrilldownPanel>;
 			
@@ -202,7 +202,7 @@
 
 			
 			[Bindable]
-			public function set category(value:KalturaCategory):void {
+			public function set category(value:BorhanCategory):void {
 				var refreshView:Boolean = !_category; 	// first opeing the drilldown
 				if (!isNewCategory) {
 					refreshView ||= value.id != _category.id;
@@ -216,7 +216,7 @@
 			}
 
 
-			public function get category():KalturaCategory {
+			public function get category():BorhanCategory {
 				return _category;
 			}
 

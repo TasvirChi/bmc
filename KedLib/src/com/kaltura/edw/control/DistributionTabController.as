@@ -1,15 +1,15 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.GetSingleEntryCommand;
-	import com.kaltura.edw.control.commands.ListFlavorAssetsByEntryIdCommand;
-	import com.kaltura.edw.control.commands.dist.*;
-	import com.kaltura.edw.control.commands.thumb.ListThumbnailAssetCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.GetSingleEntryCommand;
+	import com.borhan.edw.control.commands.ListFlavorAssetsByEntryIdCommand;
+	import com.borhan.edw.control.commands.dist.*;
+	import com.borhan.edw.control.commands.thumb.ListThumbnailAssetCommand;
+	import com.borhan.edw.control.events.EntryDistributionEvent;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.control.events.ThumbnailAssetEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class DistributionTabController extends KMvCController {
+	public class DistributionTabController extends BMvCController {
 		
 		public function DistributionTabController()
 		{

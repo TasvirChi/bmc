@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.borhan.bmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.account.control.events.MetadataFieldEvent;
-	import com.kaltura.kmc.modules.account.control.events.MetadataProfileEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.utils.parsers.MetadataProfileParser;
-	import com.kaltura.vo.KalturaMetadataProfile;
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.borhan.bmc.modules.account.control.events.MetadataFieldEvent;
+	import com.borhan.bmc.modules.account.control.events.MetadataProfileEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.utils.parsers.MetadataProfileParser;
+	import com.borhan.vo.BorhanMetadataProfile;
+	import com.borhan.vo.MetadataFieldVO;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;

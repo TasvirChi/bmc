@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.vo
+package com.borhan.bmc.modules.content.vo
 {
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.borhan.vo.BorhanPlaylist;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -8,11 +8,11 @@ package com.kaltura.kmc.modules.content.vo
 	{
 		
 	[Bindable]
-	public var playlist:KalturaPlaylist;
+	public var playlist:BorhanPlaylist;
 	[Bindable]
 	public var parts:ArrayCollection;
 	
-		public function PlaylistWrapper(playlist:KalturaPlaylist= null,part:ArrayCollection = null) 
+		public function PlaylistWrapper(playlist:BorhanPlaylist= null,part:ArrayCollection = null) 
 		{
 			this.playlist=playlist;
 			this.parts=part;

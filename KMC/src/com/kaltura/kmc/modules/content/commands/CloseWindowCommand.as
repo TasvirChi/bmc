@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.kmvc.model.KMvCModel;
+	import com.borhan.edw.model.types.WindowsStates;
+	import com.borhan.bmvc.model.BMvCModel;
 
-	public class CloseWindowCommand extends KalturaCommand
+	public class CloseWindowCommand extends BorhanCommand
 	{
 		
 		override public function execute(event:CairngormEvent):void
@@ -13,12 +13,12 @@ package com.kaltura.kmc.modules.content.commands
 			switch (_model.windowState) {
 				case WindowsStates.REPLACEMENT_ENTRY_DETAILS_WINDOW:
 					// in this case we still have another drilldown open
-					KMvCModel.removeModel();
+					BMvCModel.removeModel();
 					_model.windowState = WindowsStates.ENTRY_DETAILS_WINDOW_CLOSED_ONE;
 					break;
 				
 				case WindowsStates.ENTRY_DETAILS_WINDOW_SA:
-					KMvCModel.removeModel();
+					BMvCModel.removeModel();
 					_model.windowState = WindowsStates.NONE;
 					break;
 				
@@ -33,7 +33,7 @@ package com.kaltura.kmc.modules.content.commands
 			
 			//in this case we still have another drilldown open
 //			if (_model.windowState == WindowsStates.REPLACEMENT_ENTRY_DETAILS_WINDOW) {
-//				KMvCModel.removeModel();
+//				BMvCModel.removeModel();
 //				_model.windowState = WindowsStates.ENTRY_DETAILS_WINDOW_CLOSED_ONE;
 //			}
 //			else {

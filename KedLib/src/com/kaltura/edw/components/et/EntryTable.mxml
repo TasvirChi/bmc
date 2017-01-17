@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:DataGrid xmlns:mx="http://www.adobe.com/2006/mxml" height="100%" verticalScrollPolicy="auto" rowHeight="60"
 			 selectable="false" headerRelease="{headerReleaseHandler(event)}"
-			 creationComplete="creationCompleteHandler(event)" implements="com.kaltura.controls.table.ISelectionTable">
+			 creationComplete="creationCompleteHandler(event)" implements="com.borhan.controls.table.ISelectionTable">
 	<mx:Metadata>
 		
 		[ResourceBundle("entrytable")]
 		
 		[Event(name="orderByChanged", type="flash.events.Event")] 
 		[Event(name="openEntry", type="flash.events.Event")] 
-		[Event(name="selectionChanged", type="com.kaltura.edw.components.et.events.EntryTableEvent")] 
-		[Event(name="showDetails", type="com.kaltura.edw.components.et.events.EntryTableEvent")] 
-		[Event(name="openPreview", type="com.kaltura.edw.components.et.events.EntryTableEvent")] 
-		[Event(name="deleteEntry", type="com.kaltura.edw.components.et.events.EntryTableEvent")] 
-		[Event(name="approveEntry", type="com.kaltura.edw.components.et.events.EntryTableEvent")] 
-		[Event(name="rejectEntry", type="com.kaltura.edw.components.et.events.EntryTableEvent")] 
+		[Event(name="selectionChanged", type="com.borhan.edw.components.et.events.EntryTableEvent")] 
+		[Event(name="showDetails", type="com.borhan.edw.components.et.events.EntryTableEvent")] 
+		[Event(name="openPreview", type="com.borhan.edw.components.et.events.EntryTableEvent")] 
+		[Event(name="deleteEntry", type="com.borhan.edw.components.et.events.EntryTableEvent")] 
+		[Event(name="approveEntry", type="com.borhan.edw.components.et.events.EntryTableEvent")] 
+		[Event(name="rejectEntry", type="com.borhan.edw.components.et.events.EntryTableEvent")] 
 	</mx:Metadata>
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.controls.table.ISelectionTable;
-			import com.kaltura.controls.table.SelectionRenderer;
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.components.et.business.EntryTableActions;
-			import com.kaltura.edw.components.et.events.EntryTableEvent;
-			import com.kaltura.edw.components.et.ir.ActionsRenderer;
-			import com.kaltura.edw.components.et.ir.NameRenderer;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.kmvc.control.KMvCController;
-			import com.kaltura.types.KalturaMediaEntryOrderBy;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.borhan.controls.table.ISelectionTable;
+			import com.borhan.controls.table.SelectionRenderer;
+			import com.borhan.dataStructures.HashMap;
+			import com.borhan.edw.components.et.business.EntryTableActions;
+			import com.borhan.edw.components.et.events.EntryTableEvent;
+			import com.borhan.edw.components.et.ir.ActionsRenderer;
+			import com.borhan.edw.components.et.ir.NameRenderer;
+			import com.borhan.edw.control.events.KedEntryEvent;
+			import com.borhan.bmvc.control.BMvCController;
+			import com.borhan.types.BorhanMediaEntryOrderBy;
+			import com.borhan.vo.BorhanBaseEntry;
 			
 			import mx.collections.ArrayCollection;
 			import mx.collections.ICollectionView;
@@ -75,7 +75,7 @@
 			/**
 			 * controller for communication with application model
 			 * */
-			public var controller:KMvCController;
+			public var controller:BMvCController;
 
 
 			[Bindable]
@@ -155,7 +155,7 @@
 			public var showModerationActions:Boolean;
 
 
-			public var kalturaSorting:Boolean = true;
+			public var borhanSorting:Boolean = true;
 
 			/**
 			 * show/hide the links for the entries names
@@ -215,11 +215,11 @@
 			 * then set them as selected items
 			 * */
 			protected function setSelectedItems(items:Array):void {
-				var entry:KalturaBaseEntry;
+				var entry:BorhanBaseEntry;
 				var si:Array = super.selectedItems; // currently selected items
 				// mark all currently selected items as not selected
 				for (var i:int = si.length - 1; i >= 0; i--) {
-					entry = si[i] as KalturaBaseEntry;
+					entry = si[i] as BorhanBaseEntry;
 					entry[_selectionAttribute] = false;
 					entry.dispatchEvent(PropertyChangeEvent.createUpdateEvent(entry, _selectionAttribute, true, false));
 				}
@@ -229,7 +229,7 @@
 				else {
 					si = [];
 					// find selectedItems in the DP and add them to the selected list
-					for each (var nkbe:KalturaBaseEntry in items) {
+					for each (var nkbe:BorhanBaseEntry in items) {
 						for each (entry in dataProvider) {
 							if (nkbe === entry) {
 								// add the item that was in the dataprovider to start with
@@ -265,14 +265,14 @@
 			private var _sortDirection:String = "DESC";
 
 
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 
 
 			[Bindable]
 			/**
 			 * the latest selected entry in the table
 			 * */
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
 
@@ -280,7 +280,7 @@
 			/**
 			 * @private
 			 */
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:BorhanBaseEntry):void {
 				_selectedEntry = value;
 				markSelectedEntry(false);
 			}
@@ -334,9 +334,9 @@
 					// gotta find the correct entry by its id, because these are new objects.
 					var n:int = dataProvider.length;
 					var entries:Array = (dataProvider as ArrayCollection).source;
-					var entry:KalturaBaseEntry;
+					var entry:BorhanBaseEntry;
 					for (var i:int = 0; i < n; i++) {
-						entry = entries[i] as KalturaBaseEntry;
+						entry = entries[i] as BorhanBaseEntry;
 						if (entry.id == selectedEntry.id) {
 							selectedItems = [entry];
 							break;
@@ -353,17 +353,17 @@
 
 
 			public function openEditEntry(e:Object):void {
-				var entry:KalturaBaseEntry;
+				var entry:BorhanBaseEntry;
 
 				if (!showLinks) {
 					return;
 				}
 
-				if (e is KalturaBaseEntry) {
-					entry = e as KalturaBaseEntry;
+				if (e is BorhanBaseEntry) {
+					entry = e as BorhanBaseEntry;
 				}
 				else if (e is Event) {
-					entry = e.target.data as KalturaBaseEntry;
+					entry = e.target.data as BorhanBaseEntry;
 				}
 
 				if (entry) {
@@ -439,31 +439,31 @@
 					}
 				
 					var sortDir:Boolean = _columnsSortMap.getValue(headerText) as Boolean;
-					if (kalturaSorting) {
+					if (borhanSorting) {
 						switch (event.itemRenderer.data.headerText) {
 							case resourceManager.getString('entrytable', 'createAt'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.CREATED_AT_ASC : KalturaMediaEntryOrderBy.CREATED_AT_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.CREATED_AT_ASC : BorhanMediaEntryOrderBy.CREATED_AT_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'name'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.NAME_ASC : KalturaMediaEntryOrderBy.NAME_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.NAME_ASC : BorhanMediaEntryOrderBy.NAME_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'playerLoads'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.VIEWS_ASC : KalturaMediaEntryOrderBy.VIEWS_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.VIEWS_ASC : BorhanMediaEntryOrderBy.VIEWS_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'plays'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.PLAYS_ASC : KalturaMediaEntryOrderBy.PLAYS_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.PLAYS_ASC : BorhanMediaEntryOrderBy.PLAYS_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'type'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.MEDIA_TYPE_ASC : KalturaMediaEntryOrderBy.MEDIA_TYPE_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.MEDIA_TYPE_ASC : BorhanMediaEntryOrderBy.MEDIA_TYPE_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'flags'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.MODERATION_COUNT_ASC : KalturaMediaEntryOrderBy.MODERATION_COUNT_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.MODERATION_COUNT_ASC : BorhanMediaEntryOrderBy.MODERATION_COUNT_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'rating'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.RANK_ASC : KalturaMediaEntryOrderBy.RANK_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.RANK_ASC : BorhanMediaEntryOrderBy.RANK_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'duration'):
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.DURATION_ASC : KalturaMediaEntryOrderBy.DURATION_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.DURATION_ASC : BorhanMediaEntryOrderBy.DURATION_DESC;
 								break;
 							default:
 								Alert.show(resourceManager.getString('entrytable', 'cannotOrderByIt', [event.itemRenderer.data.headerText]), resourceManager.getString('entrydetails', 'cannotOrderByItTitle'));
@@ -486,35 +486,35 @@
 						switch (event.itemRenderer.data.headerText) {
 							case resourceManager.getString('entrytable', 'createAt'):
 								att = "createdAt";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.CREATED_AT_ASC : KalturaMediaEntryOrderBy.CREATED_AT_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.CREATED_AT_ASC : BorhanMediaEntryOrderBy.CREATED_AT_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'name'):
 								att = "name";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.NAME_ASC : KalturaMediaEntryOrderBy.NAME_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.NAME_ASC : BorhanMediaEntryOrderBy.NAME_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'playerLoads'):
 								att = "views";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.VIEWS_ASC : KalturaMediaEntryOrderBy.VIEWS_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.VIEWS_ASC : BorhanMediaEntryOrderBy.VIEWS_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'plays'):
 								att = "plays";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.PLAYS_ASC : KalturaMediaEntryOrderBy.PLAYS_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.PLAYS_ASC : BorhanMediaEntryOrderBy.PLAYS_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'type'):
 								att = "mediaType";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.MEDIA_TYPE_ASC : KalturaMediaEntryOrderBy.MEDIA_TYPE_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.MEDIA_TYPE_ASC : BorhanMediaEntryOrderBy.MEDIA_TYPE_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'flags'):
 								att = "moderationCount";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.MODERATION_COUNT_ASC : KalturaMediaEntryOrderBy.MODERATION_COUNT_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.MODERATION_COUNT_ASC : BorhanMediaEntryOrderBy.MODERATION_COUNT_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'rating'):
 								att = "rank";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.RANK_ASC : KalturaMediaEntryOrderBy.RANK_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.RANK_ASC : BorhanMediaEntryOrderBy.RANK_DESC;
 								break;
 							case resourceManager.getString('entrytable', 'duration'):
 								att = "duration";
-								_orderBy = sortDir ? KalturaMediaEntryOrderBy.DURATION_ASC : KalturaMediaEntryOrderBy.DURATION_DESC;
+								_orderBy = sortDir ? BorhanMediaEntryOrderBy.DURATION_ASC : BorhanMediaEntryOrderBy.DURATION_DESC;
 								break;
 							default:
 								Alert.show(resourceManager.getString('entrytable', 'cannotOrderByIt', [event.itemRenderer.data.headerText]), resourceManager.getString('entrydetails', 'cannotOrderByItTitle'));
@@ -550,7 +550,7 @@
 			 * */
 			private function approveEntry(event:Event):void {
 				var e:EntryTableEvent = new EntryTableEvent(EntryTableEvent.APPROVE_ENTRY);
-				e.data = event.target.data as KalturaBaseEntry;
+				e.data = event.target.data as BorhanBaseEntry;
 				dispatchEvent(e);
 			}
 			
@@ -559,7 +559,7 @@
 			 * */
 			private function rejectEntry(event:Event):void {
 				var e:EntryTableEvent = new EntryTableEvent(EntryTableEvent.REJECT_ENTRY);
-				e.data = event.target.data as KalturaBaseEntry;
+				e.data = event.target.data as BorhanBaseEntry;
 				dispatchEvent(e);
 			}
 
@@ -568,25 +568,25 @@
 			 * */
 			private function deleteEntry(event:Event):void {
 				var e:EntryTableEvent = new EntryTableEvent(EntryTableEvent.DELETE_ENTRY);
-				e.data = event.target.data as KalturaBaseEntry;
+				e.data = event.target.data as BorhanBaseEntry;
 				dispatchEvent(e);
 			}
 
 
 			/**
 			 * request opening preview & embed popup for an entry.
-			 * @param item	either a KalturaBaseEntry or an event whose target.data is a KalturaBaseEntry.
+			 * @param item	either a BorhanBaseEntry or an event whose target.data is a BorhanBaseEntry.
 			 *
 			 * @internal
 			 * the event is probably from the preview IR of the table and the other option is left for backwards compat.
 			 * */
 			public function preview(item:Object):void {
-				var entry:KalturaBaseEntry;
+				var entry:BorhanBaseEntry;
 				if (item is Event) {
-					entry = item.target.data as KalturaBaseEntry;
+					entry = item.target.data as BorhanBaseEntry;
 				}
 				else {
-					entry = item as KalturaBaseEntry;
+					entry = item as BorhanBaseEntry;
 				}
 
 				var e:EntryTableEvent = new EntryTableEvent(EntryTableEvent.OPEN_PREVIEW);
@@ -630,7 +630,7 @@
 			 * */
 			protected function handleSelectionChanged(e:Event):void {
 				// set value on data
-				var entry:KalturaBaseEntry = e.target.data as KalturaBaseEntry;
+				var entry:BorhanBaseEntry = e.target.data as BorhanBaseEntry;
 				if (entry) {
 					// the click was inside the table
 					var oldVal:Boolean = entry[_selectionAttribute];
@@ -641,7 +641,7 @@
 					if (oldVal) {
 						// the entry was in the selectedItems array, remove it
 						for (var i:int = 0; i < si.length; i++) {
-							if ((si[i] as KalturaBaseEntry) === entry) {
+							if ((si[i] as BorhanBaseEntry) === entry) {
 								si.splice(i, 1);
 								break;
 							}
@@ -680,7 +680,7 @@
 
 
 			/**
-			 * table ordering, optional values listed in <code>KalturaMediaEntryOrderBy</code>
+			 * table ordering, optional values listed in <code>BorhanMediaEntryOrderBy</code>
 			 * */
 			public function get orderBy():String {
 				return _orderBy;
@@ -716,78 +716,78 @@
 
 	<mx:columns>
 		<mx:DataGridColumn width="32" minWidth="32" id="selectionColumn" visible="{showSelection}"
-						   headerRenderer="com.kaltura.controls.table.SelectionRenderer"
-						   itemRenderer="com.kaltura.controls.table.SelectionRenderer"/>
+						   headerRenderer="com.borhan.controls.table.SelectionRenderer"
+						   itemRenderer="com.borhan.controls.table.SelectionRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('entrytable', 'thumbnail')}" width="72" minWidth="54"
-						   itemRenderer="com.kaltura.edw.components.et.ir.ThumbnailRenderer" visible="{showThumbnails}"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.ThumbnailRenderer" visible="{showThumbnails}"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="id" width="90"
 						   headerText="{resourceManager.getString('entrytable', 'idHeader')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.GeneralRenderer"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="name"
 						   headerText="{resourceManager.getString('entrytable', 'name')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.NameRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.NameRenderer"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="80"
 						   headerText="{resourceManager.getString('entrytable', 'playlistType')}"
 						   labelFunction="{EntryTableLabelFunctions.getPlaylistMediaTypes}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.GeneralRenderer"/>
 
 		<mx:DataGridColumn width="40" headerText="{resourceManager.getString('entrytable', 'type')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.MediaTypeRenderer"
+						   itemRenderer="com.borhan.edw.components.et.ir.MediaTypeRenderer"
 						   headerStyleName="centerTableColumnHeader"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="views" width="80"
 						   headerText="{resourceManager.getString('entrytable', 'playerLoads')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.DataGridColumnLabel"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.DataGridColumnLabel"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="plays" width="55"
 						   headerText="{resourceManager.getString('entrytable', 'plays')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.DataGridColumnLabel"
+						   itemRenderer="com.borhan.edw.components.et.ir.DataGridColumnLabel"
 						   headerStyleName="centerTableColumnHeader"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="rank" width="50"
 						   headerText="{resourceManager.getString('entrytable', 'rating')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.DataGridColumnLabel"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.DataGridColumnLabel"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="userId" width="90"
 						   headerText="{resourceManager.getString('entrytable', 'creator')}" showDataTips="true"
-						   itemRenderer="com.kaltura.edw.components.et.ir.DataGridColumnLabel"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.DataGridColumnLabel"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="110"
 						   headerText="{resourceManager.getString('entrytable', 'createAt')}"
 						   labelFunction="{EntryTableLabelFunctions.formatDate}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.GeneralRenderer"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="75"
 						   headerText="{resourceManager.getString('entrytable', 'intime')}"
 						   labelFunction="{EntryTableLabelFunctions.formatDate}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.GeneralRenderer"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="75"
 						   headerText="{resourceManager.getString('entrytable', 'duration')}"
 						   labelFunction="{EntryTableLabelFunctions.getTimeFormat}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.GeneralRenderer"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" dataField="moderationCount" width="40"
 						   headerText="{resourceManager.getString('entrytable', 'flags')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.DataGridColumnLabel"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.DataGridColumnLabel"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="110"
 						   headerText="{resourceManager.getString('entrytable', 'status')}"
 						   labelFunction="{EntryTableLabelFunctions.getStatus}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.GeneralRenderer"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="110"
 						   headerText="{resourceManager.getString('entrytable', 'moderationStatus')}"
 						   labelFunction="{EntryTableLabelFunctions.getStatusForModeration}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.GeneralRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.GeneralRenderer"/>
 
 		<mx:DataGridColumn paddingLeft="4" paddingRight="4" width="140"
 						   headerText="{resourceManager.getString('entrytable', 'actions')}"
-						   itemRenderer="com.kaltura.edw.components.et.ir.ActionsRenderer"/>
+						   itemRenderer="com.borhan.edw.components.et.ir.ActionsRenderer"/>
 
 	</mx:columns>
 </mx:DataGrid>

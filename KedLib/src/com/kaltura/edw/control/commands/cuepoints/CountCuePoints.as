@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.cuepoints
+package com.borhan.edw.control.commands.cuepoints
 {
-	import com.kaltura.commands.cuePoint.CuePointCount;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.CuePointEvent;
-	import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaCuePointFilter;
+	import com.borhan.commands.cuePoint.CuePointCount;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.CuePointEvent;
+	import com.borhan.edw.model.datapacks.CuePointsDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanCuePointFilter;
 	
 	public class CountCuePoints extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();		
 			var e : CuePointEvent = event as CuePointEvent;
-			var f:KalturaCuePointFilter = new KalturaCuePointFilter();
+			var f:BorhanCuePointFilter = new BorhanCuePointFilter();
 			f.entryIdEqual = e.data;
 			var cnt:CuePointCount = new CuePointCount(f);
 			
-			cnt.addEventListener(KalturaEvent.COMPLETE, result);
-			cnt.addEventListener(KalturaEvent.FAILED, fault);
+			cnt.addEventListener(BorhanEvent.COMPLETE, result);
+			cnt.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(cnt);	 
 		}

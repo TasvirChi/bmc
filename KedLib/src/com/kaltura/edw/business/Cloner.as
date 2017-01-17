@@ -1,13 +1,13 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaLiveStreamAdminEntry;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaMixEntry;
-	import com.kaltura.vo.KalturaPlayableEntry;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.borhan.utils.ObjectUtil;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanLiveStreamAdminEntry;
+	import com.borhan.vo.BorhanLiveStreamEntry;
+	import com.borhan.vo.BorhanMediaEntry;
+	import com.borhan.vo.BorhanMixEntry;
+	import com.borhan.vo.BorhanPlayableEntry;
+	import com.borhan.vo.BorhanPlaylist;
 	
 	public class Cloner
 	{
@@ -18,31 +18,31 @@ package com.kaltura.edw.business
 		/**
 		 * clone according to entry type
 		 * */
-		public static function cloneByEntryType(entry:KalturaBaseEntry):KalturaBaseEntry {
-			var copy:KalturaBaseEntry;
+		public static function cloneByEntryType(entry:BorhanBaseEntry):BorhanBaseEntry {
+			var copy:BorhanBaseEntry;
 			
-			if (entry is KalturaPlaylist) {
-				copy = cloneKalturaPlaylist(entry as KalturaPlaylist);
+			if (entry is BorhanPlaylist) {
+				copy = cloneBorhanPlaylist(entry as BorhanPlaylist);
 			}
-			else if (entry is KalturaMixEntry) {
-				copy = cloneKalturaMixEntry(entry as KalturaMixEntry);
+			else if (entry is BorhanMixEntry) {
+				copy = cloneBorhanMixEntry(entry as BorhanMixEntry);
 			}
-			else if (entry is KalturaLiveStreamEntry || entry is KalturaLiveStreamAdminEntry) {
-				copy = cloneKalturaStreamAdminEntry(entry as KalturaLiveStreamEntry);
+			else if (entry is BorhanLiveStreamEntry || entry is BorhanLiveStreamAdminEntry) {
+				copy = cloneBorhanStreamAdminEntry(entry as BorhanLiveStreamEntry);
 			}
-			else if (entry is KalturaMediaEntry) {
-				copy = cloneKalturaMediaEntry(entry as KalturaMediaEntry);
+			else if (entry is BorhanMediaEntry) {
+				copy = cloneBorhanMediaEntry(entry as BorhanMediaEntry);
 			}
 			return copy;
 		}
 		
 		
 		/**
-		 * Return a new KalturaBaseEntry object with same attributes as source attributes
+		 * Return a new BorhanBaseEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaBaseEntry(source:KalturaBaseEntry):KalturaBaseEntry
+		public static function cloneBorhanBaseEntry(source:BorhanBaseEntry):BorhanBaseEntry
 		{
-			var be:KalturaBaseEntry = new KalturaBaseEntry();
+			var be:BorhanBaseEntry = new BorhanBaseEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				be[atts[i]] = source[atts[i]];
@@ -52,11 +52,11 @@ package com.kaltura.edw.business
 		}
 		
 		/**
-		 * Return a new KalturaPlayableEntry object with same attributes as source attributes
+		 * Return a new BorhanPlayableEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaPlayableEntry(source:KalturaPlayableEntry):KalturaPlayableEntry
+		public static function cloneBorhanPlayableEntry(source:BorhanPlayableEntry):BorhanPlayableEntry
 		{
-			var kpe:KalturaPlayableEntry = new KalturaPlayableEntry();
+			var kpe:BorhanPlayableEntry = new BorhanPlayableEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				kpe[atts[i]] = source[atts[i]];
@@ -66,11 +66,11 @@ package com.kaltura.edw.business
 		
 		
 		/**
-		 * Return a new KalturaMediaEntry object with same attributes as source attributes
+		 * Return a new BorhanMediaEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaMediaEntry(source:KalturaMediaEntry):KalturaMediaEntry
+		public static function cloneBorhanMediaEntry(source:BorhanMediaEntry):BorhanMediaEntry
 		{
-			var me:KalturaMediaEntry = new KalturaMediaEntry();
+			var me:BorhanMediaEntry = new BorhanMediaEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				me[atts[i]] = source[atts[i]];
@@ -79,11 +79,11 @@ package com.kaltura.edw.business
 		}
 
 		/**
-		 * Return a new KalturaPlaylist object with same attributes as source attributes
+		 * Return a new BorhanPlaylist object with same attributes as source attributes
 		 */
-		public static function cloneKalturaPlaylist(source:KalturaPlaylist):KalturaPlaylist
+		public static function cloneBorhanPlaylist(source:BorhanPlaylist):BorhanPlaylist
 		{
-			var pl:KalturaPlaylist = new KalturaPlaylist();
+			var pl:BorhanPlaylist = new BorhanPlaylist();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				pl[atts[i]] = source[atts[i]];
@@ -91,11 +91,11 @@ package com.kaltura.edw.business
 			return pl;
 		}
 		/**
-		 * Return a new KalturaMixEntry object with same attributes as source attributes
+		 * Return a new BorhanMixEntry object with same attributes as source attributes
 		 */
-		public static function cloneKalturaMixEntry(source:KalturaMixEntry):KalturaMixEntry
+		public static function cloneBorhanMixEntry(source:BorhanMixEntry):BorhanMixEntry
 		{
-			var mix:KalturaMixEntry = new KalturaMixEntry();
+			var mix:BorhanMixEntry = new BorhanMixEntry();
 			
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
@@ -105,9 +105,9 @@ package com.kaltura.edw.business
 			return mix;
 		}
 		
-		public static function cloneKalturaStreamAdminEntry(source:KalturaLiveStreamEntry):KalturaLiveStreamEntry
+		public static function cloneBorhanStreamAdminEntry(source:BorhanLiveStreamEntry):BorhanLiveStreamEntry
 		{
-			var klsae:KalturaLiveStreamEntry = new KalturaLiveStreamEntry();
+			var klsae:BorhanLiveStreamEntry = new BorhanLiveStreamEntry();
 			var atts:Array = ObjectUtil.getObjectAllKeys(source);
 			for (var i:int = 0; i< atts.length; i++) {
 				klsae[atts[i]] = source[atts[i]];

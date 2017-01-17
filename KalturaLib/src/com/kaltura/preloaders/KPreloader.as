@@ -1,6 +1,6 @@
-package com.kaltura.preloaders
+package com.borhan.preloaders
 {
-	import com.kaltura.wrapper.IFlexWrapper;
+	import com.borhan.wrapper.IFlexWrapper;
 
 	import flash.display.DisplayObject;
 	import flash.events.Event;

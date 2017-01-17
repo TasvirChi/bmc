@@ -2,17 +2,17 @@
 <!--- 
 	Upload Panel section of Dashboard
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="dashboardBox" xmlns:controls="com.kaltura.controls.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="dashboardBox" xmlns:controls="com.borhan.controls.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.dashboard.DashboardManager;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.events.BmcNavigationEvent;
+			import com.borhan.bmc.modules.dashboard.DashboardManager;
+			import com.borhan.types.BorhanStatsBmcEventType;
 			
 			import modules.Dashboard;
 			
@@ -25,28 +25,28 @@
 			private function doBulkUpload():void
 			{
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_IMPORT_CONTENT, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_IMPORT_CONTENT, "DashBoard>Import Content");
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,BorhanStatsBmcEventType.DASHBOARD_IMPORT_CONTENT, "DashBoard>Import Content");
 				// show content>upload tab
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'add', '', {kmcFunction:"addCode.addMediaBulk"}));
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, 'add', '', {bmcFunction:"addCode.addMediaBulk"}));
 			}
 			
 			private function doFileUpload():void
 			{
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_UPLOAD_CONTENT, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_UPDATE_CONTENT, "DashBoard>Upload Content");
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,BorhanStatsBmcEventType.DASHBOARD_UPDATE_CONTENT, "DashBoard>Upload Content");
 				// show content>upload tab
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'add', '', {kmcFunction:"addCode.addUpload"}));
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, 'add', '', {bmcFunction:"addCode.addUpload"}));
 			}
 
 			protected function dnldSamples(event:MouseEvent):void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_DNLD_SAMPLES, GoogleAnalyticsConsts.DASHBOARD);
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'add', '', {kmcFunction:"addCode.downloadSampleFiles"}));
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, 'add', '', {bmcFunction:"addCode.downloadSampleFiles"}));
 			}
 
 
 			private function onHelp(event:MouseEvent):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_upload_menu"));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, "section_upload_menu"));
 			}
 
 		]]>

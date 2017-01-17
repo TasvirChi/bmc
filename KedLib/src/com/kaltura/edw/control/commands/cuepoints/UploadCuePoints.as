@@ -1,20 +1,20 @@
-package com.kaltura.edw.control.commands.cuepoints
+package com.borhan.edw.control.commands.cuepoints
 {
-	import com.kaltura.commands.cuePoint.CuePointAddFromBulk;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.commands.cuePoint.CuePointAddFromBulk;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.CuePointsDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	public class UploadCuePoints extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();		
 			var cnt:CuePointAddFromBulk = new CuePointAddFromBulk(event.data);
 			
-			cnt.addEventListener(KalturaEvent.COMPLETE, result);
-			cnt.addEventListener(KalturaEvent.FAILED, fault);
+			cnt.addEventListener(BorhanEvent.COMPLETE, result);
+			cnt.addEventListener(BorhanEvent.FAILED, fault);
 			cnt.queued = false;
 			
 			(_model.getDataPack(CuePointsDataPack) as CuePointsDataPack).reloadCuePoints = false;

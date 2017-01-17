@@ -1,7 +1,7 @@
-package com.kaltura.kmc.business.module {
-	import com.kaltura.kmc.business.KmcModuleLoader;
-	import com.kaltura.kmc.events.KmcModuleEvent;
-	import com.kaltura.kmc.modules.KmcModule;
+package com.borhan.bmc.business.module {
+	import com.borhan.bmc.business.BmcModuleLoader;
+	import com.borhan.bmc.events.BmcModuleEvent;
+	import com.borhan.bmc.modules.BmcModule;
 	
 	import flash.system.ApplicationDomain;
 	
@@ -13,43 +13,43 @@ package com.kaltura.kmc.business.module {
 	import org.flexunit.Assert;
 	import org.flexunit.async.Async;
 
-	public class TestKmcModuleLoader {
-		private var _kmcModuleLoader:KmcModuleLoader;
+	public class TestBmcModuleLoader {
+		private var _bmcModuleLoader:BmcModuleLoader;
 
 
 		[Before]
 		public function setUp():void {
-			_kmcModuleLoader = new KmcModuleLoader();
+			_bmcModuleLoader = new BmcModuleLoader();
 		}
 
 
 		[After]
 		public function tearDown():void {
-			_kmcModuleLoader = null;
+			_bmcModuleLoader = null;
 		}
 
 
 		[Test(async, description="if module loaded, say so")]
 		public function testOnModuleReady():void {
-			KmcModule;HBox;ComboBox;
+			BmcModule;HBox;ComboBox;
 			var asyncHandler:Function = Async.asyncHandler(this, handleSuccess, 5000, null, handleTimeout);
-			_kmcModuleLoader.addEventListener(KmcModuleEvent.MODULE_LOADED, asyncHandler, false, 0, true);
-			var ml:ModuleLoader = _kmcModuleLoader.loadKmcModule("bin-debug/modules/Dashboard.swf", "dashboard");
+			_bmcModuleLoader.addEventListener(BmcModuleEvent.MODULE_LOADED, asyncHandler, false, 0, true);
+			var ml:ModuleLoader = _bmcModuleLoader.loadBmcModule("bin-debug/modules/Dashboard.swf", "dashboard");
 			ml.loadModule();
 		}
 
 
 		[Test(async, description="if error loading module, catch the error")]
 		public function testOnModuleError():void {
-			KmcModule; 
+			BmcModule; 
 			var asyncHandler:Function = Async.asyncHandler(this, handleSuccess, 10000, null, handleTimeout);
-			_kmcModuleLoader.addEventListener(KmcModuleEvent.MODULE_LOAD_ERROR, asyncHandler, false, 0, true);
-			var ml:ModuleLoader = _kmcModuleLoader.loadKmcModule("bin-debug/modules/Dashboard1.swf", "dashboard");
+			_bmcModuleLoader.addEventListener(BmcModuleEvent.MODULE_LOAD_ERROR, asyncHandler, false, 0, true);
+			var ml:ModuleLoader = _bmcModuleLoader.loadBmcModule("bin-debug/modules/Dashboard1.swf", "dashboard");
 			ml.loadModule();
 		}
 
 
-		protected function handleSuccess(event:KmcModuleEvent, passThroughData:Object = null):void {
+		protected function handleSuccess(event:BmcModuleEvent, passThroughData:Object = null):void {
 			trace(event.type, event.errorText);
 		}
 

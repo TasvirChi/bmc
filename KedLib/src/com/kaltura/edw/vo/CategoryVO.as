@@ -1,7 +1,7 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.utils.ObjectUtil;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -12,7 +12,7 @@ package com.kaltura.edw.vo
 		[Bindable]
 		public var name:String;
 		
-		public var category:KalturaCategory;
+		public var category:BorhanCategory;
 		
 		
 		[Bindable]
@@ -22,11 +22,11 @@ package com.kaltura.edw.vo
 		public var enabled:Boolean = true;
 		
 		
-		[ArrayElementType("com.kaltura.edw.vo.CategoryVO")]
+		[ArrayElementType("com.borhan.edw.vo.CategoryVO")]
 		public var children:ArrayCollection;
 		
 		
-		public function CategoryVO(id:Number, name:String, category:KalturaCategory)
+		public function CategoryVO(id:Number, name:String, category:BorhanCategory)
 		{
 			this.id = id;
 			this.name = name;
@@ -38,7 +38,7 @@ package com.kaltura.edw.vo
 		}
 		
 		public function clone():CategoryVO {
-			var clonedVo:CategoryVO = new CategoryVO(id, name, new KalturaCategory());
+			var clonedVo:CategoryVO = new CategoryVO(id, name, new BorhanCategory());
 			ObjectUtil.copyObject(this.category, clonedVo.category);
 			return clonedVo;
 		}

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ir:FlavorAssetRendererBase xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
 								   horizontalAlign="center" verticalAlign="middle"
-								   xmlns:renderers="com.kaltura.kmc.modules.content.view.window.entrydetails.renderers.*" 
-								   xmlns:ir="com.kaltura.edw.view.ir.*">
+								   xmlns:renderers="com.borhan.bmc.modules.content.view.window.entrydetails.renderers.*" 
+								   xmlns:ir="com.borhan.edw.view.ir.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaWidevineFlavorAsset;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.view.FlavorsTable;
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
-			import com.kaltura.types.KalturaFlavorAssetStatus;
+			import com.borhan.vo.BorhanWidevineFlavorAsset;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.edw.view.FlavorsTable;
+			import com.borhan.edw.vo.FlavorAssetWithParamsVO;
+			import com.borhan.types.BorhanFlavorAssetStatus;
 			
 			import mx.controls.Button;
 
@@ -78,7 +78,7 @@
 
 			private function setActions():void {
 				_actionArr = new Array();
-				if (_flavorWithParams.kalturaFlavorAssetWithParams.flavorAsset == null) {
+				if (_flavorWithParams.borhanFlavorAssetWithParams.flavorAsset == null) {
 					// no asset, only params
 					if (_flavorWithParams.hasOriginal) {
 						this.currentState = null;
@@ -94,14 +94,14 @@
 					}
 				}
 				else {
-					if (_flavorWithParams.kalturaFlavorAssetWithParams.flavorAsset.isOriginal) {
+					if (_flavorWithParams.borhanFlavorAssetWithParams.flavorAsset.isOriginal) {
 						// source flavor asset
-						var status:int = _flavorWithParams.kalturaFlavorAssetWithParams.flavorAsset.status;
-						if ((status == KalturaFlavorAssetStatus.CONVERTING)
-							|| (status == KalturaFlavorAssetStatus.WAIT_FOR_CONVERT)
-							|| (status == KalturaFlavorAssetStatus.QUEUED)
-							|| (status == KalturaFlavorAssetStatus.IMPORTING)
-							|| (status == KalturaFlavorAssetStatus.VALIDATING)) {
+						var status:int = _flavorWithParams.borhanFlavorAssetWithParams.flavorAsset.status;
+						if ((status == BorhanFlavorAssetStatus.CONVERTING)
+							|| (status == BorhanFlavorAssetStatus.WAIT_FOR_CONVERT)
+							|| (status == BorhanFlavorAssetStatus.QUEUED)
+							|| (status == BorhanFlavorAssetStatus.IMPORTING)
+							|| (status == BorhanFlavorAssetStatus.VALIDATING)) {
 							this.currentState = "convertingState";
 						}
 						else {
@@ -109,23 +109,23 @@
 							_actionArr.push(resourceManager.getString('cms', 'deleteActionLabel'));
 							_actionArr.push(resourceManager.getString('cms', 'downloadActionLabel'));
 							addIngestionOptions();
-							if (_flavorWithParams.kalturaFlavorAssetWithParams.flavorAsset.isWeb) {
+							if (_flavorWithParams.borhanFlavorAssetWithParams.flavorAsset.isWeb) {
 								_actionArr.push(resourceManager.getString('cms', 'previewActionLabel'));
 								_showPreviewBtn = true;
 							}
 						}
 					}
 					else {
-						switch (_flavorWithParams.kalturaFlavorAssetWithParams.flavorAsset.status) {
-							case KalturaFlavorAssetStatus.CONVERTING:
-							case KalturaFlavorAssetStatus.WAIT_FOR_CONVERT:
-							case KalturaFlavorAssetStatus.QUEUED:
-							case KalturaFlavorAssetStatus.IMPORTING:
-							case KalturaFlavorAssetStatus.VALIDATING:  {
+						switch (_flavorWithParams.borhanFlavorAssetWithParams.flavorAsset.status) {
+							case BorhanFlavorAssetStatus.CONVERTING:
+							case BorhanFlavorAssetStatus.WAIT_FOR_CONVERT:
+							case BorhanFlavorAssetStatus.QUEUED:
+							case BorhanFlavorAssetStatus.IMPORTING:
+							case BorhanFlavorAssetStatus.VALIDATING:  {
 								this.currentState = "convertingState";
 								break;
 							}
-							case KalturaFlavorAssetStatus.DELETED:  {
+							case BorhanFlavorAssetStatus.DELETED:  {
 								if (_flavorWithParams.hasOriginal) {
 									this.currentState = null;
 									_actionArr.push(resourceManager.getString('cms', 'convertActionLabel'));
@@ -140,8 +140,8 @@
 								}
 								break;
 							}
-							case KalturaFlavorAssetStatus.ERROR:
-							case KalturaFlavorAssetStatus.NOT_APPLICABLE:  {
+							case BorhanFlavorAssetStatus.ERROR:
+							case BorhanFlavorAssetStatus.NOT_APPLICABLE:  {
 								if (_flavorWithParams.hasOriginal) {
 									this.currentState = null;
 									_actionArr.push(resourceManager.getString('cms', 'reconvertActionLabel'));
@@ -157,20 +157,20 @@
 								break;
 							}
 
-							case KalturaFlavorAssetStatus.EXPORTING:  
-							case KalturaFlavorAssetStatus.READY:  {
+							case BorhanFlavorAssetStatus.EXPORTING:  
+							case BorhanFlavorAssetStatus.READY:  {
 								this.currentState = null;
 								_actionArr.push(resourceManager.getString('cms', 'deleteActionLabel'));
 								_actionArr.push(resourceManager.getString('cms', 'downloadActionLabel'));
 								addIngestionOptions();
-								if (_flavorWithParams.kalturaFlavorAssetWithParams.flavorAsset.isWeb) {
+								if (_flavorWithParams.borhanFlavorAssetWithParams.flavorAsset.isWeb) {
 									_actionArr.push(resourceManager.getString('cms', 'previewActionLabel'));
 									_showPreviewBtn = true;
 								}
 								if (_flavorWithParams.hasOriginal) {
 									_actionArr.push(resourceManager.getString('cms', 'reconvertActionLabel'));
 								}
-								if (_flavorWithParams.kalturaFlavorAssetWithParams.flavorAsset is KalturaWidevineFlavorAsset) {
+								if (_flavorWithParams.borhanFlavorAssetWithParams.flavorAsset is BorhanWidevineFlavorAsset) {
 									_actionArr.push(resourceManager.getString('cms', 'wvDetailsActionLabel'));
 								}
 								

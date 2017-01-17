@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.syndicationFeed.SyndicationFeedDelete;
-	import com.kaltura.events.KalturaEvent;
+	import com.borhan.bmc.modules.content.events.ExternalSyndicationEvent;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.syndicationFeed.SyndicationFeedDelete;
+	import com.borhan.events.BorhanEvent;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 	
-	public class DeleteExternalSyndicationCommand extends KalturaCommand implements ICommand, IResponder
+	public class DeleteExternalSyndicationCommand extends BorhanCommand implements ICommand, IResponder
 	{
 			
 		override public function execute(event:CairngormEvent):void
@@ -24,8 +24,8 @@ package com.kaltura.kmc.modules.content.commands
 				mr.addAction(deleteFeed);
 			}
 					
-            mr.addEventListener(KalturaEvent.COMPLETE, result);
-            mr.addEventListener(KalturaEvent.FAILED, fault);
+            mr.addEventListener(BorhanEvent.COMPLETE, result);
+            mr.addEventListener(BorhanEvent.FAILED, fault);
             _model.context.kc.post(mr); 
 		}
 		

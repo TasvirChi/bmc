@@ -1,5 +1,5 @@
-package com.kaltura.kmc.modules.analytics.vo {
-	import com.kaltura.kmc.modules.analytics.utils.TimeConsts;
+package com.borhan.bmc.modules.analytics.vo {
+	import com.borhan.bmc.modules.analytics.utils.TimeConsts;
 	
 	import flash.events.EventDispatcher;
 	
@@ -34,7 +34,7 @@ package com.kaltura.kmc.modules.analytics.vo {
 		
 		/**
 		 * days / months
-		 * @see com.kaltura.types.KalturaReportInterval 
+		 * @see com.borhan.types.BorhanReportInterval 
 		 */
 		public var interval:String;
 

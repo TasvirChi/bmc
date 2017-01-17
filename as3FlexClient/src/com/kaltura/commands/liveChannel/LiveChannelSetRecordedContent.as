@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,26 +25,26 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.liveChannel
+package com.borhan.commands.liveChannel
 {
-		import com.kaltura.vo.KalturaDataCenterContentResource;
-	import com.kaltura.delegates.liveChannel.LiveChannelSetRecordedContentDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanDataCenterContentResource;
+	import com.borhan.delegates.liveChannel.LiveChannelSetRecordedContentDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* Sey recorded video to live entry
 	**/
-	public class LiveChannelSetRecordedContent extends KalturaCall
+	public class LiveChannelSetRecordedContent extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param entryId String
 		* @param mediaServerIndex String
-		* @param resource KalturaDataCenterContentResource
+		* @param resource BorhanDataCenterContentResource
 		* @param duration Number
 		**/
-		public function LiveChannelSetRecordedContent( entryId : String,mediaServerIndex : String,resource : KalturaDataCenterContentResource,duration : Number )
+		public function LiveChannelSetRecordedContent( entryId : String,mediaServerIndex : String,resource : BorhanDataCenterContentResource,duration : Number )
 		{
 			service= 'livechannel';
 			action= 'setRecordedContent';
@@ -56,7 +56,7 @@ package com.kaltura.commands.liveChannel
 			valueArr.push(entryId);
 			keyArr.push('mediaServerIndex');
 			valueArr.push(mediaServerIndex);
-				keyValArr = kalturaObject2Arrays(resource, 'resource');
+				keyValArr = borhanObject2Arrays(resource, 'resource');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('duration');

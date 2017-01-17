@@ -1,4 +1,4 @@
-package com.kaltura.edw.model
+package com.borhan.edw.model
 {
 	import mx.collections.ArrayCollection;
 

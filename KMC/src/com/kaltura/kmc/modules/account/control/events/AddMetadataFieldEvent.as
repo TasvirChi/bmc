@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.borhan.bmc.modules.account.control.events
 {
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.borhan.vo.MetadataFieldVO;
 	
 	import flash.events.Event;
 	

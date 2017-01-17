@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,15 +25,15 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.userEntry
+package com.borhan.commands.userEntry
 {
-	import com.kaltura.delegates.userEntry.UserEntrySubmitQuizDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.borhan.delegates.userEntry.UserEntrySubmitQuizDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* Submits the quiz so that it's status will be submitted and calculates the score for the quiz
 	**/
-	public class UserEntrySubmitQuiz extends KalturaCall
+	public class UserEntrySubmitQuiz extends BorhanCall
 	{
 		public var filterFields : String;
 		

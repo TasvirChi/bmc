@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.accessControl.AccessControlUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.AccessControlEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.borhan.commands.accessControl.AccessControlUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.control.events.AccessControlEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.vo.AccessControlProfileVO;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -20,8 +20,8 @@ package com.kaltura.kmc.modules.account.control.command {
 			var accessControl:AccessControlProfileVO = event.data;
 			accessControl.profile.setUpdatedFieldsOnly(true);
 			var updateAccessControl:AccessControlUpdate = new AccessControlUpdate(accessControl.profile.id, accessControl.profile);
-			updateAccessControl.addEventListener(KalturaEvent.COMPLETE, result);
-			updateAccessControl.addEventListener(KalturaEvent.FAILED, fault);
+			updateAccessControl.addEventListener(BorhanEvent.COMPLETE, result);
+			updateAccessControl.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(updateAccessControl);
 		}
 
@@ -40,7 +40,7 @@ package com.kaltura.kmc.modules.account.control.command {
 
 
 		public function fault(info:Object):void {
-			var e:KalturaEvent = info as KalturaEvent;
+			var e:BorhanEvent = info as BorhanEvent;
 			if (e && e.error) {
 				if (e.error.errorMsg && e.error.errorMsg.toString().indexOf("Invalid KS") > -1) {
 					JSGate.expired();

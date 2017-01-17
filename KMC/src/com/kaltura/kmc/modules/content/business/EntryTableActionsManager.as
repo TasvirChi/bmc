@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.business
+package com.borhan.bmc.modules.content.business
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.components.et.EntryTable;
-	import com.kaltura.edw.components.et.events.EntryTableEvent;
-	import com.kaltura.edw.control.KedController;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
-	import com.kaltura.kmc.modules.content.events.SelectionEvent;
-	import com.kaltura.kmc.modules.content.events.WindowEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaPlaylistType;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaMixEntry;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.borhan.edw.components.et.EntryTable;
+	import com.borhan.edw.components.et.events.EntryTableEvent;
+	import com.borhan.edw.control.KedController;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.model.types.WindowsStates;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.bmc.modules.content.events.BMCEntryEvent;
+	import com.borhan.bmc.modules.content.events.SelectionEvent;
+	import com.borhan.bmc.modules.content.events.WindowEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanPlaylistType;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanMediaEntry;
+	import com.borhan.vo.BorhanMixEntry;
+	import com.borhan.vo.BorhanPlaylist;
 	
 	import mx.collections.ArrayCollection;
 
@@ -41,12 +41,12 @@ package com.kaltura.kmc.modules.content.business
 		 * @param event
 		 */
 		public function preview(event:EntryTableEvent):void {
-			var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
-			var cgEvent:KMCEntryEvent;
-			if (entry is KalturaPlaylist)
-				cgEvent = new KMCEntryEvent(KMCEntryEvent.PREVIEW, entry as KalturaPlaylist);
-			else if (entry is KalturaMediaEntry || entry is KalturaMixEntry)
-				cgEvent = new KMCEntryEvent(KMCEntryEvent.PREVIEW, entry as KalturaBaseEntry);
+			var entry:BorhanBaseEntry = event.data as BorhanBaseEntry;
+			var cgEvent:BMCEntryEvent;
+			if (entry is BorhanPlaylist)
+				cgEvent = new BMCEntryEvent(BMCEntryEvent.PREVIEW, entry as BorhanPlaylist);
+			else if (entry is BorhanMediaEntry || entry is BorhanMixEntry)
+				cgEvent = new BMCEntryEvent(BMCEntryEvent.PREVIEW, entry as BorhanBaseEntry);
 			else {
 				trace("Error: no PlaylistVO nor EntryVO");
 				return;
@@ -57,9 +57,9 @@ package com.kaltura.kmc.modules.content.business
 		
 		
 		public function showEntryDetailsHandler(event:EntryTableEvent):void {
-			var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
+			var entry:BorhanBaseEntry = event.data as BorhanBaseEntry;
 			var et:EntryTable = event.target as EntryTable;
-			var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
+			var kEvent:BMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry, entry.id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
 			KedController.getInstance().dispatch(kEvent);
 			var cgEvent:CairngormEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.ENTRY_DETAILS_WINDOW);
 			cgEvent.dispatch();
@@ -67,18 +67,18 @@ package com.kaltura.kmc.modules.content.business
 		
 		
 		public function showPlaylistDetailsHandler(event:EntryTableEvent):void {
-			var entry:KalturaBaseEntry = event.data as KalturaBaseEntry;
+			var entry:BorhanBaseEntry = event.data as BorhanBaseEntry;
 			var et:EntryTable = event.target as EntryTable;
 			var cgEvent:CairngormEvent;
-			var kEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry as KalturaBaseEntry, (entry as KalturaBaseEntry).id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
+			var kEvent:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, entry as BorhanBaseEntry, (entry as BorhanBaseEntry).id, (et.dataProvider as ArrayCollection).getItemIndex(entry));
 			KedController.getInstance().dispatchEvent(kEvent);
 			//switch manual / rule base
-			if ((entry as KalturaPlaylist).playlistType == KalturaPlaylistType.STATIC_LIST) {
+			if ((entry as BorhanPlaylist).playlistType == BorhanPlaylistType.STATIC_LIST) {
 				// manual list
 				cgEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_MANUAL_WINDOW);
 				cgEvent.dispatch();
 			}
-			if ((entry as KalturaPlaylist).playlistType == KalturaPlaylistType.DYNAMIC) {
+			if ((entry as BorhanPlaylist).playlistType == BorhanPlaylistType.DYNAMIC) {
 				cgEvent = new WindowEvent(WindowEvent.OPEN, WindowsStates.PLAYLIST_RULE_BASED_WINDOW);
 				cgEvent.dispatch();
 			}

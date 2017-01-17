@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.commands.mix
+package com.borhan.edw.control.commands.mix
 {
-	import com.kaltura.commands.mixing.MixingGetMixesByMediaId;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.ContentDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.edw.control.commands.KedCommand;
+	import com.borhan.commands.mixing.MixingGetMixesByMediaId;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.model.datapacks.ContentDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.edw.control.commands.KedCommand;
 
 	public class GetEntryRoughcutsCommand extends KedCommand 
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();		
 			var cdp:ContentDataPack = _model.getDataPack(ContentDataPack) as ContentDataPack;
@@ -18,8 +18,8 @@ package com.kaltura.edw.control.commands.mix
 			var e : KedEntryEvent = event as KedEntryEvent;
 			var getMixUsingEntry:MixingGetMixesByMediaId = new MixingGetMixesByMediaId(e.entryVo.id);
 			
-			getMixUsingEntry.addEventListener(KalturaEvent.COMPLETE, result);
-			getMixUsingEntry.addEventListener(KalturaEvent.FAILED, fault);
+			getMixUsingEntry.addEventListener(BorhanEvent.COMPLETE, result);
+			getMixUsingEntry.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(getMixUsingEntry);
 		}

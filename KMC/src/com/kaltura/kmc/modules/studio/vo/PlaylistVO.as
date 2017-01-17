@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.studio.vo
+package com.borhan.bmc.modules.studio.vo
 {
-	import com.kaltura.kmc.modules.studio.model.types.PlaylistTypes;
+	import com.borhan.bmc.modules.studio.model.types.PlaylistTypes;
 	
 	import mx.collections.ArrayCollection;
 	

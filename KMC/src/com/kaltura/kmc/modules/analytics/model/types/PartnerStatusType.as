@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.model.types
+package com.borhan.bmc.modules.analytics.model.types
 {
 	public class PartnerStatusType
 	{

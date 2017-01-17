@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	
@@ -6,7 +6,7 @@ package com.kaltura.kmc.modules.content.events
 	{
 		
 		/**
-		 * event.data is kalturaFilterPager to be passed to call, potherwise model value is used
+		 * event.data is borhanFilterPager to be passed to call, potherwise model value is used
 		 * */
 		public static const LIST_EXTERNAL_SYNDICATIONS : String = "content_listSyndications";
 		

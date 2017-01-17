@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.analytics.commands {
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.view.renderers.DrillDownLinkButton;
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
-	import com.kaltura.types.KalturaReportInterval;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaReportInputFilter;
+package com.borhan.bmc.modules.analytics.commands {
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.bmc.modules.analytics.model.types.ScreenTypes;
+	import com.borhan.bmc.modules.analytics.view.renderers.DrillDownLinkButton;
+	import com.borhan.bmc.modules.analytics.vo.FilterVo;
+	import com.borhan.types.BorhanReportInterval;
+	import com.borhan.vo.BorhanEndUserReportInputFilter;
+	import com.borhan.vo.BorhanReportInputFilter;
 	
 	import mx.resources.ResourceManager;
 	import mx.formatters.DateFormatter;
@@ -56,8 +56,8 @@ package com.kaltura.kmc.modules.analytics.commands {
 		 * @param screenType	screen type
 		 * @return	filter object that should be sent to server 
 		 */
-		public static function createFilterFromReport(fvo:FilterVo, screenType:int):KalturaReportInputFilter {
-			var krif:KalturaReportInputFilter;
+		public static function createFilterFromReport(fvo:FilterVo, screenType:int):BorhanReportInputFilter {
+			var krif:BorhanReportInputFilter;
 			//If we have a user report call we need to have another filter (that support application and users) 
 			//when we generate the report get total call
 			if (_model.entitlementEnabled && 
@@ -85,12 +85,12 @@ package com.kaltura.kmc.modules.analytics.commands {
 		
 
 		/**
-		 * creates a new KalturaReportInputFilter from the current filter in the KMCModelLocator instance
-		 * @return krif the new KalturaReportInputFilter
+		 * creates a new BorhanReportInputFilter from the current filter in the BMCModelLocator instance
+		 * @return krif the new BorhanReportInputFilter
 		 *
 		 */
-		public static function createFilterFromCurrentReport(fvo:FilterVo):KalturaReportInputFilter {
-			var krif:KalturaReportInputFilter = new KalturaReportInputFilter();
+		public static function createFilterFromCurrentReport(fvo:FilterVo):BorhanReportInputFilter {
+			var krif:BorhanReportInputFilter = new BorhanReportInputFilter();
 			var today:Date = new Date();
 			if (fvo) {
 				// filter dates are in seconds, Date.time is in ms, Date.timezoneOffset is in minutes.
@@ -113,8 +113,8 @@ package com.kaltura.kmc.modules.analytics.commands {
 			return krif;
 		}
 		
-		public static function createEndUserFilterFromCurrentReport(fvo:FilterVo):KalturaEndUserReportInputFilter{
-			var keurif:KalturaEndUserReportInputFilter = new KalturaEndUserReportInputFilter();
+		public static function createEndUserFilterFromCurrentReport(fvo:FilterVo):BorhanEndUserReportInputFilter{
+			var keurif:BorhanEndUserReportInputFilter = new BorhanEndUserReportInputFilter();
 			var today:Date = new Date();
 			if (fvo) {
 				// filter dates are in seconds, Date.time is in ms, Date.timezoneOffset is in minutes.

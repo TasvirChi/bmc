@@ -1,11 +1,11 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.edw.vo.AssetVO;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.vo.AssetVO;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	import flash.net.FileReference;
 	
-	public class UploadTokenEvent extends KMvCEvent
+	public class UploadTokenEvent extends BMvCEvent
 	{
 		public static const UPLOAD_TOKEN:String = "uploadToken";
 		

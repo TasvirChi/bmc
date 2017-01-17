@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.commands.flavor
+package com.borhan.edw.control.commands.flavor
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaFlavorAssetWithParams;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanFlavorAssetWithParams;
 	
 	import flash.external.ExternalInterface;
 	
@@ -11,11 +11,11 @@ package com.kaltura.edw.control.commands.flavor
 	
 	public class PreviewFlavorAsset extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{		
 			// { asset_id : "00_uyjv3dkxot", flavor_name : "Normal - big", format : "flv", codec : "vp6", bitrate : "768", dimensions : { height : 360 , width : 640 }, sizeKB : 1226, status : "OK" } 
 			
-			var obj:KalturaFlavorAssetWithParams = event.data as KalturaFlavorAssetWithParams;
+			var obj:BorhanFlavorAssetWithParams = event.data as BorhanFlavorAssetWithParams;
 			var flavorDetails:Object = new Object();
 			flavorDetails.asset_id = obj.flavorAsset.id;
 			flavorDetails.flavor_name = obj.flavorParams.name;
@@ -32,7 +32,7 @@ package com.kaltura.edw.control.commands.flavor
 			flavorDetails.sizeKB = obj.flavorAsset.size;
 			flavorDetails.status = ResourceManager.getInstance().getString('cms','readyStatus');
 			
-			ExternalInterface.call("kmc.preview_embed.doFlavorPreview", obj.entryId, (_model.getDataPack(EntryDataPack)as EntryDataPack).selectedEntry.name , flavorDetails);
+			ExternalInterface.call("bmc.preview_embed.doFlavorPreview", obj.entryId, (_model.getDataPack(EntryDataPack)as EntryDataPack).selectedEntry.name , flavorDetails);
 		}
 	}
 }

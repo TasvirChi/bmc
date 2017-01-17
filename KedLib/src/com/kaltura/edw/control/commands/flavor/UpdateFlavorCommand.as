@@ -1,24 +1,24 @@
-package com.kaltura.edw.control.commands.flavor
+package com.borhan.edw.control.commands.flavor
 {
-	import com.kaltura.commands.flavorAsset.FlavorAssetSetContent;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.MediaEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaContentResource;
-	import com.kaltura.edw.control.commands.KedCommand;
+	import com.borhan.commands.flavorAsset.FlavorAssetSetContent;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.control.events.MediaEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanContentResource;
+	import com.borhan.edw.control.commands.KedCommand;
 	
 	public class UpdateFlavorCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_dispatcher = event.dispatcher;
 			_model.increaseLoadCounter();
 			var e:MediaEvent = event as MediaEvent;
-			var fau:FlavorAssetSetContent = new FlavorAssetSetContent(e.data.flavorAssetId, e.data.resource as KalturaContentResource);
-			fau.addEventListener(KalturaEvent.COMPLETE, result);
-			fau.addEventListener(KalturaEvent.FAILED, fault);
+			var fau:FlavorAssetSetContent = new FlavorAssetSetContent(e.data.flavorAssetId, e.data.resource as BorhanContentResource);
+			fau.addEventListener(BorhanEvent.COMPLETE, result);
+			fau.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(fau);
 		}
 		

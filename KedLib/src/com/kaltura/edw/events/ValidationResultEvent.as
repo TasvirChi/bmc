@@ -1,4 +1,4 @@
-package com.kaltura.edw.events {
+package com.borhan.edw.events {
 
 	/**
 	 * results of a call to <code>IDrilldownPanel.validate()</code> dispatched by the panel.

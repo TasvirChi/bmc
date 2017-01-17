@@ -1,14 +1,14 @@
-package com.kaltura.edw.components.et
+package com.borhan.edw.components.et
 {
-	import com.kaltura.types.KalturaEntryModerationStatus;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.types.KalturaPlaylistType;
-	import com.kaltura.utils.KTimeUtil;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaClipAttributes;
-	import com.kaltura.vo.KalturaLiveEntry;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
-	import com.kaltura.vo.KalturaOperationAttributes;
+	import com.borhan.types.BorhanEntryModerationStatus;
+	import com.borhan.types.BorhanEntryStatus;
+	import com.borhan.types.BorhanPlaylistType;
+	import com.borhan.utils.KTimeUtil;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanClipAttributes;
+	import com.borhan.vo.BorhanLiveEntry;
+	import com.borhan.vo.BorhanLiveStreamEntry;
+	import com.borhan.vo.BorhanOperationAttributes;
 	
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.formatters.DateFormatter;
@@ -28,13 +28,13 @@ package com.kaltura.edw.components.et
 
 		public static function getPlaylistMediaTypes(item:Object, column:DataGridColumn):String {
 			switch (item.playlistType) {
-				case KalturaPlaylistType.STATIC_LIST:
+				case BorhanPlaylistType.STATIC_LIST:
 					return ResourceManager.getInstance().getString('cms', 'manuall');
 					break;
-				case KalturaPlaylistType.DYNAMIC:
+				case BorhanPlaylistType.DYNAMIC:
 					return ResourceManager.getInstance().getString('cms', 'ruleBased');
 					break;
-				case KalturaPlaylistType.EXTERNAL:
+				case BorhanPlaylistType.EXTERNAL:
 					return ResourceManager.getInstance().getString('cms', 'externalRss');
 					break;
 			}
@@ -42,11 +42,11 @@ package com.kaltura.edw.components.et
 		}
 		
 		public static function getClipIntime(item:Object, column:DataGridColumn):String {
-			var entry:KalturaBaseEntry = item as KalturaBaseEntry;
+			var entry:BorhanBaseEntry = item as BorhanBaseEntry;
 			var result:String = '';
-			for each (var opatt:KalturaOperationAttributes in entry.operationAttributes) {
-				if (opatt is KalturaClipAttributes) {
-					result = formatTime((opatt as KalturaClipAttributes).offset);
+			for each (var opatt:BorhanOperationAttributes in entry.operationAttributes) {
+				if (opatt is BorhanClipAttributes) {
+					result = formatTime((opatt as BorhanClipAttributes).offset);
 					break;
 				}
 			}
@@ -68,7 +68,7 @@ package com.kaltura.edw.components.et
 		 * format the timer
 		 */
 		public static function getTimeFormat(item:Object, column:DataGridColumn):String {
-			if (item is KalturaLiveEntry) {
+			if (item is BorhanLiveEntry) {
 				return ResourceManager.getInstance().getString('cms', 'n_a');
 			}
 			return KTimeUtil.formatTime2(item.duration, true, true);
@@ -79,22 +79,22 @@ package com.kaltura.edw.components.et
 		 * get correct string for entry moderation status 
 		 */		
 		public static function getStatusForModeration(item:Object, column:DataGridColumn):String {
-			var entry:KalturaBaseEntry = item as KalturaBaseEntry;
+			var entry:BorhanBaseEntry = item as BorhanBaseEntry;
 			var rm:IResourceManager = ResourceManager.getInstance();
 			switch (entry.moderationStatus) {
-				case KalturaEntryModerationStatus.APPROVED:  {
+				case BorhanEntryModerationStatus.APPROVED:  {
 					return rm.getString('entrytable', 'approvedStatus');
 				}
-				case KalturaEntryModerationStatus.AUTO_APPROVED:  {
+				case BorhanEntryModerationStatus.AUTO_APPROVED:  {
 					return rm.getString('entrytable', 'autoApprovedStatus');
 				}
-				case KalturaEntryModerationStatus.FLAGGED_FOR_REVIEW:  {
+				case BorhanEntryModerationStatus.FLAGGED_FOR_REVIEW:  {
 					return rm.getString('entrytable', 'flaggedStatus');
 				}
-				case KalturaEntryModerationStatus.PENDING_MODERATION:  {
+				case BorhanEntryModerationStatus.PENDING_MODERATION:  {
 					return rm.getString('entrytable', 'pendingStatus');
 				}
-				case KalturaEntryModerationStatus.REJECTED:  {
+				case BorhanEntryModerationStatus.REJECTED:  {
 					return rm.getString('entrytable', 'rejectedStatus');
 				}
 			}
@@ -107,27 +107,27 @@ package com.kaltura.edw.components.et
 		 */
 		public static function getStatus(item:Object, column:DataGridColumn):String {
 			var rm:IResourceManager = ResourceManager.getInstance();
-			var entry:KalturaBaseEntry = item as KalturaBaseEntry;
+			var entry:BorhanBaseEntry = item as BorhanBaseEntry;
 			var status:String = entry.status;
 			switch (status) {
-				case KalturaEntryStatus.DELETED: 
+				case BorhanEntryStatus.DELETED: 
 					//fixed to all states
 					return rm.getString('cms', 'statusdeleted');
 					break;
 				
-				case KalturaEntryStatus.ERROR_IMPORTING: 
+				case BorhanEntryStatus.ERROR_IMPORTING: 
 					//fixed to all states
 					return rm.getString('cms', 'statuserrorimporting');
 					break;
 				
-				case KalturaEntryStatus.ERROR_CONVERTING: 
+				case BorhanEntryStatus.ERROR_CONVERTING: 
 					//fixed to all states
 					return rm.getString('cms', 'statuserrorconverting');
 					break;
 				
-				case KalturaEntryStatus.IMPORT: 
+				case BorhanEntryStatus.IMPORT: 
 					//fixed to all states
-					if (entry is KalturaLiveStreamEntry) {
+					if (entry is BorhanLiveStreamEntry) {
 						return rm.getString('cms', 'provisioning');
 					}
 					else {
@@ -135,20 +135,20 @@ package com.kaltura.edw.components.et
 					}
 					break;
 				
-				case KalturaEntryStatus.PRECONVERT: 
+				case BorhanEntryStatus.PRECONVERT: 
 					//fixed to all states
 					return rm.getString('cms', 'statuspreconvert');
 					break;
 				
-				case KalturaEntryStatus.PENDING:
+				case BorhanEntryStatus.PENDING:
 					return rm.getString('cms', 'statuspending');
 					break;
 				
-				case KalturaEntryStatus.NO_CONTENT:  
+				case BorhanEntryStatus.NO_CONTENT:  
 					return rm.getString('cms', 'statusNoMedia');
 					break;
 				
-				case KalturaEntryStatus.READY:  
+				case BorhanEntryStatus.READY:  
 					return getStatusForReadyEntry(entry);
 					break;
 				
@@ -164,7 +164,7 @@ package com.kaltura.edw.components.et
 		/**
 		 * the text for a ready entry is caculated according to moderation status / scheduling
 		 * */
-		private static function getStatusForReadyEntry(entry:KalturaBaseEntry):String {
+		private static function getStatusForReadyEntry(entry:BorhanBaseEntry):String {
 			var rm:IResourceManager = ResourceManager.getInstance();
 			var result:String = '';
 			var now:Date = new Date();
@@ -185,9 +185,9 @@ package com.kaltura.edw.components.et
 			
 			
 			switch (moderationStatus) {
-				case KalturaEntryModerationStatus.APPROVED:
-				case KalturaEntryModerationStatus.AUTO_APPROVED:
-				case KalturaEntryModerationStatus.FLAGGED_FOR_REVIEW:  
+				case BorhanEntryModerationStatus.APPROVED:
+				case BorhanEntryModerationStatus.AUTO_APPROVED:
+				case BorhanEntryModerationStatus.FLAGGED_FOR_REVIEW:  
 					if (schedulingType == SCHEDULING_ALL_OR_IN_FRAME){
 						result = rm.getString('entrytable', 'liveStatus');
 					}
@@ -199,11 +199,11 @@ package com.kaltura.edw.components.et
 					}
 					break;
 				
-				case KalturaEntryModerationStatus.PENDING_MODERATION:  
+				case BorhanEntryModerationStatus.PENDING_MODERATION:  
 					result = rm.getString('entrytable', 'pendingStatus');
 					break;
 				
-				case KalturaEntryModerationStatus.REJECTED:  
+				case BorhanEntryModerationStatus.REJECTED:  
 					result = rm.getString('entrytable', 'rejectedStatus');
 					break;
 				

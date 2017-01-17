@@ -1,8 +1,8 @@
-package com.kaltura.edw.model.util
+package com.borhan.edw.model.util
 {
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.core.KClassFactory;
+	import com.borhan.vo.BorhanFlavorParams;
+	import com.borhan.utils.ObjectUtil;
+	import com.borhan.core.KClassFactory;
 	import flash.xml.XMLDocument;
 	import mx.rpc.xml.SimpleXMLEncoder;
 	import flash.xml.XMLNode;
@@ -10,18 +10,18 @@ package com.kaltura.edw.model.util
 	public class FlavorParamsUtil
 	{
 		/**
-		 * validate the given object is KalturaFlavorParams.
+		 * validate the given object is BorhanFlavorParams.
 		 * Otherwise, create new KFP and populate attributes with given object values.
 		 * @param object
 		 * @return 
 		 */
-		public static function makeFlavorParams(object:Object):KalturaFlavorParams {
-			var result:KalturaFlavorParams;
-			if (object is KalturaFlavorParams) {
-				result = object as KalturaFlavorParams;
+		public static function makeFlavorParams(object:Object):BorhanFlavorParams {
+			var result:BorhanFlavorParams;
+			if (object is BorhanFlavorParams) {
+				result = object as BorhanFlavorParams;
 			}
 			else {
-				result = new KClassFactory(KalturaFlavorParams).newInstanceFromXML( XMLList(objectToXML(object)));
+				result = new KClassFactory(BorhanFlavorParams).newInstanceFromXML( XMLList(objectToXML(object)));
 				result.originalObjectType = object.objectType; 
 			}
 			return result;

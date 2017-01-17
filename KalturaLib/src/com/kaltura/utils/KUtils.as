@@ -1,7 +1,7 @@
-package com.kaltura.utils
+package com.borhan.utils
 {
 	/**
-	 * A class that contains Kaltura specific functions
+	 * A class that contains Borhan specific functions
 	 *
 	 */
 	public class KUtils
@@ -15,12 +15,12 @@ package com.kaltura.utils
 			switch (hostCode)
 			{
 				case "0":
-					hostUrl = "kaldev.kaltura.com";
+					hostUrl = "kaldev.borhan.com";
 				break;
-				// default server is www.kaltura.com
+				// default server is www.borhan.com
 				case null:
 				case "1":
-					hostUrl = "www.kaltura.com";
+					hostUrl = "www.borhan.com";
 				break;
 
 				case "2":
@@ -28,7 +28,7 @@ package com.kaltura.utils
 				break;
 
 				case "3":
-					hostUrl = "sandbox.kaltura.com";
+					hostUrl = "sandbox.borhan.com";
 				break;
 
 				default: // a url

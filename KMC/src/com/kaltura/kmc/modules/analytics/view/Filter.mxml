@@ -6,19 +6,19 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACUsersController;
-			import com.kaltura.autocomplete.itemRenderers.UserFilterSelectedItem;
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.modules.analytics.business.IDateRangeManager;
-			import com.kaltura.kmc.modules.analytics.control.DrillDownEvent;
-			import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-			import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-			import com.kaltura.kmc.modules.analytics.view.window.CategoriesTreePopUp;
-			import com.kaltura.kmc.modules.analytics.vo.FilterVo;
-			import com.kaltura.types.KalturaReportInterval;
+			import com.borhan.BorhanClient;
+			import com.borhan.autocomplete.controllers.KACUsersController;
+			import com.borhan.autocomplete.itemRenderers.UserFilterSelectedItem;
+			import com.borhan.dataStructures.HashMap;
+			import com.borhan.edw.vo.CategoryVO;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.modules.analytics.business.IDateRangeManager;
+			import com.borhan.bmc.modules.analytics.control.DrillDownEvent;
+			import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+			import com.borhan.bmc.modules.analytics.model.types.ScreenTypes;
+			import com.borhan.bmc.modules.analytics.view.window.CategoriesTreePopUp;
+			import com.borhan.bmc.modules.analytics.vo.FilterVo;
+			import com.borhan.types.BorhanReportInterval;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -67,7 +67,7 @@
 			public var isLoading:Boolean;
 
 			[Bindable]
-			public var kc :KalturaClient;
+			public var kc :BorhanClient;
 
 			[Bindable]
 			public var applicationsList : ArrayCollection = new ArrayCollection();
@@ -103,7 +103,7 @@
 
 
 			[Bindable]
-			private var _timeUnitsDp:Array = [KalturaReportInterval.MONTHS, KalturaReportInterval.DAYS];
+			private var _timeUnitsDp:Array = [BorhanReportInterval.MONTHS, BorhanReportInterval.DAYS];
 
 			[Bindable]
 			public var dateOnlyFlag:Boolean = false;
@@ -142,7 +142,7 @@
 							timeUnitsCb.selectedItem = filterVo.interval;
 						}
 						else {
-							filterVo.interval = KalturaReportInterval.MONTHS;
+							filterVo.interval = BorhanReportInterval.MONTHS;
 						}
 					}
 
@@ -398,10 +398,10 @@
 			private function getTimeUnitLabel(item:Object):String {
 				var res:String;
 				switch (item) {
-					case KalturaReportInterval.MONTHS:
+					case BorhanReportInterval.MONTHS:
 						res = ResourceManager.getInstance().getString('analytics', 'monthly');
 						break;
-					case KalturaReportInterval.DAYS:
+					case BorhanReportInterval.DAYS:
 						res = ResourceManager.getInstance().getString('analytics', 'daily');
 						break;
 				}
@@ -428,7 +428,7 @@
 					  includeInLayout="{showTimeUnits}" visible="{showTimeUnits}" />
 			<mx:ComboBox id="timeUnitsCb" styleName="analyticsCombo" enabled="{!isLoading}"
 						 dataProvider="{_timeUnitsDp}" change="changeTimeUnits(event)" labelFunction="getTimeUnitLabel"
-						 includeInLayout="{showTimeUnits}" visible="{showTimeUnits}" selectedIndex="{_filterVo.interval == KalturaReportInterval.MONTHS ? 0 : 1}" />
+						 includeInLayout="{showTimeUnits}" visible="{showTimeUnits}" selectedIndex="{_filterVo.interval == BorhanReportInterval.MONTHS ? 0 : 1}" />
 			<mx:Label text="{resourceManager.getString('analytics','dates')}"/>
 			<mx:DateField id="fromDate" width="100" buttonMode="true" selectedDate="{_filterVo.fromDate}"
 						  change="fromDateChanged( event )" enabled="{!isLoading}"/>

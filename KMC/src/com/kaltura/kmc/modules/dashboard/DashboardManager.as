@@ -1,22 +1,22 @@
-package com.kaltura.kmc.modules.dashboard {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.commands.partner.PartnerGetStatistics;
-	import com.kaltura.commands.partner.PartnerGetUsage;
-	import com.kaltura.commands.report.ReportGetGraphs;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.events.KmcNavigationEvent;
-	import com.kaltura.kmc.modules.KmcModule;
-	import com.kaltura.types.KalturaReportType;
-	import com.kaltura.vo.KalturaPartner;
-	import com.kaltura.vo.KalturaPartnerStatistics;
-	import com.kaltura.vo.KalturaPartnerUsage;
-	import com.kaltura.vo.KalturaReportGraph;
-	import com.kaltura.vo.KalturaReportInputFilter;
+package com.borhan.bmc.modules.dashboard {
+	import com.borhan.BorhanClient;
+	import com.borhan.commands.partner.PartnerGetInfo;
+	import com.borhan.commands.partner.PartnerGetStatistics;
+	import com.borhan.commands.partner.PartnerGetUsage;
+	import com.borhan.commands.report.ReportGetGraphs;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.business.permissions.PermissionManager;
+	import com.borhan.edw.model.types.APIErrorCode;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.events.BmcNavigationEvent;
+	import com.borhan.bmc.modules.BmcModule;
+	import com.borhan.types.BorhanReportType;
+	import com.borhan.vo.BorhanPartner;
+	import com.borhan.vo.BorhanPartnerStatistics;
+	import com.borhan.vo.BorhanPartnerUsage;
+	import com.borhan.vo.BorhanReportGraph;
+	import com.borhan.vo.BorhanReportInputFilter;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -37,7 +37,7 @@ package com.kaltura.kmc.modules.dashboard {
 	 * In the first phase of the dashboard this class does it all, later on we will split it to
 	 */
 	public class DashboardManager extends EventDispatcher {
-		public const KALTURA_OFFSET:Number = 21600; //(6 hours * 60 min * 60 sec = 21600)
+		public const BORHAN_OFFSET:Number = 21600; //(6 hours * 60 min * 60 sec = 21600)
 
 		///it is set to 30 DAYS just to get some data
 		public const SECONDES_IN_30_DAYS:Number = 30 * 24 * 60 * 60; // 7d x 24h x 60m x 60s
@@ -48,9 +48,9 @@ package com.kaltura.kmc.modules.dashboard {
 		/** single instanse for this class **/
 		private static var _instance:DashboardManager;
 
-		/** kaltura client object - for contacting the server **/
-		private var _kc:KalturaClient; //kaltura client that make all kaltura API calls
-		public var app:KmcModule;
+		/** borhan client object - for contacting the server **/
+		private var _kc:BorhanClient; //borhan client that make all borhan API calls
+		public var app:BmcModule;
 		
 		[Bindable]
 		public var showGraphs : Boolean = true;
@@ -80,12 +80,12 @@ package com.kaltura.kmc.modules.dashboard {
 		public var publisherName:String;
 
 
-		public function get kc():KalturaClient {
+		public function get kc():BorhanClient {
 			return _kc;
 		}
 
 
-		public function set kc(kC:KalturaClient):void {
+		public function set kc(kC:BorhanClient):void {
 			_kc = kC;
 		}
 
@@ -139,14 +139,14 @@ package com.kaltura.kmc.modules.dashboard {
 		
 		private function getPartnerData():void {
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, onPartnerInfo);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
+			getPartnerInfo.addEventListener(BorhanEvent.COMPLETE, onPartnerInfo);
+			getPartnerInfo.addEventListener(BorhanEvent.FAILED, fault);
 			kc.post(getPartnerInfo);	
 		}
 
 		
-		private function onPartnerInfo(ke:KalturaEvent):void {
-			publisherName = (ke.data as KalturaPartner).name;
+		private function onPartnerInfo(ke:BorhanEvent):void {
+			publisherName = (ke.data as BorhanPartner).name;
 		}
 		
 
@@ -157,16 +157,16 @@ package com.kaltura.kmc.modules.dashboard {
 		 */
 		private function getUsageData():void {
 			var now:Date = new Date();
-			new KalturaPartnerUsage();
+			new BorhanPartnerUsage();
 			var partnerGetStatistics:PartnerGetStatistics = new PartnerGetStatistics();
-			partnerGetStatistics.addEventListener(KalturaEvent.COMPLETE, onPartnerStatistics);
-			partnerGetStatistics.addEventListener(KalturaEvent.FAILED, fault);
+			partnerGetStatistics.addEventListener(BorhanEvent.COMPLETE, onPartnerStatistics);
+			partnerGetStatistics.addEventListener(BorhanEvent.FAILED, fault);
 			kc.post(partnerGetStatistics);	
 		}
 		
 		protected function onPartnerStatistics(result:Object):void
 		{
-			var statistics:KalturaPartnerStatistics = result.data as KalturaPartnerStatistics;
+			var statistics:BorhanPartnerStatistics = result.data as BorhanPartnerStatistics;
 			totalBWSoFar = statistics.bandwidth.toFixed(2);
 			totalPercentSoFar = statistics.usagePercent.toFixed();
 			hostingGB = statistics.hosting.toFixed(2);
@@ -194,7 +194,7 @@ package com.kaltura.kmc.modules.dashboard {
 		 * Calling for the graph's data from the server
 		 */
 		private function getGraphData():void {
-			var krif:KalturaReportInputFilter = new KalturaReportInputFilter();
+			var krif:BorhanReportInputFilter = new BorhanReportInputFilter();
 			if (!dateFormatter) initDateFormatter();
 			
 			var today:Date = new Date();
@@ -205,10 +205,10 @@ package com.kaltura.kmc.modules.dashboard {
 			krif.fromDay = dateFormatter.format(new Date(today.time - 30*ONE_DAY));
 			krif.timeZoneOffset = today.timezoneOffset;
 
-			var reportGetGraphs:ReportGetGraphs = new ReportGetGraphs(KalturaReportType.TOP_CONTENT, krif, 'sum_time_viewed'); //  sum_time_viewed count_plays
+			var reportGetGraphs:ReportGetGraphs = new ReportGetGraphs(BorhanReportType.TOP_CONTENT, krif, 'sum_time_viewed'); //  sum_time_viewed count_plays
 
-			reportGetGraphs.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetGraphs.addEventListener(KalturaEvent.FAILED, fault);
+			reportGetGraphs.addEventListener(BorhanEvent.COMPLETE, result);
+			reportGetGraphs.addEventListener(BorhanEvent.FAILED, fault);
 			kc.post(reportGetGraphs);
 		}
 
@@ -222,7 +222,7 @@ package com.kaltura.kmc.modules.dashboard {
 			var krpArr:Array = result.data as Array;
 
 			for (var i:int = 0; i < krpArr.length; i++) {
-				var krp:KalturaReportGraph = KalturaReportGraph(krpArr[i]);
+				var krp:BorhanReportGraph = BorhanReportGraph(krpArr[i]);
 				var pointsArr:Array = krp.data.split(";");
 				var graphPoints:ArrayCollection = new ArrayCollection();
 
@@ -257,7 +257,7 @@ package com.kaltura.kmc.modules.dashboard {
 		 *
 		 */
 		private function fault(info:Object):void {
-			if ((info as KalturaEvent).error) {
+			if ((info as BorhanEvent).error) {
 				if (info.error.errorCode == APIErrorCode.INVALID_KS) {
 					JSGate.expired();
 				}
@@ -267,10 +267,10 @@ package com.kaltura.kmc.modules.dashboard {
 					Alert.show(ResourceManager.getInstance().getString('common', 'forbiddenError'), 
 						ResourceManager.getInstance().getString('kdashboard', 'error'), Alert.OK, null, logout);
 					//de-activate the HTML tabs
-//					ExternalInterface.call("kmc.utils.activateHeader", false);
+//					ExternalInterface.call("bmc.utils.activateHeader", false);
 				}
-				else if((info as KalturaEvent).error.errorMsg) {
-					Alert.show((info as KalturaEvent).error.errorMsg, ResourceManager.getInstance().getString('kdashboard', 'error'));
+				else if((info as BorhanEvent).error.errorMsg) {
+					Alert.show((info as BorhanEvent).error.errorMsg, ResourceManager.getInstance().getString('kdashboard', 'error'));
 				}
 			}
 		}
@@ -308,8 +308,8 @@ package com.kaltura.kmc.modules.dashboard {
 		/**
 		 * Loading a outer module by calling JS function and the html wrapper of this SWF application
 		 */
-		public function loadKMCModule(moduleName:String, subModule:String = ''):void {
-			dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, moduleName, subModule));
+		public function loadBMCModule(moduleName:String, subModule:String = ''):void {
+			dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, moduleName, subModule));
 		}
 
 	}

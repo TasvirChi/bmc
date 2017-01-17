@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.analytics.commands
+package com.borhan.bmc.modules.analytics.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.vo.AccountUsageVO;
-	import com.kaltura.commands.partner.PartnerGetUsage;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaPartnerUsage;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.bmc.modules.analytics.vo.AccountUsageVO;
+	import com.borhan.commands.partner.PartnerGetUsage;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.vo.BorhanPartnerUsage;
 	
 	import mx.rpc.IResponder;
 	
@@ -16,11 +16,11 @@ package com.kaltura.kmc.modules.analytics.commands
 		
 		public function execute(event:CairngormEvent):void
 		{
-			new KalturaPartnerUsage();
+			new BorhanPartnerUsage();
 			var params:Object = event.data;
 			var getPartnerUsage:PartnerGetUsage = new PartnerGetUsage(params.year, params.month, params.resolution);
-			getPartnerUsage.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerUsage.addEventListener(KalturaEvent.FAILED, fault);
+			getPartnerUsage.addEventListener(BorhanEvent.COMPLETE, result);
+			getPartnerUsage.addEventListener(BorhanEvent.FAILED, fault);
 			_model.kc.post(getPartnerUsage);	
 		}
 		

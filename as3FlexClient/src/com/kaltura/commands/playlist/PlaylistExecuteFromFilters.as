@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,16 +25,16 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.playlist
+package com.borhan.commands.playlist
 {
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.playlist.PlaylistExecuteFromFiltersDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.delegates.playlist.PlaylistExecuteFromFiltersDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* Revrieve playlist for playing purpose, based on media entry filters
 	**/
-	public class PlaylistExecuteFromFilters extends KalturaCall
+	public class PlaylistExecuteFromFilters extends BorhanCall
 	{
 		public var filterFields : String;
 		
@@ -42,9 +42,9 @@ package com.kaltura.commands.playlist
 		* @param filters Array
 		* @param totalResults int
 		* @param detailed String
-		* @param pager KalturaFilterPager
+		* @param pager BorhanFilterPager
 		**/
-		public function PlaylistExecuteFromFilters( filters : Array,totalResults : int,detailed : String='1',pager : KalturaFilterPager=null )
+		public function PlaylistExecuteFromFilters( filters : Array,totalResults : int,detailed : String='1',pager : BorhanFilterPager=null )
 		{
 			service= 'playlist';
 			action= 'executeFromFilters';
@@ -60,7 +60,7 @@ package com.kaltura.commands.playlist
 			keyArr.push('detailed');
 			valueArr.push(detailed);
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = borhanObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

@@ -1,4 +1,4 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
 	import flash.external.ExternalInterface;
 
@@ -12,7 +12,7 @@ package com.kaltura.edw.business
 	public class KedJSGate {
 		
 		public static function openClipApp(entryId:String, mode:String):void {
-			ExternalInterface.call("kmc.functions.openClipApp", entryId, mode);
+			ExternalInterface.call("bmc.functions.openClipApp", entryId, mode);
 		} 
 		
 		
@@ -32,7 +32,7 @@ package com.kaltura.edw.business
 		public static function doPreviewEmbed(functionName:String, entryId:String, entryName:String, entryDescription:String, 
 											  previewOnly:Boolean, is_playlist:Boolean, uiconfId:String, live_bitrates:Array,
 											  duration:int, thumbnail:String):void {
-			//			kmc.preview_embed.doPreviewEmbed(id, name, description, previewOnly, is_playlist, uiconf id, live_bitrates);
+			//			bmc.preview_embed.doPreviewEmbed(id, name, description, previewOnly, is_playlist, uiconf id, live_bitrates);
 			ExternalInterface.call(functionName, entryId, entryName, entryDescription, previewOnly, is_playlist, uiconfId,
 				live_bitrates, duration, thumbnail);
 		}
@@ -41,7 +41,7 @@ package com.kaltura.edw.business
 		 * ks expired 
 		 */
 		public static function expired():void {
-			ExternalInterface.call("kmc.functions.expired");
+			ExternalInterface.call("bmc.functions.expired");
 		}
 		
 		/**
@@ -49,7 +49,7 @@ package com.kaltura.edw.business
 		 * @param enable	if true enable, otherwise disable  
 		 */
 		public static function maskHeader(enable:Boolean):void {
-			ExternalInterface.call("kmc.utils.maskHeader", enable);
+			ExternalInterface.call("bmc.utils.maskHeader", enable);
 		}
 		
 		
@@ -59,7 +59,7 @@ package com.kaltura.edw.business
 		 * @param entryName
 		 */
 		public static function openLiveAnalyticsDrilldown(entryId:String, entryName:String):void { 
-			ExternalInterface.call("kmc.functions.openLiveAnalyticsDrilldown", entryId, entryName);
+			ExternalInterface.call("bmc.functions.openLiveAnalyticsDrilldown", entryId, entryName);
 		}
 		
 		/**

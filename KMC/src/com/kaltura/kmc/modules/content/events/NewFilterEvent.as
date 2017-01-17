@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+	import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
 	
 	import flash.events.Event;
 
@@ -9,15 +9,15 @@ package com.kaltura.kmc.modules.content.events
 		static public const NEW_PLAYLIST_FILTER:String = "content_newPlaylistFilter";
 		static public const EMPTY_PLAYLIST_FILTER:String = "content_emptyPlaylistFilter";
 		
-		private var _ruleVo:KalturaMediaEntryFilterForPlaylist;
+		private var _ruleVo:BorhanMediaEntryFilterForPlaylist;
 		
-		public function NewFilterEvent(type:String,playlistFilterVo:KalturaMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function NewFilterEvent(type:String,playlistFilterVo:BorhanMediaEntryFilterForPlaylist, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_ruleVo = playlistFilterVo;
 		}
 		
-		public function get ruleVo():KalturaMediaEntryFilterForPlaylist
+		public function get ruleVo():BorhanMediaEntryFilterForPlaylist
 		{
 			return _ruleVo;
 		}

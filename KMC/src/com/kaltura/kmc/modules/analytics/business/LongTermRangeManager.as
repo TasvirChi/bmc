@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.analytics.business {
-	import com.kaltura.kmc.modules.analytics.utils.TimeConsts;
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
+package com.borhan.bmc.modules.analytics.business {
+	import com.borhan.bmc.modules.analytics.utils.TimeConsts;
+	import com.borhan.bmc.modules.analytics.vo.FilterVo;
 	
 	import mx.controls.ComboBox;
 	import mx.events.ListEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	import mx.utils.ArrayUtil;
-	import com.kaltura.edw.vo.LocalizedVo;
+	import com.borhan.edw.vo.LocalizedVo;
 
 	public class LongTermRangeManager implements IDateRangeManager {
 

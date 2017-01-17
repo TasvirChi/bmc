@@ -1,8 +1,8 @@
-package com.kaltura.kmc.flavourAssetUpload.tests
+package com.borhan.bmc.flavourAssetUpload.tests
 {
-	import com.kaltura.edw.view.window.flavors.AddFlavorAssetsWindow;
-	import com.kaltura.edw.vo.UploadFileVo;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
+	import com.borhan.edw.view.window.flavors.AddFlavorAssetsWindow;
+	import com.borhan.edw.vo.UploadFileVo;
+	import com.borhan.bmc.modules.content.model.CmsModelLocator;
 	
 	import flexunit.framework.Assert;
 	

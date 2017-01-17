@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.commands.categoryEntry.CategoryEntryList;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.view.window.RemoveCategoriesWindow;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryEntry;
-	import com.kaltura.vo.KalturaCategoryEntryFilter;
-	import com.kaltura.vo.KalturaCategoryEntryListResponse;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.commands.categoryEntry.CategoryEntryList;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.bmc.modules.content.view.window.RemoveCategoriesWindow;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryEntry;
+	import com.borhan.vo.BorhanCategoryEntryFilter;
+	import com.borhan.vo.BorhanCategoryEntryListResponse;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -22,7 +22,7 @@ package com.kaltura.kmc.modules.content.commands
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class ListEntriesCategoriesCommand extends KalturaCommand {
+	public class ListEntriesCategoriesCommand extends BorhanCommand {
 		
 		private const CHUNK_SIZE:int = 20;
 		
@@ -72,18 +72,18 @@ package com.kaltura.kmc.modules.content.commands
 			}
 			
 			for (var i:uint = _lastObjectIndex; i < final; i++) {
-				ids += (_model.selectedEntries[i] as KalturaBaseEntry).id + ",";
+				ids += (_model.selectedEntries[i] as BorhanBaseEntry).id + ",";
 			}
-			var f:KalturaCategoryEntryFilter = new KalturaCategoryEntryFilter();
+			var f:BorhanCategoryEntryFilter = new BorhanCategoryEntryFilter();
 			f.entryIdIn = ids;
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:BorhanFilterPager = new BorhanFilterPager();
 			p.pageIndex = 1;
 			p.pageSize = 1000;	// very big number, should get all
 			
 			var list:CategoryEntryList = new CategoryEntryList(f, p);
-			list.addEventListener(KalturaEvent.COMPLETE, listCategoryEntriesChunkResult);
-			list.addEventListener(KalturaEvent.FAILED, fault);
+			list.addEventListener(BorhanEvent.COMPLETE, listCategoryEntriesChunkResult);
+			list.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(list);
 			_lastObjectIndex = final;
 		}
@@ -93,11 +93,11 @@ package com.kaltura.kmc.modules.content.commands
 		 * see if need to get another CategoryEntry chunk, or start processing
 		 * @param data
 		 */		
-		private function listCategoryEntriesChunkResult(data:KalturaEvent):void {
+		private function listCategoryEntriesChunkResult(data:BorhanEvent):void {
 			super.result(data);
 			if (!checkError(data)) {
 				// concat result to previous results
-				var curResult:Array = (data.data as KalturaCategoryEntryListResponse).objects;
+				var curResult:Array = (data.data as BorhanCategoryEntryListResponse).objects;
 				if (curResult && curResult.length) {
 					// if categories were deleted or something and are still listed on the entry
 					// but don't come back on list, we might get an empty array
@@ -141,7 +141,7 @@ package com.kaltura.kmc.modules.content.commands
 			var found:Boolean;
 			for (var i:int = 0; i<_categoryEntries.length; i++) {
 				found = false;
-				for each (var kce:KalturaCategoryEntry in uniques) {
+				for each (var kce:BorhanCategoryEntry in uniques) {
 					if (kce.categoryId == _categoryEntries[i].categoryId) {
 						found = true;
 						break;
@@ -165,19 +165,19 @@ package com.kaltura.kmc.modules.content.commands
 			}
 			
 			for (var i:uint = _lastObjectIndex; i < final; i++) {
-				ids += (_uniqueCategories[i] as KalturaCategoryEntry).categoryId + ",";
+				ids += (_uniqueCategories[i] as BorhanCategoryEntry).categoryId + ",";
 			}
 			
-			var f:KalturaCategoryFilter = new KalturaCategoryFilter();
+			var f:BorhanCategoryFilter = new BorhanCategoryFilter();
 			f.idIn = ids;
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:BorhanFilterPager = new BorhanFilterPager();
 			p.pageIndex = 1;
 			p.pageSize = CHUNK_SIZE;	// very big number, should get all
 			
 			var list:CategoryList = new CategoryList(f, p);
-			list.addEventListener(KalturaEvent.COMPLETE, listCategoriesChunkResult);
-			list.addEventListener(KalturaEvent.FAILED, fault);
+			list.addEventListener(BorhanEvent.COMPLETE, listCategoriesChunkResult);
+			list.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(list);
 			_lastObjectIndex = final;
 		}
@@ -185,11 +185,11 @@ package com.kaltura.kmc.modules.content.commands
 		private var _categories:Array = [];
 		
 		
-		private function listCategoriesChunkResult(data:KalturaEvent):void {
+		private function listCategoriesChunkResult(data:BorhanEvent):void {
 			super.result(data);
 			_model.decreaseLoadCounter();
 			if (!checkError(data)) {
-				_categories = _categories.concat((data.data as KalturaCategoryListResponse).objects);
+				_categories = _categories.concat((data.data as BorhanCategoryListResponse).objects);
 				
 				if (_lastObjectIndex < _uniqueCategories.length) {
 					listCategoriesChunk();

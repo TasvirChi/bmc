@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
-	public class ModelEvent extends KMvCEvent {
+	public class ModelEvent extends BMvCEvent {
 		
 		/**
 		 * create a new entryDetailsModel, copy general attributes

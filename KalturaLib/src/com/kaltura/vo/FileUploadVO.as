@@ -1,6 +1,6 @@
-package com.kaltura.vo {
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.types.KalturaEntryType;
+package com.borhan.vo {
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.types.BorhanEntryType;
 	
 	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
@@ -49,7 +49,7 @@ package com.kaltura.vo {
 		public var entryId:String;
 		
 		/**
-		 * the type of the entry to which this asset belongs (KalturaMediaType).
+		 * the type of the entry to which this asset belongs (BorhanMediaType).
 		 * passed as parameter.
 		 */
 		public var entryType:int;
@@ -124,10 +124,10 @@ package com.kaltura.vo {
 		 * catch an event, and dispatch equal event with this VO as its target.
 		 * @param e
 		 */
-		public function bubbleEvent(e:KalturaEvent):void {
-			(e.target as EventDispatcher).removeEventListener(KalturaEvent.COMPLETE, bubbleEvent);
-			(e.target as EventDispatcher).removeEventListener(KalturaEvent.FAILED, bubbleEvent);
-			var event:KalturaEvent = e.clone() as KalturaEvent;
+		public function bubbleEvent(e:BorhanEvent):void {
+			(e.target as EventDispatcher).removeEventListener(BorhanEvent.COMPLETE, bubbleEvent);
+			(e.target as EventDispatcher).removeEventListener(BorhanEvent.FAILED, bubbleEvent);
+			var event:BorhanEvent = e.clone() as BorhanEvent;
 			dispatchEvent(event);
 		}
 		

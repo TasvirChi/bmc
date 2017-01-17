@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.fltr.cat
+package com.borhan.edw.components.fltr.cat
 {
 	/**
 	 * this class lists possible values for <code>CatTree.mode</code> attribute 

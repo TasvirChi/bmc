@@ -1,10 +1,10 @@
-package com.kaltura.edw.model
+package com.borhan.edw.model
 {
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.borhan.edw.vo.CustomMetadataDataVO;
+	import com.borhan.vo.BorhanBaseEntry;
 	
 	import mx.collections.ArrayCollection;
-	import com.kaltura.edw.vo.DistributionInfo;
+	import com.borhan.edw.vo.DistributionInfo;
 
 	[Bindable]
 	/**

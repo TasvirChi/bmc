@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.analytics.control
+package com.borhan.bmc.modules.analytics.control
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
+	import com.borhan.bmc.modules.analytics.model.reportdata.ReportData;
 
 	public class PageEvent extends CairngormEvent
 	{

@@ -1,10 +1,10 @@
-package com.kaltura.kmvc.model
+package com.borhan.bmvc.model
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.utils.getQualifiedClassName;
 
-	public class KMvCModel extends EventDispatcher implements IModelLocator, IDataPackRepository {
+	public class BMvCModel extends EventDispatcher implements IModelLocator, IDataPackRepository {
 		
 		
 		
@@ -18,7 +18,7 @@ package com.kaltura.kmvc.model
 		
 		private var _packMap:Object;
 		
-		public function KMvCModel(enforcer:Enforcer) {
+		public function BMvCModel(enforcer:Enforcer) {
 			
 			_packMap = new Object();
 		}
@@ -78,14 +78,14 @@ package com.kaltura.kmvc.model
 		 * singleton means of retreiving an instance of the
 		 * <code>EntryDetailsModel</code> class.
 		 */
-		public static function getInstance():KMvCModel {
+		public static function getInstance():BMvCModel {
 			// create models list if doesn't exist
 			if (__models == null) {
 				__models = new Array();
 			}
 			// create a model if none exists
 			if (__models.length == 0) {
-				__models.push(new KMvCModel(new Enforcer()));
+				__models.push(new BMvCModel(new Enforcer()));
 				
 			}
 			// return the top model
@@ -96,11 +96,11 @@ package com.kaltura.kmvc.model
 		 * create a new model and add it to the stack 
 		 * @return the new model
 		 * */
-		public static function addModel():KMvCModel {
-			var newmodel:KMvCModel = new KMvCModel(new Enforcer());
+		public static function addModel():BMvCModel {
+			var newmodel:BMvCModel = new BMvCModel(new Enforcer());
 			if (__models.length) {
 				// copy attributes from the last existing model
-				var oldmodel:KMvCModel = getInstance();
+				var oldmodel:BMvCModel = getInstance();
 				for each (var idp:IDataPack in oldmodel._packMap) {
 					if (idp.shared) {
 						newmodel.setDataPack(idp);
@@ -115,8 +115,8 @@ package com.kaltura.kmvc.model
 		 * remove the model at the top of the stack 
 		 * @return the removed model
 		 */		
-		public static function removeModel():KMvCModel {
-			return __models.pop() as KMvCModel;
+		public static function removeModel():BMvCModel {
+			return __models.pop() as BMvCModel;
 		}
 		
 		
@@ -131,7 +131,7 @@ package com.kaltura.kmvc.model
 		public function increaseLoadCounter():void {
 			++_loadingCounter;
 			if (_loadingCounter == 1) {
-				dispatchEvent(new Event(KMvCModel.LOADING_FLAG_CHANGED));
+				dispatchEvent(new Event(BMvCModel.LOADING_FLAG_CHANGED));
 			}
 		}
 		
@@ -142,7 +142,7 @@ package com.kaltura.kmvc.model
 		public function decreaseLoadCounter():void {
 			--_loadingCounter;
 			if (_loadingCounter == 0) {
-				dispatchEvent(new Event(KMvCModel.LOADING_FLAG_CHANGED));
+				dispatchEvent(new Event(BMvCModel.LOADING_FLAG_CHANGED));
 			}
 		}
 		

@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.business.PartnerInfoUtil;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.vo.NotificationVO;
-	import com.kaltura.kmc.modules.account.vo.PartnerVO;
-	import com.kaltura.vo.KalturaPartner;
+	import com.borhan.commands.partner.PartnerGetInfo;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.business.PartnerInfoUtil;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.bmc.modules.account.vo.NotificationVO;
+	import com.borhan.bmc.modules.account.vo.PartnerVO;
+	import com.borhan.vo.BorhanPartner;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -27,16 +27,16 @@ package com.kaltura.kmc.modules.account.control.command {
 			_model.loadingFlag = true;
 
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
+			getPartnerInfo.addEventListener(BorhanEvent.COMPLETE, result);
+			getPartnerInfo.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(getPartnerInfo);
 		}
 
 
 		public function result(data:Object):void {
 			_model.loadingFlag = false;
-			if (data.data is KalturaPartner) {
-				var resultKp:KalturaPartner = data.data as KalturaPartner;
+			if (data.data is BorhanPartner) {
+				var resultKp:BorhanPartner = data.data as BorhanPartner;
 				var pvo:PartnerVO = new PartnerVO;
 				pvo.partner = resultKp;
 

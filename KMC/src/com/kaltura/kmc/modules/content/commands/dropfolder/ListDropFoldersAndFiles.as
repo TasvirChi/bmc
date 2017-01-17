@@ -1,31 +1,31 @@
-package com.kaltura.kmc.modules.content.commands.dropfolder {
+package com.borhan.bmc.modules.content.commands.dropfolder {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.dropFolder.DropFolderList;
-	import com.kaltura.commands.dropFolderFile.DropFolderFileList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.DropFolderEvent;
-	import com.kaltura.edw.model.types.DropFolderListType;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.KMCDropFolderEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaDropFolderContentFileHandlerMatchPolicy;
-	import com.kaltura.types.KalturaDropFolderFileHandlerType;
-	import com.kaltura.types.KalturaDropFolderFileOrderBy;
-	import com.kaltura.types.KalturaDropFolderFileStatus;
-	import com.kaltura.types.KalturaDropFolderOrderBy;
-	import com.kaltura.types.KalturaDropFolderStatus;
-	import com.kaltura.vo.KalturaDropFolder;
-	import com.kaltura.vo.KalturaDropFolderContentFileHandlerConfig;
-	import com.kaltura.vo.KalturaDropFolderFile;
-	import com.kaltura.vo.KalturaDropFolderFileFilter;
-	import com.kaltura.vo.KalturaDropFolderFileListResponse;
-	import com.kaltura.vo.KalturaDropFolderFilter;
-	import com.kaltura.vo.KalturaDropFolderListResponse;
-	import com.kaltura.vo.KalturaFtpDropFolder;
-	import com.kaltura.vo.KalturaScpDropFolder;
-	import com.kaltura.vo.KalturaSftpDropFolder;
+	import com.borhan.commands.dropFolder.DropFolderList;
+	import com.borhan.commands.dropFolderFile.DropFolderFileList;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.DropFolderEvent;
+	import com.borhan.edw.model.types.DropFolderListType;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.BMCDropFolderEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanDropFolderContentFileHandlerMatchPolicy;
+	import com.borhan.types.BorhanDropFolderFileHandlerType;
+	import com.borhan.types.BorhanDropFolderFileOrderBy;
+	import com.borhan.types.BorhanDropFolderFileStatus;
+	import com.borhan.types.BorhanDropFolderOrderBy;
+	import com.borhan.types.BorhanDropFolderStatus;
+	import com.borhan.vo.BorhanDropFolder;
+	import com.borhan.vo.BorhanDropFolderContentFileHandlerConfig;
+	import com.borhan.vo.BorhanDropFolderFile;
+	import com.borhan.vo.BorhanDropFolderFileFilter;
+	import com.borhan.vo.BorhanDropFolderFileListResponse;
+	import com.borhan.vo.BorhanDropFolderFilter;
+	import com.borhan.vo.BorhanDropFolderListResponse;
+	import com.borhan.vo.BorhanFtpDropFolder;
+	import com.borhan.vo.BorhanScpDropFolder;
+	import com.borhan.vo.BorhanSftpDropFolder;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -37,25 +37,25 @@ package com.kaltura.kmc.modules.content.commands.dropfolder {
 //	use namespace mx.core.mx_internal;
 	
 
-	public class ListDropFoldersAndFiles extends KalturaCommand {
+	public class ListDropFoldersAndFiles extends BorhanCommand {
 
 		
 		private var _flags:uint;
-		private var _fileFilter:KalturaDropFolderFileFilter;
+		private var _fileFilter:BorhanDropFolderFileFilter;
 
 
 		override public function execute(event:CairngormEvent):void {
-			_flags = (event as KMCDropFolderEvent).flags;
+			_flags = (event as BMCDropFolderEvent).flags;
 			_model.increaseLoadCounter();
-			if (event.data is KalturaDropFolderFileFilter) {
+			if (event.data is BorhanDropFolderFileFilter) {
 				_fileFilter = event.data;
 			}
-			var filter:KalturaDropFolderFilter = new KalturaDropFolderFilter();
-			filter.orderBy = KalturaDropFolderOrderBy.CREATED_AT_DESC;
-			filter.statusEqual = KalturaDropFolderStatus.ENABLED;
+			var filter:BorhanDropFolderFilter = new BorhanDropFolderFilter();
+			filter.orderBy = BorhanDropFolderOrderBy.CREATED_AT_DESC;
+			filter.statusEqual = BorhanDropFolderStatus.ENABLED;
 			var listFolders:DropFolderList = new DropFolderList(filter);
-			listFolders.addEventListener(KalturaEvent.COMPLETE, result);
-			listFolders.addEventListener(KalturaEvent.FAILED, fault);
+			listFolders.addEventListener(BorhanEvent.COMPLETE, result);
+			listFolders.addEventListener(BorhanEvent.FAILED, fault);
 
 			_model.context.kc.post(listFolders);
 		}
@@ -64,13 +64,13 @@ package com.kaltura.kmc.modules.content.commands.dropfolder {
 		override public function result(data:Object):void {
 			var rm:IResourceManager = ResourceManager.getInstance();
 			if (data.error) {
-				var er:KalturaError = data.error as KalturaError;
+				var er:BorhanError = data.error as BorhanError;
 				if (er) {
 					Alert.show(er.errorMsg, rm.getString('cms', 'error'));
 				}
 			}
 			else {
-				var ar:Array = handleDropFolderList(data.data as KalturaDropFolderListResponse);
+				var ar:Array = handleDropFolderList(data.data as BorhanDropFolderListResponse);
 				_model.dropFolderModel.dropFolders = new ArrayCollection(ar);
 				
 				if (ar.length == 0) {
@@ -84,31 +84,31 @@ package com.kaltura.kmc.modules.content.commands.dropfolder {
 					// load files from the returned folders
 					if (!_fileFilter) {
 						var folderIds:String = '';
-						for each (var kdf:KalturaDropFolder in ar) {
+						for each (var kdf:BorhanDropFolder in ar) {
 							folderIds += kdf.id + ",";
 						}
-						_fileFilter = new KalturaDropFolderFileFilter();
-						_fileFilter.orderBy = KalturaDropFolderFileOrderBy.CREATED_AT_DESC;
+						_fileFilter = new BorhanDropFolderFileFilter();
+						_fileFilter.orderBy = BorhanDropFolderFileOrderBy.CREATED_AT_DESC;
 						// use selected folder
 						_fileFilter.dropFolderIdIn = folderIds;
-						_fileFilter.statusIn = KalturaDropFolderFileStatus.DOWNLOADING + "," +
-							KalturaDropFolderFileStatus.ERROR_DELETING + "," + 
-							KalturaDropFolderFileStatus.ERROR_DOWNLOADING + "," + 
-							KalturaDropFolderFileStatus.ERROR_HANDLING + "," + 
-							KalturaDropFolderFileStatus.HANDLED + "," + 
-							KalturaDropFolderFileStatus.NO_MATCH + "," + 
-							KalturaDropFolderFileStatus.PENDING + "," + 
-							KalturaDropFolderFileStatus.PROCESSING + "," + 
-							KalturaDropFolderFileStatus.PARSED + "," + 
-							KalturaDropFolderFileStatus.UPLOADING + "," + 
-							KalturaDropFolderFileStatus.DETECTED + "," + 
-							KalturaDropFolderFileStatus.WAITING; 
+						_fileFilter.statusIn = BorhanDropFolderFileStatus.DOWNLOADING + "," +
+							BorhanDropFolderFileStatus.ERROR_DELETING + "," + 
+							BorhanDropFolderFileStatus.ERROR_DOWNLOADING + "," + 
+							BorhanDropFolderFileStatus.ERROR_HANDLING + "," + 
+							BorhanDropFolderFileStatus.HANDLED + "," + 
+							BorhanDropFolderFileStatus.NO_MATCH + "," + 
+							BorhanDropFolderFileStatus.PENDING + "," + 
+							BorhanDropFolderFileStatus.PROCESSING + "," + 
+							BorhanDropFolderFileStatus.PARSED + "," + 
+							BorhanDropFolderFileStatus.UPLOADING + "," + 
+							BorhanDropFolderFileStatus.DETECTED + "," + 
+							BorhanDropFolderFileStatus.WAITING; 
 						_model.dropFolderModel.filter = _fileFilter;
 					}
 					var listFiles:DropFolderFileList = new DropFolderFileList(_fileFilter, _model.dropFolderModel.pager);
 	
-					listFiles.addEventListener(KalturaEvent.COMPLETE, filesResult);
-					listFiles.addEventListener(KalturaEvent.FAILED, fault);
+					listFiles.addEventListener(BorhanEvent.COMPLETE, filesResult);
+					listFiles.addEventListener(BorhanEvent.FAILED, fault);
 					_model.context.kc.post(listFiles);
 				}
 			}
@@ -116,11 +116,11 @@ package com.kaltura.kmc.modules.content.commands.dropfolder {
 		}
 
 
-		protected function filesResult(event:KalturaEvent):void {
+		protected function filesResult(event:BorhanEvent):void {
 			var ar:Array = new Array();
-			var objs:Array = (event.data as KalturaDropFolderFileListResponse).objects;
+			var objs:Array = (event.data as BorhanDropFolderFileListResponse).objects;
 			for each (var o:Object in objs) {
-				if (o is KalturaDropFolderFile) {
+				if (o is BorhanDropFolderFile) {
 					ar.push(o);
 				}
 			}
@@ -133,30 +133,30 @@ package com.kaltura.kmc.modules.content.commands.dropfolder {
 		/**
 		 * put the folders in an array collection on the model
 		 * */
-		protected function handleDropFolderList(lr:KalturaDropFolderListResponse):Array {
+		protected function handleDropFolderList(lr:BorhanDropFolderListResponse):Array {
 			// so that the classes will be comiled in
-			var dummy1:KalturaScpDropFolder;
-			var dummy2:KalturaSftpDropFolder;
-			var dummy3:KalturaFtpDropFolder;
+			var dummy1:BorhanScpDropFolder;
+			var dummy2:BorhanSftpDropFolder;
+			var dummy3:BorhanFtpDropFolder;
 
-			var df:KalturaDropFolder;
+			var df:BorhanDropFolder;
 			var ar:Array = new Array();
 			for each (var o:Object in lr.objects) {
-				if (o is KalturaDropFolder) {
-					df = o as KalturaDropFolder;
-					if (df.fileHandlerType == KalturaDropFolderFileHandlerType.CONTENT) {
-						var cfg:KalturaDropFolderContentFileHandlerConfig = df.fileHandlerConfig as KalturaDropFolderContentFileHandlerConfig;
-						if (_flags & DropFolderListType.ADD_NEW && cfg.contentMatchPolicy == KalturaDropFolderContentFileHandlerMatchPolicy.ADD_AS_NEW) {
+				if (o is BorhanDropFolder) {
+					df = o as BorhanDropFolder;
+					if (df.fileHandlerType == BorhanDropFolderFileHandlerType.CONTENT) {
+						var cfg:BorhanDropFolderContentFileHandlerConfig = df.fileHandlerConfig as BorhanDropFolderContentFileHandlerConfig;
+						if (_flags & DropFolderListType.ADD_NEW && cfg.contentMatchPolicy == BorhanDropFolderContentFileHandlerMatchPolicy.ADD_AS_NEW) {
 							ar.push(df);
 						}
-						else if (_flags & DropFolderListType.MATCH_OR_KEEP && cfg.contentMatchPolicy == KalturaDropFolderContentFileHandlerMatchPolicy.MATCH_EXISTING_OR_KEEP_IN_FOLDER) {
+						else if (_flags & DropFolderListType.MATCH_OR_KEEP && cfg.contentMatchPolicy == BorhanDropFolderContentFileHandlerMatchPolicy.MATCH_EXISTING_OR_KEEP_IN_FOLDER) {
 							ar.push(df);
 						}
-						else if (_flags & DropFolderListType.MATCH_OR_NEW && cfg.contentMatchPolicy == KalturaDropFolderContentFileHandlerMatchPolicy.MATCH_EXISTING_OR_ADD_AS_NEW) {
+						else if (_flags & DropFolderListType.MATCH_OR_NEW && cfg.contentMatchPolicy == BorhanDropFolderContentFileHandlerMatchPolicy.MATCH_EXISTING_OR_ADD_AS_NEW) {
 							ar.push(df);
 						}
 					}
-					else if (_flags & DropFolderListType.XML_FOLDER && df.fileHandlerType == KalturaDropFolderFileHandlerType.XML) {
+					else if (_flags & DropFolderListType.XML_FOLDER && df.fileHandlerType == BorhanDropFolderFileHandlerType.XML) {
 						ar.push(df);
 					}
 				}

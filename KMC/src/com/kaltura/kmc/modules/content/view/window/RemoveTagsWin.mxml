@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" help="{onHelp()}"
-				 showCloseButton="true" xmlns="com.kaltura.containers.*" layout="vertical"
+				 showCloseButton="true" xmlns="com.borhan.containers.*" layout="vertical"
 				 title="{resourceManager.getString('cms', 'removeTags')}">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
 			import com.adobe.utils.ArrayUtil;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.events.EntriesEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.content.events.CategoryEvent;
+			import com.borhan.bmc.modules.content.events.EntriesEvent;
+			import com.borhan.bmc.modules.content.events.WindowEvent;
+			import com.borhan.types.BorhanStatsBmcEventType;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.mx_internal;
@@ -40,10 +40,10 @@
 			
 			private function onHelp():void {
 				if (objectType == OBJECT_TYPE_ENTRY) {
-					dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_remove_entry_tags'));
+					dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_remove_entry_tags'));
 				}
 				else if (objectType == OBJECT_TYPE_CATEGORY) {
-					dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_remove_cat_tags'));
+					dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_remove_cat_tags'));
 				}
 			}
 
@@ -55,7 +55,7 @@
 					}
 
 					if (objectType == OBJECT_TYPE_ENTRY) {
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_REMOVE_TAGS,
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_REMOVE_TAGS,
 							"Entry>RemoveTagsWindow",
 							_objects[i].id);
 					}

@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.borhan.bmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.user.UserUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.UserEvent;
-	import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.commands.user.UserUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.admin.control.events.UserEvent;
+	import com.borhan.bmc.modules.admin.model.DrilldownMode;
+	import com.borhan.vo.BorhanUser;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -13,7 +13,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 	public class UpdateUserCommand extends BaseCommand {
 		
 		override public function execute(event:CairngormEvent):void {
-			var user:KalturaUser = (event as UserEvent).user;
+			var user:BorhanUser = (event as UserEvent).user;
 			user.setUpdatedFieldsOnly(true);
 			var userId:String = _model.usersModel.selectedUser.id;
 			if (!userId) {
@@ -21,8 +21,8 @@ package com.kaltura.kmc.modules.admin.control.commands
 				userId = user.id;
 			}
 			var uu:UserUpdate = new UserUpdate(userId, user);
-			uu.addEventListener(KalturaEvent.COMPLETE, result);
-			uu.addEventListener(KalturaEvent.FAILED, fault);
+			uu.addEventListener(BorhanEvent.COMPLETE, result);
+			uu.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_model.kc.post(uu);
 		}

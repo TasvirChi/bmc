@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml"
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.borhan.edw.components.fltr.panels.*"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaEntryModerationStatus;
-			import com.kaltura.types.KalturaNullableBoolean;
+			import com.borhan.types.BorhanEntryModerationStatus;
+			import com.borhan.types.BorhanNullableBoolean;
 			
 			import mx.events.FlexEvent;
 
@@ -27,23 +27,23 @@
 					var mods:Array = value.split(',');
 					for each (var mod:int in mods) {
 						switch (mod) {
-							case KalturaEntryModerationStatus.APPROVED:
+							case BorhanEntryModerationStatus.APPROVED:
 //								approved.selected = true;
 								approved.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 								break;
-							case KalturaEntryModerationStatus.REJECTED:
+							case BorhanEntryModerationStatus.REJECTED:
 //								rejected.selected = true;
 								rejected.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 								break;
-							case KalturaEntryModerationStatus.FLAGGED_FOR_REVIEW:
+							case BorhanEntryModerationStatus.FLAGGED_FOR_REVIEW:
 //								flagged.selected = true;
 								flagged.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 								break;
-							case KalturaEntryModerationStatus.AUTO_APPROVED:
+							case BorhanEntryModerationStatus.AUTO_APPROVED:
 //								autoApproved.selected = true;
 								autoApproved.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 								break;
-							case KalturaEntryModerationStatus.PENDING_MODERATION:
+							case BorhanEntryModerationStatus.PENDING_MODERATION:
 //								pendingModeration.selected = true;
 								pendingModeration.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 								break;
@@ -56,15 +56,15 @@
 			override public function get filter():Object {
 				var moderationString:String = '';
 				if (approved.selected)
-					moderationString += KalturaEntryModerationStatus.APPROVED + ",";
+					moderationString += BorhanEntryModerationStatus.APPROVED + ",";
 				if (rejected.selected)
-					moderationString += KalturaEntryModerationStatus.REJECTED + ",";
+					moderationString += BorhanEntryModerationStatus.REJECTED + ",";
 				if (flagged.selected)
-					moderationString += KalturaEntryModerationStatus.FLAGGED_FOR_REVIEW + ",";
+					moderationString += BorhanEntryModerationStatus.FLAGGED_FOR_REVIEW + ",";
 				if (autoApproved.selected)
-					moderationString += KalturaEntryModerationStatus.AUTO_APPROVED + ",";
+					moderationString += BorhanEntryModerationStatus.AUTO_APPROVED + ",";
 				if (pendingModeration.selected)
-					moderationString += KalturaEntryModerationStatus.PENDING_MODERATION + ",";
+					moderationString += BorhanEntryModerationStatus.PENDING_MODERATION + ",";
 				
 				if (moderationString) {
 					// remove last ","

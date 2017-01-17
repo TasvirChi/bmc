@@ -19,10 +19,10 @@
 			private var _loader:Loader;
 			public var _widget_uiconf:String;
 			public var cfg:Object = {};
-			private	var _kdpUrl:String;
+			private	var _bdpUrl:String;
 			public	var readyToUse : Boolean = false;
-			public	var kdpFlashvars : String = "";
-			public var autoLoadKdp : Boolean = true;
+			public	var bdpFlashvars : String = "";
+			public var autoLoadBdp : Boolean = true;
 			
 			public function insertMedia( kshowId : String = "-1",
 										entryId : String = "-1",
@@ -54,22 +54,22 @@
 				if(loaderInfo)
 					_flashvars = loaderInfo.parameters;
 				
-				if(_flashvars && _flashvars.devFlag == "true") _kdpUrl = "kdp.swf"; //if we are working localy use the kdp.swf
+				if(_flashvars && _flashvars.devFlag == "true") _bdpUrl = "bdp.swf"; //if we are working localy use the bdp.swf
 				 
 				var childDefinitions:LoaderContext = new LoaderContext();
 				childDefinitions.applicationDomain = new ApplicationDomain();//new ApplicationDomain(ApplicationDomain.currentDomain);
 		 		
-		 		if(_flashvars && autoLoadKdp)
-		 			loadKdp();
+		 		if(_flashvars && autoLoadBdp)
+		 			loadBdp();
     		}
 
-    		public function loadKdp() : void
+    		public function loadBdp() : void
     		{
-    			//_kdpUrl = "kdp.swf"//TODO: REMOVE
+    			//_bdpUrl = "bdp.swf"//TODO: REMOVE
  				//TODO: GET PATH FROM SERVICE
-				load(_kdpUrl);	
+				load(_bdpUrl);	
 					
-				trace("KDPSWFLoder==> " + _kdpUrl);
+				trace("BDPSWFLoder==> " + _bdpUrl);
     		}
     		
     		
@@ -116,20 +116,20 @@
 			}
 			
 			// the Gigya object must be on top level displayobject - see if this is needed in case of just a preview widget 
-			// under KMC application 
+			// under BMC application 
 			private function onGigya(evt:Event):void
 			{
 				cfg = evt["data"];
 			}
 			
-			public function set kdpUrl( kdpUrl : String ) : void
+			public function set bdpUrl( bdpUrl : String ) : void
 			{
-				_kdpUrl = kdpUrl;
+				_bdpUrl = bdpUrl;
 			}
 			
-			public function get kdpUrl() : String
+			public function get bdpUrl() : String
 			{
-				return _kdpUrl;
+				return _bdpUrl;
 			}
 			
 		]]>

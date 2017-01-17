@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.model
+package com.borhan.bmc.modules.content.model
 {
 	import mx.resources.ResourceManager;
 	

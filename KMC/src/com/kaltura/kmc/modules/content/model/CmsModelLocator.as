@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.content.model {
+package com.borhan.bmc.modules.content.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.containers.ConfinedTitleWindow;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.PlaylistModel;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.types.KalturaTubeMogulSyndicationFeedOrderBy;
-	import com.kaltura.vo.KalturaBaseSyndicationFeedFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.containers.ConfinedTitleWindow;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.model.PlaylistModel;
+	import com.borhan.edw.model.datapacks.ContextDataPack;
+	import com.borhan.edw.model.datapacks.FilterDataPack;
+	import com.borhan.edw.model.types.WindowsStates;
+	import com.borhan.edw.vo.ListableVo;
+	import com.borhan.bmvc.model.BMvCModel;
+	import com.borhan.types.BorhanTubeMogulSyndicationFeedOrderBy;
+	import com.borhan.vo.BorhanBaseSyndicationFeedFilter;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -56,7 +56,7 @@ package com.kaltura.kmc.modules.content.model {
 		/**
 		 * entry details model
 		 * */
-		public var entryDetailsModel:KMvCModel;
+		public var entryDetailsModel:BMvCModel;
 		
 		
 		/**
@@ -180,7 +180,7 @@ package com.kaltura.kmc.modules.content.model {
 		
 		/**
 		 * conversion profiles that are marked as live, for use when adding live streams
-		 * (KalturaConversionProfile.type = KalturaConversionProfileType.LIVE_STREAM)
+		 * (BorhanConversionProfile.type = BorhanConversionProfileType.LIVE_STREAM)
 		 */
 		public var liveConversionProfiles:ArrayCollection;
 
@@ -260,7 +260,7 @@ package com.kaltura.kmc.modules.content.model {
 		public function CmsModelLocator(enforcer:Enforcer) {
 			attic = new Object();
 			
-			entryDetailsModel = KMvCModel.getInstance();
+			entryDetailsModel = BMvCModel.getInstance();
 			
 			context = entryDetailsModel.getDataPack(ContextDataPack) as ContextDataPack;
 			
@@ -281,10 +281,10 @@ package com.kaltura.kmc.modules.content.model {
 			bulkUploadModel = new BulkUploadModel();
 			
 			extSynModel = new ExtSynModel();
-			extSynModel.syndicationFeedsFilterPager = new KalturaFilterPager();
+			extSynModel.syndicationFeedsFilterPager = new BorhanFilterPager();
 			extSynModel.syndicationFeedsFilterPager.pageSize = 10;
-			extSynModel.syndicationFeedsFilter = new KalturaBaseSyndicationFeedFilter();
-			extSynModel.syndicationFeedsFilter.orderBy = KalturaTubeMogulSyndicationFeedOrderBy.CREATED_AT_DESC;
+			extSynModel.syndicationFeedsFilter = new BorhanBaseSyndicationFeedFilter();
+			extSynModel.syndicationFeedsFilter.orderBy = BorhanTubeMogulSyndicationFeedOrderBy.CREATED_AT_DESC;
 		}
 
 

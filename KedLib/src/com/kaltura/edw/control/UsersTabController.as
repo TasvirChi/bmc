@@ -1,13 +1,13 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.usrs.GetEntitledUsersCommand;
-	import com.kaltura.edw.control.commands.usrs.GetEntryUserCommand;
-	import com.kaltura.edw.control.commands.usrs.SetEntryOwnerCommand;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.UsersEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.usrs.GetEntitledUsersCommand;
+	import com.borhan.edw.control.commands.usrs.GetEntryUserCommand;
+	import com.borhan.edw.control.commands.usrs.SetEntryOwnerCommand;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.control.events.UsersEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class UsersTabController extends KMvCController {
+	public class UsersTabController extends BMvCController {
 		
 		public function UsersTabController() {
 			initializeCommands();

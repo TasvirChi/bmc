@@ -1,23 +1,23 @@
-package com.kaltura.edw.control.commands.dist
+package com.borhan.edw.control.commands.dist
 {
-	import com.kaltura.commands.entryDistribution.EntryDistributionSubmitUpdate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.borhan.commands.entryDistribution.EntryDistributionSubmitUpdate;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.EntryDistributionEvent;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanEntryDistribution;
 
 	public class SubmitUpdateEntryDistributionCommand extends KedCommand
 	{
-		private var _entryDis:KalturaEntryDistribution;
+		private var _entryDis:BorhanEntryDistribution;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
 			_entryDis = (event as EntryDistributionEvent).entryDistribution;
 			var update:EntryDistributionSubmitUpdate = new EntryDistributionSubmitUpdate(_entryDis.id);
-			update.addEventListener(KalturaEvent.COMPLETE, result);
-			update.addEventListener(KalturaEvent.FAILED, fault);
+			update.addEventListener(BorhanEvent.COMPLETE, result);
+			update.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(update);
 		}
@@ -25,7 +25,7 @@ package com.kaltura.edw.control.commands.dist
 		override public function result(data:Object):void {
 			_model.decreaseLoadCounter();
 			super.result(data);
-			var updateResult:KalturaEntryDistribution = data.data as KalturaEntryDistribution;
+			var updateResult:BorhanEntryDistribution = data.data as BorhanEntryDistribution;
 			_entryDis.status = updateResult.status;
 			_entryDis.dirtyStatus = updateResult.dirtyStatus;
 			//for data binding

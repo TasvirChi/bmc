@@ -1,44 +1,44 @@
-package com.kaltura.edw.control.commands
+package com.borhan.edw.control.commands
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.accessControl.AccessControlList;
-	import com.kaltura.commands.baseEntry.BaseEntryCount;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.commands.distributionProfile.DistributionProfileList;
-	import com.kaltura.commands.flavorParams.FlavorParamsList;
-	import com.kaltura.core.KClassFactory;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.ClientUtil;
-	import com.kaltura.edw.business.IDataOwner;
-	import com.kaltura.edw.control.DataTabController;
-	import com.kaltura.edw.control.events.LoadEvent;
-	import com.kaltura.edw.control.events.MetadataProfileEvent;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.util.FlavorParamsUtil;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaAccessControlOrderBy;
-	import com.kaltura.types.KalturaDistributionProfileStatus;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.vo.AccessControlProfileVO;
-	import com.kaltura.vo.KalturaAccessControl;
-	import com.kaltura.vo.KalturaAccessControlFilter;
-	import com.kaltura.vo.KalturaAccessControlListResponse;
-	import com.kaltura.vo.KalturaBaseRestriction;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaDistributionProfileListResponse;
-	import com.kaltura.vo.KalturaDistributionThumbDimensions;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.vo.KalturaFlavorParamsListResponse;
-	import com.kaltura.vo.KalturaMediaEntryFilter;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.accessControl.AccessControlList;
+	import com.borhan.commands.baseEntry.BaseEntryCount;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.commands.distributionProfile.DistributionProfileList;
+	import com.borhan.commands.flavorParams.FlavorParamsList;
+	import com.borhan.core.KClassFactory;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.business.ClientUtil;
+	import com.borhan.edw.business.IDataOwner;
+	import com.borhan.edw.control.DataTabController;
+	import com.borhan.edw.control.events.LoadEvent;
+	import com.borhan.edw.control.events.MetadataProfileEvent;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.model.util.FlavorParamsUtil;
+	import com.borhan.edw.vo.CategoryVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanAccessControlOrderBy;
+	import com.borhan.types.BorhanDistributionProfileStatus;
+	import com.borhan.types.BorhanEntryStatus;
+	import com.borhan.types.BorhanMediaType;
+	import com.borhan.vo.AccessControlProfileVO;
+	import com.borhan.vo.BorhanAccessControl;
+	import com.borhan.vo.BorhanAccessControlFilter;
+	import com.borhan.vo.BorhanAccessControlListResponse;
+	import com.borhan.vo.BorhanBaseRestriction;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
+	import com.borhan.vo.BorhanDistributionProfile;
+	import com.borhan.vo.BorhanDistributionProfileListResponse;
+	import com.borhan.vo.BorhanDistributionThumbDimensions;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanFlavorParams;
+	import com.borhan.vo.BorhanFlavorParamsListResponse;
+	import com.borhan.vo.BorhanMediaEntryFilter;
 	
 	import flash.xml.XMLDocument;
 	import flash.xml.XMLNode;
@@ -75,7 +75,7 @@ package com.kaltura.edw.control.commands
 		 */		
 		private var _caller:IDataOwner;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_caller = (event as LoadEvent).caller;
 			_filterModel = (event as LoadEvent).filterModel;
 			
@@ -86,7 +86,7 @@ package com.kaltura.edw.control.commands
 			
 			_model.increaseLoadCounter();
 			
-			var pager:KalturaFilterPager;
+			var pager:BorhanFilterPager;
 			
 			// custom data hack
 			if (_filterModel.enableCustomData) {
@@ -98,27 +98,27 @@ package com.kaltura.edw.control.commands
 			
 			// distribution
 			if (_filterModel.enableDistribution) {
-				pager = new KalturaFilterPager();
+				pager = new BorhanFilterPager();
 				pager.pageSize = DEFAULT_PAGE_SIZE;
 				var listDistributionProfile:DistributionProfileList = new DistributionProfileList(null, pager);
 				multiRequest.addAction(listDistributionProfile);
 			}
 			// flavor params
-			pager = new KalturaFilterPager();
+			pager = new BorhanFilterPager();
 			pager.pageSize = DEFAULT_PAGE_SIZE;
 			var listFlavorParams:FlavorParamsList = new FlavorParamsList(null, pager);
 			multiRequest.addAction(listFlavorParams);
 			// access control
-			var acfilter:KalturaAccessControlFilter = new KalturaAccessControlFilter();
-			acfilter.orderBy = KalturaAccessControlOrderBy.CREATED_AT_DESC;
-			pager = new KalturaFilterPager();
+			var acfilter:BorhanAccessControlFilter = new BorhanAccessControlFilter();
+			acfilter.orderBy = BorhanAccessControlOrderBy.CREATED_AT_DESC;
+			pager = new BorhanFilterPager();
 			pager.pageSize = 1000;
 			var getListAccessControlProfiles:AccessControlList = new AccessControlList(acfilter, pager);
 			multiRequest.addAction(getListAccessControlProfiles);
 			
 			// listeners
-			multiRequest.addEventListener(KalturaEvent.COMPLETE, result);
-			multiRequest.addEventListener(KalturaEvent.FAILED, fault);
+			multiRequest.addEventListener(BorhanEvent.COMPLETE, result);
+			multiRequest.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(multiRequest);
 		}
@@ -129,16 +129,16 @@ package com.kaltura.edw.control.commands
 				
 				if (_filterModel.enableDistribution) {
 					// distribution
-					handleListDistributionProfileResult(data.data[responseCount] as KalturaDistributionProfileListResponse);
+					handleListDistributionProfileResult(data.data[responseCount] as BorhanDistributionProfileListResponse);
 					responseCount ++;
 				}
 				
 				// flavor params
-				handleFlavorsData(data.data[responseCount] as KalturaFlavorParamsListResponse);
+				handleFlavorsData(data.data[responseCount] as BorhanFlavorParamsListResponse);
 				responseCount ++;
 				
 				// access control
-				handleAccessControls(data.data[responseCount] as KalturaAccessControlListResponse);
+				handleAccessControls(data.data[responseCount] as BorhanAccessControlListResponse);
 				responseCount ++;
 				
 				_filterModel.loadingRequired = false;
@@ -152,22 +152,22 @@ package com.kaltura.edw.control.commands
 		/**
 		 * coppied from ListDistributionProfilesCommand 
 		 */
-		private function handleListDistributionProfileResult(profilesResult:KalturaDistributionProfileListResponse) : void {
-			var dum:KalturaDistributionThumbDimensions;
+		private function handleListDistributionProfileResult(profilesResult:BorhanDistributionProfileListResponse) : void {
+			var dum:BorhanDistributionThumbDimensions;
 			var profilesArray:Array = new Array();
 			//as3flexClient can't generate these objects since we don't include them in the swf 
 			for each (var profile:Object in profilesResult.objects) {
-				var newProfile:KalturaDistributionProfile;
-				if (profile is KalturaDistributionProfile) {
-					newProfile = profile as KalturaDistributionProfile;
+				var newProfile:BorhanDistributionProfile;
+				if (profile is BorhanDistributionProfile) {
+					newProfile = profile as BorhanDistributionProfile;
 				}
 				else {
-					newProfile = ClientUtil.createClassInstanceFromObject(KalturaDistributionProfile, profile);
+					newProfile = ClientUtil.createClassInstanceFromObject(BorhanDistributionProfile, profile);
 					//fix bug: simpleXmlEncoder not working properly for nested objects
 					if (profile.requiredThumbDimensions is Array)
 						newProfile.requiredThumbDimensions = profile.requiredThumbDimensions;
 				}
-				if (newProfile.status == KalturaDistributionProfileStatus.ENABLED)
+				if (newProfile.status == BorhanDistributionProfileStatus.ENABLED)
 					profilesArray.push(newProfile);
 			}
 			var ddp:DistributionDataPack = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
@@ -179,12 +179,12 @@ package com.kaltura.edw.control.commands
 		/**
 		 * coppied from ListFlavorsParamsCommand 
 		 */
-		private function handleFlavorsData(response:KalturaFlavorParamsListResponse):void {
+		private function handleFlavorsData(response:BorhanFlavorParamsListResponse):void {
 			clearOldFlavorData();
 			var tempFlavorParamsArr:ArrayCollection = new ArrayCollection();
-			// loop on Object and cast to KalturaFlavorParams so we don't crash on unknown types:
+			// loop on Object and cast to BorhanFlavorParams so we don't crash on unknown types:
 			for each (var kFlavor:Object in response.objects) {
-				if (kFlavor is KalturaFlavorParams) {
+				if (kFlavor is BorhanFlavorParams) {
 					tempFlavorParamsArr.addItem(kFlavor);
 				}
 				else {
@@ -198,9 +198,9 @@ package com.kaltura.edw.control.commands
 		/**
 		 * coppied from ListAccessControlsCommand 
 		 */
-		private function handleAccessControls(response:KalturaAccessControlListResponse):void {
+		private function handleAccessControls(response:BorhanAccessControlListResponse):void {
 			var tempArrCol:ArrayCollection = new ArrayCollection();
-			for each(var kac:KalturaAccessControl in response.objects)
+			for each(var kac:BorhanAccessControl in response.objects)
 			{
 				var acVo:AccessControlProfileVO = new AccessControlProfileVO();
 				acVo.profile = kac;
@@ -208,9 +208,9 @@ package com.kaltura.edw.control.commands
 				if (kac.restrictions) {
 					// remove unknown objects
 					// if any restriction is unknown, we remove it from the list.
-					// this means it is not supported in KMC at the moment
+					// this means it is not supported in BMC at the moment
 					for (var i:int = 0; i<kac.restrictions.length; i++) {
-						if (! (kac.restrictions[i] is KalturaBaseRestriction)) {
+						if (! (kac.restrictions[i] is BorhanBaseRestriction)) {
 							kac.restrictions.splice(i, 1);
 						}
 					}

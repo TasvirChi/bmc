@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.business.playerlist
+package com.borhan.bmc.modules.studio.business.playerlist
 {
 	import flash.events.Event;
 

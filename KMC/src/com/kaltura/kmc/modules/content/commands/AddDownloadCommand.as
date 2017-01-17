@@ -1,18 +1,18 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.DownloadEvent;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-	import com.kaltura.commands.*;
-	import com.kaltura.commands.xInternal.XInternalXAddBulkDownload;
-	import com.kaltura.events.KalturaEvent;
+	import com.borhan.bmc.modules.content.events.DownloadEvent;
+	import com.borhan.bmc.modules.content.model.CmsModelLocator;
+	import com.borhan.commands.*;
+	import com.borhan.commands.xInternal.XInternalXAddBulkDownload;
+	import com.borhan.events.BorhanEvent;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 
-	public class AddDownloadCommand extends KalturaCommand
+	public class AddDownloadCommand extends BorhanCommand
 	{
 		
 		override public function execute(event:CairngormEvent):void
@@ -21,8 +21,8 @@ package com.kaltura.kmc.modules.content.commands
 			var de:DownloadEvent = event as DownloadEvent;
 			
 		 	var addDownload:XInternalXAddBulkDownload = new XInternalXAddBulkDownload(de.entriesIds, de.flavorParamId);
-		 	addDownload.addEventListener(KalturaEvent.COMPLETE, result);
-			addDownload.addEventListener(KalturaEvent.FAILED, fault);
+		 	addDownload.addEventListener(BorhanEvent.COMPLETE, result);
+			addDownload.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(addDownload);	   
 		}
 		

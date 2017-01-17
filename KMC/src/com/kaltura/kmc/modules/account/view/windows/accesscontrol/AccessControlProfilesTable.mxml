@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<table:SelectionTable xmlns:table="com.kaltura.controls.table.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
+<table:SelectionTable xmlns:table="com.borhan.controls.table.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
 					  width="100%" height="100%" rowHeight="30" headerRelease="headerReleaseHandler(event)"
 					  creationComplete="creationCompleteHandler(event)" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
-			import com.kaltura.kmc.events.KmcEvent;
-			import com.kaltura.kmc.modules.account.control.events.AccessControlEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.types.KalturaAccessControlOrderBy;
-			import com.kaltura.vo.AccessControlProfileVO;
+			import com.borhan.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
+			import com.borhan.bmc.events.BmcEvent;
+			import com.borhan.bmc.modules.account.control.events.AccessControlEvent;
+			import com.borhan.bmc.modules.account.model.AccountModelLocator;
+			import com.borhan.types.BorhanAccessControlOrderBy;
+			import com.borhan.vo.AccessControlProfileVO;
 			
 			import mx.core.Application;
 			import mx.events.DataGridEvent;
@@ -53,42 +53,42 @@
 					var orederByStr:String;
 					switch (headerText) {
 						case resourceManager.getString('account', 'nameColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
 						case resourceManager.getString('account', 'descriptionColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
 						case resourceManager.getString('account', 'createdAtColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
 						case resourceManager.getString('account', 'authorizedSitesColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
 						case resourceManager.getString('account', 'authorizedCountriesColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
 						case resourceManager.getString('account', 'authorizedIPsColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
 						case resourceManager.getString('account', 'authorizedFlavorsColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
 						case resourceManager.getString('account', 'advancedSecurityColumnTitle'):  {
-							orederByStr = sortDir ? KalturaAccessControlOrderBy.CREATED_AT_ASC : KalturaAccessControlOrderBy.CREATED_AT_DESC;
+							orederByStr = sortDir ? BorhanAccessControlOrderBy.CREATED_AT_ASC : BorhanAccessControlOrderBy.CREATED_AT_DESC;
 							break;
 						}
 
@@ -108,11 +108,11 @@
 
 
 			private function saveUpdatedProfile(e:Event):void {
-				dispatchEvent(new KmcEvent(AccessControlProfilePopUpWindow.SAVE_UPDATED_PROFILE, (e.target as AccessControlProfilePopUpWindow).accessControlProfile, true));
+				dispatchEvent(new BmcEvent(AccessControlProfilePopUpWindow.SAVE_UPDATED_PROFILE, (e.target as AccessControlProfilePopUpWindow).accessControlProfile, true));
 			}
 
 
-			private function onClickProfileName(event:KmcEvent):void {
+			private function onClickProfileName(event:BmcEvent):void {
 				var editProfileWin:AccessControlProfilePopUpWindow = new AccessControlProfilePopUpWindow();
 				editProfileWin.accessControlProfile = event.data as AccessControlProfileVO;
 				editProfileWin.allFlavors = AccountModelLocator.getInstance().getAllFlavorParams();
@@ -132,39 +132,39 @@
 
 
 	<table:columns>
-		<mx:DataGridColumn width="32" minWidth="32" headerRenderer="com.kaltura.controls.table.SelectionRenderer"
-						   itemRenderer="com.kaltura.controls.table.SelectionRenderer"/>
+		<mx:DataGridColumn width="32" minWidth="32" headerRenderer="com.borhan.controls.table.SelectionRenderer"
+						   itemRenderer="com.borhan.controls.table.SelectionRenderer"/>
 
 		<mx:DataGridColumn width="45" headerText="{resourceManager.getString('account','id')}" dataField="id"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlIdRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlIdRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','nameColumnTitle')}" dataField="name"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlNameRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlNameRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','descriptionColumnTitle')}"
 						   dataField="profile.description"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlDescriptionRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlDescriptionRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','createdAtColumnTitle')}"
 						   dataField="profile.createdAt"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlCreatedAtRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlCreatedAtRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','authorizedSitesColumnTitle')}"
 						   dataField="authoSites"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoSitesRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoSitesRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','authorizedCountriesColumnTitle')}"
 						   dataField="authoCountries" visible="{showIp2Loc}"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoCountriesRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoCountriesRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','authorizedIPsColumnTitle')}"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoIpsRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoIpsRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','authorizedFlavorsColumnTitle')}" visible="{showFlavors}"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoFlavorsRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAuthoFlavorsRenderer"/>
 
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','advancedSecurityColumnTitle')}"
 						   dataField="advance"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAdvancedSecRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.AccessControlAdvancedSecRenderer"/>
 	</table:columns>
 </table:SelectionTable>

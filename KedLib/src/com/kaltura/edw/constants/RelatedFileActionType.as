@@ -1,4 +1,4 @@
-package com.kaltura.edw.constants
+package com.borhan.edw.constants
 {
 	public class RelatedFileActionType
 	{

@@ -1,22 +1,22 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.borhan.bmc.modules.content.commands {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.playlist.PlaylistExecute;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.borhan.commands.playlist.PlaylistExecute;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.events.BMCEntryEvent;
+	import com.borhan.vo.BorhanPlaylist;
 
-	public class GetPlaylistCommand extends KalturaCommand {
-		private var _currentPlaylist:KalturaPlaylist;
+	public class GetPlaylistCommand extends BorhanCommand {
+		private var _currentPlaylist:BorhanPlaylist;
 
 
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
-			var e:KMCEntryEvent = event as KMCEntryEvent;
-			_currentPlaylist = e.entryVo as KalturaPlaylist;
+			var e:BMCEntryEvent = event as BMCEntryEvent;
+			_currentPlaylist = e.entryVo as BorhanPlaylist;
 			var playlistGet:PlaylistExecute = new PlaylistExecute(_currentPlaylist.id);
-			playlistGet.addEventListener(KalturaEvent.COMPLETE, result);
-			playlistGet.addEventListener(KalturaEvent.FAILED, fault);
+			playlistGet.addEventListener(BorhanEvent.COMPLETE, result);
+			playlistGet.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(playlistGet);
 		}
 

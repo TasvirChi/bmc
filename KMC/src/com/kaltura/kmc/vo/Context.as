@@ -1,4 +1,4 @@
-package com.kaltura.kmc.vo {
+package com.borhan.bmc.vo {
 	/**
 	 * this is a dummy class until we create the real
 	 * one that will work with all the modules.

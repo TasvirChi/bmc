@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,18 +25,18 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaAssetFilter;
+	import com.borhan.vo.BorhanAssetFilter;
 
-	import com.kaltura.vo.KalturaUrlTokenizer;
+	import com.borhan.vo.BorhanUrlTokenizer;
 
-	import com.kaltura.vo.KalturaUrlRecognizer;
+	import com.borhan.vo.BorhanUrlRecognizer;
 
-	import com.kaltura.vo.BaseFlexVo;
+	import com.borhan.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaDeliveryProfile extends BaseFlexVo
+	public dynamic class BorhanDeliveryProfile extends BaseFlexVo
 	{
 		/**
 		* The id of the Delivery
@@ -54,7 +54,7 @@ package com.kaltura.vo
 
 		/**
 		* Delivery type
-		* @see com.kaltura.types.KalturaDeliveryProfileType
+		* @see com.borhan.types.BorhanDeliveryProfileType
 		**/
 		public var type : String = null;
 
@@ -79,7 +79,7 @@ package com.kaltura.vo
 		public var updatedAt : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaPlaybackProtocol
+		* @see com.borhan.types.BorhanPlaybackProtocol
 		**/
 		public var streamerType : String = null;
 
@@ -93,21 +93,21 @@ package com.kaltura.vo
 		public var hostName : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaDeliveryStatus
+		* @see com.borhan.types.BorhanDeliveryStatus
 		**/
 		public var status : int = int.MIN_VALUE;
 
 		/**
 		**/
-		public var recognizer : KalturaUrlRecognizer;
+		public var recognizer : BorhanUrlRecognizer;
 
 		/**
 		**/
-		public var tokenizer : KalturaUrlTokenizer;
+		public var tokenizer : BorhanUrlTokenizer;
 
 		/**
 		* True if this is the systemwide default for the protocol
-		* @see com.kaltura.types.KalturaNullableBoolean
+		* @see com.borhan.types.BorhanNullableBoolean
 		**/
 		public var isDefault : int = int.MIN_VALUE;
 
@@ -134,7 +134,7 @@ package com.kaltura.vo
 		/**
 		* A filter that can be used to include additional assets in the URL (e.g. captions)
 		**/
-		public var supplementaryAssetsFilter : KalturaAssetFilter;
+		public var supplementaryAssetsFilter : BorhanAssetFilter;
 
 		/** 
 		* a list of attributes which may be updated on this object 

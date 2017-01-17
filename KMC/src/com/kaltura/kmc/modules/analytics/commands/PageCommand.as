@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.borhan.bmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.analytics.control.PageEvent;
-	import com.kaltura.kmc.modules.analytics.control.ReportEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.bmc.modules.analytics.control.PageEvent;
+	import com.borhan.bmc.modules.analytics.control.ReportEvent;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
 
 	public class PageCommand implements ICommand {
 

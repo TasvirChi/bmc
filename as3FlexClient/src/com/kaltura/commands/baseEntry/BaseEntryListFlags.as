@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.baseEntry
+package com.borhan.commands.baseEntry
 {
-		import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.delegates.baseEntry.BaseEntryListFlagsDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.delegates.baseEntry.BaseEntryListFlagsDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* List all pending flags for the entry.
 	**/
-	public class BaseEntryListFlags extends KalturaCall
+	public class BaseEntryListFlags extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param entryId String
-		* @param pager KalturaFilterPager
+		* @param pager BorhanFilterPager
 		**/
-		public function BaseEntryListFlags( entryId : String,pager : KalturaFilterPager=null )
+		public function BaseEntryListFlags( entryId : String,pager : BorhanFilterPager=null )
 		{
 			service= 'baseentry';
 			action= 'listFlags';
@@ -53,7 +53,7 @@ package com.kaltura.commands.baseEntry
 			keyArr.push('entryId');
 			valueArr.push(entryId);
 			if (pager) { 
-				keyValArr = kalturaObject2Arrays(pager, 'pager');
+				keyValArr = borhanObject2Arrays(pager, 'pager');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

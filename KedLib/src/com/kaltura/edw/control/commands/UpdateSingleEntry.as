@@ -1,26 +1,26 @@
-package com.kaltura.edw.control.commands {
-	import com.kaltura.commands.baseEntry.BaseEntryUpdate;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.events.KedDataEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
+package com.borhan.edw.control.commands {
+	import com.borhan.commands.baseEntry.BaseEntryUpdate;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.events.KedDataEvent;
+	import com.borhan.edw.model.datapacks.ContextDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanEntryStatus;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanLiveStreamEntry;
 
 	public class UpdateSingleEntry extends KedCommand {
 		
 		private var _event:KedEntryEvent;
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
 			
 			_event = event as KedEntryEvent;
-			var entry:KalturaBaseEntry = _event.entryVo;
+			var entry:BorhanBaseEntry = _event.entryVo;
 
 			entry.setUpdatedFieldsOnly(true);
-			if (entry.status != KalturaEntryStatus.NO_CONTENT && !(entry is KalturaLiveStreamEntry)) {
+			if (entry.status != BorhanEntryStatus.NO_CONTENT && !(entry is BorhanLiveStreamEntry)) {
 				entry.conversionProfileId = int.MIN_VALUE;
 			}
 			// don't send categories - we use categoryEntry service to update them in EntryData panel
@@ -33,8 +33,8 @@ package com.kaltura.edw.control.commands {
 
 			var mu:BaseEntryUpdate = new BaseEntryUpdate(entry.id, entry);
 			// add listeners and post call
-			mu.addEventListener(KalturaEvent.COMPLETE, result);
-			mu.addEventListener(KalturaEvent.FAILED, fault);
+			mu.addEventListener(BorhanEvent.COMPLETE, result);
+			mu.addEventListener(BorhanEvent.FAILED, fault);
 
 			_client.post(mu);
 		}

@@ -2,7 +2,7 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" >
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.utils.KTimeUtil;
+			import com.borhan.utils.KTimeUtil;
 			
 			private const _lblWidth : Number = 80;
 			

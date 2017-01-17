@@ -1,28 +1,28 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryGet;
-	import com.kaltura.commands.categoryUser.CategoryUserCopyFromCategory;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.category.CategoryGet;
+	import com.borhan.commands.categoryUser.CategoryUserCopyFromCategory;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.net.BorhanCall;
+	import com.borhan.vo.BorhanCategory;
 	
-	public class InheritUsersCommand extends KalturaCommand {
+	public class InheritUsersCommand extends BorhanCommand {
 		
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
-			var catid:int = (event.data as KalturaCategory).id;
+			var catid:int = (event.data as BorhanCategory).id;
 			var mr:MultiRequest = new MultiRequest();
-			var call:KalturaCall = new CategoryUserCopyFromCategory(catid);
+			var call:BorhanCall = new CategoryUserCopyFromCategory(catid);
 			mr.addAction(call);
 			call = new CategoryGet(catid);
 			mr.addAction(call);
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);
 			
 		}
@@ -33,7 +33,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 				var cg:CategoryEvent = new CategoryEvent(CategoryEvent.LIST_CATEGORY_USERS);
 				cg.dispatch();
 				// set new numbers of members to the category object
-				var updatedCat:KalturaCategory = data.data[data.data.length-1] as KalturaCategory;
+				var updatedCat:BorhanCategory = data.data[data.data.length-1] as BorhanCategory;
 				_model.categoriesModel.selectedCategory.membersCount = updatedCat.membersCount;
 				_model.categoriesModel.selectedCategory.pendingMembersCount = updatedCat.pendingMembersCount;
 			}

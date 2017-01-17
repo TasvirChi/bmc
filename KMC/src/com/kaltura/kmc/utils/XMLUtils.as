@@ -1,4 +1,4 @@
-package com.kaltura.kmc.utils
+package com.borhan.bmc.utils
 {
 	public class XMLUtils {
 		

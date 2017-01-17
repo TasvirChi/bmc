@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.UploadTokenCommand;
-	import com.kaltura.edw.control.commands.captions.*;
-	import com.kaltura.edw.control.events.CaptionsEvent;
-	import com.kaltura.edw.control.events.UploadTokenEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.UploadTokenCommand;
+	import com.borhan.edw.control.commands.captions.*;
+	import com.borhan.edw.control.events.CaptionsEvent;
+	import com.borhan.edw.control.events.UploadTokenEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class CaptionsTabController extends KMvCController {
+	public class CaptionsTabController extends BMvCController {
 		
 		public function CaptionsTabController()
 		{

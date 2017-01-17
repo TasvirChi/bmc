@@ -2,9 +2,9 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCategoryUserStatus;
-			import com.kaltura.types.KalturaUpdateMethodType;
-			import com.kaltura.vo.KalturaCategoryUser;
+			import com.borhan.types.BorhanCategoryUserStatus;
+			import com.borhan.types.BorhanUpdateMethodType;
+			import com.borhan.vo.BorhanCategoryUser;
 			
 			import mx.events.ListEvent;
 			
@@ -18,28 +18,28 @@
 				
 				// build actions list:
 				var actions:Array = [];
-				var kcu:KalturaCategoryUser = value as KalturaCategoryUser;
+				var kcu:BorhanCategoryUser = value as BorhanCategoryUser;
 				
 				// approve / archive / activate
-				/* if (kcu.status == KalturaCategoryUserStatus.PENDING) {
+				/* if (kcu.status == BorhanCategoryUserStatus.PENDING) {
 					actions.push({label:resourceManager.getString('cms', 'utaApprove'), data:CatUsrTableActions.APPROVE});
 				}
-				else */ if (kcu.status == KalturaCategoryUserStatus.ACTIVE) {
+				else */ if (kcu.status == BorhanCategoryUserStatus.ACTIVE) {
 					actions.push({label:resourceManager.getString('cms', 'utaDeactivate'), data:CatUsrTableActions.DEACTIVATE});
 				}
-				else if (kcu.status == KalturaCategoryUserStatus.NOT_ACTIVE) {
+				else if (kcu.status == BorhanCategoryUserStatus.NOT_ACTIVE) {
 					actions.push({label:resourceManager.getString('cms', 'utaActivate'), data:CatUsrTableActions.ACTIVATE});
 				}
 				
-				if (kcu.status != KalturaCategoryUserStatus.NOT_ACTIVE) {
+				if (kcu.status != BorhanCategoryUserStatus.NOT_ACTIVE) {
 					// permission level
 					actions.push({label:resourceManager.getString('cms', 'utaPermLvl'), data:CatUsrTableActions.EDIT_PERMISSION_LEVEL});
 					
 					// update method
-					if (kcu.updateMethod == KalturaUpdateMethodType.MANUAL) {
+					if (kcu.updateMethod == BorhanUpdateMethodType.MANUAL) {
 						actions.push({label:resourceManager.getString('cms', 'utaMethodAuto'), data:CatUsrTableActions.SET_AUTO_UPDATE});
 					}
-					else if (kcu.updateMethod == KalturaUpdateMethodType.AUTOMATIC) {
+					else if (kcu.updateMethod == BorhanUpdateMethodType.AUTOMATIC) {
 						actions.push({label:resourceManager.getString('cms', 'utaMethodManual'), data:CatUsrTableActions.SET_MANUAL_UPDATE});
 					}
 				}

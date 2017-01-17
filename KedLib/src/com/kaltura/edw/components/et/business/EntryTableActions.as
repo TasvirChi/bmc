@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.et.business
+package com.borhan.edw.components.et.business
 {
 	public class EntryTableActions {
 		

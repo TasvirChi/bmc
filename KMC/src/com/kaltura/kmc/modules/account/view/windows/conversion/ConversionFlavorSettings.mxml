@@ -2,21 +2,21 @@
 <!---
 edit ConversionProfileAssetParams attributes
 -->
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"  
+<HelpTitleWindow xmlns="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"  
 				 styleName="TitleWindowType2" creationComplete="creationCompleteHandler(event)"
 				 title="{resourceManager.getString('account','conversionFlavorSettingsTitle')}" 
 				 showCloseButton="true" close="{onClose()}" showHelpButton="true" help="helpHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.types.KalturaAssetParamsDeletePolicy;
-			import com.kaltura.types.KalturaAssetParamsOrigin;
-			import com.kaltura.types.KalturaFlavorReadyBehaviorType;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaConversionProfileAssetParams;
-			import com.kaltura.vo.KalturaLiveParams;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.types.BorhanAssetParamsDeletePolicy;
+			import com.borhan.types.BorhanAssetParamsOrigin;
+			import com.borhan.types.BorhanFlavorReadyBehaviorType;
+			import com.borhan.types.BorhanNullableBoolean;
+			import com.borhan.vo.FlavorVO;
+			import com.borhan.vo.BorhanConversionProfileAssetParams;
+			import com.borhan.vo.BorhanLiveParams;
 			
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
@@ -31,26 +31,26 @@ edit ConversionProfileAssetParams attributes
 			 * data provider for the asset's ready behaviour
 			 * */
 			private const _availabilityOptions:Array = [
-				{value:KalturaFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS, name:ResourceManager.getInstance().getString('account', 'flavor_inherit')}, 
-				{value:KalturaFlavorReadyBehaviorType.REQUIRED, name:ResourceManager.getInstance().getString('account', 'flavor_required')}, 
-				{value:KalturaFlavorReadyBehaviorType.OPTIONAL, name:ResourceManager.getInstance().getString('account', 'flavor_optional')}
+				{value:BorhanFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS, name:ResourceManager.getInstance().getString('account', 'flavor_inherit')}, 
+				{value:BorhanFlavorReadyBehaviorType.REQUIRED, name:ResourceManager.getInstance().getString('account', 'flavor_required')}, 
+				{value:BorhanFlavorReadyBehaviorType.OPTIONAL, name:ResourceManager.getInstance().getString('account', 'flavor_optional')}
 			];
 			
 			/**
 			 * data provider for the asset's origin
 			 * */
 			private const _originOptions:Array = [
-				{value:KalturaAssetParamsOrigin.CONVERT, name:ResourceManager.getInstance().getString('account', 'flavor_convert')},
-				{value:KalturaAssetParamsOrigin.CONVERT_WHEN_MISSING, name:ResourceManager.getInstance().getString('account', 'flavor_cwm')},
-				{value:KalturaAssetParamsOrigin.INGEST, name:ResourceManager.getInstance().getString('account', 'flavor_ingest')}
+				{value:BorhanAssetParamsOrigin.CONVERT, name:ResourceManager.getInstance().getString('account', 'flavor_convert')},
+				{value:BorhanAssetParamsOrigin.CONVERT_WHEN_MISSING, name:ResourceManager.getInstance().getString('account', 'flavor_cwm')},
+				{value:BorhanAssetParamsOrigin.INGEST, name:ResourceManager.getInstance().getString('account', 'flavor_ingest')}
 			];
 			
 			/**
 			 * data provider for the asset's generation policy
 			 * */
 			private const _genOptions:Array = [
-				{value:KalturaNullableBoolean.FALSE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_no_force')},
-				{value:KalturaNullableBoolean.TRUE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_force')},
+				{value:BorhanNullableBoolean.FALSE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_no_force')},
+				{value:BorhanNullableBoolean.TRUE_VALUE, name:ResourceManager.getInstance().getString('account', 'gen_force')},
 			];
 			
 			
@@ -58,14 +58,14 @@ edit ConversionProfileAssetParams attributes
 			 * data provider for the asset's intermediate-flavor handling options
 			 * */
 			private const _handleOptions:Array = [
-				{value:KalturaAssetParamsDeletePolicy.KEEP, name:ResourceManager.getInstance().getString('account', 'ifh_keep')},
-				{value:KalturaAssetParamsDeletePolicy.DELETE, name:ResourceManager.getInstance().getString('account', 'ifh_delete')},
+				{value:BorhanAssetParamsDeletePolicy.KEEP, name:ResourceManager.getInstance().getString('account', 'ifh_keep')},
+				{value:BorhanAssetParamsDeletePolicy.DELETE, name:ResourceManager.getInstance().getString('account', 'ifh_delete')},
 			];
 			
 			
 			
 			
-			private var _cpap:KalturaConversionProfileAssetParams;
+			private var _cpap:BorhanConversionProfileAssetParams;
 			
 			
 			[Bindable]
@@ -121,31 +121,31 @@ edit ConversionProfileAssetParams attributes
 				if (cbAvailability && cbConvertPolicy && tiSystemName && cbGenPolicy && cbInterHandle) {
 					// source flavor - always ingest, inherit
 					if (_flavorVO.kFlavor.tags && _flavorVO.kFlavor.tags.indexOf("source") > -1) {
-						_cpap.origin = KalturaAssetParamsOrigin.INGEST;
+						_cpap.origin = BorhanAssetParamsOrigin.INGEST;
 						if (_cpap.readyBehavior == int.MIN_VALUE) {
-							_cpap.readyBehavior = KalturaFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS;
+							_cpap.readyBehavior = BorhanFlavorReadyBehaviorType.INHERIT_FLAVOR_PARAMS;
 						}
 						cbConvertPolicy.enabled = false;
 					}
 					if (_flavorVO.kFlavor.id == 0) {
 						cbGenPolicy.enabled = false;
-						_cpap.forceNoneComplied = KalturaNullableBoolean.FALSE_VALUE;
+						_cpap.forceNoneComplied = BorhanNullableBoolean.FALSE_VALUE;
 					}
 					// default values:
 					if (_cpap.readyBehavior == int.MIN_VALUE) {
-						_cpap.readyBehavior = KalturaFlavorReadyBehaviorType.OPTIONAL;
+						_cpap.readyBehavior = BorhanFlavorReadyBehaviorType.OPTIONAL;
 					}
 					if (_cpap.origin == int.MIN_VALUE) {
-						_cpap.origin = KalturaAssetParamsOrigin.CONVERT;
+						_cpap.origin = BorhanAssetParamsOrigin.CONVERT;
 					}
 					if (!_cpap.systemName) {
 						_cpap.systemName = _flavorVO.kFlavor.systemName;
 					}
-					if (_cpap.forceNoneComplied == int.MIN_VALUE) {	// KalturaNullableBoolean is generated in the client as int
-						_cpap.forceNoneComplied = KalturaNullableBoolean.FALSE_VALUE;
+					if (_cpap.forceNoneComplied == int.MIN_VALUE) {	// BorhanNullableBoolean is generated in the client as int
+						_cpap.forceNoneComplied = BorhanNullableBoolean.FALSE_VALUE;
 					}
 					if (_cpap.deletePolicy == int.MIN_VALUE) {	
-						_cpap.deletePolicy = KalturaAssetParamsDeletePolicy.KEEP;
+						_cpap.deletePolicy = BorhanAssetParamsDeletePolicy.KEEP;
 					}
 					cbAvailability.selectedIndex = getItemIndex(_availabilityOptions, _cpap.readyBehavior);
 					cbConvertPolicy.selectedIndex = getItemIndex(_originOptions, _cpap.origin);
@@ -179,7 +179,7 @@ edit ConversionProfileAssetParams attributes
 				PermissionManager.getInstance().applyAllAttributes(this, "conversionFlavorDrilldown");
 				if (flavorVO) {
 					// if this is a live param, only system name is relevant
-					if (flavorVO.kFlavor is KalturaLiveParams) {
+					if (flavorVO.kFlavor is BorhanLiveParams) {
 						cbAvailability.includeInLayout = cbAvailability.visible = false;
 						cbConvertPolicy.includeInLayout = cbConvertPolicy.visible = false;
 						cbGenPolicy.includeInLayout = cbGenPolicy.visible = false;
@@ -208,16 +208,16 @@ edit ConversionProfileAssetParams attributes
 			}
 
 			/**
-			 * the KalturaConversionProfileAssetParams being edited
+			 * the BorhanConversionProfileAssetParams being edited
 			 */
-			public function get cpap():KalturaConversionProfileAssetParams {
+			public function get cpap():BorhanConversionProfileAssetParams {
 				return _cpap;
 			}
 
 			/**
 			 * @private
 			 */
-			public function set cpap(value:KalturaConversionProfileAssetParams):void {
+			public function set cpap(value:BorhanConversionProfileAssetParams):void {
 				_cpap = value;
 				setValues();
 			}
@@ -227,7 +227,7 @@ edit ConversionProfileAssetParams attributes
 
 			protected function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_transcoding_flavor_edit'));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_transcoding_flavor_edit'));
 			}
 
 			
@@ -241,7 +241,7 @@ edit ConversionProfileAssetParams attributes
 				if (result) {
 					// originalObjectType is being set in FlavorParamsUtil.makeFlavorParams()
 					if (flavorVO.kFlavor.hasOwnProperty('originalObjectType') 
-						&& flavorVO.kFlavor.originalObjectType == 'KalturaWidevineFlavorParams') {
+						&& flavorVO.kFlavor.originalObjectType == 'BorhanWidevineFlavorParams') {
 						result = false;
 					}
 					// this is another check for the same thing.

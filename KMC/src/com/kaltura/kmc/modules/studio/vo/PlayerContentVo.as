@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.studio.vo
+package com.borhan.bmc.modules.studio.vo
 {
 	
 	/**
-	 * media KDP should display in appstudio  
+	 * media BDP should display in appstudio  
 	 * @author Atar
 	 */	
 	public dynamic class PlayerContentVo {

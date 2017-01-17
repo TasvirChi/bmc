@@ -1,11 +1,11 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.AddNewAccessControlProfileCommand;
-	import com.kaltura.edw.control.commands.ListAccessControlsCommand;
-	import com.kaltura.edw.control.events.AccessControlEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.AddNewAccessControlProfileCommand;
+	import com.borhan.edw.control.commands.ListAccessControlsCommand;
+	import com.borhan.edw.control.events.AccessControlEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class AccessTabController extends KMvCController {
+	public class AccessTabController extends BMvCController {
 		
 		public function AccessTabController()
 		{

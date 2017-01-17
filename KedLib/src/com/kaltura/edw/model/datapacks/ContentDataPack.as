@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.borhan.bmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
@@ -13,7 +13,7 @@ package com.kaltura.edw.model.datapacks
 		
 //		/**
 //		 * whether to display "mixes" tab in entrydrilldown
-//		 * (in KMC value is taken from content uiconf) 
+//		 * (in BMC value is taken from content uiconf) 
 //		 */		
 //		public var showMixesTab:Boolean = true;
 		

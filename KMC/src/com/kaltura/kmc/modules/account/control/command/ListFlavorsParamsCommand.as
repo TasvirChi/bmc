@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.borhan.bmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.flavorParams.FlavorParamsList;
-	import com.kaltura.edw.model.util.FlavorParamsUtil;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.FlavorVO;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.vo.KalturaFlavorParamsListResponse;
-	import com.kaltura.vo.KalturaLiveParams;
+	import com.borhan.commands.flavorParams.FlavorParamsList;
+	import com.borhan.edw.model.util.FlavorParamsUtil;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.vo.FlavorVO;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanFlavorParams;
+	import com.borhan.vo.BorhanFlavorParamsListResponse;
+	import com.borhan.vo.BorhanLiveParams;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -27,11 +27,11 @@ package com.kaltura.kmc.modules.account.control.command
 		{
 			// only load if we are missing data
 			if (_model.liveFlavorsData.length == 0 || _model.mediaFlavorsData.length == 0) {
-				var pager:KalturaFilterPager = new KalturaFilterPager();
+				var pager:BorhanFilterPager = new BorhanFilterPager();
 				pager.pageSize = ListFlavorsParamsCommand.DEFAULT_PAGE_SIZE;
 			 	var listFlavorParams:FlavorParamsList = new FlavorParamsList(null, pager);
-			 	listFlavorParams.addEventListener(KalturaEvent.COMPLETE, result);
-				listFlavorParams.addEventListener(KalturaEvent.FAILED, fault);
+			 	listFlavorParams.addEventListener(BorhanEvent.COMPLETE, result);
+				listFlavorParams.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(listFlavorParams);
 			}
 			else {
@@ -50,18 +50,18 @@ package com.kaltura.kmc.modules.account.control.command
 		public function result(event:Object):void
 		{
 			_model.loadingFlag = false;
-			var response:KalturaFlavorParamsListResponse = event.data as KalturaFlavorParamsListResponse;
+			var response:BorhanFlavorParamsListResponse = event.data as BorhanFlavorParamsListResponse;
 			var flavorsParams:Array = FlavorParamsUtil.makeManyFlavorParams(response.objects);
 			
 			var mediaFlvorsTmpArrCol:ArrayCollection = new ArrayCollection();
 			var liveFlvorsTmpArrCol:ArrayCollection = new ArrayCollection();
 			
 			var flavor:FlavorVO;
-			for each(var kFlavor:KalturaFlavorParams in flavorsParams) {
+			for each(var kFlavor:BorhanFlavorParams in flavorsParams) {
 				// separate live flavorparams from all other flavor params
 				flavor = new FlavorVO();
 				flavor.kFlavor = kFlavor;
-				if (kFlavor is KalturaLiveParams) {
+				if (kFlavor is BorhanLiveParams) {
 					liveFlvorsTmpArrCol.addItem(flavor);
 				}
 				else {

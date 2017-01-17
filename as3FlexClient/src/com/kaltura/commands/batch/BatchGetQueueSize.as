@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.batch
+package com.borhan.commands.batch
 {
-		import com.kaltura.vo.KalturaWorkerQueueFilter;
-	import com.kaltura.delegates.batch.BatchGetQueueSizeDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanWorkerQueueFilter;
+	import com.borhan.delegates.batch.BatchGetQueueSizeDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* batch getQueueSize action get the queue size for job type
 	**/
-	public class BatchGetQueueSize extends KalturaCall
+	public class BatchGetQueueSize extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param workerQueueFilter KalturaWorkerQueueFilter
+		* @param workerQueueFilter BorhanWorkerQueueFilter
 		**/
-		public function BatchGetQueueSize( workerQueueFilter : KalturaWorkerQueueFilter )
+		public function BatchGetQueueSize( workerQueueFilter : BorhanWorkerQueueFilter )
 		{
 			service= 'batch';
 			action= 'getQueueSize';
@@ -49,7 +49,7 @@ package com.kaltura.commands.batch
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(workerQueueFilter, 'workerQueueFilter');
+				keyValArr = borhanObject2Arrays(workerQueueFilter, 'workerQueueFilter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

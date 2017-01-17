@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.playlist.types
+package com.borhan.edw.components.playlist.types
 {
 	/**
 	 * defines the values of the "context" attribute of 

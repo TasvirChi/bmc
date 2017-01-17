@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.borhan.bmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.vo.NotificationVO;
-	import com.kaltura.kmc.modules.analytics.vo.PartnerVO;
-	import com.kaltura.vo.KalturaPartner;
+	import com.borhan.commands.partner.PartnerGetInfo;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.bmc.modules.analytics.vo.NotificationVO;
+	import com.borhan.bmc.modules.analytics.vo.PartnerVO;
+	import com.borhan.vo.BorhanPartner;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -26,8 +26,8 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingPartnerInfo = true;
 
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
+			getPartnerInfo.addEventListener(BorhanEvent.COMPLETE, result);
+			getPartnerInfo.addEventListener(BorhanEvent.FAILED, fault);
 			_model.kc.post(getPartnerInfo);
 		}
 
@@ -35,8 +35,8 @@ package com.kaltura.kmc.modules.analytics.commands {
 		public function result(data:Object):void {
 			_model.loadingPartnerInfo = false;
 			_model.checkLoading();
-			if (data.data is KalturaPartner) {
-				var resultKp:KalturaPartner = data.data as KalturaPartner;
+			if (data.data is BorhanPartner) {
+				var resultKp:BorhanPartner = data.data as BorhanPartner;
 				var pvo:PartnerVO = new PartnerVO;
 				pvo.subPId = _model.context.subpId;
 

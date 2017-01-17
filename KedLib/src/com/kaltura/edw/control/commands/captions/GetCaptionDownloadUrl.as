@@ -1,14 +1,14 @@
-package com.kaltura.edw.control.commands.captions
+package com.borhan.edw.control.commands.captions
 {
-	import com.kaltura.commands.captionAsset.CaptionAssetGet;
-	import com.kaltura.commands.captionAsset.CaptionAssetGetUrl;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.CaptionsEvent;
-	import com.kaltura.edw.vo.EntryCaptionVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaFlavorAssetStatus;
-	import com.kaltura.vo.KalturaCaptionAsset;
+	import com.borhan.commands.captionAsset.CaptionAssetGet;
+	import com.borhan.commands.captionAsset.CaptionAssetGetUrl;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.CaptionsEvent;
+	import com.borhan.edw.vo.EntryCaptionVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanFlavorAssetStatus;
+	import com.borhan.vo.BorhanCaptionAsset;
 	
 	
 	public class GetCaptionDownloadUrl extends KedCommand
@@ -20,14 +20,14 @@ package com.kaltura.edw.control.commands.captions
 		 * @param event
 		 * 
 		 */		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_captionVo = (event as CaptionsEvent).captionVo;
 			if (_captionVo.caption && _captionVo.caption.id) {
 				_model.increaseLoadCounter();
 				
 				var getCaption:CaptionAssetGet = new CaptionAssetGet(_captionVo.caption.id);
-				getCaption.addEventListener(KalturaEvent.COMPLETE, captionRecieved);
-				getCaption.addEventListener(KalturaEvent.FAILED, fault);
+				getCaption.addEventListener(BorhanEvent.COMPLETE, captionRecieved);
+				getCaption.addEventListener(BorhanEvent.FAILED, fault);
 				
 				_client.post(getCaption);
 			}
@@ -38,15 +38,15 @@ package com.kaltura.edw.control.commands.captions
 		 * @param event
 		 * 
 		 */		
-		private function captionRecieved(event:KalturaEvent):void {
-			if (event.data is KalturaCaptionAsset) {
-				var resultCaption:KalturaCaptionAsset = event.data as KalturaCaptionAsset;
+		private function captionRecieved(event:BorhanEvent):void {
+			if (event.data is BorhanCaptionAsset) {
+				var resultCaption:BorhanCaptionAsset = event.data as BorhanCaptionAsset;
 				_captionVo.caption.status = resultCaption.status;
-				if (_captionVo.caption.status == KalturaFlavorAssetStatus.READY) {
+				if (_captionVo.caption.status == BorhanFlavorAssetStatus.READY) {
 //					var getUrl:CaptionAssetGetDownloadUrl = new CaptionAssetGetDownloadUrl(_captionVo.caption.id);
 					var getUrl:CaptionAssetGetUrl = new CaptionAssetGetUrl(_captionVo.caption.id);
-					getUrl.addEventListener(KalturaEvent.COMPLETE, result);
-					getUrl.addEventListener(KalturaEvent.FAILED, fault);
+					getUrl.addEventListener(BorhanEvent.COMPLETE, result);
+					getUrl.addEventListener(BorhanEvent.FAILED, fault);
 					_client.post(getUrl);
 				}
 				else {

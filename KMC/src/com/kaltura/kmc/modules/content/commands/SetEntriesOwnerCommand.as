@@ -1,30 +1,30 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.baseEntry.BaseEntryUpdate;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.baseEntry.BaseEntryUpdate;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.vo.BorhanBaseEntry;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class SetEntriesOwnerCommand extends KalturaCommand {
+	public class SetEntriesOwnerCommand extends BorhanCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 			
 			var e:EntriesEvent = event as EntriesEvent;
 			var userid:String = e.data;
-			var entry:KalturaBaseEntry;
+			var entry:BorhanBaseEntry;
 			var updateEntry:BaseEntryUpdate
 			var mr:MultiRequest = new MultiRequest();
 			
 			for (var i:uint = 0; i < e.entries.length; i++) {
-				entry = e.entries[i] as KalturaBaseEntry;
+				entry = e.entries[i] as BorhanBaseEntry;
 				entry.userId = userid;
 				entry.setUpdatedFieldsOnly(true);
 				if (entry.conversionProfileId) {
@@ -37,8 +37,8 @@ package com.kaltura.kmc.modules.content.commands
 				updateEntry = new BaseEntryUpdate(entry.id, entry);
 				mr.addAction(updateEntry);
 			}
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);
 			
 		}

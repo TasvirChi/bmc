@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.playlist.events
+package com.borhan.edw.components.playlist.events
 {
-	import com.kaltura.edw.events.KedDataEvent;
+	import com.borhan.edw.events.KedDataEvent;
 	
 	public class ManualPlaylistWindowEvent extends KedDataEvent {
 		

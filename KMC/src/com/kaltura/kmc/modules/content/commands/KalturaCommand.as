@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.borhan.bmc.modules.content.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.analytics.GoogleAnalyticsConsts;
-	import com.kaltura.analytics.GoogleAnalyticsTracker;
-	import com.kaltura.edw.business.KedJSGate;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
+	import com.borhan.analytics.GoogleAnalyticsConsts;
+	import com.borhan.analytics.GoogleAnalyticsTracker;
+	import com.borhan.edw.business.KedJSGate;
+	import com.borhan.edw.model.types.APIErrorCode;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.model.CmsModelLocator;
 	
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 
-	public class KalturaCommand implements ICommand, IResponder {
+	public class BorhanCommand implements ICommand, IResponder {
 		protected var _model:CmsModelLocator = CmsModelLocator.getInstance();
 
 
@@ -23,7 +23,7 @@ package com.kaltura.kmc.modules.content.commands {
 		 */
 		public function fault(info:Object):void {
 			_model.decreaseLoadCounter();
-			var er:KalturaError = (info as KalturaEvent).error;
+			var er:BorhanError = (info as BorhanEvent).error;
 			if (!er) return;
 			if (er.errorCode == "CONNECTION_TIMEOUT") {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CLIENT_CONNECTION_TIMEOUT, GoogleAnalyticsConsts.CONTENT);
@@ -39,7 +39,7 @@ package com.kaltura.kmc.modules.content.commands {
 				Alert.show(ResourceManager.getInstance().getString('common','forbiddenError',[er.errorMsg]), 
 					ResourceManager.getInstance().getString('common', 'forbiden_error_title'), Alert.OK, null, logout);
 				//de-activate the HTML tabs
-//				ExternalInterface.call("kmc.utils.activateHeader", false);
+//				ExternalInterface.call("bmc.utils.activateHeader", false);
 			}
 			else {
 				Alert.show(getMessageFromError(er.errorCode, er.errorMsg), ResourceManager.getInstance().getString('cms', 'error'));
@@ -60,7 +60,7 @@ package com.kaltura.kmc.modules.content.commands {
 		 *
 		 */
 		public function result(data:Object):void {
-			var er:KalturaError = (data as KalturaEvent).error;
+			var er:BorhanError = (data as BorhanEvent).error;
 			if (er && er.errorCode == APIErrorCode.INVALID_KS) {
 				// redirect to login, or whatever JS does with invalid KS.
 				KedJSGate.expired();
@@ -81,7 +81,7 @@ package com.kaltura.kmc.modules.content.commands {
 			}
 			// look for error
 			var str:String = '';
-			var er:KalturaError = (resultData as KalturaEvent).error;
+			var er:BorhanError = (resultData as BorhanEvent).error;
 			if (er) {
 				str = getMessageFromError(er.errorCode, er.errorMsg);
 				Alert.show(str, header);
@@ -134,7 +134,7 @@ package com.kaltura.kmc.modules.content.commands {
 		 * @param er	the error to parse
 		 * @return 		possible localised error message
 		 */
-		protected function getErrorText(er:KalturaError):String {
+		protected function getErrorText(er:BorhanError):String {
 			var str:String = ResourceManager.getInstance().getString('cms', er.errorCode);
 			if (!str) {
 				str = er.errorMsg;

@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.business {
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.kmc.modules.content.events.ChangeModelEvent;
+package com.borhan.bmc.modules.content.business {
+	import com.borhan.edw.business.permissions.PermissionManager;
+	import com.borhan.bmc.modules.content.events.ChangeModelEvent;
 	
 	import flash.events.Event;
 	
@@ -154,7 +154,7 @@ package com.kaltura.kmc.modules.content.business {
 
 
 		/**
-		 * should KMC try to resize thumbnail images (entry table)? 
+		 * should BMC try to resize thumbnail images (entry table)? 
 		 */
 		public function set enableThumbResize(value:Boolean):void {
 			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.SET_ENABLE_THUMB_RESIZE, value);
@@ -236,41 +236,41 @@ package com.kaltura.kmc.modules.content.business {
 		
 		
 		/**
-		 * enable provisioning of Kaltura live streams 
+		 * enable provisioning of Borhan live streams 
 		 */
-		public function set enableKalturaLive(value:Boolean):void {
-			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_KALTURA_LIVE, value);
+		public function set enableBorhanLive(value:Boolean):void {
+			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_BORHAN_LIVE, value);
 			cge.dispatch();
 		}
 		
-		public function get enableKalturaLive():Boolean {
+		public function get enableBorhanLive():Boolean {
 			return true;
 		}
 		
 		
 		/**
-		 * by default, record kaltura live streams 
+		 * by default, record borhan live streams 
 		 */
-		public function set enableKalturaRecording(value:Boolean):void {
-			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_KALTURA_RECORDING, value);
+		public function set enableBorhanRecording(value:Boolean):void {
+			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_BORHAN_RECORDING, value);
 			cge.dispatch();
 		}
 		
-		public function get enableKalturaRecording():Boolean {
+		public function get enableBorhanRecording():Boolean {
 			return true;
 		}
 		
 		
 		
 		/**
-		 * enable creating Kaltura multicast live streams 
+		 * enable creating Borhan multicast live streams 
 		 */
-		public function set enableKalturaMulticast(value:Boolean):void {
-			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_KALTURA_MULTICAST, value);
+		public function set enableBorhanMulticast(value:Boolean):void {
+			var cge:ChangeModelEvent = new ChangeModelEvent(ChangeModelEvent.ENABLE_BORHAN_MULTICAST, value);
 			cge.dispatch();
 		}
 		
-		public function get enableKalturaMulticast():Boolean {
+		public function get enableBorhanMulticast():Boolean {
 			return true;
 		}
 		

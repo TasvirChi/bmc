@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="com.kaltura.types.KalturaEntryAttendeeOrderBy"/>
-    <classEntry path="com.kaltura.types.KalturaEntryAttendeeStatus"/>
-    <classEntry path="com.kaltura.types.KalturaMediaServerOrderBy"/>
-    <classEntry path="com.kaltura.vo.KalturaEntryAttendeeBaseFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaEntryAttendeeFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaFileSyncImportJobData"/>
-    <classEntry path="com.kaltura.vo.KalturaMediaServerFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaRemoteStorageResource"/>
-    <classEntry path="com.kaltura.vo.KalturaReportGraph"/>
-    <classEntry path="com.kaltura.vo.KalturaVelocixProvisionJobData"/>
-    <classEntry path="com.kaltura.vo.KalturaWidevineFlavorParamsOutputFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaWidgetFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaYahooSyndicationFeed"/>
-    <classEntry path="com.kaltura.vo.KalturaYahooSyndicationFeedBaseFilter"/>
-    <classEntry path="com.kaltura.vo.KalturaYahooSyndicationFeedFilter"/>
+    <classEntry path="com.borhan.types.BorhanEntryAttendeeOrderBy"/>
+    <classEntry path="com.borhan.types.BorhanEntryAttendeeStatus"/>
+    <classEntry path="com.borhan.types.BorhanMediaServerOrderBy"/>
+    <classEntry path="com.borhan.vo.BorhanEntryAttendeeBaseFilter"/>
+    <classEntry path="com.borhan.vo.BorhanEntryAttendeeFilter"/>
+    <classEntry path="com.borhan.vo.BorhanFileSyncImportJobData"/>
+    <classEntry path="com.borhan.vo.BorhanMediaServerFilter"/>
+    <classEntry path="com.borhan.vo.BorhanRemoteStorageResource"/>
+    <classEntry path="com.borhan.vo.BorhanReportGraph"/>
+    <classEntry path="com.borhan.vo.BorhanVelocixProvisionJobData"/>
+    <classEntry path="com.borhan.vo.BorhanWidevineFlavorParamsOutputFilter"/>
+    <classEntry path="com.borhan.vo.BorhanWidgetFilter"/>
+    <classEntry path="com.borhan.vo.BorhanYahooSyndicationFeed"/>
+    <classEntry path="com.borhan.vo.BorhanYahooSyndicationFeedBaseFilter"/>
+    <classEntry path="com.borhan.vo.BorhanYahooSyndicationFeedFilter"/>
     <classEntry path="ru.inspirit.net.MultipartURLLoader"/>
     <classEntry path="ru.inspirit.net.events.MultipartURLLoaderEvent"/>
   </includeClasses>

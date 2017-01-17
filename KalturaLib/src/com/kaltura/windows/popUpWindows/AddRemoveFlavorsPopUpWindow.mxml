@@ -6,7 +6,7 @@
 -->
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
 							title="{rm.getString('windows', 'addRemoveFlavorsTitle')}" close="closeWindow(event)" height="350"
-							xmlns:containers="com.kaltura.containers.*" showCloseButton="true" width="630"
+							xmlns:containers="com.borhan.containers.*" showCloseButton="true" width="630"
 							showHelpButton="false" defaultButton="{saveBtn}">
 	<containers:states>
 		<mx:State name="{RESTRICT_STATE}">
@@ -20,10 +20,10 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.utils.KArrayUtil;
+			import com.borhan.vo.FlavorVO;
+			import com.borhan.utils.KArrayUtil;
 			import com.adobe.utils.ArrayUtil;
-			import com.kaltura.vo.KalturaFlavorParams;
+			import com.borhan.vo.BorhanFlavorParams;
 			
 			import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
@@ -128,7 +128,7 @@
 			<mx:Label text="{rm.getString('windows', 'allFlavorsLabel')}"/>
 			<mx:List id="allFlavorsList" height="100%" width="100%" allowMultipleSelection="true" 
 					 dataProvider="{_noneSelectedFlavors}" styleName="accessControlFlavorsList"
-					 itemRenderer="com.kaltura.renderers.FlavorsListItemRenderer">
+					 itemRenderer="com.borhan.renderers.FlavorsListItemRenderer">
 			</mx:List>
 		</mx:VBox>
 		<mx:VBox height="100%" horizontalAlign="center" verticalAlign="middle" paddingLeft="2" paddingRight="2">
@@ -141,7 +141,7 @@
 			<mx:Label text="{rm.getString('windows', 'flavorsToAllowLabel')}" id="label1"/>
 			<mx:List id="selectedFlavorsList" height="100%" width="100%" allowMultipleSelection="true" 
 					 dataProvider="{new ArrayCollection(selectedData.toArray())}" styleName="accessControlFlavorsList"
-					 itemRenderer="com.kaltura.renderers.FlavorsListItemRenderer">
+					 itemRenderer="com.borhan.renderers.FlavorsListItemRenderer">
 			</mx:List>
 		</mx:VBox>
 	</mx:HBox>

@@ -1,9 +1,9 @@
-package com.kaltura.utils.parsers
+package com.borhan.utils.parsers
 {
-	import com.kaltura.base.types.MetadataCustomFieldMaxOccursTypes;
-	import com.kaltura.base.types.MetadataCustomFieldTypes;
-	import com.kaltura.base.types.XSDConstants;
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.borhan.base.types.MetadataCustomFieldMaxOccursTypes;
+	import com.borhan.base.types.MetadataCustomFieldTypes;
+	import com.borhan.base.types.XSDConstants;
+	import com.borhan.vo.MetadataFieldVO;
 	
 	import mx.collections.ArrayCollection;
 	import mx.resources.ResourceManager;

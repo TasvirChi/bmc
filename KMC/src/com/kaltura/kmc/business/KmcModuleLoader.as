@@ -1,5 +1,5 @@
-package com.kaltura.kmc.business {
-	import com.kaltura.kmc.events.KmcModuleEvent;
+package com.borhan.bmc.business {
+	import com.borhan.bmc.events.BmcModuleEvent;
 	
 	import flash.events.EventDispatcher;
 	import flash.system.ApplicationDomain;
@@ -10,30 +10,30 @@ package com.kaltura.kmc.business {
 	import mx.modules.ModuleManager;
 
 	/**
-	 * KmcModuleLoader is responsible for loading the different modules required by KMC.
+	 * BmcModuleLoader is responsible for loading the different modules required by BMC.
 	 * It creates a ModuleLoader instance for each module it is asked to load, and saves 
-	 * its id so KMC can ask for it later.
+	 * its id so BMC can ask for it later.
 	 * The load listeners attached to the diffrerent ModuleLoaders are not removed deliberately, 
-	 * because KmcModuleLoader doesn't actually loads modules. The modules are laoded when they
+	 * because BmcModuleLoader doesn't actually loads modules. The modules are laoded when they
 	 * are needed, and the <code>ModuleEvent.READY</code> is dispatched every time the module 
 	 * becomes visible and is used then.  
 	 */	
-	public class KmcModuleLoader extends EventDispatcher {
+	public class BmcModuleLoader extends EventDispatcher {
 
 		// ==============================================================================
 		// events
 		// ==============================================================================
 		/**
 		 * Dispatched when a module was loaded.
-		 * @eventType KmcModuleEvent.MODULE_LOADED
+		 * @eventType BmcModuleEvent.MODULE_LOADED
 		 */
-		[Event(name="moduleLoaded", type="com.kaltura.kmc.events.KmcModuleEvent")]
+		[Event(name="moduleLoaded", type="com.borhan.bmc.events.BmcModuleEvent")]
 
 		/**
 		 * Dispatched when a module failed loading.
-		 * @eventType KmcModuleEvents.moduleLoaded
+		 * @eventType BmcModuleEvents.moduleLoaded
 		 */
-		[Event(name="moduleLoadError", type="com.kaltura.kmc.events.KmcModuleEvent")]
+		[Event(name="moduleLoadError", type="com.borhan.bmc.events.BmcModuleEvent")]
 
 		
 		// ==============================================================================
@@ -61,19 +61,19 @@ package com.kaltura.kmc.business {
 		 * Constructor.
 		 * Initialize the modules info dictionary. 
 		 */		
-		public function KmcModuleLoader() {
+		public function BmcModuleLoader() {
 			_urlToId = new Object();
 			_urlToMl = new Object();
 		}
 
 		
 		/**
-		 * Load a KMC module, or return the instance of the module already loaded.
+		 * Load a BMC module, or return the instance of the module already loaded.
 		 * @param url 	the path to the loaded module
 		 * @param id	load id for this module, used later to retreive it's uiconf id.
 		 * @return	the ModuleLoader instance that will load this module
 		 */
-		public function loadKmcModule(url:String, id:String):ModuleLoader {
+		public function loadBmcModule(url:String, id:String):ModuleLoader {
 			var moduleLoader:ModuleLoader ;
 			if (_urlToMl[url]) {
 				moduleLoader = _urlToMl[url]; 
@@ -100,7 +100,7 @@ package com.kaltura.kmc.business {
 		
 		/**
 		 * retrieve the load id that was initialy passed for a module. 
-		 * NOTE: this is not the module's id in KMC, it is just a name it was loaded with. 
+		 * NOTE: this is not the module's id in BMC, it is just a name it was loaded with. 
 		 * @param ml	the <code>ModuleLoader</code> instance that loaded the module in question.
 		 * @return 		id of the module loaded by <code>ml</code>.
 		 * -----------------------------------
@@ -120,7 +120,7 @@ package com.kaltura.kmc.business {
 			//TODO make useful
 //			trace("onModuleProgress: ",Math.round(event.bytesLoaded * 100 /event.bytesTotal), (event.target as ModuleLoader).url);	
 //			var ml:ModuleLoader = event.target as ModuleLoader;
-//			dispatchEvent(new KmcModuleEvent(KmcModuleEvent.MODULE_LOAD_PROGRESS, ml, _modulesInfo[ml.url]));
+//			dispatchEvent(new BmcModuleEvent(BmcModuleEvent.MODULE_LOAD_PROGRESS, ml, _modulesInfo[ml.url]));
 		}
 
 
@@ -131,7 +131,7 @@ package com.kaltura.kmc.business {
 		 */
 		protected function onModuleReady(event:ModuleEvent):void {
 			var ml:ModuleLoader = event.currentTarget as ModuleLoader;
-			dispatchEvent(new KmcModuleEvent(KmcModuleEvent.MODULE_LOADED, ml));
+			dispatchEvent(new BmcModuleEvent(BmcModuleEvent.MODULE_LOADED, ml));
 		}
 
 
@@ -142,7 +142,7 @@ package com.kaltura.kmc.business {
 		 */		
 		protected function onModuleError(event:ModuleEvent):void {
 			var ml:ModuleLoader = event.currentTarget as ModuleLoader;
-			dispatchEvent(new KmcModuleEvent(KmcModuleEvent.MODULE_LOAD_ERROR, ml, event.errorText));
+			dispatchEvent(new BmcModuleEvent(BmcModuleEvent.MODULE_LOAD_ERROR, ml, event.errorText));
 		}
 	}
 }

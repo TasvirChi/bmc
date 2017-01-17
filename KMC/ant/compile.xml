@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="KMC Compiler" basedir="./.." default="build">
+<project name="BMC Compiler" basedir="./.." default="build">
 	
 	<!-- path to Flex SDK -->
     <property name="FLEX_HOME" value="C:/Program Files (x86)/Adobe/Adobe Flash Builder 4.5/sdks/3.6.0"/>
@@ -8,12 +8,12 @@
 	<!-- directory for the compiled swf -->
     <property name="DEPLOY_DIR" value="${basedir}/bin-release"/>
 	
-	<property name="KMC_VERSION" value="v5.41.2"/>
-	<property name="KDP_VERSION" value="v3.9.9"/>
+	<property name="BMC_VERSION" value="v5.41.2"/>
+	<property name="BDP_VERSION" value="v3.9.9"/>
 	<property name="HTML5_VERSION" value="v1.9.6"/>
 	<property name="KCLIP_VERSION" value="v1.2"/>
-	<property name="KCW_VERSION" value="v2.2.4"/>
-	<property name="KCW_VERSION_ONPREM" value="v2.2.4"/>
+	<property name="BCW_VERSION" value="v2.2.4"/>
+	<property name="BCW_VERSION_ONPREM" value="v2.2.4"/>
 	
 	<!-- include flex tasks -->
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
@@ -22,7 +22,7 @@
 	<target name="build" description="general build" depends="clean, init, compile_locales, compile, pack">
 		
 		<length property="length" mode="each">
-		    <fileset dir="${basedir}/../${KMC_VERSION}" >
+		    <fileset dir="${basedir}/../${BMC_VERSION}" >
 				<exclude name="**/locale/**"/>
 				<include name="**/*.swf"/>
 			</fileset>
@@ -33,7 +33,7 @@
 			<success source="C:/WINDOWS/media/tada.wav"/>
 			<fail source="C:/WINDOWS/media"/>
 		</sound>
-		<echo>WOOHOO! KMC is ready!</echo>
+		<echo>WOOHOO! BMC is ready!</echo>
 	</target>
 	
 	
@@ -45,7 +45,7 @@
 			<property name="basedir" value="${basedir}/../KedLib"/>
 		</ant> 
 		<ant antfile="ant/generateKeysLocaleSources.xml" target="build" > 
-			<property name="basedir" value="${basedir}/../KalturaLib"/>
+			<property name="basedir" value="${basedir}/../BorhanLib"/>
 		</ant> 
 		<ant antfile="ant/generateKeysLocaleSources.xml" target="build" > 
 			<property name="basedir" value="${basedir}/../AutoComplete"/>
@@ -76,9 +76,9 @@
 		</ant> 
 	</target>
 	
-	<target name="compile" description="compile release build of KMC and drilldown panels">
-		<fb.exportReleaseBuild project="KMC" /> 
-		<echo>KMC release build created</echo>
+	<target name="compile" description="compile release build of BMC and drilldown panels">
+		<fb.exportReleaseBuild project="BMC" /> 
+		<echo>BMC release build created</echo>
 		<fb.exportReleaseBuild project="KedPanels" destdir="${DEPLOY_DIR}" /> 
 		<echo>Ked Panels release build created</echo>
 	</target>

@@ -1,23 +1,23 @@
-package com.kaltura.edw.control.commands.flavor
+package com.borhan.edw.control.commands.flavor
 {
-	import com.kaltura.commands.flavorAsset.FlavorAssetGetUrl;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaFlavorAssetWithParams;
+	import com.borhan.commands.flavorAsset.FlavorAssetGetUrl;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanFlavorAssetWithParams;
 	
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
 	public class DownloadFlavorAsset extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{		
 		 	_model.increaseLoadCounter();
-		 	var obj:KalturaFlavorAssetWithParams = event.data as KalturaFlavorAssetWithParams;
+		 	var obj:BorhanFlavorAssetWithParams = event.data as BorhanFlavorAssetWithParams;
 			var downloadCommand:FlavorAssetGetUrl = new FlavorAssetGetUrl(obj.flavorAsset.id);
-            downloadCommand.addEventListener(KalturaEvent.COMPLETE, result);
-	        downloadCommand.addEventListener(KalturaEvent.FAILED, fault);
+            downloadCommand.addEventListener(BorhanEvent.COMPLETE, result);
+	        downloadCommand.addEventListener(BorhanEvent.FAILED, fault);
     	    _client.post(downloadCommand);  
 		}
 		

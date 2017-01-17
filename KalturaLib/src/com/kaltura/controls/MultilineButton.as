@@ -1,6 +1,6 @@
-package com.kaltura.controls
+package com.borhan.controls
 {
-	import com.kaltura.controls.text.NoTruncationUITextField;
+	import com.borhan.controls.text.NoTruncationUITextField;
 	
 	import flash.display.DisplayObject;
 	import flash.text.TextLineMetrics;

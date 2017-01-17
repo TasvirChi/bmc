@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,15 +25,15 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaPlayableEntryFilter;
+	import com.borhan.vo.BorhanPlayableEntryFilter;
 
 	[Bindable]
-	public dynamic class KalturaMediaEntryBaseFilter extends KalturaPlayableEntryFilter
+	public dynamic class BorhanMediaEntryBaseFilter extends BorhanPlayableEntryFilter
 	{
 		/**
-		* @see com.kaltura.types.KalturaMediaType
+		* @see com.borhan.types.BorhanMediaType
 		**/
 		public var mediaTypeEqual : int = int.MIN_VALUE;
 
@@ -42,12 +42,12 @@ package com.kaltura.vo
 		public var mediaTypeIn : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaSourceType
+		* @see com.borhan.types.BorhanSourceType
 		**/
 		public var sourceTypeEqual : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaSourceType
+		* @see com.borhan.types.BorhanSourceType
 		**/
 		public var sourceTypeNotEqual : String = null;
 

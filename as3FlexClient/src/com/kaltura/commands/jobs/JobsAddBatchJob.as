@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.jobs
+package com.borhan.commands.jobs
 {
-		import com.kaltura.vo.KalturaBatchJob;
-	import com.kaltura.delegates.jobs.JobsAddBatchJobDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanBatchJob;
+	import com.borhan.delegates.jobs.JobsAddBatchJobDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* batch addBatchJob action allows to add a generic BatchJob
 	**/
-	public class JobsAddBatchJob extends KalturaCall
+	public class JobsAddBatchJob extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param batchJob KalturaBatchJob
+		* @param batchJob BorhanBatchJob
 		**/
-		public function JobsAddBatchJob( batchJob : KalturaBatchJob )
+		public function JobsAddBatchJob( batchJob : BorhanBatchJob )
 		{
 			service= 'jobs';
 			action= 'addBatchJob';
@@ -49,7 +49,7 @@ package com.kaltura.commands.jobs
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(batchJob, 'batchJob');
+				keyValArr = borhanObject2Arrays(batchJob, 'batchJob');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

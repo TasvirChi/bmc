@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+<containers:ConfinedTitleWindow xmlns:containers="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml"
 				layout="vertical" styleName="TitleWindowType2"
 				backgroundColor="#f7f7f7"
 				width="360" height="230"
@@ -9,8 +9,8 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.events.KedDataEvent;
+			import com.borhan.edw.constants.PanelConsts;
+			import com.borhan.edw.events.KedDataEvent;
 			
 			import mx.containers.VBox;
 			import mx.containers.ViewStack;

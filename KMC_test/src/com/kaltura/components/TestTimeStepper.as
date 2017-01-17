@@ -1,6 +1,6 @@
-package com.kaltura.components
+package com.borhan.components
 {
-	import com.kaltura.controls.TimeStepper;
+	import com.borhan.controls.TimeStepper;
 	
 	import org.flexunit.Assert;
 	

@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.borhan.bmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.user.UserAdd;
-	import com.kaltura.commands.user.UserGetByLoginId;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.kmc.modules.admin.control.events.UserEvent;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.commands.user.UserAdd;
+	import com.borhan.commands.user.UserGetByLoginId;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.edw.model.types.APIErrorCode;
+	import com.borhan.bmc.modules.admin.control.events.UserEvent;
+	import com.borhan.vo.BorhanUser;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
@@ -21,13 +21,13 @@ package com.kaltura.kmc.modules.admin.control.commands
 	 */
 	public class CheckUserExistCommand extends BaseCommand {
 		
-		private var user:KalturaUser;
+		private var user:BorhanUser;
 		
 		override public function execute(event:CairngormEvent):void {
 			user = (event as UserEvent).user;
 			var ua:UserGetByLoginId = new UserGetByLoginId(user.email);
-			ua.addEventListener(KalturaEvent.COMPLETE, result);
-			ua.addEventListener(KalturaEvent.FAILED, fault);
+			ua.addEventListener(BorhanEvent.COMPLETE, result);
+			ua.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_model.kc.post(ua);
 		}
@@ -36,7 +36,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 			if (data.success) {
 				/* Use case 4 - user already exist in the system and is associated with the current account. 
 				When creating a new user with an email address of a user that is already existed (active or 
-				blocked) in the system and is associated with the current KMC account a pop-up message should 
+				blocked) in the system and is associated with the current BMC account a pop-up message should 
 				be prompted upon clicking the "save changes" button notifying the administrator on the existing 
 				user "user.name@domain.com is already listed in the system as an authorized user in your 
 				account". a new user should not be created and existing user should not be updated. 
@@ -45,14 +45,14 @@ package com.kaltura.kmc.modules.admin.control.commands
 				Alert.show(str, ResourceManager.getInstance().getString('admin', 'error'));
 			}
 			else {
-				handleFault(data.error as KalturaError);
+				handleFault(data.error as BorhanError);
 			}
 			_model.decreaseLoadCounter();
 		}
 		
 		// override fault to handle correctly
 		override protected function fault(info:Object):void {
-			handleFault(info.error as KalturaError);
+			handleFault(info.error as BorhanError);
 			_model.decreaseLoadCounter();
 		}
 		
@@ -61,7 +61,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 		 * respond to the error received 
 		 * @param err error received from the server
 		 */
-		private function handleFault(err:KalturaError):void {
+		private function handleFault(err:BorhanError):void {
 			switch (err.errorCode) {
 				case APIErrorCode.LOGIN_DATA_NOT_FOUND:
 					/* Use case 2 - user does not exist in the system. a new user should be created 
@@ -77,9 +77,9 @@ package com.kaltura.kmc.modules.admin.control.commands
 				case APIErrorCode.USER_NOT_FOUND:
 					/* Use case 3 - user already exist in the system and is associated with another account.
 					When creating a new user with an email address of a user that already exists in the system 
-					and is associated with another KMC account, a confirmation message should be prompted upon 
+					and is associated with another BMC account, a confirmation message should be prompted upon 
 					clicking the "save changes" button notifying the administrator on the existing user 
-					"user.name@domain.com is already listed in the system and is associated with another KMC 
+					"user.name@domain.com is already listed in the system and is associated with another BMC 
 					account do you want to associate this user with you account as well?" Upon confirmation the 
 					existing user should be associated with the current account with the specified role and 
 					optionally with a different publisher user ID. His first/last name should not be overridden 

@@ -1,22 +1,22 @@
-package com.kaltura.kmc.modules.create
+package com.borhan.bmc.modules.create
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.bulkUpload.BulkUploadAdd;
-	import com.kaltura.commands.category.CategoryAddFromBulkUpload;
-	import com.kaltura.commands.categoryUser.CategoryUserAddFromBulkUpload;
-	import com.kaltura.commands.user.UserAddFromBulkUpload;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.create.types.BulkTypes;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.types.KalturaBulkUploadType;
-	import com.kaltura.vo.KalturaBulkUploadCategoryData;
-	import com.kaltura.vo.KalturaBulkUploadCategoryUserData;
-	import com.kaltura.vo.KalturaBulkUploadCsvJobData;
-	import com.kaltura.vo.KalturaBulkUploadUserData;
+	import com.borhan.BorhanClient;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.bulkUpload.BulkUploadAdd;
+	import com.borhan.commands.category.CategoryAddFromBulkUpload;
+	import com.borhan.commands.categoryUser.CategoryUserAddFromBulkUpload;
+	import com.borhan.commands.user.UserAddFromBulkUpload;
+	import com.borhan.edw.model.types.APIErrorCode;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.create.types.BulkTypes;
+	import com.borhan.net.BorhanCall;
+	import com.borhan.types.BorhanBulkUploadType;
+	import com.borhan.vo.BorhanBulkUploadCategoryData;
+	import com.borhan.vo.BorhanBulkUploadCategoryUserData;
+	import com.borhan.vo.BorhanBulkUploadCsvJobData;
+	import com.borhan.vo.BorhanBulkUploadUserData;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -38,12 +38,12 @@ package com.kaltura.kmc.modules.create
 	public class BulkUploader extends EventDispatcher {
 		
 		
-		private var _client:KalturaClient;
+		private var _client:BorhanClient;
 		
 		/**
 		 * type of object being uploaded in bulk
 		 * 
-		 * @see com.kaltura.kmc.modules.create.types.BulkTypes 
+		 * @see com.borhan.bmc.modules.create.types.BulkTypes 
 		 */		
 		private var _uploadType:String;
 		
@@ -59,7 +59,7 @@ package com.kaltura.kmc.modules.create
 		
 		private var _processedFilesCounter:int = 0;
 		
-		public function BulkUploader(client:KalturaClient) {
+		public function BulkUploader(client:BorhanClient) {
 			super(this);
 			_client = client;
 		}
@@ -78,15 +78,15 @@ package com.kaltura.kmc.modules.create
 		protected function addBulkUploads(event:Event):void {
 			var defaultConversionProfileId:int = -1;
 			var file:FileReference;
-			var kbu:KalturaCall;
-			var jobData:KalturaBulkUploadCsvJobData;
+			var kbu:BorhanCall;
+			var jobData:BorhanBulkUploadCsvJobData;
 			_files = [];
 			for (var i:int = 0; i<_bulkUpldFileRef.fileList.length; i++) {
 				file = _bulkUpldFileRef.fileList[i] as FileReference;
 				// save the file
 				_files.push(file);
 			
-				jobData = new KalturaBulkUploadCsvJobData();
+				jobData = new BorhanBulkUploadCsvJobData();
 				jobData.fileName = file.name;
 				switch (_uploadType) {
 					case BulkTypes.MEDIA:
@@ -95,19 +95,19 @@ package com.kaltura.kmc.modules.create
 						break;
 					
 					case BulkTypes.CATEGORY:
-						kbu = new CategoryAddFromBulkUpload(file, jobData, new KalturaBulkUploadCategoryData());
+						kbu = new CategoryAddFromBulkUpload(file, jobData, new BorhanBulkUploadCategoryData());
 						break;
 					case BulkTypes.USER:
-						kbu = new UserAddFromBulkUpload(file, jobData, new KalturaBulkUploadUserData());
+						kbu = new UserAddFromBulkUpload(file, jobData, new BorhanBulkUploadUserData());
 						break;
 					case BulkTypes.CATEGORY_USER:
-						kbu = new CategoryUserAddFromBulkUpload(file, jobData, new KalturaBulkUploadCategoryUserData());
+						kbu = new CategoryUserAddFromBulkUpload(file, jobData, new BorhanBulkUploadCategoryUserData());
 						break;
 				}
 				
 				
-				kbu.addEventListener(KalturaEvent.COMPLETE, bulkUploadCompleteHandler);
-				kbu.addEventListener(KalturaEvent.FAILED, bulkUploadCompleteHandler);
+				kbu.addEventListener(BorhanEvent.COMPLETE, bulkUploadCompleteHandler);
+				kbu.addEventListener(BorhanEvent.FAILED, bulkUploadCompleteHandler);
 				kbu.queued = false;
 				_client.post(kbu);
 			}
@@ -139,9 +139,9 @@ package com.kaltura.kmc.modules.create
 			var ext:String = url.substring(url.length - 3);
 			ext = ext.toLowerCase();
 			if (ext == "csv") {
-				return KalturaBulkUploadType.CSV;
+				return BorhanBulkUploadType.CSV;
 			}
-			return KalturaBulkUploadType.XML;
+			return BorhanBulkUploadType.XML;
 		}
 		
 		
@@ -154,9 +154,9 @@ package com.kaltura.kmc.modules.create
 		}
 		
 		
-		protected function bulkUploadCompleteHandler(e:KalturaEvent):void {
+		protected function bulkUploadCompleteHandler(e:BorhanEvent):void {
 			if (!e.success)  {
-				var er:KalturaError = e.error;
+				var er:BorhanError = e.error;
 				if (er.errorCode == APIErrorCode.INVALID_KS) {
 					JSGate.expired();
 				}
@@ -177,7 +177,7 @@ package com.kaltura.kmc.modules.create
 		}
 		
 		/**
-		 * logout from KMC
+		 * logout from BMC
 		 * */
 		protected function logout(e:Object):void {
 			JSGate.expired();

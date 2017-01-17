@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.analytics.model.reports {
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.utils.FormattingUtil;
-	import com.kaltura.utils.KTimeUtil;
+package com.borhan.bmc.modules.analytics.model.reports {
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.bmc.modules.analytics.model.types.ScreenTypes;
+	import com.borhan.bmc.modules.analytics.utils.FormattingUtil;
+	import com.borhan.utils.KTimeUtil;
 	
 	import mx.formatters.DateFormatter;
 	import mx.formatters.NumberBaseRoundType;

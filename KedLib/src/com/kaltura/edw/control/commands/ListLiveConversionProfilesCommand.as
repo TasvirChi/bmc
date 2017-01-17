@@ -1,16 +1,16 @@
-package com.kaltura.edw.control.commands {
+package com.borhan.edw.control.commands {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.conversionProfile.ConversionProfileList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaConversionProfileType;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileFilter;
-	import com.kaltura.vo.KalturaConversionProfileListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.commands.conversionProfile.ConversionProfileList;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.FlavorsDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanConversionProfileType;
+	import com.borhan.types.BorhanNullableBoolean;
+	import com.borhan.vo.BorhanConversionProfile;
+	import com.borhan.vo.BorhanConversionProfileFilter;
+	import com.borhan.vo.BorhanConversionProfileListResponse;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
@@ -18,16 +18,16 @@ package com.kaltura.edw.control.commands {
 	
 	public class ListLiveConversionProfilesCommand extends KedCommand {
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:BorhanFilterPager = new BorhanFilterPager();
 			p.pageIndex = 1;
 			p.pageSize = 500; // trying to get all conversion profiles here, standard partner has no more than 10
-			var f:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-			f.typeEqual = KalturaConversionProfileType.LIVE_STREAM;
+			var f:BorhanConversionProfileFilter = new BorhanConversionProfileFilter();
+			f.typeEqual = BorhanConversionProfileType.LIVE_STREAM;
 			var listProfiles:ConversionProfileList = new ConversionProfileList(f, p);
-			listProfiles.addEventListener(KalturaEvent.COMPLETE, result);
-			listProfiles.addEventListener(KalturaEvent.FAILED, fault);
+			listProfiles.addEventListener(BorhanEvent.COMPLETE, result);
+			listProfiles.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_client.post(listProfiles);
 		}
@@ -37,12 +37,12 @@ package com.kaltura.edw.control.commands {
 			super.result(data);
 			
 			var result:Array = new Array();
-			for each (var kcp:KalturaConversionProfile in (data.data as KalturaConversionProfileListResponse).objects) {
-				if (kcp.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
-					result.unshift(kcp);
+			for each (var bcp:BorhanConversionProfile in (data.data as BorhanConversionProfileListResponse).objects) {
+				if (bcp.isDefault == BorhanNullableBoolean.TRUE_VALUE) {
+					result.unshift(bcp);
 				}
 				else {
-					result.push(kcp);
+					result.push(bcp);
 				}
 			}
 			var fdp:FlavorsDataPack = _model.getDataPack(FlavorsDataPack) as FlavorsDataPack;

@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.commands
+package com.borhan.edw.control.commands
 {
-	import com.kaltura.commands.baseEntry.BaseEntryList;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaBaseEntryFilter;
-	import com.kaltura.vo.KalturaBaseEntryListResponse;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaMixEntry;
+	import com.borhan.commands.baseEntry.BaseEntryList;
+	import com.borhan.edw.control.events.SearchEvent;
+	import com.borhan.edw.vo.ListableVo;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanBaseEntryFilter;
+	import com.borhan.vo.BorhanBaseEntryListResponse;
+	import com.borhan.vo.BorhanMediaEntry;
+	import com.borhan.vo.BorhanMixEntry;
 	
 	import mx.collections.ArrayCollection;
 
@@ -20,13 +20,13 @@ package com.kaltura.edw.control.commands
 		/**
 		 * @inheritDoc
 		 */		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_caller = (event as SearchEvent).listableVo;
-			var getMediaList:BaseEntryList = new BaseEntryList(_caller.filterVo as KalturaBaseEntryFilter ,_caller.pagingComponent.kalturaFilterPager );
-		 	getMediaList.addEventListener(KalturaEvent.COMPLETE, result);
-			getMediaList.addEventListener(KalturaEvent.FAILED, fault);
+			var getMediaList:BaseEntryList = new BaseEntryList(_caller.filterVo as BorhanBaseEntryFilter ,_caller.pagingComponent.borhanFilterPager );
+		 	getMediaList.addEventListener(BorhanEvent.COMPLETE, result);
+			getMediaList.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(getMediaList);	  
 		}
 
@@ -38,14 +38,14 @@ package com.kaltura.edw.control.commands
 			super.result(data);
 			// the following variables are used to force  
 			// their types to compile into the application
-			var kme:KalturaMediaEntry; 
-			var kbe:KalturaBaseEntry;
-			var mix:KalturaMixEntry;
-			var recivedData:KalturaBaseEntryListResponse = KalturaBaseEntryListResponse(data.data);
+			var kme:BorhanMediaEntry; 
+			var kbe:BorhanBaseEntry;
+			var mix:BorhanMixEntry;
+			var recivedData:BorhanBaseEntryListResponse = BorhanBaseEntryListResponse(data.data);
 			// only use object we can handle
 			var tempAr:Array = [];
 			for each (var o:Object in recivedData.objects) {
-				if (o is KalturaBaseEntry) {
+				if (o is BorhanBaseEntry) {
 					tempAr.push(o);
 				}
 			}

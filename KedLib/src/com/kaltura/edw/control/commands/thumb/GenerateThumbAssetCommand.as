@@ -1,16 +1,16 @@
-package com.kaltura.edw.control.commands.thumb
+package com.borhan.edw.control.commands.thumb
 {
-	import com.kaltura.commands.thumbAsset.ThumbAssetGenerate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.GenerateThumbAssetEvent;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaThumbAsset;
-	import com.kaltura.vo.KalturaThumbParams;
+	import com.borhan.commands.thumbAsset.ThumbAssetGenerate;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.GenerateThumbAssetEvent;
+	import com.borhan.edw.control.events.ThumbnailAssetEvent;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.vo.ThumbnailWithDimensions;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanThumbAsset;
+	import com.borhan.vo.BorhanThumbParams;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
@@ -22,13 +22,13 @@ package com.kaltura.edw.control.commands.thumb
 		
 		private var _ddp:DistributionDataPack;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			var generateThumbEvent:GenerateThumbAssetEvent = event as GenerateThumbAssetEvent;
 			var generateThumbAsset:ThumbAssetGenerate = new ThumbAssetGenerate((_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id, generateThumbEvent.thumbParams, generateThumbEvent.thumbSourceId);
-			generateThumbAsset.addEventListener(KalturaEvent.COMPLETE, result);
-			generateThumbAsset.addEventListener(KalturaEvent.FAILED, fault);
+			generateThumbAsset.addEventListener(BorhanEvent.COMPLETE, result);
+			generateThumbAsset.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(generateThumbAsset);
 		}
@@ -37,7 +37,7 @@ package com.kaltura.edw.control.commands.thumb
 			_model.decreaseLoadCounter();
 			super.result(data);
 			_ddp = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
-			var newThumb:KalturaThumbAsset =  data.data as KalturaThumbAsset;
+			var newThumb:BorhanThumbAsset =  data.data as BorhanThumbAsset;
 			_thumbsArray = _ddp.distributionInfo.thumbnailDimensions;
 			var curUsedProfiles:Array = new Array();
 			var thumbExist:Boolean = false;

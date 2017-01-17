@@ -1,4 +1,4 @@
-package com.kaltura.edw.model.types
+package com.borhan.edw.model.types
 {
 	/**
 	 * <code>WindowsStates</code> lists all the popup windows types in the application

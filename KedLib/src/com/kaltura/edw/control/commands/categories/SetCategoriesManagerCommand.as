@@ -1,14 +1,14 @@
-package com.kaltura.edw.control.commands.categories
+package com.borhan.edw.control.commands.categories
 {
-	import com.kaltura.edw.components.fltr.cat.data.ICategoriesDataManger;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.components.fltr.cat.data.ICategoriesDataManger;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.model.datapacks.FilterDataPack;
+	import com.borhan.bmvc.control.BMvCEvent;
 
 	public class SetCategoriesManagerCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			var filterModel:FilterModel = (_model.getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 			filterModel.catTreeDataManager = event.data as ICategoriesDataManger;

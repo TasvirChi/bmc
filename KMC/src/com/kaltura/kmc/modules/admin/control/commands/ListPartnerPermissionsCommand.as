@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.borhan.bmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.permission.PermissionList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaPermission;
-	import com.kaltura.vo.KalturaPermissionListResponse;
+	import com.borhan.commands.permission.PermissionList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanPermission;
+	import com.borhan.vo.BorhanPermissionListResponse;
 	
 	public class ListPartnerPermissionsCommand extends BaseCommand {
 		
@@ -13,11 +13,11 @@ package com.kaltura.kmc.modules.admin.control.commands
 		 * @inheritDocs
 		 */
 		override public function execute(event:CairngormEvent):void {
-			var largePager:KalturaFilterPager = new KalturaFilterPager();
+			var largePager:BorhanFilterPager = new BorhanFilterPager();
 			largePager.pageSize = 500;
 			var ul:PermissionList = new PermissionList(_model.rolesModel.permissionsFilter, largePager);
-			ul.addEventListener(KalturaEvent.COMPLETE, result);
-			ul.addEventListener(KalturaEvent.FAILED, fault);
+			ul.addEventListener(BorhanEvent.COMPLETE, result);
+			ul.addEventListener(BorhanEvent.FAILED, fault);
 			if (_model.kc) {
 				_model.increaseLoadCounter();
 				_model.kc.post(ul);
@@ -31,7 +31,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 		 */
 		override protected function result(data:Object):void {
 			super.result(data);
-			var response:KalturaPermissionListResponse = data.data as KalturaPermissionListResponse;
+			var response:BorhanPermissionListResponse = data.data as BorhanPermissionListResponse;
 			_model.rolesModel.partnerPermissions = parsePartnerPermissions(response);
 			_model.decreaseLoadCounter();
 		}
@@ -42,9 +42,9 @@ package com.kaltura.kmc.modules.admin.control.commands
 		 * @param klr	the permissions list response
 		 * @return a comma separated string of partner permission ids.
 		 * */
-		protected function parsePartnerPermissions(klr:KalturaPermissionListResponse):String {
+		protected function parsePartnerPermissions(klr:BorhanPermissionListResponse):String {
 			var result:String = '';
-			for each (var kperm:KalturaPermission in klr.objects) {
+			for each (var kperm:BorhanPermission in klr.objects) {
 				result += kperm.name + ",";
 			}
 			// remove last ","

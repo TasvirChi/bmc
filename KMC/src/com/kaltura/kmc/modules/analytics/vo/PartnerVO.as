@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.analytics.vo
+package com.borhan.bmc.modules.analytics.vo
 {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.kmc.modules.analytics.model.Notifications;
+	import com.borhan.bmc.modules.analytics.model.Notifications;
 	
 	import mx.collections.ArrayCollection;
 	

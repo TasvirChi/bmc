@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-							xmlns:containers="com.kaltura.containers.*"
-							xmlns:view="com.kaltura.kmc.modules.create.view.*"
+							xmlns:containers="com.borhan.containers.*"
+							xmlns:view="com.borhan.bmc.modules.create.view.*"
 							width="550" height="400" layout="vertical"
 							showCloseButton="true" close="closeHandler(event)"
 							showHelpButton="true" help="helpHandler(event)"
@@ -14,25 +14,25 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.commands.MultiRequest;
-			import com.kaltura.commands.conversionProfile.ConversionProfileList;
-			import com.kaltura.commands.media.MediaAdd;
-			import com.kaltura.errors.KalturaError;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.create.MultipleMediaFilesSelector;
-			import com.kaltura.kmc.modules.create.vo.UploadFile;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.types.KalturaConversionProfileType;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.vo.FileUploadVO;
-			import com.kaltura.vo.KalturaConversionProfile;
-			import com.kaltura.vo.KalturaConversionProfileFilter;
-			import com.kaltura.vo.KalturaConversionProfileListResponse;
-			import com.kaltura.vo.KalturaFilterPager;
-			import com.kaltura.vo.KalturaMediaEntry;
+			import com.borhan.BorhanClient;
+			import com.borhan.commands.MultiRequest;
+			import com.borhan.commands.conversionProfile.ConversionProfileList;
+			import com.borhan.commands.media.MediaAdd;
+			import com.borhan.errors.BorhanError;
+			import com.borhan.events.BorhanEvent;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.events.BmcNavigationEvent;
+			import com.borhan.bmc.modules.create.MultipleMediaFilesSelector;
+			import com.borhan.bmc.modules.create.vo.UploadFile;
+			import com.borhan.managers.FileUploadManager;
+			import com.borhan.types.BorhanConversionProfileType;
+			import com.borhan.types.BorhanMediaType;
+			import com.borhan.vo.FileUploadVO;
+			import com.borhan.vo.BorhanConversionProfile;
+			import com.borhan.vo.BorhanConversionProfileFilter;
+			import com.borhan.vo.BorhanConversionProfileListResponse;
+			import com.borhan.vo.BorhanFilterPager;
+			import com.borhan.vo.BorhanMediaEntry;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -44,13 +44,13 @@
 			import mx.resources.ResourceManager;
 			
 			
-			public var client:KalturaClient;
+			public var client:BorhanClient;
 			
 			
 			[Bindable]
 			/**
 			 * list of available conversion profiles 
-			 * <code>KalturaConversionProfile</code> objects
+			 * <code>BorhanConversionProfile</code> objects
 			 * */
 			private var _conversionProfiles:ArrayCollection;
 			
@@ -104,7 +104,7 @@
 			/**
 			 * get media type according to file extension
 			 * @param fr	the queried file
-			 * @return matching KalturaMediaType enum value, or -1 if no match found
+			 * @return matching BorhanMediaType enum value, or -1 if no match found
 			 * */
 			private function getFileMediaType(fr:FileReference):int {
 				var dot:int = fr.name.lastIndexOf(".");
@@ -113,19 +113,19 @@
 				var types:Array = getTypesInFilter(filterDefinitions.(@name=="video_files")[0].@ext);
 				for each (str in types) {
 					if (str == ext) {
-						return KalturaMediaType.VIDEO;
+						return BorhanMediaType.VIDEO;
 					}
 				}
 				types = getTypesInFilter(filterDefinitions.(@name=="audio_files")[0].@ext);
 				for each (str in types) {
 					if (str == ext) {
-						return KalturaMediaType.AUDIO;
+						return BorhanMediaType.AUDIO;
 					}
 				}
 				types = getTypesInFilter(filterDefinitions.(@name=="image_files")[0].@ext);
 				for each (str in types) {
 					if (str == ext) {
-						return KalturaMediaType.IMAGE;
+						return BorhanMediaType.IMAGE;
 					}
 				}
 				return -1;
@@ -150,31 +150,31 @@
 			}
 			
 			private function listConversionProfiels():void {
-				var f:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-				f.typeEqual = KalturaConversionProfileType.MEDIA;
-				var p:KalturaFilterPager = new KalturaFilterPager();
+				var f:BorhanConversionProfileFilter = new BorhanConversionProfileFilter();
+				f.typeEqual = BorhanConversionProfileType.MEDIA;
+				var p:BorhanFilterPager = new BorhanFilterPager();
 				p.pageSize = 500;	// very large number that should cover all profiles
 				var cpl:ConversionProfileList = new ConversionProfileList(f, p);
-				cpl.addEventListener(KalturaEvent.COMPLETE, conversionProfilesHandler);
-				cpl.addEventListener(KalturaEvent.FAILED, conversionProfilesHandler);
+				cpl.addEventListener(BorhanEvent.COMPLETE, conversionProfilesHandler);
+				cpl.addEventListener(BorhanEvent.FAILED, conversionProfilesHandler);
 				client.post(cpl);
 			}
 			
-			private function conversionProfilesHandler(e:KalturaEvent):void {
-				if (e.type == KalturaEvent.FAILED) {
+			private function conversionProfilesHandler(e:BorhanEvent):void {
+				if (e.type == BorhanEvent.FAILED) {
 					showError(e.error.errorMsg);
 				}
 				else {
-					var resp:Array = (e.data as KalturaConversionProfileListResponse).objects;
+					var resp:Array = (e.data as BorhanConversionProfileListResponse).objects;
 					var ar:Array = new Array();
-					var def:KalturaConversionProfile;
+					var def:BorhanConversionProfile;
 					for each (var o:Object in resp) {
-						if (o is KalturaConversionProfile) {
-							if ((o as KalturaConversionProfile).isDefault) {
-								def = o as KalturaConversionProfile;
+						if (o is BorhanConversionProfile) {
+							if ((o as BorhanConversionProfile).isDefault) {
+								def = o as BorhanConversionProfile;
 							}
 							else {
-								ar.push(o as KalturaConversionProfile);
+								ar.push(o as BorhanConversionProfile);
 							}
 						}
 					}
@@ -276,10 +276,10 @@
 				submitBtn.enabled = false;
 				var mr:MultiRequest = new MultiRequest();
 				var ma:MediaAdd;
-				var kme:KalturaMediaEntry;
+				var kme:BorhanMediaEntry;
 				
 				for each (var file:UploadFile in _files) {
-					kme = new KalturaMediaEntry();
+					kme = new BorhanMediaEntry();
 					kme.name = file.fileName;
 					kme.mediaType = file.mediaType;
 					kme.conversionProfileId = cnvrtProfCb.selectedItem.id;
@@ -287,8 +287,8 @@
 					ma = new MediaAdd(kme);
 					mr.addAction(ma);
 				}
-				mr.addEventListener(KalturaEvent.COMPLETE, addMediaToEntries);
-				mr.addEventListener(KalturaEvent.FAILED, addMediaToEntries);
+				mr.addEventListener(BorhanEvent.COMPLETE, addMediaToEntries);
+				mr.addEventListener(BorhanEvent.FAILED, addMediaToEntries);
 				client.post(mr);
 			}
 			
@@ -297,23 +297,23 @@
 			 * add media files to the newly created entries
 			 * @param e	the event dispatched by the entries creation call
 			 * */
-			protected function addMediaToEntries(e:KalturaEvent):void {
-				e.target.removeEventListener(KalturaEvent.COMPLETE, addMediaToEntries);
-				e.target.removeEventListener(KalturaEvent.FAILED, addMediaToEntries);
+			protected function addMediaToEntries(e:BorhanEvent):void {
+				e.target.removeEventListener(BorhanEvent.COMPLETE, addMediaToEntries);
+				e.target.removeEventListener(BorhanEvent.FAILED, addMediaToEntries);
 				CursorManager.removeBusyCursor();
-				if (e.type == KalturaEvent.FAILED) {
+				if (e.type == BorhanEvent.FAILED) {
 					showError(e.error.errorMsg);
 					return;
 				}
 				else {
 					// internal errors
 					for each (var o:Object in e.data) {
-						if (o is KalturaError) {
+						if (o is BorhanError) {
 							showError(o.errorMsg);
 							return;
 						}
 						else if (o.error) {
-							// in MRs, errors are not KalturaErrors.
+							// in MRs, errors are not BorhanErrors.
 							showError(o.error.message);
 							return;
 						}
@@ -321,7 +321,7 @@
 					// pass FRs to upload manager
 					// we assume an entry for each file, in matching order
 					var uploader:FileUploadManager = FileUploadManager.getInstance();
-					var entry:KalturaMediaEntry;
+					var entry:BorhanMediaEntry;
 					var entries:Array = e.data as Array;
 					var fu:UploadFile;		// local vo
 					var fuv:FileUploadVO;	// uploader vo
@@ -332,7 +332,7 @@
 						uploader.updateEntryContent(entry.id, [fuv]);
 					}
 					// dispatch navigation event
-					dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content"));
+					dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, "content"));
 					// remove popup
 					closeHandler(null);
 				}
@@ -345,7 +345,7 @@
 
 
 			protected function helpHandler(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_desktop_upload'));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_desktop_upload'));
 			}
 
 		]]>

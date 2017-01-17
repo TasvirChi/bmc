@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.analytics.model.reports {
+package com.borhan.bmc.modules.analytics.model.reports {
 
 	[Bindable]
 	/**
 	 * list of column headers by which the report table cannot be ordered. <br>
 	 * values should match those returned from server for the report
 	 * 
-	 * @see com.kaltura.kmc.modules.analytics.model.reports.TableHeaders
+	 * @see com.borhan.bmc.modules.analytics.model.reports.TableHeaders
 	 * 
 	 * @author atar.shadmi
 	 *

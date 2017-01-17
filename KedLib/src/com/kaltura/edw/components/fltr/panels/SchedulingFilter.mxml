@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:MultiAttributeFilter xmlns:mx="http://www.adobe.com/2006/mxml"
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
-						 implements="com.kaltura.edw.components.fltr.IMultiAttributeFilterComponent"
+						 xmlns:panels="com.borhan.edw.components.fltr.panels.*"
+						 implements="com.borhan.edw.components.fltr.IMultiAttributeFilterComponent"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.components.fltr.BaseFilter;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.vo.KalturaPlayableEntryFilter;
+			import com.borhan.edw.components.fltr.BaseFilter;
+			import com.borhan.edw.components.fltr.FilterComponentEvent;
+			import com.borhan.edw.components.fltr.indicators.IndicatorVo;
+			import com.borhan.vo.BorhanPlayableEntryFilter;
 			
 			import mx.controls.Alert;
 			import mx.controls.Button;

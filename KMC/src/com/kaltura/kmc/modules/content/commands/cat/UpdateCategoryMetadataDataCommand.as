@@ -1,23 +1,23 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.metadata.MetadataAdd;
-	import com.kaltura.commands.metadata.MetadataUpdate;
-	import com.kaltura.edw.business.MetadataDataParser;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.types.KalturaMetadataObjectType;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.metadata.MetadataAdd;
+	import com.borhan.commands.metadata.MetadataUpdate;
+	import com.borhan.edw.business.MetadataDataParser;
+	import com.borhan.edw.vo.CustomMetadataDataVO;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.types.BorhanMetadataObjectType;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	
-	public class UpdateCategoryMetadataDataCommand extends KalturaCommand
+	public class UpdateCategoryMetadataDataCommand extends BorhanCommand
 	{
 		override public function execute(event:CairngormEvent):void{
 			_model.increaseLoadCounter();
@@ -31,7 +31,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var profileArray:ArrayCollection = _model.filterModel.categoryMetadataProfiles;
 			for (var j:int = 0; j < infoArray.length; j++) {
 				var metadataInfo:CustomMetadataDataVO = infoArray[j] as CustomMetadataDataVO;
-				var profile:KMCMetadataProfileVO = profileArray[j] as KMCMetadataProfileVO;
+				var profile:BMCMetadataProfileVO = profileArray[j] as BMCMetadataProfileVO;
 				if (metadataInfo && profile && profile.profile) {
 					var newMetadataXML:XML = MetadataDataParser.toMetadataXML(metadataInfo, profile);
 					//metadata exists--> update request
@@ -45,7 +45,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 					}
 					else if (newMetadataXML.children().length() > 0) {
 						var metadataAdd:MetadataAdd = new MetadataAdd(profile.profile.id,
-							KalturaMetadataObjectType.CATEGORY,
+							BorhanMetadataObjectType.CATEGORY,
 							catid,
 							newMetadataXML.toXMLString());
 						mr.addAction(metadataAdd);
@@ -54,8 +54,8 @@ package com.kaltura.kmc.modules.content.commands.cat
 			}
 			
 			// add listeners and post call
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_model.context.kc.post(mr);
 		}
@@ -67,10 +67,10 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var isErr:Boolean;
 			if (data.data && data.data is Array) {
 				for (var i:uint = 0; i < (data.data as Array).length; i++) {
-					if ((data.data as Array)[i] is KalturaError) {
+					if ((data.data as Array)[i] is BorhanError) {
 						isErr = true;
 						Alert.show(ResourceManager.getInstance().getString('drilldown', 'error') + ": " +
-							((data.data as Array)[i] as KalturaError).errorMsg);
+							((data.data as Array)[i] as BorhanError).errorMsg);
 					}
 					else if ((data.data as Array)[i].hasOwnProperty("error")) {
 						isErr = true;

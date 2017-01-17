@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.analytics.model.types
+package com.borhan.bmc.modules.analytics.model.types
 {
-	import com.kaltura.types.KalturaSearchProviderType;
-	import com.kaltura.types.KalturaSourceType;
+	import com.borhan.types.BorhanSearchProviderType;
+	import com.borhan.types.BorhanSourceType;
 	
 	import mx.resources.ResourceManager;
 
@@ -15,61 +15,61 @@ package com.kaltura.kmc.modules.analytics.model.types
 				case -1:
 					return ResourceManager.getInstance().getString('sourceTypes', 'UNKNOWN');
 					break;
-				case int(KalturaSourceType.FILE):
+				case int(BorhanSourceType.FILE):
 					return ResourceManager.getInstance().getString('sourceTypes', 'FILE');
 					break;
-				case int(KalturaSourceType.SEARCH_PROVIDER):
+				case int(BorhanSourceType.SEARCH_PROVIDER):
 					return ResourceManager.getInstance().getString('sourceTypes', 'SEARCH_PROVIDER');
 					break;
-				case int(KalturaSourceType.URL):
+				case int(BorhanSourceType.URL):
 					return ResourceManager.getInstance().getString('sourceTypes', 'URL');
 					break;
-				case int(KalturaSourceType.WEBCAM):
+				case int(BorhanSourceType.WEBCAM):
 					return ResourceManager.getInstance().getString('sourceTypes', 'WEBCAM');
 					break;
-				case KalturaSearchProviderType.FLICKR:
+				case BorhanSearchProviderType.FLICKR:
 					return ResourceManager.getInstance().getString('sourceTypes', 'FLICKR');
 					break;
-				case KalturaSearchProviderType.ARCHIVE_ORG:
+				case BorhanSearchProviderType.ARCHIVE_ORG:
 					return ResourceManager.getInstance().getString('sourceTypes', 'ARCHIVE_ORG');
 					break;
-				case KalturaSearchProviderType.CCMIXTER:
+				case BorhanSearchProviderType.CCMIXTER:
 					return ResourceManager.getInstance().getString('sourceTypes', 'CCMIXTER');
 					break;
-				case KalturaSearchProviderType.CURRENT:
+				case BorhanSearchProviderType.CURRENT:
 					return ResourceManager.getInstance().getString('sourceTypes', 'CURRENT');
 					break;
-				case KalturaSearchProviderType.JAMENDO:
+				case BorhanSearchProviderType.JAMENDO:
 					return ResourceManager.getInstance().getString('sourceTypes', 'JAMENDO');
 					break;
-				case KalturaSearchProviderType.KALTURA:
-					return ResourceManager.getInstance().getString('sourceTypes', 'KALTURA');
+				case BorhanSearchProviderType.BORHAN:
+					return ResourceManager.getInstance().getString('sourceTypes', 'BORHAN');
 					break;
-				case KalturaSearchProviderType.KALTURA_PARTNER:
-					return ResourceManager.getInstance().getString('sourceTypes', 'KALTURA_PARTNER');
+				case BorhanSearchProviderType.BORHAN_PARTNER:
+					return ResourceManager.getInstance().getString('sourceTypes', 'BORHAN_PARTNER');
 					break;
-				case KalturaSearchProviderType.KALTURA_USER_CLIPS:
-					return ResourceManager.getInstance().getString('sourceTypes', 'KALTURA_USER_CLIPS');
+				case BorhanSearchProviderType.BORHAN_USER_CLIPS:
+					return ResourceManager.getInstance().getString('sourceTypes', 'BORHAN_USER_CLIPS');
 					break;
-				case KalturaSearchProviderType.MEDIA_COMMONS:
+				case BorhanSearchProviderType.MEDIA_COMMONS:
 					return ResourceManager.getInstance().getString('sourceTypes', 'MEDIA_COMMONS');
 					break;
-				case KalturaSearchProviderType.METACAFE:
+				case BorhanSearchProviderType.METACAFE:
 					return ResourceManager.getInstance().getString('sourceTypes', 'METACAFE');
 					break;
-				case KalturaSearchProviderType.MYSPACE:
+				case BorhanSearchProviderType.MYSPACE:
 					return ResourceManager.getInstance().getString('sourceTypes', 'MYSPACE');
 					break;
-				case KalturaSearchProviderType.NYPL:
+				case BorhanSearchProviderType.NYPL:
 					return ResourceManager.getInstance().getString('sourceTypes', 'NYPL');
 					break;
-				case KalturaSearchProviderType.PHOTOBUCKET:
+				case BorhanSearchProviderType.PHOTOBUCKET:
 					return ResourceManager.getInstance().getString('sourceTypes', 'PHOTOBUCKET');
 					break;
-				case KalturaSearchProviderType.YOUTUBE:
+				case BorhanSearchProviderType.YOUTUBE:
 					return ResourceManager.getInstance().getString('sourceTypes', 'YOUTUBE');
 					break;
-				case KalturaSearchProviderType.SEARCH_PROXY:
+				case BorhanSearchProviderType.SEARCH_PROXY:
 					return ResourceManager.getInstance().getString('sourceTypes', 'SEARCH_PROXY');
 					break;
 			}

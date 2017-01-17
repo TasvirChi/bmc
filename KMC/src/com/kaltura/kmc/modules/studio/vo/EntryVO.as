@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.studio.vo
+package com.borhan.bmc.modules.studio.vo
 {
 	
-	import com.kaltura.kmc.modules.studio.model.types.MediaTypes;
+	import com.borhan.bmc.modules.studio.model.types.MediaTypes;
 	
 	import mx.collections.ArrayCollection;
 	

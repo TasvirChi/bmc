@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduleEvent
+package com.borhan.commands.scheduleEvent
 {
-		import com.kaltura.vo.KalturaScheduleEvent;
-	import com.kaltura.delegates.scheduleEvent.ScheduleEventUpdateDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanScheduleEvent;
+	import com.borhan.delegates.scheduleEvent.ScheduleEventUpdateDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
-	* Update an existing KalturaScheduleEvent object
+	* Update an existing BorhanScheduleEvent object
 	**/
-	public class ScheduleEventUpdate extends KalturaCall
+	public class ScheduleEventUpdate extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param scheduleEventId int
-		* @param scheduleEvent KalturaScheduleEvent
+		* @param scheduleEvent BorhanScheduleEvent
 		**/
-		public function ScheduleEventUpdate( scheduleEventId : int,scheduleEvent : KalturaScheduleEvent )
+		public function ScheduleEventUpdate( scheduleEventId : int,scheduleEvent : BorhanScheduleEvent )
 		{
 			service= 'schedule_scheduleevent';
 			action= 'update';
@@ -52,7 +52,7 @@ package com.kaltura.commands.scheduleEvent
 			var keyValArr : Array = new Array();
 			keyArr.push('scheduleEventId');
 			valueArr.push(scheduleEventId);
-				keyValArr = kalturaObject2Arrays(scheduleEvent, 'scheduleEvent');
+				keyValArr = borhanObject2Arrays(scheduleEvent, 'scheduleEvent');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

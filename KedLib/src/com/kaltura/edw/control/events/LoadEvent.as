@@ -1,10 +1,10 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.edw.business.IDataOwner;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.business.IDataOwner;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
-	public class LoadEvent extends KMvCEvent {
+	public class LoadEvent extends BMvCEvent {
 		
 		public static const LOAD_FILTER_DATA : String = "content_loadFilterData";
 		public static const LOAD_ENTRY_DATA : String = "content_loadEntryData";

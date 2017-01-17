@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:navigation="com.kaltura.kmc.modules.content.view.navigation.*"
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel"
-		 xmlns:controls="com.kaltura.controls.*" xmlns:indicators="com.kaltura.edw.components.fltr.indicators.*" 
-		 xmlns:filter="com.kaltura.kmc.modules.content.view.bulk.filter.*"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:navigation="com.borhan.bmc.modules.content.view.navigation.*"
+		 implements="com.borhan.bmc.modules.content.business.IContentPanel"
+		 xmlns:controls="com.borhan.controls.*" xmlns:indicators="com.borhan.edw.components.fltr.indicators.*" 
+		 xmlns:filter="com.borhan.bmc.modules.content.view.bulk.filter.*"
 		 horizontalAlign="left" width="100%" height="100%" 
 		 creationComplete="{creationCompleteHandler(event)}" >
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.content.business.FileManager;
-			import com.kaltura.kmc.modules.content.events.BulkEvent;
-			import com.kaltura.kmc.modules.content.model.BulkUploadModel;
-			import com.kaltura.kmc.modules.content.model.types.BulkTypes;
-			import com.kaltura.kmc.modules.content.vo.FilterVO;
-			import com.kaltura.types.KalturaBulkUploadObjectType;
-			import com.kaltura.types.KalturaBulkUploadType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.pager.Pager;
-			import com.kaltura.vo.KalturaBulkUpload;
-			import com.kaltura.vo.KalturaBulkUploadFilter;
+			import com.borhan.vo.BorhanBaseEntryFilter;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.modules.content.business.FileManager;
+			import com.borhan.bmc.modules.content.events.BulkEvent;
+			import com.borhan.bmc.modules.content.model.BulkUploadModel;
+			import com.borhan.bmc.modules.content.model.types.BulkTypes;
+			import com.borhan.bmc.modules.content.vo.FilterVO;
+			import com.borhan.types.BorhanBulkUploadObjectType;
+			import com.borhan.types.BorhanBulkUploadType;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.utils.pager.Pager;
+			import com.borhan.vo.BorhanBulkUpload;
+			import com.borhan.vo.BorhanBulkUploadFilter;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -51,7 +51,7 @@
 
 			private var _fm:FileManager = new FileManager();
 
-			public function init(kbef:KalturaBaseEntryFilter = null):void {
+			public function init(kbef:BorhanBaseEntryFilter = null):void {
 			}
 
 			public function initPaging():void {
@@ -68,7 +68,7 @@
 					// if there is no filter or pager there's no point in listing, and this call probably came from Content.refreshBulk.
 					// in this case, we'll get a "list" when we switch to this page.
 					var bulkEvent:BulkEvent = new BulkEvent(BulkEvent.LIST_BULK_UPLOAD);
-					bulkEvent.data = [filter.kalturaFilter, paging.kalturaFilterPager];
+					bulkEvent.data = [filter.borhanFilter, paging.borhanFilterPager];
 					bulkEvent.dispatch();
 				}
 			}
@@ -216,7 +216,7 @@
 
 			private function gotoPage():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
 				loadEntries();
 			}
 
@@ -226,12 +226,12 @@
 				addEventListener("delete", handleBulkAction);
 				addEventListener("dnldLog", handleBulkAction);
 				addEventListener("dnldOrig", handleBulkAction);
-				filter.kalturaFilter = new KalturaBulkUploadFilter();
+				filter.borhanFilter = new BorhanBulkUploadFilter();
 				loadEntries();
 			}
 			
 			protected function handleBulkAction(e:Event):void {
-				var bulk:KalturaBulkUpload = e.target.data as KalturaBulkUpload;
+				var bulk:BorhanBulkUpload = e.target.data as BorhanBulkUpload;
 				var fileName:String;
 				switch (e.type) {
 					case "delete":
@@ -278,15 +278,15 @@
 			protected function getUploadType(item:Object, column:DataGridColumn):String {
 				var ext:String = 'txt';
 				switch (item.bulkUploadType) {
-					case KalturaBulkUploadType.CSV:
+					case BorhanBulkUploadType.CSV:
 						ext = 'csv';
 						break;
-					case KalturaBulkUploadType.XML:
-					case KalturaBulkUploadType.DROP_FOLDER_XML:
+					case BorhanBulkUploadType.XML:
+					case BorhanBulkUploadType.DROP_FOLDER_XML:
 						ext = 'xml';
 						break;
-					case KalturaBulkUploadType.ICAL:
-					case KalturaBulkUploadType.DROP_FOLDER_ICAL:
+					case BorhanBulkUploadType.ICAL:
+					case BorhanBulkUploadType.DROP_FOLDER_ICAL:
 						ext = 'ics';
 						break;
 				}
@@ -312,16 +312,16 @@
 			public function getUploadObjectType(str:String):String {
 				var result:String = resourceManager.getString('cms', 'other');
 				switch (str) {
-					case KalturaBulkUploadObjectType.CATEGORY:
+					case BorhanBulkUploadObjectType.CATEGORY:
 						result = resourceManager.getString('cms', 'categories');
 						break;
-					case KalturaBulkUploadObjectType.CATEGORY_USER:
+					case BorhanBulkUploadObjectType.CATEGORY_USER:
 						result = resourceManager.getString('cms', 'categoryUsers');
 						break;
-					case KalturaBulkUploadObjectType.ENTRY:
+					case BorhanBulkUploadObjectType.ENTRY:
 						result = resourceManager.getString('cms', 'entries');
 						break;
-					case KalturaBulkUploadObjectType.USER:
+					case BorhanBulkUploadObjectType.USER:
 						result = resourceManager.getString('cms', 'endusers');
 						break;
 				}
@@ -424,7 +424,7 @@
 					
 					<!-- actions -->
 					<mx:DataGridColumn id="actions" width="200" paddingLeft="7" paddingRight="7"
-									   itemRenderer="com.kaltura.kmc.modules.content.view.itemrenderers.uploads.LogActionsIR"
+									   itemRenderer="com.borhan.bmc.modules.content.view.itemrenderers.uploads.LogActionsIR"
 									   headerText="{resourceManager.getString('cms', 'action')}" />
 					
 				</mx:columns>

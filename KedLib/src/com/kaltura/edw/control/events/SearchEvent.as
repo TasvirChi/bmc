@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.vo.ListableVo;
+	import com.borhan.bmvc.control.BMvCEvent;
 
-	public class SearchEvent extends KMvCEvent
+	public class SearchEvent extends BMvCEvent
 	{
 		
 		

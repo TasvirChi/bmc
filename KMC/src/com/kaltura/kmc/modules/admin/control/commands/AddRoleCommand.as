@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.borhan.bmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.userRole.UserRoleAdd;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.kmc.modules.admin.model.DrilldownMode;
+	import com.borhan.commands.userRole.UserRoleAdd;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.admin.control.events.RoleEvent;
+	import com.borhan.bmc.modules.admin.model.DrilldownMode;
 
 	public class AddRoleCommand extends BaseCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			var ua:UserRoleAdd = new UserRoleAdd((event as RoleEvent).role);
-			ua.addEventListener(KalturaEvent.COMPLETE, result);
-			ua.addEventListener(KalturaEvent.FAILED, fault);
+			ua.addEventListener(BorhanEvent.COMPLETE, result);
+			ua.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_model.kc.post(ua);
 		}

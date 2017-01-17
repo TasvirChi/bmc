@@ -2,48 +2,48 @@
 <!---
 	 entry drill-down screen.
 -->
-<navigation:ChangeableDataViewer xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<navigation:ChangeableDataViewer xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.borhan.containers.*"
 							height="595" width="930" layout="horizontal" horizontalScrollPolicy="off" paddingTop="18"
 							showCloseButton="true" close="{onClose()}" help="{onHelp()}"
-							xmlns:navigation="com.kaltura.edw.business.*"
-							xmlns:ed="com.kaltura.edw.view.*" xmlns:adobe="http://www.adobe.com/2006/fc"
+							xmlns:navigation="com.borhan.edw.business.*"
+							xmlns:ed="com.borhan.edw.view.*" xmlns:adobe="http://www.adobe.com/2006/fc"
 							creationComplete="{onWindowCreationComplete()}" 
-							xmlns:window="com.kaltura.kmc.modules.content.view.window.*"
-							xmlns:control="com.kaltura.edw.control.*">
+							xmlns:window="com.borhan.bmc.modules.content.view.window.*"
+							xmlns:control="com.borhan.edw.control.*">
 	<mx:Metadata>
 		[ResourceBundle("drilldown")]
 		[ResourceBundle("cms")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.Cloner;
-			import com.kaltura.edw.business.IDrilldownPanel;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.events.*;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.*;
-			import com.kaltura.edw.view.panels.PanelLoader;
-			import com.kaltura.edw.view.panels.PanelMetadataParser;
-			import com.kaltura.edw.view.panels.PanelMetadataVO;
-			import com.kaltura.kmvc.control.KMvCEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.KArrayUtil;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaLiveStreamAdminEntry;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMixEntry;
+			import com.borhan.BorhanClient;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.edw.business.Cloner;
+			import com.borhan.edw.business.IDrilldownPanel;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.constants.PanelConsts;
+			import com.borhan.edw.control.events.KedEntryEvent;
+			import com.borhan.edw.events.*;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.model.datapacks.*;
+			import com.borhan.edw.view.panels.PanelLoader;
+			import com.borhan.edw.view.panels.PanelMetadataParser;
+			import com.borhan.edw.view.panels.PanelMetadataVO;
+			import com.borhan.bmvc.control.BMvCEvent;
+			import com.borhan.bmvc.model.BMvCModel;
+			import com.borhan.types.BorhanEntryStatus;
+			import com.borhan.types.BorhanMediaType;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.utils.KArrayUtil;
+			import com.borhan.vo.BMCMetadataProfileVO;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanLiveStreamAdminEntry;
+			import com.borhan.vo.BorhanLiveStreamEntry;
+			import com.borhan.vo.BorhanMediaEntry;
+			import com.borhan.vo.BorhanMixEntry;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -63,7 +63,7 @@
 			// ===================================================================
 
 			/**
-			 * the string to dispatch on help events so KMC can interpret them
+			 * the string to dispatch on help events so BMC can interpret them
 			 * */
 
 			public static const HELP_REQUEST:String = 'helpRequest';
@@ -107,7 +107,7 @@
 			/**
 			 * entry details window data
 			 * */
-			private var _entryDetailsModel:KMvCModel;
+			private var _entryDetailsModel:BMvCModel;
 
 			[Bindable]
 			/**
@@ -120,7 +120,7 @@
 			 * */
 			public var panels:Object = new Object();
 			
-			public function set entryDetailsModel(value:KMvCModel):void {
+			public function set entryDetailsModel(value:BMvCModel):void {
 				_entryDetailsModel = value;
 				if (value) {
 					// let commands dispatch events from the current window
@@ -153,7 +153,7 @@
 				}
 			}
 			
-			public function get entryDetailsModel():KMvCModel {
+			public function get entryDetailsModel():BMvCModel {
 				return _entryDetailsModel;
 			}
 
@@ -167,9 +167,9 @@
 			 * we work on this instead of the actual selected entry
 			 * (model.selectedEntry) so we can easily revert if needed.
 			 * */
-			public var undoToEntry:KalturaBaseEntry;
+			public var undoToEntry:BorhanBaseEntry;
 
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 
 			/**
 			 * this js function will be triggered to show preview
@@ -277,11 +277,11 @@
 			 * The entry to refer to in the current window.
 			 * refers to entryDetailsModel.selectedEntry
 			 * */
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
 
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:BorhanBaseEntry):void {
 				var shouldInit:Boolean;
 				if (_selectedEntry == null && value) {
 					shouldInit = true;
@@ -407,17 +407,17 @@
 			 * will set the title according to entry type
 			 * */
 			private function setWindowTitle():void {
-				if (undoToEntry.status == KalturaEntryStatus.NO_CONTENT) {
+				if (undoToEntry.status == BorhanEntryStatus.NO_CONTENT) {
 					if (isNewEntry) {
 						var mediaType:int = parseInt(undoToEntry.mediaType);
 						switch (mediaType) {
-							case KalturaMediaType.IMAGE:
+							case BorhanMediaType.IMAGE:
 								title = resourceManager.getString('drilldown', 'newImageEntry');
 								break;
-							case KalturaMediaType.AUDIO:
+							case BorhanMediaType.AUDIO:
 								title = resourceManager.getString('drilldown', 'newAudioEntry');
 								break;
-							case KalturaMediaType.VIDEO:
+							case BorhanMediaType.VIDEO:
 								title = resourceManager.getString('drilldown', 'newVideoEntry');
 								break;
 						}
@@ -495,10 +495,10 @@
 					allTabs =  _visibleTabs;
 				}
 				// remove tabs which aren't relevant to the different entry types
-				if (undoToEntry is KalturaLiveStreamEntry) {
+				if (undoToEntry is BorhanLiveStreamEntry) {
 					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.ASSETS_PANEL, PanelConsts.CONTENT_PANEL, PanelConsts.ADS_PANEL, PanelConsts.CAPTIONS_PANEL, PanelConsts.DISTRIBUTION_PANEL]));
 				}
-				else if (selectedEntry is KalturaMixEntry) {
+				else if (selectedEntry is BorhanMixEntry) {
 					//this is a mix
 					
 					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.ASSETS_PANEL, PanelConsts.LIVE_STREAM_PANEL, PanelConsts.ADS_PANEL, PanelConsts.DISTRIBUTION_PANEL, PanelConsts.CLIPS_PANEL]));
@@ -509,16 +509,16 @@
 					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.LIVE_STREAM_PANEL]));
 					
 					//remove redundant tabs in image and audio cases
-					if (selectedEntry.mediaType == KalturaMediaType.IMAGE) {
+					if (selectedEntry.mediaType == BorhanMediaType.IMAGE) {
 						allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.THUMBNAILS_PANEL, PanelConsts.ASSETS_PANEL, PanelConsts.DISTRIBUTION_PANEL, PanelConsts.CAPTIONS_PANEL, PanelConsts.ADS_PANEL, PanelConsts.CLIPS_PANEL]));
 					}
-					else if (selectedEntry.mediaType == KalturaMediaType.AUDIO) {
+					else if (selectedEntry.mediaType == BorhanMediaType.AUDIO) {
 						allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.DISTRIBUTION_PANEL]));
 					}
 				}
 				
 //				// if uiconf requires removing content tab
-//				var cdp:ContentDataPack = KMvCModel.getInstance().getDataPack(ContentDataPack) as ContentDataPack;
+//				var cdp:ContentDataPack = BMvCModel.getInstance().getDataPack(ContentDataPack) as ContentDataPack;
 //				if (!cdp.showMixesTab) {
 //					allTabs = filterVector(allTabs, Vector.<String>([PanelConsts.CONTENT_PANEL]));
 //				}	// (QC 4569 - content tab is controlled by RnP)
@@ -534,7 +534,7 @@
 							// Determining if custom data tab is necessary.
 							var isCustomDataIn:Boolean = false;
 							for (var i:int = 0; i < _filterModel.metadataProfiles.length; i++) {
-								var curProfile:KMCMetadataProfileVO = _filterModel.metadataProfiles.getItemAt(i) as KMCMetadataProfileVO;
+								var curProfile:BMCMetadataProfileVO = _filterModel.metadataProfiles.getItemAt(i) as BMCMetadataProfileVO;
 								
 								if (curProfile.profile && curProfile.metadataFieldVOArray && curProfile.metadataFieldVOArray.length > 0) {
 									isCustomDataIn = true;
@@ -649,7 +649,7 @@
 					removeWatchers();
 					undoToEntry = null;
 
-//					var dsp:IEventDispatcher = (KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).dispatcher;
+//					var dsp:IEventDispatcher = (BMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack).dispatcher;
 					/* dsp. */dispatchEvent(new KedDataEvent(KedDataEvent.CLOSE_WINDOW));
 				}
 			}
@@ -721,13 +721,13 @@
 					}
 					if (success) {
 						// if referenceId was changed
-						if (undoToEntry.referenceId && undoToEntry.referenceId != KalturaClient.NULL_STRING && _selectedEntry.referenceId != undoToEntry.referenceId) {
+						if (undoToEntry.referenceId && undoToEntry.referenceId != BorhanClient.NULL_STRING && _selectedEntry.referenceId != undoToEntry.referenceId) {
 							// list all entries with the same refid , if any - show message
 							if (!_sameRefidWatcher) {
 								_entryDp.entriesWSameRefidAsSelected = new Array();
 								_sameRefidWatcher = BindingUtils.bindSetter(confirmSameRefid, _entryDp, "entriesWSameRefidAsSelected");
 							}
-							var cg:KMvCEvent = new KedEntryEvent(KedEntryEvent.LIST_ENTRIES_BY_REFID, undoToEntry);
+							var cg:BMvCEvent = new KedEntryEvent(KedEntryEvent.LIST_ENTRIES_BY_REFID, undoToEntry);
 							edwController.dispatch(cg);
 						}
 						else {
@@ -768,7 +768,7 @@
 				if (value && value.length > 0) {
 					// we have entries with the same refid
 					var ar:Array = [];
-					for each (var o:KalturaBaseEntry in value) {
+					for each (var o:BorhanBaseEntry in value) {
 						ar.push(o.id);
 					}
 					Alert.show(resourceManager.getString('drilldown', 'existingRefid', [undoToEntry.referenceId, ar]),
@@ -827,7 +827,7 @@
 				cgEvent.onComplete = handleSaveComplete;
 				edwController.dispatch(cgEvent);
 				
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_EDIT_ENTRY, "EditedtDrillDown", undoToEntry.id);
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_EDIT_ENTRY, "EditedtDrillDown", undoToEntry.id);
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_EDIT_ENTRY, GoogleAnalyticsConsts.CONTENT);
 			}
 
@@ -972,7 +972,7 @@
 				}
 				if ((event == null || event.detail == Alert.YES)) {
 					itemIndex = getNavigatableItemIndex(_nextPendingEntry == 1, itemIndex);
-					var selectEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, _itemsAC.getItemAt(itemIndex) as KalturaBaseEntry, '', itemIndex, true);
+					var selectEntry:KedEntryEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, _itemsAC.getItemAt(itemIndex) as BorhanBaseEntry, '', itemIndex, true);
 					edwController.dispatch(selectEntry);
 				}
 				_nextPendingEntry = 0;
@@ -1087,8 +1087,8 @@
 					return nextEntryIndex;
 				}
 				
-				var nextEntry:KalturaMediaEntry = _itemsAC.getItemAt(nextEntryIndex) as KalturaMediaEntry;
-				if (nextEntry && nextEntry.mediaType == KalturaMediaType.LIVE_STREAM_FLASH && nextEntry.status != KalturaEntryStatus.READY) {
+				var nextEntry:BorhanMediaEntry = _itemsAC.getItemAt(nextEntryIndex) as BorhanMediaEntry;
+				if (nextEntry && nextEntry.mediaType == BorhanMediaType.LIVE_STREAM_FLASH && nextEntry.status != BorhanEntryStatus.READY) {
 					return getNavigatableItemIndex(goForward, nextEntryIndex);
 				}
 				else {

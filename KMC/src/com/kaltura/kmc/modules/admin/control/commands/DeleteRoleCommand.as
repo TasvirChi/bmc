@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.borhan.bmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.userRole.UserRoleDelete;
-	import com.kaltura.commands.userRole.UserRoleList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.vo.KalturaUserRoleListResponse;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.userRole.UserRoleDelete;
+	import com.borhan.commands.userRole.UserRoleList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.admin.control.events.RoleEvent;
+	import com.borhan.net.BorhanCall;
+	import com.borhan.vo.BorhanUserRoleListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -19,15 +19,15 @@ package com.kaltura.kmc.modules.admin.control.commands
 		override public function execute(event:CairngormEvent):void {
 			var mr:MultiRequest = new MultiRequest();
 			// delete
-			var call:KalturaCall = new UserRoleDelete((event as RoleEvent).role.id);
+			var call:BorhanCall = new UserRoleDelete((event as RoleEvent).role.id);
 			mr.addAction(call);
 			// list
 			call = new UserRoleList(_model.rolesModel.rolesFilter);
 			mr.addAction(call);
 			
 			// post
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_model.kc.post(mr);
 		}
@@ -41,7 +41,7 @@ package com.kaltura.kmc.modules.admin.control.commands
 				Alert.show(rm.getString('admin', 'role_in_use'), rm.getString('admin', 'error')) ;
 			}
 			
-			var response:KalturaUserRoleListResponse = data.data[1] as KalturaUserRoleListResponse;
+			var response:BorhanUserRoleListResponse = data.data[1] as BorhanUserRoleListResponse;
 			_model.rolesModel.roles = new ArrayCollection(response.objects);
 			_model.decreaseLoadCounter();
 		}

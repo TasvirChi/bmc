@@ -2,28 +2,28 @@
 <!---
 access control tab of EntryDetailsWin
 -->
-<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.kaltura.edw.business.IDrilldownPanel"
-		   xmlns:control="com.kaltura.edw.control.*" label="{resourceManager.getString('drilldown', 'accessControl')}">
+<mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.borhan.edw.business.IDrilldownPanel"
+		   xmlns:control="com.borhan.edw.control.*" label="{resourceManager.getString('drilldown', 'accessControl')}">
 	
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.borhan.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.borhan.edw.events.InternalKedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.AccessControlEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.FilterDataPack;
-			import com.kaltura.edw.model.util.CompositeKBaseEntry;
-			import com.kaltura.edw.model.util.EntryAccessControlUtil;
-			import com.kaltura.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.*;
-			import com.kaltura.vo.*;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.constants.PanelConsts;
+			import com.borhan.edw.control.events.AccessControlEvent;
+			import com.borhan.edw.events.InternalKedEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.model.datapacks.FilterDataPack;
+			import com.borhan.edw.model.util.CompositeKBaseEntry;
+			import com.borhan.edw.model.util.EntryAccessControlUtil;
+			import com.borhan.edw.view.window.accessControl.AccessControlProfilePopUpWindow;
+			import com.borhan.bmvc.model.IDataPackRepository;
+			import com.borhan.types.*;
+			import com.borhan.vo.*;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -36,19 +36,19 @@ access control tab of EntryDetailsWin
 			/**
 			 * @copy #selectedEntry
 			 * */
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 			
 			private var _dpModel:IDataPackRepository;
 			
 			/**
 			 * the entry being presented / edited in entry drilldown
 			 * */
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
 			
 			
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:BorhanBaseEntry):void {
 				_selectedEntry = value;
 				// if composite, set all entries to default profile
 				if (value is CompositeKBaseEntry) {
@@ -139,7 +139,7 @@ access control tab of EntryDetailsWin
 				var defualtProfile:AccessControlProfileVO;
 				// create dropdown dp
 				for each (var acProfile:AccessControlProfileVO in _accessControlData) {
-					if (acProfile.profile.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
+					if (acProfile.profile.isDefault == BorhanNullableBoolean.TRUE_VALUE) {
 						defualtProfile = acProfile;
 					}
 					else {
@@ -223,32 +223,32 @@ access control tab of EntryDetailsWin
 					var foundCountriesRestriction:Boolean = false;
 					var foundAdvancedRestriction:Boolean = false;
 					acAdvancedLabel.text = '';
-					for each (var rstrct:KalturaBaseRestriction in selectedAC.profile.restrictions) {
-						if (rstrct is KalturaSiteRestriction) {
+					for each (var rstrct:BorhanBaseRestriction in selectedAC.profile.restrictions) {
+						if (rstrct is BorhanSiteRestriction) {
 							foundSitesRestriction = true;
-							acAuthoSitesLabel.text = EntryAccessControlUtil.getSiteRestrictionText(rstrct as KalturaSiteRestriction);
+							acAuthoSitesLabel.text = EntryAccessControlUtil.getSiteRestrictionText(rstrct as BorhanSiteRestriction);
 						}
-						else if (rstrct is KalturaIpAddressRestriction) {
+						else if (rstrct is BorhanIpAddressRestriction) {
 							foundIPsRestriction = true;
-							acAuthoIPsLabel.text = EntryAccessControlUtil.getIPRestrictionText(rstrct as KalturaIpAddressRestriction);
+							acAuthoIPsLabel.text = EntryAccessControlUtil.getIPRestrictionText(rstrct as BorhanIpAddressRestriction);
 						}
-						else if (rstrct is KalturaLimitFlavorsRestriction) {
+						else if (rstrct is BorhanLimitFlavorsRestriction) {
 							foundFlavorsRestriction = true;
-							acAuthoFlavorsLabel.text = EntryAccessControlUtil.getFlavorRestrictionText(rstrct as KalturaLimitFlavorsRestriction);
+							acAuthoFlavorsLabel.text = EntryAccessControlUtil.getFlavorRestrictionText(rstrct as BorhanLimitFlavorsRestriction);
 						}
-						else if (rstrct is KalturaCountryRestriction) {
+						else if (rstrct is BorhanCountryRestriction) {
 							foundCountriesRestriction = true;
-							acAuthoCountriesLabel.text = EntryAccessControlUtil.getCountryRestrictionText(rstrct as KalturaCountryRestriction);
+							acAuthoCountriesLabel.text = EntryAccessControlUtil.getCountryRestrictionText(rstrct as BorhanCountryRestriction);
 						}
 						
-						if (rstrct is KalturaSessionRestriction) { 
+						if (rstrct is BorhanSessionRestriction) { 
 							foundAdvancedRestriction = true;
 							acAdvancedLabel.text += resourceManager.getString('drilldown', 'KS_SHORT_CUT') + ", ";
 						}
-						if (rstrct is KalturaPreviewRestriction) {
+						if (rstrct is BorhanPreviewRestriction) {
 							foundAdvancedRestriction = true;
 							acAdvancedLabel.text += resourceManager.getString('drilldown', 'PREVIEW');
-							var len:int = (rstrct as KalturaPreviewRestriction).previewLength;
+							var len:int = (rstrct as BorhanPreviewRestriction).previewLength;
 							var min:int = Math.floor(len / 60);
 							var sec:int = len % 60;
 							acAdvancedLabel.text += "(" + min + "m:" + sec + "s), ";

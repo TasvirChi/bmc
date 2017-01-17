@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.baseEntry.BaseEntryGet;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.borhan.commands.baseEntry.BaseEntryGet;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.vo.BorhanBaseEntry;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -18,8 +18,8 @@ package com.kaltura.kmc.modules.account.control.command {
 		public function execute(event:CairngormEvent):void {
 			_model.loadingFlag = true;
 			var beg:BaseEntryGet = new BaseEntryGet(event.data);
-			beg.addEventListener(KalturaEvent.COMPLETE, result);
-			beg.addEventListener(KalturaEvent.FAILED, fault);
+			beg.addEventListener(BorhanEvent.COMPLETE, result);
+			beg.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(beg);
 		}
 
@@ -29,7 +29,7 @@ package com.kaltura.kmc.modules.account.control.command {
 
 			if (data.success) {
 				// continue save process
-				_model.defaultEntry = data.data as KalturaBaseEntry;
+				_model.defaultEntry = data.data as BorhanBaseEntry;
 			}
 			else {
 				fault(data);

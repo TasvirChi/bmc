@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:controls="com.kaltura.controls.*"
-				 xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:playlist="com.kaltura.edw.components.playlist.*"
-				 implements="com.kaltura.edw.business.IListable,com.kaltura.edw.business.IDataOwner"
+<HelpTitleWindow xmlns="com.borhan.containers.*" xmlns:controls="com.borhan.controls.*"
+				 xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:playlist="com.borhan.edw.components.playlist.*"
+				 implements="com.borhan.edw.business.IListable,com.borhan.edw.business.IDataOwner"
 				 creationComplete="{onCreationComplete()}" showCloseButton="true" close="{onClose(event)}"
 				 help="{onHelp()}" verticalScrollPolicy="off" horizontalAlign="center" layout="vertical" width="1000"
-				 height="595" styleName="TitleWindowType2" xmlns:et1="com.kaltura.edw.components.et.*"
-				 xmlns:fltr="com.kaltura.edw.components.fltr.*" xmlns:components="com.hillelcoren.components.*">
+				 height="595" styleName="TitleWindowType2" xmlns:et1="com.borhan.edw.components.et.*"
+				 xmlns:fltr="com.borhan.edw.components.fltr.*" xmlns:components="com.hillelcoren.components.*">
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.utils.ArrayUtil;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.autocomplete.controllers.KACTagsController;
-			import com.kaltura.edw.business.Cloner;
-			import com.kaltura.edw.business.IListable;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.et.EntryTableColumns;
-			import com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent;
-			import com.kaltura.edw.components.playlist.types.ManualPlaylistWindowMode;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.edw.vo.DistributionInfo;
-			import com.kaltura.edw.vo.ListableVo;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.types.KalturaBaseEntryOrderBy;
-			import com.kaltura.types.KalturaEntryModerationStatus;
-			import com.kaltura.types.KalturaEntryStatus;
-			import com.kaltura.types.KalturaPlaylistType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.types.KalturaTaggedObjectType;
-			import com.kaltura.utils.ObjectUtil;
-			import com.kaltura.vo.BaseFlexVo;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
-			import com.kaltura.vo.KalturaMixEntry;
-			import com.kaltura.vo.KalturaPlaylist;
+			import com.borhan.BorhanClient;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.autocomplete.controllers.KACTagsController;
+			import com.borhan.edw.business.Cloner;
+			import com.borhan.edw.business.IListable;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.components.et.EntryTableColumns;
+			import com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent;
+			import com.borhan.edw.components.playlist.types.ManualPlaylistWindowMode;
+			import com.borhan.edw.events.GeneralNonCairngormEvent;
+			import com.borhan.edw.events.KedDataEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.edw.view.EntryDetailsWin;
+			import com.borhan.edw.vo.DistributionInfo;
+			import com.borhan.edw.vo.ListableVo;
+			import com.borhan.bmvc.model.BMvCModel;
+			import com.borhan.types.BorhanBaseEntryOrderBy;
+			import com.borhan.types.BorhanEntryModerationStatus;
+			import com.borhan.types.BorhanEntryStatus;
+			import com.borhan.types.BorhanPlaylistType;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.types.BorhanTaggedObjectType;
+			import com.borhan.utils.ObjectUtil;
+			import com.borhan.vo.BaseFlexVo;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanMediaEntry;
+			import com.borhan.vo.BorhanMediaEntryFilter;
+			import com.borhan.vo.BorhanMixEntry;
+			import com.borhan.vo.BorhanPlaylist;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -76,8 +76,8 @@
 			public var distributionProfilesArray:Array;
 
 			/**
-			 * the item being edited, either KalturaPlaylist (manual playlist),
-			 * KalturaBaseEntry (entry metadata: linked entries) or KalturaCategory (category metadata: linked entry)
+			 * the item being edited, either BorhanPlaylist (manual playlist),
+			 * BorhanBaseEntry (entry metadata: linked entries) or BorhanCategory (category metadata: linked entry)
 			 * */
 			public var editedItem:BaseFlexVo;
 
@@ -90,7 +90,7 @@
 			 * This attribute will switch between 2 usage of this window:
 			 * 1 - A manual playlist
 			 * 2 - A list for the metadata
-			 * @see com.kaltura.edw.components.playlist.types.ManualPlaylistWindowMode
+			 * @see com.borhan.edw.components.playlist.types.ManualPlaylistWindowMode
 			 */
 			public var context:String = ManualPlaylistWindowMode.NEW_PLAYLIST;
 
@@ -109,7 +109,7 @@
 
 			/**
 			 * list of custom-data linked items
-			 * @see com.kaltura.edw.view.customData.EntryIdLinkTable
+			 * @see com.borhan.edw.view.customData.EntryIdLinkTable
 			 * @internal
 			 * reference to the array collection on EntryIdLinkTable 
 			 * */
@@ -132,18 +132,18 @@
 			/**
 			 * a copy of the original playlist object, for editing.
 			 * */
-			private var _editPlaylist:KalturaPlaylist;
+			private var _editPlaylist:BorhanPlaylist;
 
 			/**
 			 * the original playlist object
 			 * */
-			private var _originalPlaylist:KalturaPlaylist;
-			private var _orderBy:String = KalturaBaseEntryOrderBy.CREATED_AT_DESC;
+			private var _originalPlaylist:BorhanPlaylist;
+			private var _orderBy:String = BorhanBaseEntryOrderBy.CREATED_AT_DESC;
 
 			[Bindable]
 			private var _listableVo:ListableVo;
 
-			public var client:KalturaClient;
+			public var client:BorhanClient;
 
 
 			public function onRequestedDataLoaded():void {
@@ -217,14 +217,14 @@
 
 				else {
 					// playlist
-					new KACTagsController(tagsComplete, client, KalturaTaggedObjectType.ENTRY);
+					new KACTagsController(tagsComplete, client, BorhanTaggedObjectType.ENTRY);
 					entries.tableTitle = resourceManager.getString('cms', 'playlistResultLabel');
 
-					if (editedItem && (editedItem is KalturaPlaylist)) {
+					if (editedItem && (editedItem is BorhanPlaylist)) {
 						// edit existing playlist
 						title = editedItem.name;
-						_originalPlaylist = editedItem as KalturaPlaylist;
-						_editPlaylist = Cloner.cloneKalturaPlaylist(_originalPlaylist);
+						_originalPlaylist = editedItem as BorhanPlaylist;
+						_editPlaylist = Cloner.cloneBorhanPlaylist(_originalPlaylist);
 						playlistName.text = _editPlaylist.name;
 						playlistDescription.text = _editPlaylist.description;
 						_editPlaylist.parts = _playlistArrayCollection;
@@ -244,16 +244,16 @@
 					}
 				}
 
-				var kFilter:KalturaMediaEntryFilter = filter.kalturaFilter as KalturaMediaEntryFilter;
+				var kFilter:BorhanMediaEntryFilter = filter.borhanFilter as BorhanMediaEntryFilter;
 				// a unique moderation & Conversion status for custom data
 				if (context == ManualPlaylistWindowMode.EDIT_LINKED_ENTRIES_MODE || context == ManualPlaylistWindowMode.NEW_LINKED_ENTRIES) {
 					kFilter.moderationStatusIn = null;
 				}
 				else {
 					// view only approved and pending
-					kFilter.moderationStatusIn = KalturaEntryModerationStatus.APPROVED + "," + KalturaEntryModerationStatus.FLAGGED_FOR_REVIEW + "," + KalturaEntryModerationStatus.PENDING_MODERATION + "," + KalturaEntryModerationStatus.AUTO_APPROVED;
+					kFilter.moderationStatusIn = BorhanEntryModerationStatus.APPROVED + "," + BorhanEntryModerationStatus.FLAGGED_FOR_REVIEW + "," + BorhanEntryModerationStatus.PENDING_MODERATION + "," + BorhanEntryModerationStatus.AUTO_APPROVED;
 					// view only ready and converting
-					kFilter.statusIn = KalturaEntryStatus.PRECONVERT + "," + KalturaEntryStatus.READY;
+					kFilter.statusIn = BorhanEntryStatus.PRECONVERT + "," + BorhanEntryStatus.READY;
 				}
 
 				if (filterData.enableCustomData && filterData.metadataProfiles) {
@@ -294,13 +294,13 @@
 			private function gotoPage():void {
 				loadEntries();
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>Show Rows");
 			}
 
 
 			public function get filterVo():Object {
-				return filter.kalturaFilter;
+				return filter.borhanFilter;
 			}
 
 
@@ -310,7 +310,7 @@
 
 
 			public function loadEntries():void {
-				_listableVo = new ListableVo(filter.kalturaFilter, paging, null, this);
+				_listableVo = new ListableVo(filter.borhanFilter, paging, null, this);
 				_listableVo.filterVo.orderBy = _orderBy;
 
 				var e:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SEARCH_ENTRIES);
@@ -331,11 +331,11 @@
 				else {
 					for (var i:uint = 0; i < allEntries.selectedItems.length; i++) {
 						var o:Object;
-						if (allEntries.selectedItems[i] is KalturaMixEntry) {
-							o = Cloner.cloneKalturaMixEntry(allEntries.selectedItems[i] as KalturaMixEntry);
+						if (allEntries.selectedItems[i] is BorhanMixEntry) {
+							o = Cloner.cloneBorhanMixEntry(allEntries.selectedItems[i] as BorhanMixEntry);
 						}
-						if (allEntries.selectedItems[i] is KalturaMediaEntry) {
-							o = Cloner.cloneKalturaMediaEntry(allEntries.selectedItems[i] as KalturaMediaEntry);
+						if (allEntries.selectedItems[i] is BorhanMediaEntry) {
+							o = Cloner.cloneBorhanMediaEntry(allEntries.selectedItems[i] as BorhanMediaEntry);
 						}
 						_playlistArrayCollection.addItemAt(o, 0);
 					}
@@ -349,7 +349,7 @@
 			 * set the values shown in the popup tot he given playlist object
 			 * @param kpl 	the playlist to update
 			 * */
-			private function setPlaylistInfoFromScreen(kpl:KalturaPlaylist):void {
+			private function setPlaylistInfoFromScreen(kpl:BorhanPlaylist):void {
 				kpl.name = playlistName.text;
 				kpl.description = playlistDescription.text;
 				kpl.tags = getPlaylistTags();
@@ -388,12 +388,12 @@
 				if (context != ManualPlaylistWindowMode.EDIT_PLAYLIST_MODE) {
 					// new playlist
 					if (validatePlaylist()) {
-						var kalturaPlaylist:KalturaPlaylist = new KalturaPlaylist();
-						setPlaylistInfoFromScreen(kalturaPlaylist);
-						kalturaPlaylist.playlistType = KalturaPlaylistType.STATIC_LIST;
+						var borhanPlaylist:BorhanPlaylist = new BorhanPlaylist();
+						setPlaylistInfoFromScreen(borhanPlaylist);
+						borhanPlaylist.playlistType = BorhanPlaylistType.STATIC_LIST;
 
 						var ap:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SAVE_NEW_PLAYLIST);
-						ap.data = kalturaPlaylist;
+						ap.data = borhanPlaylist;
 						dispatchEvent(ap);
 					}
 				}
@@ -407,7 +407,7 @@
 					var e:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SAVE_EXISTING_PLAYLIST);
 					e.data = _editPlaylist;
 					dispatchEvent(e);
-					KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_EDIT_PLAYLIST,
+					KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_EDIT_PLAYLIST,
 						"ManuallPlayList>EditPlayList" + ">" + _editPlaylist.id);
 					GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_EDIT_PLAYLIST +
 						">" + _editPlaylist.id, GoogleAnalyticsConsts.CONTENT);
@@ -461,7 +461,7 @@
 
 			protected function entryTable_showDetailsHandler(event:KedDataEvent):void {
 				var e:ManualPlaylistWindowEvent = new ManualPlaylistWindowEvent(ManualPlaylistWindowEvent.SHOW_ENTRY_DETAILS);
-				e.data = event.data as KalturaBaseEntry;
+				e.data = event.data as BorhanBaseEntry;
 				dispatchEvent(e);
 			}
 
@@ -487,13 +487,13 @@
 	</mx:Script>
 
 	<mx:Metadata>
-		[Event(name="refreshEntriesList", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="close", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="showEntryDetails", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="savePlaylist", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="getPlaylist", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="loadFilterData", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
-		[Event(name="searchEntries", type="com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="refreshEntriesList", type="com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="close", type="com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="showEntryDetails", type="com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="savePlaylist", type="com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="getPlaylist", type="com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="loadFilterData", type="com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
+		[Event(name="searchEntries", type="com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent")] 
 	</mx:Metadata>
 
 
@@ -542,7 +542,7 @@
 								freeTextSearch="{searchBox}" enableIngestionStatus="false" filterModel="{filterData}"
 								metadataProfiles="{filterData.metadataProfiles}"
 								distributionProfiles="{distributionProfilesArray}" 
-								context="{KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack}"
+								context="{BMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack}"
 								categoriesRoot="{filterData.categoriesGeneral}" allCategories="{filterData.categoriesMapGeneral}"/>
 		</mx:VBox>
 

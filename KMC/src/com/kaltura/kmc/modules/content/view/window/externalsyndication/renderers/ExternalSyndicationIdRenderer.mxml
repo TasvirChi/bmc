@@ -3,7 +3,7 @@
 		 horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
+			import com.borhan.bmc.modules.content.vo.ExternalSyndicationVO;
 		]]>
 	</mx:Script>
 	<mx:Label text="{(data as ExternalSyndicationVO).kSyndicationFeed.id}" selectable="true"/>

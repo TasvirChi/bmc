@@ -1,22 +1,22 @@
-package com.kaltura.edw.control.commands.relatedFiles
+package com.borhan.edw.control.commands.relatedFiles
 {
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetUpdate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.RelatedFileEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaAttachmentAsset;
+	import com.borhan.commands.attachmentAsset.AttachmentAssetUpdate;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.RelatedFileEvent;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanAttachmentAsset;
 	
 	public class UpdateRelatedFileCommand extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
-			var file:KalturaAttachmentAsset = (event as RelatedFileEvent).attachmentAsset;
+			var file:BorhanAttachmentAsset = (event as RelatedFileEvent).attachmentAsset;
 			file.setUpdatedFieldsOnly(true);
 			
 			var updateAsset:AttachmentAssetUpdate = new AttachmentAssetUpdate(file.id, file);
-			updateAsset.addEventListener(KalturaEvent.COMPLETE, result);
-			updateAsset.addEventListener(KalturaEvent.FAILED, fault);
+			updateAsset.addEventListener(BorhanEvent.COMPLETE, result);
+			updateAsset.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(updateAsset);
 		}

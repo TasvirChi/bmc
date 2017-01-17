@@ -1,4 +1,4 @@
-package com.kaltura.validators {
+package com.borhan.validators {
 	import mx.validators.ValidationResult;
 	import mx.validators.Validator;
 

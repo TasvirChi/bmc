@@ -5,8 +5,8 @@ This popup window is used to add or edit an Custom Data Profile.
 Use the 'newProfileState' state for the 'Add New..' action
 
 -->
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:dataGrid="com.kaltura.kmc.view.dataGrid.*"
-				xmlns:customdata="com.kaltura.kmc.modules.account.view.windows.customdata.*" showCloseButton="true"
+<containers:ConfinedTitleWindow xmlns:containers="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:dataGrid="com.borhan.bmc.view.dataGrid.*"
+				xmlns:customdata="com.borhan.bmc.modules.account.view.windows.customdata.*" showCloseButton="true"
 				close="{onCloseBtn()}" layout="vertical" creationComplete="{onCreationComplete()}" width="950"
 				height="550" styleName="TitleWindowType2" backgroundColor="#f7f7f7" verticalScrollPolicy="off">
 
@@ -20,12 +20,12 @@ Use the 'newProfileState' state for the 'Add New..' action
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.account.control.events.*;
-			import com.kaltura.types.KalturaMetadataObjectType;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaMetadataProfile;
-			import com.kaltura.vo.MetadataFieldVO;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.modules.account.control.events.*;
+			import com.borhan.types.BorhanMetadataObjectType;
+			import com.borhan.vo.BMCMetadataProfileVO;
+			import com.borhan.vo.BorhanMetadataProfile;
+			import com.borhan.vo.MetadataFieldVO;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -56,8 +56,8 @@ Use the 'newProfileState' state for the 'Add New..' action
 			 *  the metadataProfile to add ot edit
 			 */
 			[Bindable]
-			private var _metadataProfile:KMCMetadataProfileVO;
-			private var _originalProfile:KMCMetadataProfileVO;
+			private var _metadataProfile:BMCMetadataProfileVO;
+			private var _originalProfile:BMCMetadataProfileVO;
 
 			private var _editWatcher:ChangeWatcher;
 
@@ -66,7 +66,7 @@ Use the 'newProfileState' state for the 'Add New..' action
 			 * get the accessControlProfile(acp)
 			 */
 			[Bindable]
-			public function get metadataProfile():KMCMetadataProfileVO {
+			public function get metadataProfile():BMCMetadataProfileVO {
 				return _metadataProfile
 			}
 
@@ -74,12 +74,12 @@ Use the 'newProfileState' state for the 'Add New..' action
 			/**
 			 * set the metadataProfile
 			 */
-			public function set metadataProfile(metadataProfile:KMCMetadataProfileVO):void {
+			public function set metadataProfile(metadataProfile:BMCMetadataProfileVO):void {
 				_metadataProfile = metadataProfile;
 				_editWatcher = BindingUtils.bindSetter(onEditingFinished, _metadataProfile, "isCurrentlyEdited");
 
 				//saves original metadata
-				_originalProfile = new KMCMetadataProfileVO();
+				_originalProfile = new BMCMetadataProfileVO();
 				if (_metadataProfile.xsd && _metadataProfile.metadataFieldVOArray.length) {
 					_originalProfile.xsd = _metadataProfile.xsd.copy();
 					_originalProfile.metadataFieldVOArray = new ArrayCollection();
@@ -96,8 +96,8 @@ Use the 'newProfileState' state for the 'Add New..' action
 			 */
 			private function onCreationComplete():void {
 				this.mx_internal::closeButton.buttonMode = true;
-				objectTypes = [{data: KalturaMetadataObjectType.ENTRY, label: resourceManager.getString('account', 'customSchemasEntryType')},
-					{data: KalturaMetadataObjectType.CATEGORY, label: resourceManager.getString('account', 'customSchemasCategoryType')}];
+				objectTypes = [{data: BorhanMetadataObjectType.ENTRY, label: resourceManager.getString('account', 'customSchemasEntryType')},
+					{data: BorhanMetadataObjectType.CATEGORY, label: resourceManager.getString('account', 'customSchemasCategoryType')}];
 
 				if (metadataProfile) {
 					if (metadataProfile.profile.id && metadataProfile.profile.id != int.MIN_VALUE) {
@@ -108,7 +108,7 @@ Use the 'newProfileState' state for the 'Add New..' action
 					
 					if (!metadataProfile.profile.metadataObjectType) {
 						// this is a new profile
-						metadataProfile.profile.metadataObjectType = KalturaMetadataObjectType.ENTRY;
+						metadataProfile.profile.metadataObjectType = BorhanMetadataObjectType.ENTRY;
 					}
 					objectTypeCB.selectedIndex = getItemIndex(metadataProfile.profile.metadataObjectType, objectTypes);
 				}
@@ -124,13 +124,13 @@ Use the 'newProfileState' state for the 'Add New..' action
 
 
 
-			private function getSchemaObjectTypeLabel(profile:KalturaMetadataProfile):String {
+			private function getSchemaObjectTypeLabel(profile:BorhanMetadataProfile):String {
 				var oType:String = profile.metadataObjectType;
 				var result:String = '';
-				if (oType == KalturaMetadataObjectType.ENTRY) {
+				if (oType == BorhanMetadataObjectType.ENTRY) {
 					result = resourceManager.getString('account', 'customSchemasEntryType');
 				}
-				else if (oType == KalturaMetadataObjectType.CATEGORY) {
+				else if (oType == BorhanMetadataObjectType.CATEGORY) {
 					result = resourceManager.getString('account', 'customSchemasCategoryType');
 				}
 				else {

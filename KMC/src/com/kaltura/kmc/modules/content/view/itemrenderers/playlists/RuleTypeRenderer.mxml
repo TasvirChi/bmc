@@ -2,15 +2,15 @@
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" paddingTop="0" paddingBottom="0">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaDurationType;
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
+			import com.borhan.types.BorhanDurationType;
+			import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
 			/**
 			 * concat a string representing a short summary of the playlist filter
 			 * (used by advanced mode item renderer)
 			 * @param kmefpl	in advanced mode, item renderer's data
 			 */
 			private function renderSummary(data:Object):String {
-				var kmefpl:KalturaMediaEntryFilterForPlaylist = data as KalturaMediaEntryFilterForPlaylist;
+				var kmefpl:BorhanMediaEntryFilterForPlaylist = data as BorhanMediaEntryFilterForPlaylist;
 				var summary:String = "";
 				// tags
 				if (kmefpl.tagsNameMultiLikeOr)
@@ -44,11 +44,11 @@
 				// duration:
 				tempString = '';
 				if (kmefpl.durationTypeMatchOr) {
-					if (kmefpl.durationTypeMatchOr.indexOf(KalturaDurationType.SHORT) > -1)
+					if (kmefpl.durationTypeMatchOr.indexOf(BorhanDurationType.SHORT) > -1)
 						tempString += resourceManager.getString('filter', 'shortduration') + ", ";
-					if (kmefpl.durationTypeMatchOr.indexOf(KalturaDurationType.MEDIUM) > -1)
+					if (kmefpl.durationTypeMatchOr.indexOf(BorhanDurationType.MEDIUM) > -1)
 						tempString += resourceManager.getString('filter', 'mediumduration') + ", ";
-					if (kmefpl.durationTypeMatchOr.indexOf(KalturaDurationType.LONG) > -1)
+					if (kmefpl.durationTypeMatchOr.indexOf(BorhanDurationType.LONG) > -1)
 						tempString += resourceManager.getString('filter', 'longduration') + ", ";
 					tempString.slice(0, tempString.length - 2);
 					summary += resourceManager.getString('filter', 'durationToolTip') + tempString + ", ";

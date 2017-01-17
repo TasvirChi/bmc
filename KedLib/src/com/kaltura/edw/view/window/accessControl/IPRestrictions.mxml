@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 width="100%" styleName="acpPopUpSectionBox" implements="com.kaltura.edw.view.window.accessControl.IRestrictionsPanel">
+		 width="100%" styleName="acpPopUpSectionBox" implements="com.borhan.edw.view.window.accessControl.IRestrictionsPanel">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaIpAddressRestrictionType;
-			import com.kaltura.utils.KArrayUtil;
-			import com.kaltura.vo.KalturaAccessControl;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaIpAddressRestriction;
-			import com.kaltura.windows.popUpWindows.AddIpRestrictionPopup;
-			import com.kaltura.windows.popUpWindows.AddNewDomainPopUpWindow;
+			import com.borhan.types.BorhanIpAddressRestrictionType;
+			import com.borhan.utils.KArrayUtil;
+			import com.borhan.vo.BorhanAccessControl;
+			import com.borhan.vo.BorhanBaseRestriction;
+			import com.borhan.vo.BorhanIpAddressRestriction;
+			import com.borhan.windows.popUpWindows.AddIpRestrictionPopup;
+			import com.borhan.windows.popUpWindows.AddNewDomainPopUpWindow;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -20,7 +20,7 @@
 			/**
 			 * the access control object being edited
 			 * */
-			public var profile:KalturaAccessControl;
+			public var profile:BorhanAccessControl;
 			
 			[Bindable]
 			/**
@@ -46,11 +46,11 @@
 			
 			public function setRestrictions():void {
 				var restrictionFound:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in profile.restrictions) {
-					if (restriction is KalturaIpAddressRestriction) {
+				for each (var restriction:BorhanBaseRestriction in profile.restrictions) {
+					if (restriction is BorhanIpAddressRestriction) {
 						restrictionFound = true;
 						var arr:ArrayCollection;
-						if ((restriction as KalturaIpAddressRestriction).ipAddressRestrictionType == KalturaIpAddressRestrictionType.ALLOW_LIST) {
+						if ((restriction as BorhanIpAddressRestriction).ipAddressRestrictionType == BorhanIpAddressRestrictionType.ALLOW_LIST) {
 							approvedIPsRadioBtn.selected = true;
 							arr = allowedIPsArr;
 						}
@@ -59,7 +59,7 @@
 							arr = notAllowedIPsArr;
 						}
 						
-						setIPsFromString(arr, (restriction as KalturaIpAddressRestriction).ipAddressList);
+						setIPsFromString(arr, (restriction as BorhanIpAddressRestriction).ipAddressList);
 						break;
 					}
 				}
@@ -70,8 +70,8 @@
 			
 			public function updateRestrictions():void {
 				if (allIPsRaddioBtn.selected != true) {
-					var ipRestriction:KalturaIpAddressRestriction = new KalturaIpAddressRestriction();
-					ipRestriction.ipAddressRestrictionType = approvedIPsRadioBtn.selected ? KalturaIpAddressRestrictionType.ALLOW_LIST : KalturaIpAddressRestrictionType.RESTRICT_LIST;
+					var ipRestriction:BorhanIpAddressRestriction = new BorhanIpAddressRestriction();
+					ipRestriction.ipAddressRestrictionType = approvedIPsRadioBtn.selected ? BorhanIpAddressRestrictionType.ALLOW_LIST : BorhanIpAddressRestrictionType.RESTRICT_LIST;
 					
 					var list:List = (approvedIPsRadioBtn.selected == true) ? approvedIPsList : notApprovedIPsList;
 					ipRestriction.ipAddressList = getIPsList(list.dataProvider as ArrayCollection);

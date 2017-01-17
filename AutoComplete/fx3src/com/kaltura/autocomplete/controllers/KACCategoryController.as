@@ -1,16 +1,16 @@
-package com.kaltura.autocomplete.controllers
+package com.borhan.autocomplete.controllers
 {
 	import com.hillelcoren.components.AutoComplete;
 	import com.hillelcoren.utils.StringUtils;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.autocomplete.controllers.base.KACControllerBase;
-	import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.borhan.BorhanClient;
+	import com.borhan.autocomplete.controllers.base.KACControllerBase;
+	import com.borhan.autocomplete.itemRenderers.selection.CategorySelectedItem;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.net.BorhanCall;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
 	
 	import flash.events.Event;
 	import flash.utils.setTimeout;
@@ -21,7 +21,7 @@ package com.kaltura.autocomplete.controllers
 
 	public class KACCategoryController extends KACControllerBase
 	{
-		public function KACCategoryController(autoComp:AutoComplete, client:KalturaClient)
+		public function KACCategoryController(autoComp:AutoComplete, client:BorhanClient)
 		{
 			super(autoComp, client);
 			autoComp.dropDownLabelFunction = categoryLabelFunction;
@@ -30,8 +30,8 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		private function categoryComparison(itemA:Object, itemB:Object):Boolean{
-			var categoryA:KalturaCategory = itemA as KalturaCategory;
-			var categoryB:KalturaCategory = itemB as KalturaCategory;
+			var categoryA:BorhanCategory = itemA as BorhanCategory;
+			var categoryB:BorhanCategory = itemB as BorhanCategory;
 			
 			if (categoryA == null || categoryB == null){
 				trace ("categoryComparison --> Trying to compare non-category object");
@@ -41,8 +41,8 @@ package com.kaltura.autocomplete.controllers
 			return categoryA.id == categoryB.id;
 		}
 		
-		override protected function createCallHook():KalturaCall{
-			var filter:KalturaCategoryFilter = new KalturaCategoryFilter();
+		override protected function createCallHook():BorhanCall{
+			var filter:BorhanCategoryFilter = new BorhanCategoryFilter();
 			filter.nameOrReferenceIdStartsWith = _autoComp.searchText;
 			var listCategories:CategoryList = new CategoryList(filter);
 			
@@ -50,7 +50,7 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		override protected function fetchElements(data:Object):Array{
-			var ret:Array = (data.data as KalturaCategoryListResponse).objects;
+			var ret:Array = (data.data as BorhanCategoryListResponse).objects;
 			if (ret != null){
 				ret.sortOn("fullName", Array.CASEINSENSITIVE);
 			}
@@ -58,7 +58,7 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		private function categoryLabelFunction(item:Object):String{
-			var category:KalturaCategory = item as KalturaCategory;
+			var category:BorhanCategory = item as BorhanCategory;
 			
 			var labelText:String = category.fullName;
 			if (category.referenceId != null && category.referenceId != ""){
@@ -73,8 +73,8 @@ package com.kaltura.autocomplete.controllers
 			var returnStr:String = StringUtils.highlightMatch( labelText, searchStr );
 			
 			var isDisabled:Boolean = false;
-			var currCat:KalturaCategory = item as KalturaCategory;
-			var kc:KalturaCategory;
+			var currCat:BorhanCategory = item as BorhanCategory;
+			var kc:BorhanCategory;
 			for each (kc in _autoComp.disabledItems.source){
 				if (kc.id == currCat.id){
 					isDisabled = true;

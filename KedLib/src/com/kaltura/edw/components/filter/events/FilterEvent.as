@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.filter.events
+package com.borhan.edw.components.filter.events
 {
-	import com.kaltura.edw.events.KedDataEvent;
+	import com.borhan.edw.events.KedDataEvent;
 	
 	import flash.events.Event;
 	
@@ -31,7 +31,7 @@ package com.kaltura.edw.components.filter.events
 		
 		/**
 		 * add entries to category
-		 * event.data is ArrayCollection of KalturaBaseEntry objects to be saved 
+		 * event.data is ArrayCollection of BorhanBaseEntry objects to be saved 
 		 */		
 		public static const UPDATE_ENTRIES:String = "updateEntries";
 		

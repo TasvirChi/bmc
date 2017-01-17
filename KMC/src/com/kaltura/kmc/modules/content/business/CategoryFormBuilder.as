@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.content.business
+package com.borhan.bmc.modules.content.business
 {
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.base.FormBuilderBase;
-	import com.kaltura.edw.model.MetadataDataObject;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.model.types.CustomMetadataConstantTypes;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaMetadata;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.business.base.FormBuilderBase;
+	import com.borhan.edw.model.MetadataDataObject;
+	import com.borhan.edw.model.datapacks.ContextDataPack;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.model.datapacks.FilterDataPack;
+	import com.borhan.edw.model.types.CustomMetadataConstantTypes;
+	import com.borhan.bmc.modules.content.model.CmsModelLocator;
+	import com.borhan.bmvc.model.BMvCModel;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.BorhanMetadata;
 	
 	import mx.collections.ArrayCollection;
 	import mx.core.UIComponent;
@@ -20,7 +20,7 @@ package com.kaltura.kmc.modules.content.business
 	{
 		private var _model:CmsModelLocator = CmsModelLocator.getInstance();
 		
-		public function CategoryFormBuilder(metadataProfile:KMCMetadataProfileVO)
+		public function CategoryFormBuilder(metadataProfile:BMCMetadataProfileVO)
 		{
 			super(metadataProfile);
 		}

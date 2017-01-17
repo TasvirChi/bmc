@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules.content.commands.cattrack
+package com.borhan.bmc.modules.content.commands.cattrack
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.partner.PartnerListFeatureStatus;
-	import com.kaltura.edw.business.KedJSGate;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.types.KalturaFeatureStatusType;
-	import com.kaltura.vo.KalturaFeatureStatus;
-	import com.kaltura.vo.KalturaFeatureStatusListResponse;
+	import com.borhan.commands.partner.PartnerListFeatureStatus;
+	import com.borhan.edw.business.KedJSGate;
+	import com.borhan.edw.model.types.APIErrorCode;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.types.BorhanFeatureStatusType;
+	import com.borhan.vo.BorhanFeatureStatus;
+	import com.borhan.vo.BorhanFeatureStatusListResponse;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -19,14 +19,14 @@ package com.kaltura.kmc.modules.content.commands.cattrack
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class GetCategoriesStatusCommand extends KalturaCommand {
+	public class GetCategoriesStatusCommand extends BorhanCommand {
 		
 		
 		override public function execute(event:CairngormEvent):void {
 			var mr:PartnerListFeatureStatus = new PartnerListFeatureStatus();
 			mr.useTimeout = false; // if a TO is encountered, it lowers the loadCounter below 0.
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);
 			
 		}
@@ -35,17 +35,17 @@ package com.kaltura.kmc.modules.content.commands.cattrack
 			var isErr:Boolean = checkError(data);
 			if (!isErr) {
 				var dsp:EventDispatcher = new EventDispatcher();
-				var kfslr:KalturaFeatureStatusListResponse = data.data as KalturaFeatureStatusListResponse;
+				var kfslr:BorhanFeatureStatusListResponse = data.data as BorhanFeatureStatusListResponse;
 				var lockFlagFound:Boolean;
 				var updateFlagFound:Boolean;
 				var updateEntsFlagFound:Boolean;
-				for each (var kfs:KalturaFeatureStatus in kfslr.objects) {
+				for each (var kfs:BorhanFeatureStatus in kfslr.objects) {
 					switch (kfs.type) {
-						case KalturaFeatureStatusType.LOCK_CATEGORY:
+						case BorhanFeatureStatusType.LOCK_CATEGORY:
 							lockFlagFound = true;
 							updateFlagFound = true;
 							break;
-						case KalturaFeatureStatusType.CATEGORY:
+						case BorhanFeatureStatusType.CATEGORY:
 							updateFlagFound = true;
 							break;
 					}
@@ -72,9 +72,9 @@ package com.kaltura.kmc.modules.content.commands.cattrack
 		}
 		
 		override public function fault(info:Object):void {
-			if (!info || !(info is KalturaEvent)) return;
+			if (!info || !(info is BorhanEvent)) return;
 			
-			var er:KalturaError = (info as KalturaEvent).error;
+			var er:BorhanError = (info as BorhanEvent).error;
 			if (!er) return;
 			
 			trace("GetCategoriesStatusCommand.fault:", er.errorCode);

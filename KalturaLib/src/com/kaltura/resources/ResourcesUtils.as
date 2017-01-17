@@ -1,4 +1,4 @@
-package com.kaltura.resources
+package com.borhan.resources
 {
 	import mx.resources.ResourceManager;
 

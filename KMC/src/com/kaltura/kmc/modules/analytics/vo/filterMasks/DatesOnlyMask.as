@@ -1,5 +1,5 @@
-package com.kaltura.kmc.modules.analytics.vo.filterMasks {
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
+package com.borhan.bmc.modules.analytics.vo.filterMasks {
+	import com.borhan.bmc.modules.analytics.vo.FilterVo;
 
 	public class DatesOnlyMask extends BaseMask {
 
@@ -11,7 +11,7 @@ package com.kaltura.kmc.modules.analytics.vo.filterMasks {
 
 		/**
 		 * days / months
-		 * @see com.kaltura.types.KalturaReportInterval
+		 * @see com.borhan.types.BorhanReportInterval
 		 */
 		override public function get interval():String {
 			return null;

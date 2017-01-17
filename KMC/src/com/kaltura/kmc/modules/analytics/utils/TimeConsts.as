@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.utils
+package com.borhan.bmc.modules.analytics.utils
 {
 	public class TimeConsts
 	{

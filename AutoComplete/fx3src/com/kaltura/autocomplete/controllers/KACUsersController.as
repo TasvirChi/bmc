@@ -1,18 +1,18 @@
-package com.kaltura.autocomplete.controllers
+package com.borhan.autocomplete.controllers
 {
 	import com.hillelcoren.components.AutoComplete;
 	import com.hillelcoren.utils.StringUtils;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.autocomplete.controllers.base.KACControllerBase;
-	import com.kaltura.commands.user.UserGet;
-	import com.kaltura.commands.user.UserList;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaUser;
-	import com.kaltura.vo.KalturaUserFilter;
-	import com.kaltura.vo.KalturaUserListResponse;
+	import com.borhan.BorhanClient;
+	import com.borhan.autocomplete.controllers.base.KACControllerBase;
+	import com.borhan.commands.user.UserGet;
+	import com.borhan.commands.user.UserList;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.net.BorhanCall;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanUser;
+	import com.borhan.vo.BorhanUserFilter;
+	import com.borhan.vo.BorhanUserListResponse;
 	
 	import flash.events.Event;
 	
@@ -20,7 +20,7 @@ package com.kaltura.autocomplete.controllers
 	
 	public class KACUsersController extends KACControllerBase
 	{
-		public function KACUsersController(autoComp:AutoComplete, client:KalturaClient)
+		public function KACUsersController(autoComp:AutoComplete, client:BorhanClient)
 		{
 			super(autoComp, client);
 			
@@ -32,7 +32,7 @@ package com.kaltura.autocomplete.controllers
 			autoComp.addEventListener(Event.CHANGE, onSelectionChanged, false, int.MAX_VALUE);
 		}
 		
-		private function userSelectFunction(user:KalturaUser, text:String):Boolean{
+		private function userSelectFunction(user:BorhanUser, text:String):Boolean{
 			return user.id == text;
 		}
 		
@@ -41,7 +41,7 @@ package com.kaltura.autocomplete.controllers
 			for (var index:uint = 0; index < _autoComp.selectedItems.length; index++){
 				var item:Object = _autoComp.selectedItems.getItemAt(index);
 				if (item is String){
-					var userItem:KalturaUser = new KalturaUser();
+					var userItem:BorhanUser = new BorhanUser();
 					userItem.id = item as String;
 					_autoComp.selectedItems.setItemAt(userItem, index);
 				}
@@ -53,8 +53,8 @@ package com.kaltura.autocomplete.controllers
 			var userId:String = ident as String;
 			if (userId != null){
 				var getUser:UserGet = new UserGet(userId);
-				getUser.addEventListener(KalturaEvent.COMPLETE, getUserSuccess);
-				getUser.addEventListener(KalturaEvent.FAILED, fault);
+				getUser.addEventListener(BorhanEvent.COMPLETE, getUserSuccess);
+				getUser.addEventListener(BorhanEvent.FAILED, fault);
 				getUser.queued = false;
 				
 				_client.post(getUser);
@@ -65,10 +65,10 @@ package com.kaltura.autocomplete.controllers
 		
 		private function getUserSuccess(data:Object):void
 		{
-			if (data.data is KalturaError){
-				fault(data as KalturaEvent);
+			if (data.data is BorhanError){
+				fault(data as BorhanEvent);
 			} else {
-				var user:KalturaUser = data.data as KalturaUser;
+				var user:BorhanUser = data.data as BorhanUser;
 				if (_autoComp.selectedItems != null){
 					_autoComp.selectedItems.addItem(user);
 				} else {
@@ -77,11 +77,11 @@ package com.kaltura.autocomplete.controllers
 			}
 		}
 		
-		override protected function createCallHook():KalturaCall{
-			var filter:KalturaUserFilter = new KalturaUserFilter();
+		override protected function createCallHook():BorhanCall{
+			var filter:BorhanUserFilter = new BorhanUserFilter();
 			filter.idOrScreenNameStartsWith = _autoComp.searchText;
 			
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var pager:BorhanFilterPager = new BorhanFilterPager();
 			pager.pageIndex = 0;
 			pager.pageSize = 30;
 			
@@ -91,11 +91,11 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		override protected function fetchElements(data:Object):Array{
-			return (data.data as KalturaUserListResponse).objects;
+			return (data.data as BorhanUserListResponse).objects;
 		}
 		
 		private function userLabelFunction(item:Object):String{
-			var user:KalturaUser = item as KalturaUser;
+			var user:BorhanUser = item as BorhanUser;
 			
 			var labelText:String;
 			if (user.screenName != null && user.screenName != ""){
@@ -112,8 +112,8 @@ package com.kaltura.autocomplete.controllers
 			var returnStr:String = StringUtils.highlightMatch( labelText, searchStr );
 			
 			var isDisabled:Boolean = false;
-			var currUser:KalturaUser = item as KalturaUser;
-			var ku:KalturaUser;
+			var currUser:BorhanUser = item as BorhanUser;
+			var ku:BorhanUser;
 			for each (ku in _autoComp.disabledItems.source){
 				if (ku.id == currUser.id){
 					isDisabled = true;

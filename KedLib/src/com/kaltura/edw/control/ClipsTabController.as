@@ -1,10 +1,10 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.clips.*;
-	import com.kaltura.edw.control.events.ClipEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.clips.*;
+	import com.borhan.edw.control.events.ClipEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class ClipsTabController extends KMvCController {
+	public class ClipsTabController extends BMvCController {
 		
 		public function ClipsTabController()
 		{

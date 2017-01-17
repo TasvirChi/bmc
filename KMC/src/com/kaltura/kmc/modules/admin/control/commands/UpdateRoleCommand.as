@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.admin.control.commands
+package com.borhan.bmc.modules.admin.control.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.userRole.UserRoleUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.admin.control.events.RoleEvent;
-	import com.kaltura.kmc.modules.admin.model.DrilldownMode;
-	import com.kaltura.vo.KalturaUserRole;
+	import com.borhan.commands.userRole.UserRoleUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.admin.control.events.RoleEvent;
+	import com.borhan.bmc.modules.admin.model.DrilldownMode;
+	import com.borhan.vo.BorhanUserRole;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -18,11 +18,11 @@ package com.kaltura.kmc.modules.admin.control.commands
 	public class UpdateRoleCommand extends BaseCommand {
 		
 		override public function execute(event:CairngormEvent):void {
-			var role:KalturaUserRole = (event as RoleEvent).role;
+			var role:BorhanUserRole = (event as RoleEvent).role;
 			role.setUpdatedFieldsOnly(true);
 			var uu:UserRoleUpdate = new UserRoleUpdate(role.id, role);
-			uu.addEventListener(KalturaEvent.COMPLETE, result);
-			uu.addEventListener(KalturaEvent.FAILED, fault);
+			uu.addEventListener(BorhanEvent.COMPLETE, result);
+			uu.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_model.kc.post(uu);
 		}

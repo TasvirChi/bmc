@@ -1,17 +1,17 @@
-package com.kaltura.edw.control.commands.mix {
-	import com.kaltura.commands.mixing.MixingGetReadyMediaEntries;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.ContentDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
+package com.borhan.edw.control.commands.mix {
+	import com.borhan.commands.mixing.MixingGetReadyMediaEntries;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.model.datapacks.ContentDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanBaseEntry;
 	
 	import mx.collections.ArrayCollection;
-	import com.kaltura.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.commands.KedCommand;
 
 	public class GetAllEntriesCommand extends KedCommand {
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
 			var cdp:ContentDataPack = _model.getDataPack(ContentDataPack) as ContentDataPack;
 			cdp.contentParts = null;
@@ -19,8 +19,8 @@ package com.kaltura.edw.control.commands.mix {
 			var e:KedEntryEvent = event as KedEntryEvent;
 			var getMediaReadyMix:MixingGetReadyMediaEntries = new MixingGetReadyMediaEntries(e.entryVo.id);
 
-			getMediaReadyMix.addEventListener(KalturaEvent.COMPLETE, result);
-			getMediaReadyMix.addEventListener(KalturaEvent.FAILED, fault);
+			getMediaReadyMix.addEventListener(BorhanEvent.COMPLETE, result);
+			getMediaReadyMix.addEventListener(BorhanEvent.FAILED, fault);
 
 			_client.post(getMediaReadyMix);
 		}

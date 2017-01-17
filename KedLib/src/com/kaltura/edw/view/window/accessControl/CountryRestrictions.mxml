@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 width="100%" styleName="acpPopUpSectionBox" implements="com.kaltura.edw.view.window.accessControl.IRestrictionsPanel">
+		 width="100%" styleName="acpPopUpSectionBox" implements="com.borhan.edw.view.window.accessControl.IRestrictionsPanel">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaCountryRestrictionType;
-			import com.kaltura.utils.KCountriesUtil;
-			import com.kaltura.vo.KalturaAccessControl;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaCountryRestriction;
-			import com.kaltura.windows.popUpWindows.AddRemoveCountriesPopUpWindow;
+			import com.borhan.types.BorhanCountryRestrictionType;
+			import com.borhan.utils.KCountriesUtil;
+			import com.borhan.vo.BorhanAccessControl;
+			import com.borhan.vo.BorhanBaseRestriction;
+			import com.borhan.vo.BorhanCountryRestriction;
+			import com.borhan.windows.popUpWindows.AddRemoveCountriesPopUpWindow;
 			
 			import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
@@ -16,7 +16,7 @@
 			/**
 			 * the access control object being edited
 			 * */	
-			public var profile:KalturaAccessControl;
+			public var profile:BorhanAccessControl;
 			
 			[Bindable]
 			/**
@@ -37,11 +37,11 @@
 			
 			public function setRestrictions():void {
 				var restrictionFound:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in profile.restrictions) {
-					if (restriction is KalturaCountryRestriction) {
+				for each (var restriction:BorhanBaseRestriction in profile.restrictions) {
+					if (restriction is BorhanCountryRestriction) {
 						restrictionFound = true;
 						var arr:ArrayCollection;
-						if ((restriction as KalturaCountryRestriction).countryRestrictionType == KalturaCountryRestrictionType.ALLOW_COUNTRY_LIST) {
+						if ((restriction as BorhanCountryRestriction).countryRestrictionType == BorhanCountryRestrictionType.ALLOW_COUNTRY_LIST) {
 							approvedCountriesRadioBtn.selected = true;
 							arr = allowedCountriesArr;
 						}
@@ -50,7 +50,7 @@
 							arr = notAllowedCountriesArr;
 						}
 						
-						setCountriesFromString(arr, (restriction as KalturaCountryRestriction).countryList);
+						setCountriesFromString(arr, (restriction as BorhanCountryRestriction).countryList);
 						break;
 					}
 				}
@@ -60,8 +60,8 @@
 			
 			public function updateRestrictions():void {
 				if (allCountriesRaddioBtn.selected != true) {
-					var countryRestriction:KalturaCountryRestriction = new KalturaCountryRestriction();
-					countryRestriction.countryRestrictionType = approvedCountriesRadioBtn.selected ? KalturaCountryRestrictionType.ALLOW_COUNTRY_LIST : KalturaCountryRestrictionType.RESTRICT_COUNTRY_LIST;
+					var countryRestriction:BorhanCountryRestriction = new BorhanCountryRestriction();
+					countryRestriction.countryRestrictionType = approvedCountriesRadioBtn.selected ? BorhanCountryRestrictionType.ALLOW_COUNTRY_LIST : BorhanCountryRestrictionType.RESTRICT_COUNTRY_LIST;
 					
 					var list:List = (approvedCountriesRadioBtn.selected == true) ? approvedCountriesList : notApprovedCountriesList;
 					countryRestriction.countryList = getCountriesList(list.dataProvider as ArrayCollection);
@@ -143,7 +143,7 @@
 								  enabled="{approvedCountriesRadioBtn.selected}"/>
 						<mx:List width="100%" id="approvedCountriesList"
 								 enabled="{approvedCountriesRadioBtn.selected}" dataProvider="{allowedCountriesArr}"
-								 rowCount="5" itemRenderer="com.kaltura.renderers.CountryListItemRenderer"
+								 rowCount="5" itemRenderer="com.borhan.renderers.CountryListItemRenderer"
 								 selectable="false"/>
 					</mx:HBox>
 				</mx:VBox>
@@ -166,7 +166,7 @@
 								  enabled="{notApprovedCountriesRadioBtn.selected}"/>
 						<mx:List width="100%" id="notApprovedCountriesList" dataProvider="{notAllowedCountriesArr}"
 								 enabled="{notApprovedCountriesRadioBtn.selected}" rowCount="5"
-								 itemRenderer="com.kaltura.renderers.CountryListItemRenderer" selectable="false"/>
+								 itemRenderer="com.borhan.renderers.CountryListItemRenderer" selectable="false"/>
 					</mx:HBox>
 				</mx:VBox>
 				<mx:HBox>

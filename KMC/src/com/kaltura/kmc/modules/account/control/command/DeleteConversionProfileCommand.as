@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.conversionProfile.ConversionProfileDelete;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.conversionProfile.ConversionProfileDelete;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.control.events.ConversionSettingsEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.bmc.modules.account.vo.ConversionProfileVO;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
@@ -57,8 +57,8 @@ package com.kaltura.kmc.modules.account.control.command {
 				}
 				
 				
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(BorhanEvent.COMPLETE, result);
+				mr.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(mr);
 			}
 		}

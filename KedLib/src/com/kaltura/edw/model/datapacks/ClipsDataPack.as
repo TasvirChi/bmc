@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.borhan.bmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
@@ -12,7 +12,7 @@ package com.kaltura.edw.model.datapacks
 		
 		/**
 		 * clips derived from the current entry, 
-		 * <code>KalturaBaseEntry</code> objects
+		 * <code>BorhanBaseEntry</code> objects
 		 */		
 		public var clips:Array;
 	}

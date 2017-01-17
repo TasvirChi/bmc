@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,25 +25,25 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.integration
+package com.borhan.commands.integration
 {
-		import com.kaltura.vo.KalturaIntegrationJobData;
-	import com.kaltura.delegates.integration.IntegrationDispatchDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanIntegrationJobData;
+	import com.borhan.delegates.integration.IntegrationDispatchDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* Dispatch integration task
 	**/
-	public class IntegrationDispatch extends KalturaCall
+	public class IntegrationDispatch extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param data KalturaIntegrationJobData
+		* @param data BorhanIntegrationJobData
 		* @param objectType String
 		* @param objectId String
 		**/
-		public function IntegrationDispatch( data : KalturaIntegrationJobData,objectType : String,objectId : String )
+		public function IntegrationDispatch( data : BorhanIntegrationJobData,objectType : String,objectId : String )
 		{
 			service= 'integration_integration';
 			action= 'dispatch';
@@ -51,7 +51,7 @@ package com.kaltura.commands.integration
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(data, 'data');
+				keyValArr = borhanObject2Arrays(data, 'data');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('objectType');

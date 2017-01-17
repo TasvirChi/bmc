@@ -1,8 +1,8 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.borhan.BorhanClient;
+	import com.borhan.vo.BorhanDistributionProfile;
+	import com.borhan.vo.BorhanThumbAsset;
 	
 	import flash.events.EventDispatcher;
 	
@@ -38,7 +38,7 @@ package com.kaltura.edw.vo
 		/**
 		 * represents the thumbnail asset
 		 * */
-		public var thumbAsset:KalturaThumbAsset;
+		public var thumbAsset:BorhanThumbAsset;
 		
 		/**
 		 * thumb url
@@ -54,7 +54,7 @@ package com.kaltura.edw.vo
 		 * and dimensionsHeight params will be ignored
 		 * 
 		 */		
-		public function ThumbnailWithDimensions(dimensionsWidth:int, dimensionsHeight:int, thumbnailAsset:KalturaThumbAsset = null)
+		public function ThumbnailWithDimensions(dimensionsWidth:int, dimensionsHeight:int, thumbnailAsset:BorhanThumbAsset = null)
 		{
 			if (thumbnailAsset) {
 				thumbAsset = thumbnailAsset;
@@ -68,7 +68,7 @@ package com.kaltura.edw.vo
 			usedDistributionProfilesArray = new Array();
 		}
 		
-		public function buildThumbUrl(client:KalturaClient):String {
+		public function buildThumbUrl(client:BorhanClient):String {
 			var result:String = client.protocol + client.domain + ThumbnailWithDimensions.serveURL + "/ks/" + client.ks + "/thumbAssetId/" + thumbAsset.id ;
 			if (thumbAsset.version > 1) {
 				result += "/version/" + thumbAsset.version;
@@ -92,7 +92,7 @@ package com.kaltura.edw.vo
 				}
 			}
 			var profileNameArray:Array = new Array();
-			for each (var profile:KalturaDistributionProfile in usedDistributionProfilesArray) {
+			for each (var profile:BorhanDistributionProfile in usedDistributionProfilesArray) {
 				profileNameArray.push(profile.name);
 			}
 			var distributionsList:String = profileNameArray.join(concatElement);

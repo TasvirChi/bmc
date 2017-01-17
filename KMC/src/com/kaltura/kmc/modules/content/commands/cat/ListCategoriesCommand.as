@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.content.commands.cat {
+package com.borhan.bmc.modules.content.commands.cat {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.baseEntry.BaseEntryCount;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.KedJSGate;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMediaEntryFilter;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.baseEntry.BaseEntryCount;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.business.KedJSGate;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.model.types.APIErrorCode;
+	import com.borhan.edw.vo.CategoryVO;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.types.BorhanEntryStatus;
+	import com.borhan.types.BorhanMediaType;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanMediaEntryFilter;
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.Sort;
@@ -26,7 +26,7 @@ package com.kaltura.kmc.modules.content.commands.cat {
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 
-	public class ListCategoriesCommand extends KalturaCommand {
+	public class ListCategoriesCommand extends BorhanCommand {
 		
 		private var _filterModel:FilterModel;
 		
@@ -36,8 +36,8 @@ package com.kaltura.kmc.modules.content.commands.cat {
 			_model.categoriesModel.selectedCategories = [];
 			
 			if (event.data) {
-				_model.categoriesModel.filter = event.data[0] as KalturaCategoryFilter;
-				_model.categoriesModel.pager = event.data[1] as KalturaFilterPager;
+				_model.categoriesModel.filter = event.data[0] as BorhanCategoryFilter;
+				_model.categoriesModel.pager = event.data[1] as BorhanFilterPager;
 				if (event.data.length > 2) {
 					if (event.data[2]) {
 						// reload categories for tree
@@ -50,8 +50,8 @@ package com.kaltura.kmc.modules.content.commands.cat {
 			
 			var listCategories:CategoryList = new CategoryList(_model.categoriesModel.filter, _model.categoriesModel.pager);
 
-			listCategories.addEventListener(KalturaEvent.COMPLETE, result);
-			listCategories.addEventListener(KalturaEvent.FAILED, fault);
+			listCategories.addEventListener(BorhanEvent.COMPLETE, result);
+			listCategories.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(listCategories);
 		}
 
@@ -60,13 +60,13 @@ package com.kaltura.kmc.modules.content.commands.cat {
 			_model.decreaseLoadCounter();
 			super.result(data);
 			if (!checkError(data)) {		
-//			var er:KalturaError = (data as KalturaEvent).error;
+//			var er:BorhanError = (data as BorhanEvent).error;
 //			if (er) { 
 //				Alert.show(getErrorText(er), ResourceManager.getInstance().getString('cms', 'error'));
 //				return;
 //			}
-				_model.categoriesModel.categoriesList = new ArrayCollection((data.data as KalturaCategoryListResponse).objects);
-				_model.categoriesModel.totalCategories = (data.data as KalturaCategoryListResponse).totalCount;
+				_model.categoriesModel.categoriesList = new ArrayCollection((data.data as BorhanCategoryListResponse).objects);
+				_model.categoriesModel.totalCategories = (data.data as BorhanCategoryListResponse).totalCount;
 			}
 		}
 		

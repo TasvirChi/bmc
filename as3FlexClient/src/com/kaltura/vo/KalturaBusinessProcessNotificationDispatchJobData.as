@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,18 +25,18 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaBusinessProcessServer;
+	import com.borhan.vo.BorhanBusinessProcessServer;
 
-	import com.kaltura.vo.KalturaEventNotificationDispatchJobData;
+	import com.borhan.vo.BorhanEventNotificationDispatchJobData;
 
 	[Bindable]
-	public dynamic class KalturaBusinessProcessNotificationDispatchJobData extends KalturaEventNotificationDispatchJobData
+	public dynamic class BorhanBusinessProcessNotificationDispatchJobData extends BorhanEventNotificationDispatchJobData
 	{
 		/**
 		**/
-		public var server : KalturaBusinessProcessServer;
+		public var server : BorhanBusinessProcessServer;
 
 		/**
 		**/

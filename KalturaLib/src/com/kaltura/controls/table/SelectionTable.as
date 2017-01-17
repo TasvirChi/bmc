@@ -1,6 +1,6 @@
-package com.kaltura.controls.table
+package com.borhan.controls.table
 {
-	import com.kaltura.dataStructures.HashMap;
+	import com.borhan.dataStructures.HashMap;
 	
 	import flash.events.Event;
 	

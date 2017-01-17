@@ -1,16 +1,16 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.edw.vo.DistributionInfo;
-	import com.kaltura.events.FileUploadEvent;
-	import com.kaltura.kmvc.control.KMvCController;
-	import com.kaltura.kmvc.model.IDataPack;
-	import com.kaltura.managers.FileUploadManager;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaMediaEntry;
-	import com.kaltura.vo.KalturaMixEntry;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.control.events.ThumbnailAssetEvent;
+	import com.borhan.edw.vo.DistributionInfo;
+	import com.borhan.events.FileUploadEvent;
+	import com.borhan.bmvc.control.BMvCController;
+	import com.borhan.bmvc.model.IDataPack;
+	import com.borhan.managers.FileUploadManager;
+	import com.borhan.types.BorhanMediaType;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanMediaEntry;
+	import com.borhan.vo.BorhanMixEntry;
 	
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -47,20 +47,20 @@ package com.kaltura.edw.model.datapacks
 		/**
 		 * Holds a reference to the current entry to check whether it changed or not when loadThumbs is called. 
 		 */		
-		private var _thumbRequestorEntry:KalturaBaseEntry;
+		private var _thumbRequestorEntry:BorhanBaseEntry;
 		
 		/**
 		 * Holds a reference to the current entry to check whether it changed or not when loadFlavors is called. 
 		 */		
-		private var _flavorRequestorEntry:KalturaBaseEntry;
+		private var _flavorRequestorEntry:BorhanBaseEntry;
 		
-		private var _flavorController:KMvCController;
+		private var _flavorController:BMvCController;
 		
 		private var _listenToUpload:Boolean = false;
 		private var _refreshOnce:Boolean = false;
 		private var _timeoutTimer:Timer = new Timer(5,1);
 		
-		public function loadThumbs(controller:KMvCController, currEntry:KalturaBaseEntry):void{
+		public function loadThumbs(controller:BMvCController, currEntry:BorhanBaseEntry):void{
 			if (_thumbRequestorEntry != currEntry){
 				_thumbRequestorEntry = currEntry;
 				var listThumbs:ThumbnailAssetEvent = new ThumbnailAssetEvent(ThumbnailAssetEvent.LIST);
@@ -68,7 +68,7 @@ package com.kaltura.edw.model.datapacks
 			}
 		}
 		
-		public function loadFlavors(controller:KMvCController, currEntry:KalturaBaseEntry):void{
+		public function loadFlavors(controller:BMvCController, currEntry:BorhanBaseEntry):void{
 			if (_flavorRequestorEntry != currEntry){
 				_flavorRequestorEntry = currEntry;
 				_flavorController = controller;

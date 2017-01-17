@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.vo.ListableVo;
+	import com.borhan.edw.vo.ListableVo;
 
 	public class SetListableEvent extends CairngormEvent
 	{

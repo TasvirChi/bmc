@@ -1,20 +1,20 @@
-package com.kaltura.edw.model.util
+package com.borhan.edw.model.util
 {
 	import mx.collections.ArrayCollection;
-	import com.kaltura.vo.FlavorVO;
-	import com.kaltura.vo.KalturaFlavorParams;
-	import com.kaltura.utils.KCountriesUtil;
-	import com.kaltura.vo.KalturaSiteRestriction;
-	import com.kaltura.types.KalturaSiteRestrictionType;
+	import com.borhan.vo.FlavorVO;
+	import com.borhan.vo.BorhanFlavorParams;
+	import com.borhan.utils.KCountriesUtil;
+	import com.borhan.vo.BorhanSiteRestriction;
+	import com.borhan.types.BorhanSiteRestrictionType;
 	import mx.resources.ResourceManager;
 	import mx.resources.IResourceManager;
-	import com.kaltura.vo.KalturaIpAddressRestriction;
-	import com.kaltura.types.KalturaIpAddressRestrictionType;
-	import com.kaltura.vo.KalturaLimitFlavorsRestriction;
-	import com.kaltura.types.KalturaLimitFlavorsRestrictionType;
-	import com.kaltura.types.KalturaCountryRestrictionType;
-	import com.kaltura.vo.KalturaCountryRestriction;
-	import com.kaltura.edw.model.FilterModel;
+	import com.borhan.vo.BorhanIpAddressRestriction;
+	import com.borhan.types.BorhanIpAddressRestrictionType;
+	import com.borhan.vo.BorhanLimitFlavorsRestriction;
+	import com.borhan.types.BorhanLimitFlavorsRestrictionType;
+	import com.borhan.types.BorhanCountryRestrictionType;
+	import com.borhan.vo.BorhanCountryRestriction;
+	import com.borhan.edw.model.FilterModel;
 
 	/**
 	 * This class holds helper methods used in Entry Access Control section. 
@@ -31,9 +31,9 @@ package com.kaltura.edw.model.util
 			_filterModel = value;
 		}
 		
-		public static function getSiteRestrictionText (rstrct:KalturaSiteRestriction):String {
+		public static function getSiteRestrictionText (rstrct:BorhanSiteRestriction):String {
 			var result:String;
-			if (rstrct.siteRestrictionType == KalturaSiteRestrictionType.ALLOW_SITE_LIST) {
+			if (rstrct.siteRestrictionType == BorhanSiteRestrictionType.ALLOW_SITE_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_SITES') + ":  ";
 			}
 			else {
@@ -43,9 +43,9 @@ package com.kaltura.edw.model.util
 			return result;
 		}
 		
-		public static function getIPRestrictionText (rstrct:KalturaIpAddressRestriction):String {
+		public static function getIPRestrictionText (rstrct:BorhanIpAddressRestriction):String {
 			var result:String;
-			if (rstrct.ipAddressRestrictionType == KalturaIpAddressRestrictionType.ALLOW_LIST) {
+			if (rstrct.ipAddressRestrictionType == BorhanIpAddressRestrictionType.ALLOW_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_IPS') + ":  ";
 			}
 			else {
@@ -61,9 +61,9 @@ package com.kaltura.edw.model.util
 		 * @return 
 		 * 
 		 */
-		public static function getFlavorRestrictionText (rstrct:KalturaLimitFlavorsRestriction):String {
+		public static function getFlavorRestrictionText (rstrct:BorhanLimitFlavorsRestriction):String {
 			var result:String;
-			if (rstrct.limitFlavorsRestrictionType == KalturaLimitFlavorsRestrictionType.ALLOW_LIST) {
+			if (rstrct.limitFlavorsRestrictionType == BorhanLimitFlavorsRestrictionType.ALLOW_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_FLAVORS') + ":  ";
 			}
 			else {
@@ -81,9 +81,9 @@ package com.kaltura.edw.model.util
 			return result;
 		}
 		
-		public static function getCountryRestrictionText (rstrct:KalturaCountryRestriction):String {
+		public static function getCountryRestrictionText (rstrct:BorhanCountryRestriction):String {
 			var result:String;
-			if (rstrct.countryRestrictionType == KalturaCountryRestrictionType.ALLOW_COUNTRY_LIST) {
+			if (rstrct.countryRestrictionType == BorhanCountryRestrictionType.ALLOW_COUNTRY_LIST) {
 				result = resourceManager.getString('drilldown', 'ALLOW_COUNTRIES') + ": "
 			}
 			else {
@@ -95,7 +95,7 @@ package com.kaltura.edw.model.util
 		}
 		
 		private static function getFlavorNameById(flavorParamsId:int):String {
-			for each (var kFlavor:KalturaFlavorParams in _filterModel.flavorParams) {
+			for each (var kFlavor:BorhanFlavorParams in _filterModel.flavorParams) {
 				if (kFlavor.id == flavorParamsId) {
 					return kFlavor.name;
 				}
@@ -104,16 +104,16 @@ package com.kaltura.edw.model.util
 		}
 		
 		/**
-		 * filter model holds KalturaFlavorParams, but the window requires FlavorVOs.
-		 * this method wraps each KalturaFlavorParams in FlavorVO like Account module does.
+		 * filter model holds BorhanFlavorParams, but the window requires FlavorVOs.
+		 * this method wraps each BorhanFlavorParams in FlavorVO like Account module does.
 		 * */
 		public static function wrapInFlavorVo(ac:ArrayCollection):ArrayCollection {
 			var tempArrCol:ArrayCollection = new ArrayCollection();
 			var flavor:FlavorVO;
 			for each(var kFlavor:Object in ac) {
-				if (kFlavor is KalturaFlavorParams) {
+				if (kFlavor is BorhanFlavorParams) {
 					flavor = new FlavorVO();
-					flavor.kFlavor = kFlavor as KalturaFlavorParams;
+					flavor.kFlavor = kFlavor as BorhanFlavorParams;
 					tempArrCol.addItem(flavor);
 				}
 			}

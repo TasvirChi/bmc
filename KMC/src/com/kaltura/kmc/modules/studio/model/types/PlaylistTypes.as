@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.model.types
+package com.borhan.bmc.modules.studio.model.types
 {
 	/**
 	 * enumerates different playlist types 

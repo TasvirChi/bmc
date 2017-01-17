@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" implements="com.borhan.bmc.modules.content.view.interfaces.IExternalSyndicationFeed"
 		 width="100%">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaGenericSyndicationFeed;
-			import com.kaltura.vo.KalturaGenericXsltSyndicationFeed;
+			import com.borhan.vo.BorhanBaseSyndicationFeed;
+			import com.borhan.vo.BorhanGenericSyndicationFeed;
+			import com.borhan.vo.BorhanGenericXsltSyndicationFeed;
 			
 			import mx.controls.Alert;
 			import mx.events.ValidationResultEvent;
 			
-			private var _syndication:KalturaBaseSyndicationFeed;
+			private var _syndication:BorhanBaseSyndicationFeed;
 			private var _fileReference:FileReference;
 			
 			public function validate():Boolean {
@@ -21,16 +21,16 @@
 				return true;
 			}
 			
-			public function get syndication():KalturaBaseSyndicationFeed {
+			public function get syndication():BorhanBaseSyndicationFeed {
 				if (!_syndication)
-					_syndication = new KalturaGenericXsltSyndicationFeed;
-				(_syndication as KalturaGenericXsltSyndicationFeed).xslt = transFileTi.text;
+					_syndication = new BorhanGenericXsltSyndicationFeed;
+				(_syndication as BorhanGenericXsltSyndicationFeed).xslt = transFileTi.text;
 				return _syndication;
 			}
 			
-			public function set syndication(syndication:KalturaBaseSyndicationFeed):void {
+			public function set syndication(syndication:BorhanBaseSyndicationFeed):void {
 				_syndication = syndication;
-				transFileTi.text = (syndication as KalturaGenericXsltSyndicationFeed).xslt;
+				transFileTi.text = (syndication as BorhanGenericXsltSyndicationFeed).xslt;
 			}
 			
 			private function onBrowseClick():void {

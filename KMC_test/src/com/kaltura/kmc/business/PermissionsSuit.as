@@ -1,17 +1,17 @@
-package com.kaltura.kmc.business
+package com.borhan.bmc.business
 {
-	import com.kaltura.kmc.business.permissions.ExtendPermissionManager;
-	import com.kaltura.kmc.business.permissions.TestPermissionManager;
-	import com.kaltura.kmc.business.permissions.TestPermissionParser;
+	import com.borhan.bmc.business.permissions.ExtendPermissionManager;
+	import com.borhan.bmc.business.permissions.TestPermissionManager;
+	import com.borhan.bmc.business.permissions.TestPermissionParser;
 
 	
 	[Suite(order="1")]
 	[RunWith("org.flexunit.runners.Suite")]
 	public class PermissionsSuit
 	{
-		public var test1:com.kaltura.kmc.business.permissions.TestPermissionManager;
-		public var test2:com.kaltura.kmc.business.permissions.TestPermissionParser;
-		public var test4:com.kaltura.kmc.business.permissions.ExtendPermissionManager;
+		public var test1:com.borhan.bmc.business.permissions.TestPermissionManager;
+		public var test2:com.borhan.bmc.business.permissions.TestPermissionParser;
+		public var test4:com.borhan.bmc.business.permissions.ExtendPermissionManager;
 		
 	}
 }

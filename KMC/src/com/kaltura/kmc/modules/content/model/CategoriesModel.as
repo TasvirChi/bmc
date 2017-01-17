@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.content.model
+package com.borhan.bmc.modules.content.model
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.BorhanClient;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanUser;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -13,8 +13,8 @@ package com.kaltura.kmc.modules.content.model
 		
 		
 		/**
-		 * if KalturaCategory.tags include this value, 
-		 * kmc should show warning when editing it. 
+		 * if BorhanCategory.tags include this value, 
+		 * bmc should show warning when editing it. 
 		 * */
 		public static const EDIT_WARN_TAG:String = "__EditWarning";
 		
@@ -34,12 +34,12 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * reference to the API client 
 		 */
-		public var client:KalturaClient;
+		public var client:BorhanClient;
 		
 		/**
 		 * when acting on a single category, the selected category (category table actions)
 		 */		
-		public var selectedCategory:KalturaCategory;
+		public var selectedCategory:BorhanCategory;
 		
 		/**
 		 * categories selected in the table (categories screen)
@@ -59,12 +59,12 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * the filter used for the latest list action (categories screen)
 		 */		
-		public var filter:KalturaCategoryFilter;
+		public var filter:BorhanCategoryFilter;
 		
 		/**
 		 * the pager used for the latest list action (categories screen)
 		 */
-		public var pager:KalturaFilterPager;
+		public var pager:BorhanFilterPager;
 		
 		
 		
@@ -122,17 +122,17 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * The category from which the selected category inherits values, or the parent category if no inheritedParent .
 		 */
-		public var inheritedParentCategory:KalturaCategory;
+		public var inheritedParentCategory:BorhanCategory;
 		
 		/**
-		 * the KalturaUser that is set as owner of the parent category of selected category (category drilldown > ent)
+		 * the BorhanUser that is set as owner of the parent category of selected category (category drilldown > ent)
 		 */
-		public var inheritedOwner:KalturaUser;
+		public var inheritedOwner:BorhanUser;
 		
 		/**
-		 * the KalturaUser that is set as owner of the selected category (category drilldown > ent) 
+		 * the BorhanUser that is set as owner of the selected category (category drilldown > ent) 
 		 */		
-		public var categoryOwner:KalturaUser;
+		public var categoryOwner:BorhanUser;
 		
 		
 		// -----------------------------------------
@@ -140,7 +140,7 @@ package com.kaltura.kmc.modules.content.model
 		// -----------------------------------------
 		
 		/**
-		 * users associated with selected category (KalturaCategoryUser objects, end users popup)
+		 * users associated with selected category (BorhanCategoryUser objects, end users popup)
 		 */
 		public var categoryUsers:ArrayCollection;
 		
@@ -150,7 +150,7 @@ package com.kaltura.kmc.modules.content.model
 		public var totalCategoryUsers:int;
 		
 		/**
-		 * selected users in table (KalturaCategoryUser objects, end users popup)
+		 * selected users in table (BorhanCategoryUser objects, end users popup)
 		 */
 		public var selectedCategoryUsers:Array;
 		

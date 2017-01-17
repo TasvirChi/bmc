@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*" 
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.borhan.containers.*" 
 							layout="vertical" width="400" height="300" creationComplete="creationCompleteHandler(event)" 
 							showCloseButton="true" close="closeHandler(event)" showHelpButton="true" help="helpHandler(event)"
 							xmlns:components="com.hillelcoren.components.*"
@@ -7,14 +7,14 @@
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACCategoryController;
-			import com.kaltura.autocomplete.itemRenderers.selection.CategorySelectedItem;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.account.control.events.IntegrationEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.BorhanClient;
+			import com.borhan.autocomplete.controllers.KACCategoryController;
+			import com.borhan.autocomplete.itemRenderers.selection.CategorySelectedItem;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.account.control.events.IntegrationEvent;
+			import com.borhan.bmc.modules.account.model.AccountModelLocator;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -23,9 +23,9 @@
 			import mx.utils.StringUtil;
 
 			
-			private var _category:KalturaCategory;
+			private var _category:BorhanCategory;
 			
-			public function set category(value:KalturaCategory):void {
+			public function set category(value:BorhanCategory):void {
 				_category = value;
 				if (catComplete) {
 					catComplete.selectedItem = value;
@@ -50,7 +50,7 @@
 
 			private function validate(event:MouseEvent):void {
 				var contexts:String = getPrivacyContextString();
-				var kCat:KalturaCategory = catComplete.selectedItem;
+				var kCat:BorhanCategory = catComplete.selectedItem;
 				if (!kCat) {
 					Alert.show(resourceManager.getString('account', 'noCatSelected'), resourceManager.getString('account', 'error'));
 				}
@@ -81,7 +81,7 @@
 			
 			private function savePrivacyContext(e:CloseEvent):void {
 				if (e.detail == Alert.OK) {
-					var kCat:KalturaCategory = catComplete.selectedItem;
+					var kCat:BorhanCategory = catComplete.selectedItem;
 					kCat.privacyContext = getPrivacyContextString();
 					var cge:CairngormEvent = new IntegrationEvent(IntegrationEvent.UPDATE_CATEGORY);
 					cge.data = kCat;
@@ -97,7 +97,7 @@
 
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_cat_entitlement'));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_cat_entitlement'));
 			}
 
 		]]>

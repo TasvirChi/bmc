@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<modules:KmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.kaltura.kmc.modules.*"
-				   xmlns:business="com.kaltura.kmc.modules.content.business.*"
-				   xmlns:control="com.kaltura.kmc.modules.content.control.*" xmlns:view="com.kaltura.kmc.modules.content.view.*" 
-				   implements="com.kaltura.edw.business.IDataOwner" layout="vertical" 
+<modules:BmcModule xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:modules="com.borhan.bmc.modules.*"
+				   xmlns:business="com.borhan.bmc.modules.content.business.*"
+				   xmlns:control="com.borhan.bmc.modules.content.control.*" xmlns:view="com.borhan.bmc.modules.content.view.*" 
+				   implements="com.borhan.edw.business.IDataOwner" layout="vertical" 
 				   minWidth="950" verticalGap="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0"
-				   preloader="com.kaltura.preloaders.KmcPreloader"
-				   enabled="{!_model.loadingFlag &amp;&amp; !KMvCModel.getInstance().loadingFlag}" >
+				   preloader="com.borhan.preloaders.BmcPreloader"
+				   enabled="{!_model.loadingFlag &amp;&amp; !BMvCModel.getInstance().loadingFlag}" >
 
 	<mx:Metadata>
 		[ResourceBundle("cms")]
@@ -15,49 +15,49 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.containers.ConfinedTitleWindow;
-			import com.kaltura.edw.business.IDataOwner;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.playlist.ManualPlaylistWindow;
-			import com.kaltura.edw.control.DataTabController;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.MetadataProfileEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.datapacks.ContentDataPack;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-			import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.edw.model.datapacks.FlavorsDataPack;
-			import com.kaltura.edw.model.types.WindowsStates;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.events.AccessControlProfileEvent;
-			import com.kaltura.events.FileUploadEvent;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.business.IContentPanel;
-			import com.kaltura.kmc.modules.content.events.*;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.kmc.modules.content.utils.FilterUtil;
-			import com.kaltura.kmc.modules.content.view.window.RulePlaylistWindow;
-			import com.kaltura.kmc.modules.content.view.window.SetSchedulingWin;
-			import com.kaltura.kmc.modules.content.view.window.cdw.CategoryDetailsWin;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.types.KalturaMediaType;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.utils.KUtils;
-			import com.kaltura.utils.ObjectHelpers;
-			import com.kaltura.utils.SoManager;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.vo.KalturaMediaEntry;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
-			import com.kaltura.vo.KalturaPlaylistFilter;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.containers.ConfinedTitleWindow;
+			import com.borhan.edw.business.IDataOwner;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.components.playlist.ManualPlaylistWindow;
+			import com.borhan.edw.control.DataTabController;
+			import com.borhan.edw.control.KedController;
+			import com.borhan.edw.control.events.KedEntryEvent;
+			import com.borhan.edw.control.events.MetadataProfileEvent;
+			import com.borhan.edw.events.KedDataEvent;
+			import com.borhan.edw.model.datapacks.ContentDataPack;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.edw.model.datapacks.CuePointsDataPack;
+			import com.borhan.edw.model.datapacks.CustomDataDataPack;
+			import com.borhan.edw.model.datapacks.EntryDataPack;
+			import com.borhan.edw.model.datapacks.FlavorsDataPack;
+			import com.borhan.edw.model.types.WindowsStates;
+			import com.borhan.edw.view.EntryDetailsWin;
+			import com.borhan.events.AccessControlProfileEvent;
+			import com.borhan.events.FileUploadEvent;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.content.business.IContentPanel;
+			import com.borhan.bmc.modules.content.events.*;
+			import com.borhan.bmc.modules.content.model.CmsModelLocator;
+			import com.borhan.bmc.modules.content.utils.FilterUtil;
+			import com.borhan.bmc.modules.content.view.window.RulePlaylistWindow;
+			import com.borhan.bmc.modules.content.view.window.SetSchedulingWin;
+			import com.borhan.bmc.modules.content.view.window.cdw.CategoryDetailsWin;
+			import com.borhan.bmvc.model.BMvCModel;
+			import com.borhan.managers.FileUploadManager;
+			import com.borhan.types.BorhanMediaType;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.utils.KUtils;
+			import com.borhan.utils.ObjectHelpers;
+			import com.borhan.utils.SoManager;
+			import com.borhan.vo.BorhanBaseEntryFilter;
+			import com.borhan.vo.BorhanMediaEntry;
+			import com.borhan.vo.BorhanMediaEntryFilter;
+			import com.borhan.vo.BorhanPlaylistFilter;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -88,7 +88,7 @@
 			/**
 			 * entry data
 			 * */
-			private var _entryData:EntryDataPack = KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
+			private var _entryData:EntryDataPack = BMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack;
 
 			[Bindable]
 			/**
@@ -110,7 +110,7 @@
 			protected var _ready:Boolean = false;
 
 			/**
-			 * KMC is responsible to use the value of
+			 * BMC is responsible to use the value of
 			 * this const as the id of this module.
 			 * */
 			public static const NAME:String = "content";
@@ -202,7 +202,7 @@
 				var cl:String = getQualifiedClassName(e);
 				if (e.type == "resize" &&  cl == "fl.events::ComponentEvent") {
 					// this is a flash event and Flex will not know how to "eat" it,
-					// it probably came from KDP.
+					// it probably came from BDP.
 					e.stopImmediatePropagation();
 					e.preventDefault();
 				}
@@ -211,7 +211,7 @@
 			
 			/**
 			 * reset list of live conversion profiles so it will be reloaded when needed.
-			 * (triggered using KMCNavigationEvent)
+			 * (triggered using BMCNavigationEvent)
 			 * */
 			public function resetLiveConversionProfilesList():void {
 				_model.liveConversionProfiles = null;
@@ -221,9 +221,9 @@
 			 * create a new audio entry
 			 * */
 			public function createAudioEntry(conversionProfileId:int = -1):void {
-				var entry:KalturaMediaEntry = new KalturaMediaEntry();
+				var entry:BorhanMediaEntry = new BorhanMediaEntry();
 				entry.name = resourceManager.getString('cms','defaultEntryName');
-				entry.mediaType = KalturaMediaType.AUDIO;
+				entry.mediaType = BorhanMediaType.AUDIO;
 				if (conversionProfileId != -1) {
 					entry.conversionProfileId = conversionProfileId;
 				}
@@ -236,9 +236,9 @@
 			 * create a new video entry
 			 * */
 			public function createVideoEntry(conversionProfileId:int = -1):void {
-				var entry:KalturaMediaEntry = new KalturaMediaEntry();
+				var entry:BorhanMediaEntry = new BorhanMediaEntry();
 				entry.name = resourceManager.getString('cms','defaultEntryName');
-				entry.mediaType = KalturaMediaType.VIDEO;
+				entry.mediaType = BorhanMediaType.VIDEO;
 				if (conversionProfileId != -1) {
 					entry.conversionProfileId = conversionProfileId;
 				}
@@ -311,7 +311,7 @@
 			}
 
 			/**
-			 * when opening KMC with a drilldown, need to supply ked with
+			 * when opening BMC with a drilldown, need to supply ked with
 			 * a dummy dispatcher because the the drilldown only updates
 			 * this value after it is created. use this.
 			 * */
@@ -411,11 +411,11 @@
 				if (willTrigger(Event.ADDED_TO_STAGE)) {
 					removeEventListener(Event.ADDED_TO_STAGE, initTrackers);
 				}
-				GoogleAnalyticsTracker.getInstance().setBasePath("KMC/content");
+				GoogleAnalyticsTracker.getInstance().setBasePath("BMC/content");
 				var ka:KAnalyticsTracker = KAnalyticsTracker.getInstance();
 
 				// intialize local data
-				SoManager.getInstance().getLocalData("kmc", _model.context.userId);
+				SoManager.getInstance().getLocalData("bmc", _model.context.userId);
 
 				ka.init(_model.context.kc, "content", "4", _model.context.userId);
 			}
@@ -428,10 +428,10 @@
 				var confFile:XML = new XML(_uiconf.confFile);
 
 				// context:
-				_model.context.moderationUiconf = confFile.uiconf.kdp.moderation.text().toString();
-				_model.context.drilldownUiconf = confFile.uiconf.kdp.drilldown.text().toString();
-				_model.context.drilldownAdsUiconf = confFile.uiconf.kdp.drilldownAds.text().toString();
-				_model.context.captureThumbnailUiconf = confFile.uiconf.kdp.captureThumbnail.text().toString();
+				_model.context.moderationUiconf = confFile.uiconf.bdp.moderation.text().toString();
+				_model.context.drilldownUiconf = confFile.uiconf.bdp.drilldown.text().toString();
+				_model.context.drilldownAdsUiconf = confFile.uiconf.bdp.drilldownAds.text().toString();
+				_model.context.captureThumbnailUiconf = confFile.uiconf.bdp.captureThumbnail.text().toString();
 				_model.context.kClipAdsUiconf = confFile.uiconf.kclip.ads.text().toString();
 				_model.context.panelsConfig = confFile.uiconf.entryDrilldown.panels[0];
 
@@ -497,7 +497,7 @@
 			 * fix race condition, application added or tab switch from initial flashvar
 			 */
 			private function switchToTab(tab:String = ""):void {
-				var kmef:KalturaBaseEntryFilter;
+				var kmef:BorhanBaseEntryFilter;
 				if (_model.attic.filter) {
 					kmef = FilterUtil.createFilterFromString(_model.attic.filter);
 					_model.attic.filter = null;
@@ -666,30 +666,30 @@
 			private function trackTabChange(evt:Event):void {
 				switch (contentView.selectedChild) {
 					case manage:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInEntryTable>Manage");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_PAGE_VIEW, "pagingInEntryTable>Manage");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_ENTRIES, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case playlists:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInPlaylistTable>Playlists");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_PAGE_VIEW, "pagingInPlaylistTable>Playlists");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_PLAYLISTS, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case moderation:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInModerationTable>Moderate");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_PAGE_VIEW, "pagingInModerationTable>Moderate");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_MODERATION, GoogleAnalyticsConsts.CONTENT)
 						break;
 					case syndication:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInSyndicateTable>Syndicate");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_PAGE_VIEW, "pagingInSyndicateTable>Syndicate");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_SYNDICATION, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case categories:
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_CATEGORIES, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case uploads:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "pagingInBulkUploadTable>Upload");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_PAGE_VIEW, "pagingInBulkUploadTable>Upload");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_BULK_UPLOADS, GoogleAnalyticsConsts.CONTENT);
 						break;
 					case dropFolders:
-						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_PAGE_VIEW, "navigateToDropFoldersPage");
+						KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_PAGE_VIEW, "navigateToDropFoldersPage");
 						GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PAGE_VIEW + GoogleAnalyticsConsts.CONTENT_DROP_FOLDERS, GoogleAnalyticsConsts.CONTENT);
 						break;
 				}
@@ -740,7 +740,7 @@
 						return;
 					
 				}
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, anchor));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, anchor));
 			}
 
 
@@ -858,4 +858,4 @@
 
 		</mx:ViewStack>
 	</mx:VBox>
-</modules:KmcModule>
+</modules:BmcModule>

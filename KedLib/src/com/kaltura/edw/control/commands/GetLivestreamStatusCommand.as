@@ -1,26 +1,26 @@
-package com.kaltura.edw.control.commands
+package com.borhan.edw.control.commands
 {
-	import com.kaltura.commands.liveStream.LiveStreamIsLive;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.types.KalturaPlaybackProtocol;
+	import com.borhan.commands.liveStream.LiveStreamIsLive;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanNullableBoolean;
+	import com.borhan.types.BorhanPlaybackProtocol;
 
 	public class GetLivestreamStatusCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			if (event.type == KedEntryEvent.GET_LIVESTREAM_STATUS) {
 				_model.increaseLoadCounter();
-				var getStat:LiveStreamIsLive = new LiveStreamIsLive((event as KedEntryEvent).entryVo.id, KalturaPlaybackProtocol.HDS); 
-				getStat.addEventListener(KalturaEvent.COMPLETE, result);
-				getStat.addEventListener(KalturaEvent.FAILED, fault);
+				var getStat:LiveStreamIsLive = new LiveStreamIsLive((event as KedEntryEvent).entryVo.id, BorhanPlaybackProtocol.HDS); 
+				getStat.addEventListener(BorhanEvent.COMPLETE, result);
+				getStat.addEventListener(BorhanEvent.FAILED, fault);
 				_client.post(getStat);
 			}
 			else if (event.type == KedEntryEvent.RESET_LIVESTREAM_STATUS) {
 				var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
-				edp.selectedLiveEntryIsLive = KalturaNullableBoolean.NULL_VALUE;
+				edp.selectedLiveEntryIsLive = BorhanNullableBoolean.NULL_VALUE;
 			}
 		}
 		

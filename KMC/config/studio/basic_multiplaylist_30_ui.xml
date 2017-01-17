@@ -1,9 +1,9 @@
-<layout id="full" skinPath="/content/uiconf/kaltura/kmc/appstudio/kdp3/falcon/skin/v3.7/skin.swf" isPlaylist="multi">
+<layout id="full" skinPath="/content/uiconf/borhan/bmc/appstudio/bdp3/falcon/skin/v3.7/skin.swf" isPlaylist="multi">
 	<HBox id="topLevel" width="100%" height="100%">
 		<VBox id="player" width="100%" height="100%" styleName="black">
 			<Plugin id="playlistAPI" width="0%" height="0%" includeInLayout="false"
 					selectedDataProvider="{tabBar.selectedDataProvider}"/>
-			<Plugin id="kalturaMix" width="0%" height="0%" includeInLayout="false" loadingPolicy="onDemand"/>
+			<Plugin id="borhanMix" width="0%" height="0%" includeInLayout="false" loadingPolicy="onDemand"/>
 			<Plugin id="download" width="0%" height="0%" includeInLayout="false" loadingPolicy="noWait"/>
 			<Plugin id="statistics" width="0%" height="0%" includeInLayout="false"/>
 			<Plugin id="widevine" width="0%" height="0%" includeInLayout="false" asyncInit="true" loadInIframe="true" loadingPolicy="preInitialize" 
@@ -43,15 +43,15 @@
 						 pauseScreenOverId="pauseScreen" pauseScreenId="pauseScreen" playScreenOverId="playScreen"
 						 endScreenId="endScreen" endScreenOverId="endScreen"/>
 				<Watermark id="watermark" width="100%" height="100%"
-						   watermarkPath="http://www.kaltura.com/content/uiconf/kaltura/kmc/appstudio/kdp3/exampleWatermark.png"
-						   watermarkClickPath="http://www.kaltura.com/" watermarkPosition="topRight"/>
+						   watermarkPath="http://www.borhan.com/content/uiconf/borhan/bmc/appstudio/bdp3/exampleWatermark.png"
+						   watermarkClickPath="http://www.borhan.com/" watermarkPosition="topRight"/>
 				<!--5 star rating plugin-->
 				<Plugin id="stars" width="100%" height="30" editable="true" rating="-1"/>
 				<!-- overlay plugin -->
 				<Plugin id="overlay" swfUrls="{vast.overlays}" overlayStartAt="{vast.overlayStartAt}"
 						overlayInterval="{vast.overlayInterval}" displayDuration="" width="100%" height="100%"/>
 				<!-- bumper plugin -->
-				<Plugin id="bumper" bumperEntryID="0_c2gx2xjm" clickurl="http://www.kaltura.com" lockUI="true"
+				<Plugin id="bumper" bumperEntryID="0_c2gx2xjm" clickurl="http://www.borhan.com" lockUI="true"
 						playOnce="false" preSequence="1" postSequence="1" width="100%" height="100%"/>
 				<!-- skip button -->
 				<VBox id="skipBtnHolder" width="100%" height="100%">
@@ -71,13 +71,13 @@
 					<Plugin id="captionsOverFader" width="0%" height="0%" includeInLayout="false"
 							target="{ccOverComboBoxWrapper}" hoverTarget="{PlayerHolder}" duration="0.5" autoHide="true"
 							path="faderPlugin.swf" includeForeground="false"/>
-					<ComboBox id="ccOverComboBox" width="90" styleName="_kdp"
+					<ComboBox id="ccOverComboBox" width="90" styleName="_bdp"
 							  selectedIndex="{closedCaptionsOverPlayer.currentCCFileIndex}"
 							  kevent_change="sendNotification( 'closedCaptionsSelected' , ccOverComboBox.selectedItem)"
 							  dataProvider="{closedCaptionsOverPlayer.availableCCFilesLabels}" prompt="Captions"
 							  visible="{closedCaptionsOverPlayer.hasCaptions}"/>
 				</HBox>
-				<Plugin id="kalturaShare" uiconfId="8700151" width="100%" height="100%"/>
+				<Plugin id="borhanShare" uiconfId="8700151" width="100%" height="100%"/>
 				<!-- customAd plugin -->
 				<Plugin id="customAd" path="" preSequence="1" postSequence="1" width="100%" height="100%"/>
 				<!-- moderation plugin -->
@@ -136,13 +136,13 @@
 						<VolumeBar id="volumeBar" styleName="volumeBtn" buttonWidth="20" width="20" height="20"
 								   buttonType="iconButton" tooltip="Change volume"/>
 						<!-- Combo box for captions control -->
-						<ComboBox id="ccUnderComboBox" width="90" styleName="_kdp"
+						<ComboBox id="ccUnderComboBox" width="90" styleName="_bdp"
 								  selectedIndex="{closedCaptionsUnderPlayer.currentCCFileIndex}"
 								  kevent_change="sendNotification( 'closedCaptionsSelected' , ccUnderComboBox.selectedItem)"
 								  dataProvider="{closedCaptionsUnderPlayer.availableCCFilesLabels}" prompt="Captions"
 								  includeInLayout="{closedCaptionsUnderPlayer.hasCaptions}"
 								  visible="{closedCaptionsUnderPlayer.hasCaptions}"/>
-						<Button id="kalturaShareBtnControllerScreen" label="" buttonType="iconButton"
+						<Button id="borhanShareBtnControllerScreen" label="" buttonType="iconButton"
 								kClick="sendNotification('showAdvancedShare')" height="22" styleName="controllerScreen"
 								focusRectPadding="0" icon="shareIcon" tooltip="Share with friends"/>
 						<Button id="flagBtnControllerScreen" label="" buttonType="iconButton"
@@ -163,7 +163,7 @@
 								styleName="controllerScreen" tooltip="Change thumbnail"/>
 						<FlavorCombo id="flavorComboControllerScreen" width="80"
 									 streamerType="{configProxy.flashvars.streamerType}"
-									 flavorDataProvider="{mediaProxy.kalturaMediaFlavorArray}" styleName="_kdp"
+									 flavorDataProvider="{mediaProxy.borhanMediaFlavorArray}" styleName="_bdp"
 									 color1="0xFF0000" hdOn="HD On" hdOff="HD Off" selectedMessage=""
 									 autoMessage="Automatically switches between bitrates"
 									 preferedFlavorBR="{mediaProxy.preferedFlavorBR}"
@@ -194,8 +194,8 @@
 								styleName="controllerScreen" icon="generalIcon"/>
 					</HBox>
 					<Spacer width="13"/>
-					<Button id="kalturaLogo" height="50" width="100" kClick="navigate('http://www.kaltura.com')"
-							styleName="controllerScreen" icon="kalturaLogo"/>
+					<Button id="borhanLogo" height="50" width="100" kClick="navigate('http://www.borhan.com')"
+							styleName="controllerScreen" icon="borhanLogo"/>
 					<Spacer width="13"/>
 				</HBox>
 			</Canvas>
@@ -228,7 +228,7 @@
 							labelPlacement="top" label="Play" styleName="onScreenBtn" upIcon="playIcon"
 							overIcon="playIcon" downIcon="playIcon" disabeledIcon="playIcon" selectedUpIcon="playIcon"
 							selectedOverIcon="playIcon" selectedDownIcon="playIcon" selectedDisabledIcon="playIcon"/>
-					<Button id="kalturaShareBtnStartScreen" kClick="sendNotification('showAdvancedShare')"
+					<Button id="borhanShareBtnStartScreen" kClick="sendNotification('showAdvancedShare')"
 							buttonType="onScreenButton" minWidth="60" labelPlacement="top" label="Share"
 							styleName="onScreenBtn" upIcon="shareIcon"/>
 					<Button id="flagBtnStartScreen" kClick="sendNotification('flagForReview')"
@@ -295,7 +295,7 @@
 							labelPlacement="top" label="Play" styleName="onScreenBtn" upIcon="playIcon"
 							overIcon="playIcon" downIcon="playIcon" disabeledIcon="playIcon" selectedUpIcon="playIcon"
 							selectedOverIcon="playIcon" selectedDownIcon="playIcon" selectedDisabledIcon="playIcon"/>
-					<Button id="kalturaShareBtnPauseScreen" kClick="sendNotification('showAdvancedShare')"
+					<Button id="borhanShareBtnPauseScreen" kClick="sendNotification('showAdvancedShare')"
 							buttonType="onScreenButton" minWidth="60" labelPlacement="top" label="Share"
 							styleName="onScreenBtn" upIcon="shareIcon"/>
 					<Button id="flagBtnPauseScreen" kClick="sendNotification('flagForReview')"
@@ -358,7 +358,7 @@
 			<VBox id="playContainer" width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
 				<Spacer height="100%"/>
 				<Tile id="playTile" width="100%" verticalGap="10" verticalAlign="middle" horizontalAlign="center">
-					<Button id="kalturaShareBtnPlayScreen" kClick="sendNotification('showAdvancedShare')"
+					<Button id="borhanShareBtnPlayScreen" kClick="sendNotification('showAdvancedShare')"
 							buttonType="onScreenButton" minWidth="60" labelPlacement="top" label="Share"
 							styleName="onScreenBtn" upIcon="shareIcon"/>
 					<Button id="flagBtnPlayScreen" kClick="sendNotification('flagForReview')"
@@ -429,7 +429,7 @@
 					<Button id="replayBtnEndScreen" kClick="sendNotification('doPlay')" buttonType="onScreenButton"
 							minWidth="60" labelPlacement="top" label="Replay" styleName="onScreenBtn"
 							upIcon="replayIcon"/>
-					<Button id="kalturaShareBtnEndScreen" kClick="sendNotification('showAdvancedShare')"
+					<Button id="borhanShareBtnEndScreen" kClick="sendNotification('showAdvancedShare')"
 							buttonType="onScreenButton" minWidth="60" labelPlacement="top" label="Share"
 							styleName="onScreenBtn" upIcon="shareIcon"/>
 					<Button id="flagBtnEndScreen" kClick="sendNotification('flagForReview')" buttonType="onScreenButton"

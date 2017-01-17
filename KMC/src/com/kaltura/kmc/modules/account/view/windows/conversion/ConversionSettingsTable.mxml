@@ -4,11 +4,11 @@
 			 selectable="false" creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.control.events.ConversionSettingsEvent;
-			import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaConversionProfileAssetParams;
-			import com.kaltura.vo.KalturaThumbParams;
+			import com.borhan.bmc.modules.account.control.events.ConversionSettingsEvent;
+			import com.borhan.bmc.modules.account.vo.ConversionProfileVO;
+			import com.borhan.vo.FlavorVO;
+			import com.borhan.vo.BorhanConversionProfileAssetParams;
+			import com.borhan.vo.BorhanThumbParams;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.Application;
@@ -139,8 +139,8 @@
 			/**
 			 * return a matching cpap from the profile's flavours list
 			 * */
-			protected function getCpap(flavorId:int):KalturaConversionProfileAssetParams {
-				for each (var cpap:KalturaConversionProfileAssetParams in cProfile.flavors) {
+			protected function getCpap(flavorId:int):BorhanConversionProfileAssetParams {
+				for each (var cpap:BorhanConversionProfileAssetParams in cProfile.flavors) {
 					if (cpap.assetParamsId == flavorId) {
 						return cpap;
 					}
@@ -161,11 +161,11 @@
 				else {
 					idsArr = cProfile.profile.flavorParamsIds.split(',');
 				}
-				var cpap:KalturaConversionProfileAssetParams;
+				var cpap:BorhanConversionProfileAssetParams;
 				if (flavorObj.selected) {
 					idsArr.push(flavorObj.kFlavor.id);
 					// push a cpap
-					cpap = new KalturaConversionProfileAssetParams();
+					cpap = new BorhanConversionProfileAssetParams();
 					cpap.conversionProfileId = cProfile.profile.id;
 					cpap.assetParamsId = flavorObj.kFlavor.id;
 					cProfile.flavors.push(cpap);
@@ -181,7 +181,7 @@
 					}
 					// remove a cpap
 					for (var i:int = 0; i<cProfile.flavors.length; i++) {
-						cpap = cProfile.flavors[i] as KalturaConversionProfileAssetParams;
+						cpap = cProfile.flavors[i] as BorhanConversionProfileAssetParams;
 						if (cpap.assetParamsId == flavorObj.kFlavor.id) {
 							cProfile.flavors.splice(i, 1);
 							break;
@@ -243,22 +243,22 @@
 
 	<mx:columns>
 		<mx:DataGridColumn width="40"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorSelectionRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorSelectionRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transIdCol')}" dataField="id" width="30"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorIdRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorIdRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transConvFlavorsCol')}"
 						   dataField="transcodingFlavor"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorNameRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorNameRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transDescCol')}" dataField="description"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorDescriptionRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorDescriptionRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transFormatCol')}" dataField="format"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorFormatRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorFormatRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transCodecCol')}" dataField="codec"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorCodecRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorCodecRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transBitrateCol')}" dataField="bitrate"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorBitrateRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorBitrateRenderer"/>
 		<mx:DataGridColumn headerText="{resourceManager.getString('account','transDimensionsCol')}"
 						   dataField="dimensions"
-						   itemRenderer="com.kaltura.kmc.modules.account.view.windows.conversion.renderers.FlavorDimensionsRenderer"/>
+						   itemRenderer="com.borhan.bmc.modules.account.view.windows.conversion.renderers.FlavorDimensionsRenderer"/>
 	</mx:columns>
 </mx:DataGrid>

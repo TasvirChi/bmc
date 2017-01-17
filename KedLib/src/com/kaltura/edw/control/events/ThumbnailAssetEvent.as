@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.vo.ThumbnailWithDimensions;
+	import com.borhan.bmvc.control.BMvCEvent;
 
-	public class ThumbnailAssetEvent extends KMvCEvent
+	public class ThumbnailAssetEvent extends BMvCEvent
 	{
 		public static const LIST:String = "content_listThumbnailAsset";
 		public static const SET_AS_DEFAULT:String = "content_setAsDefaultThumbAsset";

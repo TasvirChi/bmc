@@ -1,18 +1,18 @@
-package com.kaltura.edw.control.commands {
-	import com.kaltura.commands.liveStream.LiveStreamRegenerateStreamToken;
-	import com.kaltura.edw.events.KedDataEvent;
-	import com.kaltura.edw.model.datapacks.ContextDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
+package com.borhan.edw.control.commands {
+	import com.borhan.commands.liveStream.LiveStreamRegenerateStreamToken;
+	import com.borhan.edw.events.KedDataEvent;
+	import com.borhan.edw.model.datapacks.ContextDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 
 	[ResourceBundle("live")]
 	
 	public class RegenerateLiveTokenCommand extends KedCommand {
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			var regenerate:LiveStreamRegenerateStreamToken = new LiveStreamRegenerateStreamToken(event.data);
-			regenerate.addEventListener(KalturaEvent.COMPLETE, result);
-			regenerate.addEventListener(KalturaEvent.FAILED, fault);
+			regenerate.addEventListener(BorhanEvent.COMPLETE, result);
+			regenerate.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_client.post(regenerate);
 		}

@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.edw.model.types.APIErrorCode;
-	import com.kaltura.kmc.modules.account.control.events.ContactEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.edw.model.types.APIErrorCode;
+	import com.borhan.bmc.modules.account.control.events.ContactEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.account.control.command {
 			params.comments = e.userComment;
 			params.services = e.services;
 
-//			http://www.kaltura.com/index.php/partnerservices2/contactsalesforce
+//			http://www.borhan.com/index.php/partnerservices2/contactsalesforce
 			var srv:HTTPService = new HTTPService();
 			srv.url = _model.context.rootUrl + '/index.php/partnerservices2/contactsalesforce';
 			srv.method = "POST";

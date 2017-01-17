@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.dist
+package com.borhan.edw.control.commands.dist
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.entryDistribution.EntryDistributionAdd;
-	import com.kaltura.commands.entryDistribution.EntryDistributionDelete;
-	import com.kaltura.commands.entryDistribution.EntryDistributionList;
-	import com.kaltura.commands.entryDistribution.EntryDistributionSubmitAdd;
-	import com.kaltura.commands.entryDistribution.EntryDistributionSubmitDelete;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.edw.model.EntryDistributionWithProfile;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaEntryDistributionStatus;
-	import com.kaltura.vo.KalturaEntryDistribution;
-	import com.kaltura.vo.KalturaEntryDistributionFilter;
-	import com.kaltura.vo.KalturaEntryDistributionListResponse;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.entryDistribution.EntryDistributionAdd;
+	import com.borhan.commands.entryDistribution.EntryDistributionDelete;
+	import com.borhan.commands.entryDistribution.EntryDistributionList;
+	import com.borhan.commands.entryDistribution.EntryDistributionSubmitAdd;
+	import com.borhan.commands.entryDistribution.EntryDistributionSubmitDelete;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.EntryDistributionEvent;
+	import com.borhan.edw.model.EntryDistributionWithProfile;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanEntryDistributionStatus;
+	import com.borhan.vo.BorhanEntryDistribution;
+	import com.borhan.vo.BorhanEntryDistributionFilter;
+	import com.borhan.vo.BorhanEntryDistributionListResponse;
 
 	public class UpdateEntryDistributionsCommand extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void 
+		override public function execute(event:BMvCEvent):void 
 		{
 			var entryDistributionEvent:EntryDistributionEvent = event as EntryDistributionEvent;
 			var distributionsToAdd:Array = entryDistributionEvent.distributionsWithProfilesToAddArray;
@@ -34,16 +34,16 @@ package com.kaltura.edw.control.commands.dist
 			for each (var distribution:EntryDistributionWithProfile in distributionsToAdd) {
 				//first delete old leftovers, create new entryDistribution if needed
 				var addEntryDistribution:EntryDistributionAdd;
-				if (distribution.kalturaEntryDistribution.status== KalturaEntryDistributionStatus.REMOVED) {
-					var deleteEntryDistribution:EntryDistributionDelete = new EntryDistributionDelete(distribution.kalturaEntryDistribution.id);
+				if (distribution.borhanEntryDistribution.status== BorhanEntryDistributionStatus.REMOVED) {
+					var deleteEntryDistribution:EntryDistributionDelete = new EntryDistributionDelete(distribution.borhanEntryDistribution.id);
 					mr.addAction(deleteEntryDistribution);
-					var newEntryDistribution:KalturaEntryDistribution = new KalturaEntryDistribution();
-					newEntryDistribution.entryId = distribution.kalturaEntryDistribution.entryId;
-					newEntryDistribution.distributionProfileId = distribution.kalturaEntryDistribution.distributionProfileId;
+					var newEntryDistribution:BorhanEntryDistribution = new BorhanEntryDistribution();
+					newEntryDistribution.entryId = distribution.borhanEntryDistribution.entryId;
+					newEntryDistribution.distributionProfileId = distribution.borhanEntryDistribution.distributionProfileId;
 					addEntryDistribution = new EntryDistributionAdd(newEntryDistribution);
 				}
 				else {
-					addEntryDistribution = new EntryDistributionAdd(distribution.kalturaEntryDistribution);
+					addEntryDistribution = new EntryDistributionAdd(distribution.borhanEntryDistribution);
 				}
 				mr.addAction(addEntryDistribution);
 				
@@ -59,31 +59,31 @@ package com.kaltura.edw.control.commands.dist
 			}
 			
 			//all entry distributions to delete
-			for each (var removeDistribution:KalturaEntryDistribution in distributionsToRemove) {
+			for each (var removeDistribution:BorhanEntryDistribution in distributionsToRemove) {
 				//remove from destination
-				if (removeDistribution.status == KalturaEntryDistributionStatus.READY ||
-					removeDistribution.status == KalturaEntryDistributionStatus.ERROR_UPDATING) {
+				if (removeDistribution.status == BorhanEntryDistributionStatus.READY ||
+					removeDistribution.status == BorhanEntryDistributionStatus.ERROR_UPDATING) {
 					var removeSubmitEntryDistribution:EntryDistributionSubmitDelete = new EntryDistributionSubmitDelete(removeDistribution.id);
 					mr.addAction(removeSubmitEntryDistribution);	
 				}
 				//if entry wasn't submitted yet, delete it
-				else if (removeDistribution.status == KalturaEntryDistributionStatus.QUEUED ||
-						 removeDistribution.status == KalturaEntryDistributionStatus.PENDING ||
-						 removeDistribution.status == KalturaEntryDistributionStatus.ERROR_SUBMITTING)
+				else if (removeDistribution.status == BorhanEntryDistributionStatus.QUEUED ||
+						 removeDistribution.status == BorhanEntryDistributionStatus.PENDING ||
+						 removeDistribution.status == BorhanEntryDistributionStatus.ERROR_SUBMITTING)
 				{
 					var deleteDistribution:EntryDistributionDelete = new EntryDistributionDelete(removeDistribution.id);
 					mr.addAction(deleteDistribution);
 				}
 			}
 			//get the new entry distributions list
-			var entryDistributionFilter:KalturaEntryDistributionFilter = new KalturaEntryDistributionFilter();
+			var entryDistributionFilter:BorhanEntryDistributionFilter = new BorhanEntryDistributionFilter();
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
 			entryDistributionFilter.entryIdEqual = edp.selectedEntry.id;	
 			var listDistributions:EntryDistributionList = new EntryDistributionList(entryDistributionFilter);
 			mr.addAction(listDistributions);
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(mr);
 		}
 		
@@ -93,7 +93,7 @@ package com.kaltura.edw.control.commands.dist
 			super.result(data);
 			var resultArray:Array = data.data as Array;
 			var listDistributionsCommand:ListEntryDistributionCommand = new ListEntryDistributionCommand();
-			listDistributionsCommand.handleEntryDistributionResult(resultArray[resultArray.length - 1] as KalturaEntryDistributionListResponse);
+			listDistributionsCommand.handleEntryDistributionResult(resultArray[resultArray.length - 1] as BorhanEntryDistributionListResponse);
 		}
 	}
 }

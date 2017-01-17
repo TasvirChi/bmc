@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" styleName="noPadding"
-		 xmlns:cat="com.kaltura.edw.components.fltr.cat.*" 
-		 implements="com.kaltura.edw.components.fltr.IFilterComponent"
+		 xmlns:cat="com.borhan.edw.components.fltr.cat.*" 
+		 implements="com.borhan.edw.components.fltr.IFilterComponent"
 		 creationComplete="creationCompleteHandler(event)">
 	<mx:Metadata>
 		/**
 		* dispatched when the value of the tree component have changed 
 		*/	
-		[Event(name="valueChange", type="com.kaltura.edw.components.fltr.FilterComponentEvent")]
+		[Event(name="valueChange", type="com.borhan.edw.components.fltr.FilterComponentEvent")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.dataStructures.HashMap;
-			import com.kaltura.edw.business.KedJSGate;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.IFilterComponent;
-			import com.kaltura.edw.components.fltr.cat.data.ICategoriesDataManger;
-			import com.kaltura.edw.components.fltr.cat.events.CatTreePrefsEvent;
-			import com.kaltura.edw.components.fltr.indicators.IndicatorVo;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.BorhanClient;
+			import com.borhan.dataStructures.HashMap;
+			import com.borhan.edw.business.KedJSGate;
+			import com.borhan.edw.components.fltr.FilterComponentEvent;
+			import com.borhan.edw.components.fltr.IFilterComponent;
+			import com.borhan.edw.components.fltr.cat.data.ICategoriesDataManger;
+			import com.borhan.edw.components.fltr.cat.events.CatTreePrefsEvent;
+			import com.borhan.edw.components.fltr.indicators.IndicatorVo;
+			import com.borhan.edw.events.GeneralNonCairngormEvent;
+			import com.borhan.edw.vo.CategoryVO;
+			import com.borhan.vo.BorhanCategory;
 			
 			import flash.sampler.getInvocationCount;
 			
@@ -39,7 +39,7 @@
 			public var dataProvider:Object;
 
 			[Bindable]
-			public var kClient:KalturaClient;
+			public var kClient:BorhanClient;
 
 
 			[Bindable]
@@ -47,7 +47,7 @@
 			 * allow multiple instances use the same data provider by using different attributes
 			 * to mark selection in tree.
 			 *
-			 * @see com.kaltura.edw.components.fltr.cat.CatTree#selectionAttribute
+			 * @see com.borhan.edw.components.fltr.cat.CatTree#selectionAttribute
 			 */
 			public var selectionAttribute:String = "selected";
 
@@ -79,7 +79,7 @@
 
 			[Bindable(event="attributeChanged")]
 			/**
-			 * Name of the <code>KalturaFilter</code> attribute this component handles
+			 * Name of the <code>BorhanFilter</code> attribute this component handles
 			 * when in SINGLE_SELECT mode. <br>
 			 * delegate to the tree
 			 */
@@ -117,7 +117,7 @@
 			private var _filter:String;
 
 			/**
-			 * Value for the relevant attribute on <code>KalturaFilter</code>. <br>
+			 * Value for the relevant attribute on <code>BorhanFilter</code>. <br>
 			 * delegate to the tree
 			 */
 			public function set filter(value:Object):void {
@@ -142,9 +142,9 @@
 			 */
 			public function removeItem(item:IndicatorVo):void {
 				if (catsFromAC) {
-					var kCat:KalturaCategory;
+					var kCat:BorhanCategory;
 					for (var i:int=0; i<catsFromAC.length; i++) {
-						kCat = catsFromAC.getItemAt(i) as KalturaCategory;
+						kCat = catsFromAC.getItemAt(i) as BorhanCategory;
 						if (kCat.id == item.value) {
 							catsFromAC.removeItemAt(i);
 						}
@@ -161,7 +161,7 @@
 			 * @default true
 			 * (default value matches value on filterModel)
 			 *
-			 * @see com.kaltura.edw.components.fltr.cat.CatTree#chunkedData
+			 * @see com.borhan.edw.components.fltr.cat.CatTree#chunkedData
 			 */
 			public var chunkedData:Boolean = true;
 
@@ -222,7 +222,7 @@
 			private function handlePrefsWin(e:Event):void {
 				if (e.type == CatTreePrefsEvent.PREFS_CHANGED) {
 					// save data in sharedObject
-					var so:SharedObject = SharedObject.getLocal("KMC_catTree_" + prefsIdentifier);
+					var so:SharedObject = SharedObject.getLocal("BMC_catTree_" + prefsIdentifier);
 					so.data.selectionMode = (e as CatTreePrefsEvent).newValue;
 					so.flush();
 					// reset tree
@@ -261,7 +261,7 @@
 				}
 				// add from saved ids
 				if (catsFromAC) {
-					for each (var kCat:KalturaCategory in catsFromAC) {
+					for each (var kCat:BorhanCategory in catsFromAC) {
 						catCollection.addItem(kCat);
 					}
 				}
@@ -277,7 +277,7 @@
 			protected function creationCompleteHandler(event:FlexEvent):void {
 				if (selectionMode != CatTreeSelectionMode.SINGLE_SELECT && _prefsBtn && _prefsBtn.visible) {
 					// get selection mode from SO
-					var so:SharedObject = SharedObject.getLocal("KMC_catTree_" + prefsIdentifier);
+					var so:SharedObject = SharedObject.getLocal("BMC_catTree_" + prefsIdentifier);
 					if (so.data && so.data.selectionMode) {
 						selectionMode = so.data.selectionMode;
 					}
@@ -308,7 +308,7 @@
 			}
 
 			/**
-			 * KalturaCategory objects which were added via autocomplete search
+			 * BorhanCategory objects which were added via autocomplete search
 			 * */
 			private var catsFromAC:ArrayCollection;
 			
@@ -316,7 +316,7 @@
 
 			protected function autoCompWrapper_valueChangeHandler(event:GeneralNonCairngormEvent):void
 			{
-				var cat:KalturaCategory = event.data as KalturaCategory;
+				var cat:BorhanCategory = event.data as BorhanCategory;
 				// remember the category object
 				if (!catsFromAC) {
 					catsFromAC = new ArrayCollection();

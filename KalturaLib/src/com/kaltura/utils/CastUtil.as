@@ -1,4 +1,4 @@
-package com.kaltura.utils
+package com.borhan.utils
 {
 	/**
 	 * This class will be a casting util for all classes.  

@@ -1,6 +1,6 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
-	import com.kaltura.core.KClassFactory;
+	import com.borhan.core.KClassFactory;
 	
 	import flash.xml.XMLDocument;
 	import flash.xml.XMLNode;
@@ -12,7 +12,7 @@ package com.kaltura.edw.business
 		/**
 		 * create a new instance of RequiredClass with attributes values taken from sourceObj.
 		 * assumption is that sourceObj is an instance of a subclass of RequiredClass which
-		 *  the client failed to create because it is not compiled into KMC (ie different 
+		 *  the client failed to create because it is not compiled into BMC (ie different 
 		 *  distribution profiles, storage profiles, etc)
 		 * @param RequiredClass	class reference
 		 * @param sourceObj	

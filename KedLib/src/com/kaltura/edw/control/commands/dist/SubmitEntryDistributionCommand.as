@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.dist
+package com.borhan.edw.control.commands.dist
 {
-	import com.kaltura.commands.entryDistribution.EntryDistributionSubmitAdd;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.EntryDistributionEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.borhan.commands.entryDistribution.EntryDistributionSubmitAdd;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.EntryDistributionEvent;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanEntryDistribution;
 
 
 	public class SubmitEntryDistributionCommand extends KedCommand
 	{
-		private var _entryDis:KalturaEntryDistribution;
+		private var _entryDis:BorhanEntryDistribution;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_entryDis = (event as EntryDistributionEvent).entryDistribution;
 			var submit:EntryDistributionSubmitAdd = new EntryDistributionSubmitAdd(_entryDis.id);
-			submit.addEventListener(KalturaEvent.COMPLETE, result);
-			submit.addEventListener(KalturaEvent.FAILED, fault);
+			submit.addEventListener(BorhanEvent.COMPLETE, result);
+			submit.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(submit);
 		}
@@ -28,7 +28,7 @@ package com.kaltura.edw.control.commands.dist
 		{
 			_model.decreaseLoadCounter();
 			super.result(data);
-			var resultEntry:KalturaEntryDistribution = data.data as KalturaEntryDistribution;
+			var resultEntry:BorhanEntryDistribution = data.data as BorhanEntryDistribution;
 			_entryDis.status =  resultEntry.status;
 			_entryDis.dirtyStatus = resultEntry.dirtyStatus;
 			//for data binding

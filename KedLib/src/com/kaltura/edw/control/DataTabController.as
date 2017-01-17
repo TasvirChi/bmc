@@ -1,22 +1,22 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.DuplicateEntryDetailsModelCommand;
-	import com.kaltura.edw.control.commands.GetEntryCategoriesCommand;
-	import com.kaltura.edw.control.commands.GetLivestreamStatusCommand;
-	import com.kaltura.edw.control.commands.GetSingleEntryCommand;
-	import com.kaltura.edw.control.commands.ListEntriesCommand;
-	import com.kaltura.edw.control.commands.LoadFilterDataCommand;
-	import com.kaltura.edw.control.commands.UpdateEntryCategoriesCommand;
-	import com.kaltura.edw.control.commands.customData.*;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.control.events.LoadEvent;
-	import com.kaltura.edw.control.events.MetadataDataEvent;
-	import com.kaltura.edw.control.events.MetadataProfileEvent;
-	import com.kaltura.edw.control.events.ModelEvent;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.DuplicateEntryDetailsModelCommand;
+	import com.borhan.edw.control.commands.GetEntryCategoriesCommand;
+	import com.borhan.edw.control.commands.GetLivestreamStatusCommand;
+	import com.borhan.edw.control.commands.GetSingleEntryCommand;
+	import com.borhan.edw.control.commands.ListEntriesCommand;
+	import com.borhan.edw.control.commands.LoadFilterDataCommand;
+	import com.borhan.edw.control.commands.UpdateEntryCategoriesCommand;
+	import com.borhan.edw.control.commands.customData.*;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.control.events.LoadEvent;
+	import com.borhan.edw.control.events.MetadataDataEvent;
+	import com.borhan.edw.control.events.MetadataProfileEvent;
+	import com.borhan.edw.control.events.ModelEvent;
+	import com.borhan.edw.control.events.SearchEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class DataTabController extends KMvCController {
+	public class DataTabController extends BMvCController {
 		
 		private static var _instance:DataTabController;
 		

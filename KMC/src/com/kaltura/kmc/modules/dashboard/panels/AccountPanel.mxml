@@ -4,17 +4,17 @@
 	 Account Panel section
 
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" initialize="onInitialize()" width="100%" height="100%" styleName="accountBox" xmlns:states="com.kaltura.kmc.modules.account.model.states.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" initialize="onInitialize()" width="100%" height="100%" styleName="accountBox" xmlns:states="com.borhan.bmc.modules.account.model.states.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.dashboard.DashboardManager;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.bmc.events.BmcNavigationEvent;
+			import com.borhan.bmc.modules.dashboard.DashboardManager;
+			import com.borhan.types.BorhanStatsBmcEventType;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
@@ -24,9 +24,9 @@
 			
 			private function contactUs():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_ACCOUNT_CONTACT_US, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_ACCOUNT_CONTACT_US,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,BorhanStatsBmcEventType.DASHBOARD_ACCOUNT_CONTACT_US,
 														  "DashBoard>Account Contacts Us")
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, 'account', 'upgrade'));
 			}
 			
 			private function onInitialize():void

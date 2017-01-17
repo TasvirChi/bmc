@@ -1,4 +1,4 @@
-package com.kaltura.core
+package com.borhan.core
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -10,7 +10,7 @@ package com.kaltura.core
 
 	public class KApplication extends Application
 	{
-		import com.kaltura.events.WrapperEvent;
+		import com.borhan.events.WrapperEvent;
 		import mx.events.FlexEvent;
 
 		public function KApplication()

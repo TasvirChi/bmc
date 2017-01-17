@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.mix.GetAllEntriesCommand;
-	import com.kaltura.edw.control.commands.mix.GetEntryRoughcutsCommand;
-	import com.kaltura.edw.control.commands.mix.ResetContentPartsCommand;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.mix.GetAllEntriesCommand;
+	import com.borhan.edw.control.commands.mix.GetEntryRoughcutsCommand;
+	import com.borhan.edw.control.commands.mix.ResetContentPartsCommand;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class ContentTabController extends KMvCController {
+	public class ContentTabController extends BMvCController {
 		
 		public function ContentTabController()
 		{

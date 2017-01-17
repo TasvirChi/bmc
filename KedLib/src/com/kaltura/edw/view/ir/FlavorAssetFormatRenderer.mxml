@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ir:FlavorAssetRendererBase xmlns="com.kaltura.kmc.modules.content.view.window.entrydetailswindowsections.renderers.*" 
-	xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:renderers="com.kaltura.kmc.modules.content.view.window.entrydetails.renderers.*" xmlns:ir="com.kaltura.edw.view.ir.*">
+<ir:FlavorAssetRendererBase xmlns="com.borhan.bmc.modules.content.view.window.entrydetailswindowsections.renderers.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:renderers="com.borhan.bmc.modules.content.view.window.entrydetails.renderers.*" xmlns:ir="com.borhan.edw.view.ir.*">
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.vo.FlavorAssetWithParamsVO;
+			import com.borhan.edw.vo.FlavorAssetWithParamsVO;
 			
 			override public function set data(value:Object):void
 			{
@@ -15,11 +15,11 @@
 			
 			private function setFlavorFormatLabel():void
 			{
-				flavorFormatLabel.enabled = (data.kalturaFlavorAssetWithParams.flavorAsset != null);
-				if ((data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams 
-					&& (data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams.flavorAsset
-					&& (data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams.flavorAsset.fileExt )
-					flavorFormatLabel.text = (data as FlavorAssetWithParamsVO).kalturaFlavorAssetWithParams.flavorAsset.fileExt;
+				flavorFormatLabel.enabled = (data.borhanFlavorAssetWithParams.flavorAsset != null);
+				if ((data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams 
+					&& (data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams.flavorAsset
+					&& (data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams.flavorAsset.fileExt )
+					flavorFormatLabel.text = (data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams.flavorAsset.fileExt;
 				else 
 					flavorFormatLabel.text = "";
 				flavorFormatLabel.toolTip = flavorFormatLabel.text;

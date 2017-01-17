@@ -30,7 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 @ignore
 */
 
-package com.kaltura.kmvc.model
+package com.borhan.bmvc.model
 {
    /**
     * Marker interface used to mark the custom ModelLocator.

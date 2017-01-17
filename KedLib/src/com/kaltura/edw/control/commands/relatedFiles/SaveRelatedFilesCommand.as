@@ -1,21 +1,21 @@
-package com.kaltura.edw.control.commands.relatedFiles
+package com.borhan.edw.control.commands.relatedFiles
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetAdd;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetDelete;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetSetContent;
-	import com.kaltura.commands.attachmentAsset.AttachmentAssetUpdate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.RelatedFileEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.RelatedFileVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaUploadedFileTokenResource;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.attachmentAsset.AttachmentAssetAdd;
+	import com.borhan.commands.attachmentAsset.AttachmentAssetDelete;
+	import com.borhan.commands.attachmentAsset.AttachmentAssetSetContent;
+	import com.borhan.commands.attachmentAsset.AttachmentAssetUpdate;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.RelatedFileEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.vo.RelatedFileVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanUploadedFileTokenResource;
 	
 	public class SaveRelatedFilesCommand extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			var evt:RelatedFileEvent = event as RelatedFileEvent;
 
 			var mr:MultiRequest = new MultiRequest();
@@ -28,7 +28,7 @@ package com.kaltura.edw.control.commands.relatedFiles
 					mr.addAction(addFile);
 					requestIndex++;
 					//set its content
-					var resource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+					var resource:BorhanUploadedFileTokenResource = new BorhanUploadedFileTokenResource();
 					resource.token = relatedFile.uploadTokenId;
 					var addContent:AttachmentAssetSetContent = new AttachmentAssetSetContent('0', resource);
 					mr.mapMultiRequestParam(requestIndex-1, "id", requestIndex, "id");
@@ -55,8 +55,8 @@ package com.kaltura.edw.control.commands.relatedFiles
 			
 			if (requestIndex > 1) {
 				_model.increaseLoadCounter();
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(BorhanEvent.COMPLETE, result);
+				mr.addEventListener(BorhanEvent.FAILED, fault);
 				
 				_client.post(mr);
 			}

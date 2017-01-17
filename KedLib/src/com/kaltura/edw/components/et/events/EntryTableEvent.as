@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.et.events
+package com.borhan.edw.components.et.events
 {
-	import com.kaltura.edw.events.KedDataEvent;
+	import com.borhan.edw.events.KedDataEvent;
 
 	public class EntryTableEvent extends KedDataEvent {
 		

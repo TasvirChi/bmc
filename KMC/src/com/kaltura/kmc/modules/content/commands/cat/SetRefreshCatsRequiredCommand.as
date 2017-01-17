@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
 	
-	public class SetRefreshCatsRequiredCommand extends KalturaCommand
+	public class SetRefreshCatsRequiredCommand extends BorhanCommand
 	{
 		override public function execute(event:CairngormEvent):void {
 			_model.categoriesModel.refreshCategoriesRequired = event.data;

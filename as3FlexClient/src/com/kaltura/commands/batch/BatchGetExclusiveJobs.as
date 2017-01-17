@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,29 +25,29 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.batch
+package com.borhan.commands.batch
 {
-		import com.kaltura.vo.KalturaExclusiveLockKey;
-		import com.kaltura.vo.KalturaBatchJobFilter;
-	import com.kaltura.delegates.batch.BatchGetExclusiveJobsDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanExclusiveLockKey;
+		import com.borhan.vo.BorhanBatchJobFilter;
+	import com.borhan.delegates.batch.BatchGetExclusiveJobsDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* batch getExclusiveJobsAction action allows to get a BatchJob
 	**/
-	public class BatchGetExclusiveJobs extends KalturaCall
+	public class BatchGetExclusiveJobs extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param lockKey KalturaExclusiveLockKey
+		* @param lockKey BorhanExclusiveLockKey
 		* @param maxExecutionTime int
 		* @param numberOfJobs int
-		* @param filter KalturaBatchJobFilter
+		* @param filter BorhanBatchJobFilter
 		* @param jobType String
 		* @param maxOffset int
 		**/
-		public function BatchGetExclusiveJobs( lockKey : KalturaExclusiveLockKey,maxExecutionTime : int,numberOfJobs : int,filter : KalturaBatchJobFilter=null,jobType : String = null,maxOffset : int=int.MIN_VALUE )
+		public function BatchGetExclusiveJobs( lockKey : BorhanExclusiveLockKey,maxExecutionTime : int,numberOfJobs : int,filter : BorhanBatchJobFilter=null,jobType : String = null,maxOffset : int=int.MIN_VALUE )
 		{
 			service= 'batch';
 			action= 'getExclusiveJobs';
@@ -55,7 +55,7 @@ package com.kaltura.commands.batch
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(lockKey, 'lockKey');
+				keyValArr = borhanObject2Arrays(lockKey, 'lockKey');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('maxExecutionTime');
@@ -63,7 +63,7 @@ package com.kaltura.commands.batch
 			keyArr.push('numberOfJobs');
 			valueArr.push(numberOfJobs);
 			if (filter) { 
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = borhanObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

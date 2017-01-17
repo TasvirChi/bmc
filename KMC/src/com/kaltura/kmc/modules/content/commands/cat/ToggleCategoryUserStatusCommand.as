@@ -1,27 +1,27 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.categoryUser.CategoryUserActivate;
-	import com.kaltura.commands.categoryUser.CategoryUserDeactivate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-	import com.kaltura.vo.KalturaCategoryUser;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.categoryUser.CategoryUserActivate;
+	import com.borhan.commands.categoryUser.CategoryUserDeactivate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.bmc.modules.content.events.CategoryUserEvent;
+	import com.borhan.vo.BorhanCategoryUser;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 	
-	public class ToggleCategoryUserStatusCommand extends KalturaCommand {
+	public class ToggleCategoryUserStatusCommand extends BorhanCommand {
 		
 		private var _usrs:Array;
 		private var _eventType:String;
 		
 		override public function execute(event:CairngormEvent):void {
-			// event.data is [KalturaCategoryUser]
+			// event.data is [BorhanCategoryUser]
 			_usrs = event.data;
 			_eventType = event.type;
 			
@@ -43,9 +43,9 @@ package com.kaltura.kmc.modules.content.commands.cat
 			_model.increaseLoadCounter();
 			
 			var mr:MultiRequest = new MultiRequest();
-			var cu:KalturaCategoryUser;
+			var cu:BorhanCategoryUser;
 			for (var i:int = 0; i<_usrs.length; i++) {
-				cu = _usrs[i] as KalturaCategoryUser;
+				cu = _usrs[i] as BorhanCategoryUser;
 				if (_eventType == CategoryUserEvent.DEACTIVATE_CATEGORY_USER) {
 					mr.addAction(new CategoryUserDeactivate(cu.categoryId, cu.userId));
 				}
@@ -53,8 +53,8 @@ package com.kaltura.kmc.modules.content.commands.cat
 					mr.addAction(new CategoryUserActivate(cu.categoryId, cu.userId));
 				}
 			} 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);	   
 			
 		}

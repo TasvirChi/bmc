@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.model.CmsModelLocator;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.bmc.modules.content.model.CmsModelLocator;
 	
 	import mx.collections.ArrayCollection;
 
 	/**
 	 * This class sets the selected entries in the model
 	 * */
-	public class SetSelectedEntriesCommand extends KalturaCommand
+	public class SetSelectedEntriesCommand extends BorhanCommand
 	{
 		
 		/**

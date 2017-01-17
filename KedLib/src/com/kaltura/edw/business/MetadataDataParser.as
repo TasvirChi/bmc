@@ -1,13 +1,13 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
-	import com.kaltura.base.types.MetadataCustomFieldMaxOccursTypes;
-	import com.kaltura.base.types.MetadataCustomFieldTypes;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.model.MetadataDataObject;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.borhan.base.types.MetadataCustomFieldMaxOccursTypes;
+	import com.borhan.base.types.MetadataCustomFieldTypes;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.model.MetadataDataObject;
+	import com.borhan.edw.vo.CustomMetadataDataVO;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.MetadataFieldVO;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.DateField;
@@ -31,7 +31,7 @@ package com.kaltura.edw.business
 		 * @param metadataProfile	the profile this metadata matches
 		 * @return a valid metadataData XML
 		 */		
-		public static function toMetadataXML(entryMetadata:CustomMetadataDataVO, metadataProfile:KMCMetadataProfileVO):XML {
+		public static function toMetadataXML(entryMetadata:CustomMetadataDataVO, metadataProfile:BMCMetadataProfileVO):XML {
 			var result:XML = new XML(METADATA_ROOT);
 			var metadataObject:MetadataDataObject = entryMetadata.metadataDataObject;
 			
@@ -164,7 +164,7 @@ package com.kaltura.edw.business
 			var array:ArrayCollection = input as ArrayCollection;
 			for each (var entry:Object in array) {
 				var node:XML = new XML("<"+name+"/>");
-				var id:String = (entry as KalturaBaseEntry).id;
+				var id:String = (entry as BorhanBaseEntry).id;
 				node.appendChild(id);
 				parent.appendChild(node);
 			}

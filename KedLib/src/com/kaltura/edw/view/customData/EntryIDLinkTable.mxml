@@ -6,22 +6,22 @@
 				 includeInLayout="{_entriesArray.length > 0}" selectable="false" sortableColumns="false">
 		<mx:Script>
 			<![CDATA[
-				import com.kaltura.commands.MultiRequest;
-				import com.kaltura.commands.baseEntry.BaseEntryGet;
-				import com.kaltura.edw.business.IDataOwner;
-				import com.kaltura.edw.components.playlist.ManualPlaylistWindow;
-				import com.kaltura.edw.components.playlist.events.ManualPlaylistWindowEvent;
-				import com.kaltura.edw.components.playlist.types.ManualPlaylistWindowMode;
-				import com.kaltura.edw.control.DataTabController;
-				import com.kaltura.edw.control.events.LoadEvent;
-				import com.kaltura.edw.control.events.SearchEvent;
-				import com.kaltura.edw.model.FilterModel;
-				import com.kaltura.edw.model.MetadataDataObject;
-				import com.kaltura.edw.model.datapacks.ContextDataPack;
-				import com.kaltura.edw.vo.ListableVo;
-				import com.kaltura.events.KalturaEvent;
-				import com.kaltura.vo.BaseFlexVo;
-				import com.kaltura.vo.KalturaBaseEntry;
+				import com.borhan.commands.MultiRequest;
+				import com.borhan.commands.baseEntry.BaseEntryGet;
+				import com.borhan.edw.business.IDataOwner;
+				import com.borhan.edw.components.playlist.ManualPlaylistWindow;
+				import com.borhan.edw.components.playlist.events.ManualPlaylistWindowEvent;
+				import com.borhan.edw.components.playlist.types.ManualPlaylistWindowMode;
+				import com.borhan.edw.control.DataTabController;
+				import com.borhan.edw.control.events.LoadEvent;
+				import com.borhan.edw.control.events.SearchEvent;
+				import com.borhan.edw.model.FilterModel;
+				import com.borhan.edw.model.MetadataDataObject;
+				import com.borhan.edw.model.datapacks.ContextDataPack;
+				import com.borhan.edw.vo.ListableVo;
+				import com.borhan.events.BorhanEvent;
+				import com.borhan.vo.BaseFlexVo;
+				import com.borhan.vo.BorhanBaseEntry;
 				
 				import mx.collections.ArrayCollection;
 				import mx.controls.Alert;
@@ -78,8 +78,8 @@
 							var getEntry:BaseEntryGet = new BaseEntryGet(entryId);
 							multiRequest.addAction(getEntry);
 						}
-						multiRequest.addEventListener(KalturaEvent.COMPLETE, listEntriesResult);
-						multiRequest.addEventListener(KalturaEvent.FAILED, listEntriesFault);
+						multiRequest.addEventListener(BorhanEvent.COMPLETE, listEntriesResult);
+						multiRequest.addEventListener(BorhanEvent.FAILED, listEntriesFault);
 						context.kc.post(multiRequest);
 					}
 				}
@@ -97,12 +97,12 @@
 				/**
 				 * handles the result of the entries list request
 				 * */
-				private function listEntriesResult(event:KalturaEvent):void {
+				private function listEntriesResult(event:BorhanEvent):void {
 					_entriesArray = new ArrayCollection();
 					var resArray:Array = event.data as Array;
 					var errorsEntries:String = '';
 					for (var i:int = 0; i<resArray.length; i++) {
-						if (resArray[i] is KalturaBaseEntry)
+						if (resArray[i] is BorhanBaseEntry)
 							_entriesArray.addItem(resArray[i]);
 						else
 							errorsEntries += _idArray[i] +", ";
@@ -126,7 +126,7 @@
 				 * */
 				private function editExistingList():void {
 					var manualPlaylist:ManualPlaylistWindow = new ManualPlaylistWindow();
-					manualPlaylist.editedItem = /* (KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack). */editedItem;
+					manualPlaylist.editedItem = /* (BMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack). */editedItem;
 					manualPlaylist.filterData = filterModel;
 					manualPlaylist.showLinks = false;
 					manualPlaylist.distributionProfilesArray = distributionProfilesArr;
@@ -212,13 +212,13 @@
 							<!-- Must be in a container ( Bug in naked linkbutton in datagrid ) -->
 							<mx:Script>
 								<![CDATA[
-									import com.kaltura.types.KalturaEntryStatus;
-									import com.kaltura.types.KalturaMediaType;
+									import com.borhan.types.BorhanEntryStatus;
+									import com.borhan.types.BorhanMediaType;
 									
 									
 									private function getDrillDownEnabled(type:int):Boolean {
-										if (type == KalturaMediaType.LIVE_STREAM_FLASH) {
-											return data.status == KalturaEntryStatus.READY;
+										if (type == BorhanMediaType.LIVE_STREAM_FLASH) {
+											return data.status == BorhanEntryStatus.READY;
 										}
 										else
 											return true;

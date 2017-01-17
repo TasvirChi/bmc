@@ -1,4 +1,4 @@
-package com.kaltura.edw.model.types {
+package com.borhan.edw.model.types {
 
 	/**
 	 * known API errors according to December 2010 (Dragonfly +-)

@@ -1,20 +1,20 @@
-package com.kaltura.edw.control.commands.customData {
-	import com.kaltura.commands.metadata.MetadataList;
-	import com.kaltura.edw.business.EntryFormBuilder;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.MetadataDataEvent;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMetadata;
-	import com.kaltura.vo.KalturaMetadataFilter;
-	import com.kaltura.vo.KalturaMetadataListResponse;
+package com.borhan.edw.control.commands.customData {
+	import com.borhan.commands.metadata.MetadataList;
+	import com.borhan.edw.business.EntryFormBuilder;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.MetadataDataEvent;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.model.datapacks.CustomDataDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.model.datapacks.FilterDataPack;
+	import com.borhan.edw.vo.CustomMetadataDataVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanMetadata;
+	import com.borhan.vo.BorhanMetadataFilter;
+	import com.borhan.vo.BorhanMetadataListResponse;
 	
 	import mx.collections.ArrayCollection;
 
@@ -34,16 +34,16 @@ package com.kaltura.edw.control.commands.customData {
 		 * @param event the event that triggered this command
 		 *
 		 */
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_filterModel = (_model.getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 			
 			if (event.type == MetadataDataEvent.RESET) {
 				var metadataEmptyData:Array = new Array;
-				var kMetadata:KalturaMetadata;
-				var prof:KMCMetadataProfileVO;
+				var kMetadata:BorhanMetadata;
+				var prof:BMCMetadataProfileVO;
 				for (var i:int = 0; i < _filterModel.metadataProfiles.length; i++) {
-					prof = _filterModel.metadataProfiles[i] as KMCMetadataProfileVO;
-					kMetadata = new KalturaMetadata();
+					prof = _filterModel.metadataProfiles[i] as BMCMetadataProfileVO;
+					kMetadata = new BorhanMetadata();
 					kMetadata.metadataProfileId = prof.profile.id;
 					metadataEmptyData.push(kMetadata);
 				}
@@ -55,12 +55,12 @@ package com.kaltura.edw.control.commands.customData {
 				if (!_filterModel.metadataProfiles || !edp.selectedEntry.id)
 					return;
 
-				var filter:KalturaMetadataFilter = new KalturaMetadataFilter();
+				var filter:BorhanMetadataFilter = new BorhanMetadataFilter();
 				filter.objectIdEqual = edp.selectedEntry.id;
 
 				var listMetadataData:MetadataList = new MetadataList(filter);
-				listMetadataData.addEventListener(KalturaEvent.COMPLETE, result);
-				listMetadataData.addEventListener(KalturaEvent.FAILED, fault);
+				listMetadataData.addEventListener(BorhanEvent.COMPLETE, result);
+				listMetadataData.addEventListener(BorhanEvent.FAILED, fault);
 
 				_client.post(listMetadataData);
 			}
@@ -74,7 +74,7 @@ package com.kaltura.edw.control.commands.customData {
 		 */
 		override public function result(data:Object):void {
 			super.result(data);
-			var metadataResponse:KalturaMetadataListResponse = data.data as KalturaMetadataListResponse;
+			var metadataResponse:BorhanMetadataListResponse = data.data as BorhanMetadataListResponse;
 			setDataToModel(metadataResponse.objects);
 		}
 
@@ -96,9 +96,9 @@ package com.kaltura.edw.control.commands.customData {
 				var formBuilder:EntryFormBuilder = _filterModel.formBuilders[i] as EntryFormBuilder;
 				formBuilder.metadataInfo = entryMetadata;
 
-				// add the KalturaMetadata of this profile to the EntryMetadataDataVO
-				var profileId:int = (_filterModel.metadataProfiles[i] as KMCMetadataProfileVO).profile.id;
-				for each (var metadata:KalturaMetadata in metadataArray) {
+				// add the BorhanMetadata of this profile to the EntryMetadataDataVO
+				var profileId:int = (_filterModel.metadataProfiles[i] as BMCMetadataProfileVO).profile.id;
+				for each (var metadata:BorhanMetadata in metadataArray) {
 					if (metadata.metadataProfileId == profileId) {
 						entryMetadata.metadata = metadata;
 						break;

@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.content.model
+package com.borhan.bmc.modules.content.model
 {
-	import com.kaltura.vo.KalturaBulkUploadFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.vo.BorhanBulkUploadFilter;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
@@ -14,15 +14,15 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * the last filter used in list action in bulk uploads log page 
 		 */		
-		public var lastFilterUsed:KalturaBulkUploadFilter;
+		public var lastFilterUsed:BorhanBulkUploadFilter;
 		
 		/**
 		 * the last pager used in list action in bulk uploads log page 
 		 */		
-		public var lastPagerUsed:KalturaFilterPager;
+		public var lastPagerUsed:BorhanFilterPager;
 		
 		/**
-		 * list of <code>KalturaBulkUpload</code>
+		 * list of <code>BorhanBulkUpload</code>
 		 * used as dataprovider in <code>BulkUpload</code>
 		 * */
 		public var bulkUploads:ArrayCollection = null;

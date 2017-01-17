@@ -1,23 +1,23 @@
-package com.kaltura.edw.control.commands
+package com.borhan.edw.control.commands
 {
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.commands.categoryEntry.CategoryEntryList;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaCategoryEntry;
-	import com.kaltura.vo.KalturaCategoryEntryFilter;
-	import com.kaltura.vo.KalturaCategoryEntryListResponse;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.commands.categoryEntry.CategoryEntryList;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanCategoryEntry;
+	import com.borhan.vo.BorhanCategoryEntryFilter;
+	import com.borhan.vo.BorhanCategoryEntryListResponse;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
 	public class GetEntryCategoriesCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
 			switch (event.type) {
 				case KedEntryEvent.RESET_ENTRY_CATEGORIES:
@@ -26,17 +26,17 @@ package com.kaltura.edw.control.commands
 				case KedEntryEvent.GET_ENTRY_CATEGORIES:
 					_model.increaseLoadCounter();
 					
-					// get a list of KalturaCategoryEntries
+					// get a list of BorhanCategoryEntries
 					var e:KedEntryEvent = event as KedEntryEvent;
 					
-					var f:KalturaCategoryEntryFilter = new KalturaCategoryEntryFilter();
+					var f:BorhanCategoryEntryFilter = new BorhanCategoryEntryFilter();
 					f.entryIdEqual = e.entryVo.id;
-					var p:KalturaFilterPager = new KalturaFilterPager();
+					var p:BorhanFilterPager = new BorhanFilterPager();
 					p.pageSize = edp.maxNumCategories;
 					var getcats:CategoryEntryList = new CategoryEntryList(f, p);
 					
-					getcats.addEventListener(KalturaEvent.COMPLETE, result);
-					getcats.addEventListener(KalturaEvent.FAILED, fault);
+					getcats.addEventListener(BorhanEvent.COMPLETE, result);
+					getcats.addEventListener(BorhanEvent.FAILED, fault);
 					
 					_client.post(getcats);
 					break;
@@ -47,9 +47,9 @@ package com.kaltura.edw.control.commands
 		override public function result(data:Object):void {
 			super.result(data);
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
-			if (data.data is KalturaCategoryEntryListResponse) {
-				// get a list of KalturaCategories
-				var kce:KalturaCategoryEntry;
+			if (data.data is BorhanCategoryEntryListResponse) {
+				// get a list of BorhanCategories
+				var kce:BorhanCategoryEntry;
 				var str:String = '';
 				var kces:Array = data.data.objects;
 				if (!kces || !kces.length) {
@@ -60,20 +60,20 @@ package com.kaltura.edw.control.commands
 				for each (kce in kces) {
 					str += kce.categoryId + ",";
 				}
-				var f:KalturaCategoryFilter = new KalturaCategoryFilter();
+				var f:BorhanCategoryFilter = new BorhanCategoryFilter();
 				f.idIn = str;
-				var p:KalturaFilterPager = new KalturaFilterPager();
+				var p:BorhanFilterPager = new BorhanFilterPager();
 				p.pageSize = edp.maxNumCategories;
 				var getcats:CategoryList = new CategoryList(f, p);
 				
-				getcats.addEventListener(KalturaEvent.COMPLETE, result);
-				getcats.addEventListener(KalturaEvent.FAILED, fault);
+				getcats.addEventListener(BorhanEvent.COMPLETE, result);
+				getcats.addEventListener(BorhanEvent.FAILED, fault);
 				
 				_client.post(getcats);
 			}
-			else if (data.data is KalturaCategoryListResponse) {
-				// put the KalturaCategories on the model
-				edp.entryCategories = new ArrayCollection((data.data as KalturaCategoryListResponse).objects);
+			else if (data.data is BorhanCategoryListResponse) {
+				// put the BorhanCategories on the model
+				edp.entryCategories = new ArrayCollection((data.data as BorhanCategoryListResponse).objects);
 				_model.decreaseLoadCounter();
 			}
 		}

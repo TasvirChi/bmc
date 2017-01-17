@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaThumbParams;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanThumbParams;
 
-	public class GenerateThumbAssetEvent extends KMvCEvent
+	public class GenerateThumbAssetEvent extends BMvCEvent
 	{
 		public static const GENERATE:String = "content_generateThumbAsset";
-		public var thumbParams:KalturaThumbParams;
+		public var thumbParams:BorhanThumbParams;
 		public var thumbSourceId:String;
 		
-		public function GenerateThumbAssetEvent(type:String, thumbParams:KalturaThumbParams, thumbSourceId:String , bubbles:Boolean=false, cancelable:Boolean=false)
+		public function GenerateThumbAssetEvent(type:String, thumbParams:BorhanThumbParams, thumbSourceId:String , bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			this.thumbParams = thumbParams;
 			this.thumbSourceId = thumbSourceId;

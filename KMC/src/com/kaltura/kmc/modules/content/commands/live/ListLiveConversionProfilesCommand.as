@@ -1,31 +1,31 @@
-package com.kaltura.kmc.modules.content.commands.live {
+package com.borhan.bmc.modules.content.commands.live {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.conversionProfile.ConversionProfileList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.types.KalturaConversionProfileType;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileFilter;
-	import com.kaltura.vo.KalturaConversionProfileListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.commands.conversionProfile.ConversionProfileList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.types.BorhanConversionProfileType;
+	import com.borhan.types.BorhanNullableBoolean;
+	import com.borhan.vo.BorhanConversionProfile;
+	import com.borhan.vo.BorhanConversionProfileFilter;
+	import com.borhan.vo.BorhanConversionProfileListResponse;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
 	[ResourceBundle("live")]
 	
-	public class ListLiveConversionProfilesCommand extends KalturaCommand {
+	public class ListLiveConversionProfilesCommand extends BorhanCommand {
 
 		override public function execute(event:CairngormEvent):void {
 			
-			var p:KalturaFilterPager = new KalturaFilterPager();
+			var p:BorhanFilterPager = new BorhanFilterPager();
 			p.pageIndex = 1;
 			p.pageSize = 500; // trying to get all conversion profiles here, standard partner has no more than 10
-			var f:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-			f.typeEqual = KalturaConversionProfileType.LIVE_STREAM;
+			var f:BorhanConversionProfileFilter = new BorhanConversionProfileFilter();
+			f.typeEqual = BorhanConversionProfileType.LIVE_STREAM;
 			var listProfiles:ConversionProfileList = new ConversionProfileList(f, p);
-			listProfiles.addEventListener(KalturaEvent.COMPLETE, result);
-			listProfiles.addEventListener(KalturaEvent.FAILED, fault);
+			listProfiles.addEventListener(BorhanEvent.COMPLETE, result);
+			listProfiles.addEventListener(BorhanEvent.FAILED, fault);
 			_model.increaseLoadCounter();
 			_model.context.kc.post(listProfiles);
 		}
@@ -35,12 +35,12 @@ package com.kaltura.kmc.modules.content.commands.live {
 			super.result(data);
 			
 			var result:Array = new Array();
-			for each (var kcp:KalturaConversionProfile in (data.data as KalturaConversionProfileListResponse).objects) {
-				if (kcp.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
-					result.unshift(kcp);
+			for each (var bcp:BorhanConversionProfile in (data.data as BorhanConversionProfileListResponse).objects) {
+				if (bcp.isDefault == BorhanNullableBoolean.TRUE_VALUE) {
+					result.unshift(bcp);
 				}
 				else {
-					result.push(kcp);
+					result.push(bcp);
 				}
 			}
 			

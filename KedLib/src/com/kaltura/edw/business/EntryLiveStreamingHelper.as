@@ -1,9 +1,9 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
-	import com.kaltura.types.KalturaDVRStatus;
-	import com.kaltura.types.KalturaRecordStatus;
-	import com.kaltura.utils.KTimeUtil;
-	import com.kaltura.vo.KalturaLiveStreamEntry;
+	import com.borhan.types.BorhanDVRStatus;
+	import com.borhan.types.BorhanRecordStatus;
+	import com.borhan.utils.KTimeUtil;
+	import com.borhan.vo.BorhanLiveStreamEntry;
 	
 	import mx.resources.ResourceManager;
 
@@ -17,27 +17,27 @@ package com.kaltura.edw.business
 		{
 		}
 		
-		public static function getDVRStatus (entry:KalturaLiveStreamEntry):String {
+		public static function getDVRStatus (entry:BorhanLiveStreamEntry):String {
 			var result:String = '';
-			if (!entry.dvrStatus || entry.dvrStatus == KalturaDVRStatus.DISABLED) {
+			if (!entry.dvrStatus || entry.dvrStatus == BorhanDVRStatus.DISABLED) {
 				result = ResourceManager.getInstance().getString('drilldown', 'off');
 			}
-			else if (entry.dvrStatus == KalturaDVRStatus.ENABLED) {
+			else if (entry.dvrStatus == BorhanDVRStatus.ENABLED) {
 				result = ResourceManager.getInstance().getString('drilldown', 'on');
 			}
 			return result;
 		}
 		
-		public static function getDVRWindow (entry:KalturaLiveStreamEntry):String {
+		public static function getDVRWindow (entry:BorhanLiveStreamEntry):String {
 			return ResourceManager.getInstance().getString('drilldown', 'dvrWinFormat', [KTimeUtil.formatTime2(entry.dvrWindow*60, true, false, true)]);
 		}
 		
-		public static function getRecordStatus (entry:KalturaLiveStreamEntry):String {
+		public static function getRecordStatus (entry:BorhanLiveStreamEntry):String {
 			var result:String = '';
-			if (!entry.recordStatus || entry.recordStatus == KalturaRecordStatus.DISABLED) {
+			if (!entry.recordStatus || entry.recordStatus == BorhanRecordStatus.DISABLED) {
 				result = ResourceManager.getInstance().getString('drilldown', 'off');
 			}
-			else if (entry.recordStatus == KalturaRecordStatus.APPENDED || entry.recordStatus == KalturaRecordStatus.PER_SESSION) {
+			else if (entry.recordStatus == BorhanRecordStatus.APPENDED || entry.recordStatus == BorhanRecordStatus.PER_SESSION) {
 				result = ResourceManager.getInstance().getString('drilldown', 'on');
 			}
 			return result;

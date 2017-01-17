@@ -1,11 +1,11 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.bmvc.model.IDataPack;
 	
 	[Bindable]
 	/**
-	 * gateway to access the filter model of KMC
+	 * gateway to access the filter model of BMC
 	 * */
 	public class FilterDataPack implements IDataPack {
 		

@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.fltr.indicators
+package com.borhan.edw.components.fltr.indicators
 {
-	import com.kaltura.edw.components.fltr.IFilterComponent;
+	import com.borhan.edw.components.fltr.IFilterComponent;
 	
 	import mx.controls.Button;
 
@@ -18,7 +18,7 @@ package com.kaltura.edw.components.fltr.indicators
 		
 		
 		/**
-		 * the field on the KalturaFilter this indicator refers to 
+		 * the field on the BorhanFilter this indicator refers to 
 		 */
 		public var attribute:String;
 		
@@ -26,7 +26,7 @@ package com.kaltura.edw.components.fltr.indicators
 		/**
 		 * a value that will allow the origin panel to identify
 		 * the exact filter value, 
-		 * i.e. for attribute mediaTypeIn, KalturaMediaType.VIDEO 
+		 * i.e. for attribute mediaTypeIn, BorhanMediaType.VIDEO 
 		 */		
 		public var value:*;
 		

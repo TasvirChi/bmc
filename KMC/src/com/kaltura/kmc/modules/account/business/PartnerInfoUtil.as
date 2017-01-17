@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.account.business
+package com.borhan.bmc.modules.account.business
 {
-	import com.kaltura.kmc.modules.account.vo.NotificationVO;
+	import com.borhan.bmc.modules.account.vo.NotificationVO;
 	
 	import mx.collections.ArrayCollection;
 
 	/**
-	 * methods for manipulating partner data (KalturaPartner / PartnerVO)  
+	 * methods for manipulating partner data (BorhanPartner / PartnerVO)  
 	 * @author atar.shadmi
 	 * 
 	 */	

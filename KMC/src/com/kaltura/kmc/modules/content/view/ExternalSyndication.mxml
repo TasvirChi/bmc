@@ -5,29 +5,29 @@
 	 syndications and editing them.
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 xmlns:es="com.kaltura.kmc.modules.content.view.window.externalsyndication.*"
-		 xmlns:controls="com.kaltura.controls.*" 
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel"
+		 xmlns:es="com.borhan.bmc.modules.content.view.window.externalsyndication.*"
+		 xmlns:controls="com.borhan.controls.*" 
+		 implements="com.borhan.bmc.modules.content.business.IContentPanel"
 		 width="100%" height="100%" creationComplete="applyPermissions(event)">
 
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.content.events.ConversionSettingsEvent;
-			import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-			import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-			import com.kaltura.kmc.modules.content.events.PartnerEvent;
-			import com.kaltura.kmc.modules.content.events.SetSyndicationPagerEvent;
-			import com.kaltura.kmc.modules.content.model.ExtSynModel;
-			import com.kaltura.kmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationPopUpWindow;
-			import com.kaltura.kmc.modules.content.vo.ExternalSyndicationVO;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.modules.content.events.ConversionSettingsEvent;
+			import com.borhan.bmc.modules.content.events.ExternalSyndicationEvent;
+			import com.borhan.bmc.modules.content.events.BMCSearchEvent;
+			import com.borhan.bmc.modules.content.events.PartnerEvent;
+			import com.borhan.bmc.modules.content.events.SetSyndicationPagerEvent;
+			import com.borhan.bmc.modules.content.model.ExtSynModel;
+			import com.borhan.bmc.modules.content.view.window.externalsyndication.popupwindows.ExternalSyndicationPopUpWindow;
+			import com.borhan.bmc.modules.content.vo.ExternalSyndicationVO;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.vo.BorhanBaseEntryFilter;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -65,14 +65,14 @@
 			 * this panel does not support initial filtering data, the kmef param is ignored.
 			 * @inheritDoc
 			 * */
-			public function init(kmef:KalturaBaseEntryFilter = null):void {
+			public function init(kmef:BorhanBaseEntryFilter = null):void {
 				if (!watchersCreated) {
 					// only bind once
 					BindingUtils.bindSetter(onPlaylistReady, extSynModel, "generalPlayListdata");
 					watchersCreated = true;
 				}
 				// load playlists
-				var listPlayList:KMCSearchEvent = new KMCSearchEvent(KMCSearchEvent.SEARCH_PLAYLIST, null);
+				var listPlayList:BMCSearchEvent = new BMCSearchEvent(BMCSearchEvent.SEARCH_PLAYLIST, null);
 				listPlayList.dispatch();
 				// external syndications are listed after the call for playlists returns
 				// list flavor params
@@ -110,7 +110,7 @@
 				extSynModel.syndicationFeedsFilterPager.pageSize = paging.pageSize;
 				
 				var listExSynEvent:ExternalSyndicationEvent = new ExternalSyndicationEvent(ExternalSyndicationEvent.LIST_EXTERNAL_SYNDICATIONS);
-				listExSynEvent.data = paging.kalturaFilterPager;
+				listExSynEvent.data = paging.borhanFilterPager;
 				listExSynEvent.dispatch();
 			}
 
@@ -122,7 +122,7 @@
 				extFeedPopUp.flavorParams = flavorParams;
 				extFeedPopUp.extSynModel = extSynModel;
 				extFeedPopUp.rootUrl = rootUrl;
-//				extFeedPopUp.addEventListener(KmcHelpEvent.HELP, dispatchHelp);
+//				extFeedPopUp.addEventListener(BmcHelpEvent.HELP, dispatchHelp);
 
 				PopUpManager.addPopUp(extFeedPopUp, Application.application as DisplayObject, true);
 				PopUpManager.centerPopUp(extFeedPopUp);
@@ -132,7 +132,7 @@
 //			 * pass the event to whomever is listening 
 //			 * (because events from popups don't naturally propagate to the main app, not the same displaylist)
 //			 * */
-//			private function dispatchHelp(e:KmcHelpEvent):void {
+//			private function dispatchHelp(e:BmcHelpEvent):void {
 //				dispatchEvent(e.clone());
 //			}
 
@@ -173,15 +173,15 @@
 			private function gotoPage():void {
 				loadFeeds();
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_CONTENT_GO_TO_PAGE, "content>Show Rows");
 			}
 
 
 			private function onPagerCreationComplete(event:Event):void {
-				var e:CairngormEvent = new SetSyndicationPagerEvent(SetSyndicationPagerEvent.SET_PAGER, paging.kalturaFilterPager);
+				var e:CairngormEvent = new SetSyndicationPagerEvent(SetSyndicationPagerEvent.SET_PAGER, paging.borhanFilterPager);
 				e.dispatch();
 				paging.selectedPage = 1;
-				paging.kalturaFilterPager.pageSize = paging.rowInPageCb.value as int;
+				paging.borhanFilterPager.pageSize = paging.rowInPageCb.value as int;
 			}
 
 
@@ -208,7 +208,7 @@
 				</mx:HBox>
 				
 				<controls:Paging id="paging" width="100%" styleName="paging" rowsInPageChange="gotoPage()" 
-								 kalturaFilterPager="{extSynModel.syndicationFeedsFilterPager}"
+								 borhanFilterPager="{extSynModel.syndicationFeedsFilterPager}"
 								 totalCount="{extSynModel.externalSyndicationFeedsTotalCount}" nextPage="gotoPage()"
 								 prvPage="gotoPage()" getPageNum="gotoPage()" visible="true" showRowsInPage="true"
 								 creationComplete="{onPagerCreationComplete(event)}"/>

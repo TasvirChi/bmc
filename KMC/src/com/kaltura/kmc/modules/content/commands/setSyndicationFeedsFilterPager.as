@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
-	import com.kaltura.kmc.modules.content.events.SetSyndicationPagerEvent;
+	import com.borhan.bmc.modules.content.events.SetSyndicationPagerEvent;
 	
-	public class setSyndicationFeedsFilterPager extends KalturaCommand implements ICommand {
+	public class setSyndicationFeedsFilterPager extends BorhanCommand implements ICommand {
 		
 		
 		override public function execute(event:CairngormEvent):void

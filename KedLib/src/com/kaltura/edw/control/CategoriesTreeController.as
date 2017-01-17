@@ -1,17 +1,17 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.categories.*;
-	import com.kaltura.edw.control.events.CategoriesTreeEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.categories.*;
+	import com.borhan.edw.control.events.CategoriesTreeEvent;
+	import com.borhan.bmvc.control.BMvCController;
 
 	/**
 	 * controller for categories tree
 	 * @internal
-	 * (not to be confused with KMC content's categories screen) 
+	 * (not to be confused with BMC content's categories screen) 
 	 * @author Atar
 	 * 
 	 */	
-	public class CategoriesTreeController extends KMvCController {
+	public class CategoriesTreeController extends BMvCController {
 		
 		public function CategoriesTreeController() {
 			initializeCommands();

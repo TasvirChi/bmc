@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.analytics.commands {
+package com.borhan.bmc.modules.analytics.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.report.ReportGetGraphs;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.analytics.control.ReportEvent;
-	import com.kaltura.kmc.modules.analytics.model.AnalyticsModelLocator;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.vo.KalturaEndUserReportInputFilter;
-	import com.kaltura.vo.KalturaReportBaseTotal;
-	import com.kaltura.vo.KalturaReportGraph;
-	import com.kaltura.vo.KalturaReportInputFilter;
+	import com.borhan.commands.report.ReportGetGraphs;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.analytics.control.ReportEvent;
+	import com.borhan.bmc.modules.analytics.model.AnalyticsModelLocator;
+	import com.borhan.bmc.modules.analytics.model.reportdata.ReportData;
+	import com.borhan.bmc.modules.analytics.model.types.ScreenTypes;
+	import com.borhan.vo.BorhanEndUserReportInputFilter;
+	import com.borhan.vo.BorhanReportBaseTotal;
+	import com.borhan.vo.BorhanReportGraph;
+	import com.borhan.vo.BorhanReportInputFilter;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
@@ -53,15 +53,15 @@ package com.kaltura.kmc.modules.analytics.commands {
 				_screenType = _model.currentScreenState;
 			}
 
-			var krif:KalturaReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
+			var krif:BorhanReportInputFilter = ExecuteReportHelper.createFilterFromReport(_model.getFilterForScreen(_screenType), _screenType);
 			var reportGetGraphs:ReportGetGraphs = new ReportGetGraphs((event as ReportEvent).reportType,
 																		krif,
 																		_model.selectedReportData.selectedDim,
 																		ExecuteReportHelper.getObjectIds(_screenType));
 
 			reportGetGraphs.queued = false;
-			reportGetGraphs.addEventListener(KalturaEvent.COMPLETE, result);
-			reportGetGraphs.addEventListener(KalturaEvent.FAILED, fault);
+			reportGetGraphs.addEventListener(BorhanEvent.COMPLETE, result);
+			reportGetGraphs.addEventListener(BorhanEvent.FAILED, fault);
 			_model.kc.post(reportGetGraphs);
 		}
 
@@ -110,15 +110,15 @@ package com.kaltura.kmc.modules.analytics.commands {
 			reportData.dimToChartDpMap = new Object();
 			reportData.dimArrColl = new ArrayCollection();
 
-			var krp:KalturaReportGraph;
+			var krp:BorhanReportGraph;
 			for (var i:int = 0; i < _graphDataArr.length; i++) {
-				parseSingleReport(_graphDataArr[i] as KalturaReportGraph, reportData);
+				parseSingleReport(_graphDataArr[i] as BorhanReportGraph, reportData);
 			}
 
 			var initDim:String = null; // initial dimension of the graph 
 			// use the first received report as default graph dimension
 			if (_graphDataArr.length > 0)
-				initDim = (_graphDataArr[0] as KalturaReportGraph).id;
+				initDim = (_graphDataArr[0] as BorhanReportGraph).id;
 
 			// set chart DP
 			setChartDp(reportData, initDim);
@@ -128,7 +128,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 		}
 
 
-		private function parseSingleReport(krp:KalturaReportGraph, reportData:ReportData):void {
+		private function parseSingleReport(krp:BorhanReportGraph, reportData:ReportData):void {
 			var obj:Object;
 			var j:int;
 			var addTotalsReport:Boolean = _addTotals && krp.id.substr(0, 5) == "added"; // this report should be followed by a "totals" report
@@ -344,7 +344,7 @@ package com.kaltura.kmc.modules.analytics.commands {
 		 * @return base total value
 		 */
 		private function getBaseTotal(totalDim:String):Number {
-			for each (var baseTotal:KalturaReportBaseTotal in _model.selectedReportData.baseTotals) {
+			for each (var baseTotal:BorhanReportBaseTotal in _model.selectedReportData.baseTotals) {
 				if (baseTotal.id == totalDim) {
 					return parseFloat(baseTotal.data);
 				}
@@ -361,14 +361,14 @@ package com.kaltura.kmc.modules.analytics.commands {
 			_model.loadingChartFlag = false;
 			_model.checkLoading();
 
-			if ((info as KalturaEvent).error) {
-				if ((info as KalturaEvent).error.errorMsg) {
-					if ((info as KalturaEvent).error.errorMsg.substr(0, 10) == "Invalid KS") {
+			if ((info as BorhanEvent).error) {
+				if ((info as BorhanEvent).error.errorMsg) {
+					if ((info as BorhanEvent).error.errorMsg.substr(0, 10) == "Invalid KS") {
 						JSGate.expired();
 						return;
 					}
 					else
-						Alert.show((info as KalturaEvent).error.errorMsg, "Error");
+						Alert.show((info as BorhanEvent).error.errorMsg, "Error");
 				}
 			}
 		}

@@ -1,13 +1,13 @@
-package com.kaltura.edw.control.commands.usrs
+package com.borhan.edw.control.commands.usrs
 {
-	import com.kaltura.commands.user.UserGet;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.UsersEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.commands.user.UserGet;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.UsersEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanUser;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -17,7 +17,7 @@ package com.kaltura.edw.control.commands.usrs
 		private var _type:String;
 		private var _userId:String;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			
 			if (event.type == UsersEvent.RESET_ENTRY_USERS) {
 				var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
@@ -36,8 +36,8 @@ package com.kaltura.edw.control.commands.usrs
 			
 			var getUser:UserGet = new UserGet(event.data);
 			
-			getUser.addEventListener(KalturaEvent.COMPLETE, result);
-			getUser.addEventListener(KalturaEvent.FAILED, result);	// intentionally so
+			getUser.addEventListener(BorhanEvent.COMPLETE, result);
+			getUser.addEventListener(BorhanEvent.FAILED, result);	// intentionally so
 			
 			_client.post(getUser);
 		}
@@ -48,22 +48,22 @@ package com.kaltura.edw.control.commands.usrs
 			super.result(data);
 			
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
-			if (data.data && data.data is KalturaUser) {
+			if (data.data && data.data is BorhanUser) {
 				switch (_type) {
 					case UsersEvent.GET_ENTRY_CREATOR:
-						edp.selectedEntryCreator = data.data as KalturaUser;
+						edp.selectedEntryCreator = data.data as BorhanUser;
 						break;
 					
 					case UsersEvent.GET_ENTRY_OWNER:
-						edp.selectedEntryOwner = data.data as KalturaUser;
+						edp.selectedEntryOwner = data.data as BorhanUser;
 						break;
 				}
 			}
 			else if (data.error) {
-				var er:KalturaError = data.error;
+				var er:BorhanError = data.error;
 				if (er.errorCode == "INVALID_USER_ID") {
 					// the user is probably deleted, create a dummy user:
-					var usr:KalturaUser = new KalturaUser();
+					var usr:BorhanUser = new BorhanUser();
 					usr.id = _userId;
 					usr.screenName = _userId;
 					switch (_type) {

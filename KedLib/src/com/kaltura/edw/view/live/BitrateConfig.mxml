@@ -5,7 +5,7 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaLiveStreamBitrate;
+			import com.borhan.vo.BorhanLiveStreamBitrate;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.UIComponent;
@@ -38,7 +38,7 @@
 			
 			/**
 			 * build the bitrates array.
-			 * @return array of <code>KalturaLiveStreamBitrate</code>
+			 * @return array of <code>BorhanLiveStreamBitrate</code>
 			 * 		(possibly empty), or null if failed validation
 			 * */
 			public function getBitrates():Array {
@@ -51,7 +51,7 @@
 					cb = this["bitrate" + i] as CheckBox;
 					if (cb && cb.selected) {
 						// found a selected bitrate checkbox
-						var klsbr:KalturaLiveStreamBitrate = new KalturaLiveStreamBitrate();
+						var klsbr:BorhanLiveStreamBitrate = new BorhanLiveStreamBitrate();
 						//get bitrate
 						combo = (this["bitrateCombo" + i] as ComboBox);
 						klsbr.bitrate = int(combo.value);

@@ -1,28 +1,28 @@
-package com.kaltura.edw.control.commands.dist
+package com.borhan.edw.control.commands.dist
 {
-	import com.kaltura.commands.entryDistribution.EntryDistributionList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.EntryDistributionWithProfile;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaEntryDistributionStatus;
-	import com.kaltura.vo.KalturaDistributionProfile;
-	import com.kaltura.vo.KalturaEntryDistribution;
-	import com.kaltura.vo.KalturaEntryDistributionFilter;
-	import com.kaltura.vo.KalturaEntryDistributionListResponse;
+	import com.borhan.commands.entryDistribution.EntryDistributionList;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.EntryDistributionWithProfile;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanEntryDistributionStatus;
+	import com.borhan.vo.BorhanDistributionProfile;
+	import com.borhan.vo.BorhanEntryDistribution;
+	import com.borhan.vo.BorhanEntryDistributionFilter;
+	import com.borhan.vo.BorhanEntryDistributionListResponse;
 	
 	public class ListEntryDistributionCommand extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();
-			var entryDistributionFilter:KalturaEntryDistributionFilter = new KalturaEntryDistributionFilter();
+			var entryDistributionFilter:BorhanEntryDistributionFilter = new BorhanEntryDistributionFilter();
 			entryDistributionFilter.entryIdEqual = (_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id;	
 			var listEntryDistribution:EntryDistributionList = new EntryDistributionList(entryDistributionFilter);
-			listEntryDistribution.addEventListener(KalturaEvent.COMPLETE, result);
-			listEntryDistribution.addEventListener(KalturaEvent.FAILED, fault);
+			listEntryDistribution.addEventListener(BorhanEvent.COMPLETE, result);
+			listEntryDistribution.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(listEntryDistribution);
 
 		}
@@ -32,22 +32,22 @@ package com.kaltura.edw.control.commands.dist
 			_model.decreaseLoadCounter();	
 			super.result(data);
 
-			var result:KalturaEntryDistributionListResponse = data.data as KalturaEntryDistributionListResponse;
+			var result:BorhanEntryDistributionListResponse = data.data as BorhanEntryDistributionListResponse;
 			handleEntryDistributionResult(result);	
 		}
 		
-		public function handleEntryDistributionResult(result:KalturaEntryDistributionListResponse):void 
+		public function handleEntryDistributionResult(result:BorhanEntryDistributionListResponse):void 
 		{
 			var ddp:DistributionDataPack = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
 			var distributionArray:Array = [];
 			var profilesArray:Array = ddp.distributionInfo.distributionProfiles;
-			for each (var distribution:KalturaEntryDistribution in result.objects) {
-				if (distribution.status != KalturaEntryDistributionStatus.DELETED) {
-					for each (var profile:KalturaDistributionProfile in profilesArray) {
+			for each (var distribution:BorhanEntryDistribution in result.objects) {
+				if (distribution.status != BorhanEntryDistributionStatus.DELETED) {
+					for each (var profile:BorhanDistributionProfile in profilesArray) {
 						if (distribution.distributionProfileId == profile.id) {
 							var newEntryDistribution:EntryDistributionWithProfile = new EntryDistributionWithProfile();
-							newEntryDistribution.kalturaDistributionProfile = profile;
-							newEntryDistribution.kalturaEntryDistribution = distribution;
+							newEntryDistribution.borhanDistributionProfile = profile;
+							newEntryDistribution.borhanEntryDistribution = distribution;
 							distributionArray.push(newEntryDistribution);
 						} 
 					}

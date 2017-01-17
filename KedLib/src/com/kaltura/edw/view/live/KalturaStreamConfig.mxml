@@ -2,12 +2,12 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryLiveStreamingHelper;
-			import com.kaltura.types.KalturaDVRStatus;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.borhan.edw.business.EntryLiveStreamingHelper;
+			import com.borhan.types.BorhanDVRStatus;
+			import com.borhan.vo.BorhanLiveStreamEntry;
 			
 			[Bindable]
-			public var selectedEntry:KalturaLiveStreamEntry;
+			public var selectedEntry:BorhanLiveStreamEntry;
 		]]>
 	</mx:Script>
 	<mx:Label text="{resourceManager.getString('drilldown', 'streamCfg')}" styleName="drillDownLabel"/>
@@ -19,8 +19,8 @@
 				  width="{EntryLiveStreamingHelper.BROADCASTING_WIDTH}" styleName="drillDownSubLabel"/>
 	</mx:HBox>
 	
-	<mx:HBox width="100%" visible="{selectedEntry.dvrStatus == KalturaDVRStatus.ENABLED}" 
-			 includeInLayout="{selectedEntry.dvrStatus == KalturaDVRStatus.ENABLED}">
+	<mx:HBox width="100%" visible="{selectedEntry.dvrStatus == BorhanDVRStatus.ENABLED}" 
+			 includeInLayout="{selectedEntry.dvrStatus == BorhanDVRStatus.ENABLED}">
 		<mx:Label text="{resourceManager.getString('drilldown', 'dvrWin')}" width="{EntryLiveStreamingHelper.PREFIXES_WIDTH}"
 				  styleName="drillDownLabel"/>
 		<mx:Label id="dvrWin" text="{EntryLiveStreamingHelper.getDVRWindow(selectedEntry)}" selectable="true" 

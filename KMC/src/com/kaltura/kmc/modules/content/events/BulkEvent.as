@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.business.FileManager;
-	import com.kaltura.kmc.modules.content.vo.FilterVO;
+	import com.borhan.bmc.modules.content.business.FileManager;
+	import com.borhan.bmc.modules.content.vo.FilterVO;
 
 	public class BulkEvent extends CairngormEvent
 	{

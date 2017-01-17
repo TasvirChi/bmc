@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.hillelcoren.components.*"
-		 implements="com.kaltura.kmc.modules.content.view.window.cdw.ICategoryDrilldownPanel"
+		 implements="com.borhan.bmc.modules.content.view.window.cdw.ICategoryDrilldownPanel"
 		 creationComplete="onCreationComplete(event)">
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.borhan.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.borhan.edw.events.InternalKedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.autocomplete.controllers.KACTagsController;
-			import com.kaltura.edw.business.EntryFormBuilder;
-			import com.kaltura.edw.business.MetadataDataParser;
-			import com.kaltura.edw.control.events.MetadataDataEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.view.customData.SingleCustomData;
-			import com.kaltura.edw.vo.CustomMetadataDataVO;
-			import com.kaltura.kmc.modules.content.business.CategoryFormBuilder;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.model.CategoriesModel;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.types.KalturaTaggedObjectType;
-			import com.kaltura.vo.KMCMetadataProfileVO;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.autocomplete.controllers.KACTagsController;
+			import com.borhan.edw.business.EntryFormBuilder;
+			import com.borhan.edw.business.MetadataDataParser;
+			import com.borhan.edw.control.events.MetadataDataEvent;
+			import com.borhan.edw.events.InternalKedEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.view.customData.SingleCustomData;
+			import com.borhan.edw.vo.CustomMetadataDataVO;
+			import com.borhan.bmc.modules.content.business.CategoryFormBuilder;
+			import com.borhan.bmc.modules.content.events.CategoryEvent;
+			import com.borhan.bmc.modules.content.model.CategoriesModel;
+			import com.borhan.bmc.modules.content.model.CmsModelLocator;
+			import com.borhan.types.BorhanTaggedObjectType;
+			import com.borhan.vo.BMCMetadataProfileVO;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -48,7 +48,7 @@
 			private static const customDataVerticalGap:int = 5;
 
 			[Bindable]
-			public var category:KalturaCategory;
+			public var category:BorhanCategory;
 
 
 			private var _tagsWatcher:ChangeWatcher;
@@ -65,7 +65,7 @@
 
 			/**
 			 * create the visual representation of each profile
-			 * @param profilesAC list of custom data profiles (<code>KMCMetadataProfileVO</code>)
+			 * @param profilesAC list of custom data profiles (<code>BMCMetadataProfileVO</code>)
 			 * @param formBuildersAC	list of matching form builders (<code>FormBuilder</code>)
 			 * */
 			private function buildProfiles(profilesAC:ArrayCollection, formBuildersAC:ArrayCollection):void {
@@ -79,7 +79,7 @@
 				}
 
 				for (var i:int = 0; i < profilesAC.length; i++) {
-					var curProfile:KMCMetadataProfileVO = profilesAC.getItemAt(i) as KMCMetadataProfileVO;
+					var curProfile:BMCMetadataProfileVO = profilesAC.getItemAt(i) as BMCMetadataProfileVO;
 
 					if (curProfile.profile && curProfile.metadataFieldVOArray && curProfile.metadataFieldVOArray.length > 0) {
 						var curCustomData:SingleCustomData = new SingleCustomData();
@@ -114,13 +114,13 @@
 					isOk = !(vre.results[0] as ValidationResult).isError;
 				}
 				
-				var ivre:com.kaltura.edw.events.ValidationResultEvent;
+				var ivre:com.borhan.edw.events.ValidationResultEvent;
 				
 				if (!isOk) {
-					ivre = new com.kaltura.edw.events.ValidationResultEvent(com.kaltura.edw.events.ValidationResultEvent.VALIDATION_COMPLETE, false, resourceManager.getString('cms', 'categoryNameIsMandatory')); 
+					ivre = new com.borhan.edw.events.ValidationResultEvent(com.borhan.edw.events.ValidationResultEvent.VALIDATION_COMPLETE, false, resourceManager.getString('cms', 'categoryNameIsMandatory')); 
 				}
 				else {
-					ivre = new com.kaltura.edw.events.ValidationResultEvent(com.kaltura.edw.events.ValidationResultEvent.VALIDATION_COMPLETE, true); 
+					ivre = new com.borhan.edw.events.ValidationResultEvent(com.borhan.edw.events.ValidationResultEvent.VALIDATION_COMPLETE, true); 
 				}
 				dispatchEvent(ivre);
 			}
@@ -171,7 +171,7 @@
 				else {
 					_profileNames = new ArrayCollection();
 				}
-				new KACTagsController(tagsInput, CmsModelLocator.getInstance().context.kc, KalturaTaggedObjectType.CATEGORY);
+				new KACTagsController(tagsInput, CmsModelLocator.getInstance().context.kc, BorhanTaggedObjectType.CATEGORY);
 			}
 
 
@@ -189,7 +189,7 @@
 				if (_profilesAC.length && infoArray && infoArray.length) {
 					for (var i:int = 0; i < _profilesAC.length; i++) {
 						var metadataInfo:CustomMetadataDataVO = infoArray.getItemAt(i) as CustomMetadataDataVO;
-						var metadataProfile:KMCMetadataProfileVO = _profilesAC.getItemAt(i) as KMCMetadataProfileVO;
+						var metadataProfile:BMCMetadataProfileVO = _profilesAC.getItemAt(i) as BMCMetadataProfileVO;
 						if (metadataProfile && metadataProfile.profile && metadataInfo) {
 							var newMetadataXML:XML = MetadataDataParser.toMetadataXML(metadataInfo, metadataProfile);
 							if (metadataInfo.metadata) {
@@ -240,7 +240,7 @@
 			}
 
 
-			private function onTagsSet(cat:KalturaCategory):void {
+			private function onTagsSet(cat:BorhanCategory):void {
 				if (cat.tags != null) {
 					var temp:Array = cat.tags.split(",");
 					tagsInput.selectedItems = new ArrayCollection(temp);

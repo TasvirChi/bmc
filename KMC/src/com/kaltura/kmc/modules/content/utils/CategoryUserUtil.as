@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.utils
+package com.borhan.bmc.modules.content.utils
 {
-	import com.kaltura.types.KalturaCategoryUserPermissionLevel;
+	import com.borhan.types.BorhanCategoryUserPermissionLevel;
 
 	public class CategoryUserUtil
 	{
@@ -12,16 +12,16 @@ package com.kaltura.kmc.modules.content.utils
 		public static function getPermissionNames(permissionLevel:int):String {
 			var result:String;
 			switch(permissionLevel) {
-				case KalturaCategoryUserPermissionLevel.MEMBER:
+				case BorhanCategoryUserPermissionLevel.MEMBER:
 					result = "CATEGORY_VIEW";
 					break;
-				case KalturaCategoryUserPermissionLevel.CONTRIBUTOR:
+				case BorhanCategoryUserPermissionLevel.CONTRIBUTOR:
 					result = "CATEGORY_CONTRIBUTE,CATEGORY_VIEW";
 					break;
-				case KalturaCategoryUserPermissionLevel.MODERATOR:
+				case BorhanCategoryUserPermissionLevel.MODERATOR:
 					result = "CATEGORY_MODERATE,CATEGORY_CONTRIBUTE,CATEGORY_VIEW";
 					break;
-				case KalturaCategoryUserPermissionLevel.MANAGER:
+				case BorhanCategoryUserPermissionLevel.MANAGER:
 					result = "CATEGORY_EDIT,CATEGORY_MODERATE,CATEGORY_CONTRIBUTE,CATEGORY_VIEW";
 					break;
 			}

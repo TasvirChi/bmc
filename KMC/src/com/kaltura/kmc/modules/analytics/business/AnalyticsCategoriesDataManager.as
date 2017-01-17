@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.analytics.business
+package com.borhan.bmc.modules.analytics.business
 {
-	import com.kaltura.edw.components.fltr.cat.data.ICategoriesDataManger;
-	import com.kaltura.edw.control.CategoriesTreeController;
-	import com.kaltura.edw.vo.CategoryVO;
+	import com.borhan.edw.components.fltr.cat.data.ICategoriesDataManger;
+	import com.borhan.edw.control.CategoriesTreeController;
+	import com.borhan.edw.vo.CategoryVO;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

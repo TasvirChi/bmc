@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,19 +25,19 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaDrmPolicy;
+	import com.borhan.vo.BorhanDrmPolicy;
 
 	[Bindable]
-	public dynamic class KalturaPlayReadyPolicy extends KalturaDrmPolicy
+	public dynamic class BorhanPlayReadyPolicy extends BorhanDrmPolicy
 	{
 		/**
 		**/
 		public var gracePeriod : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaPlayReadyLicenseRemovalPolicy
+		* @see com.borhan.types.BorhanPlayReadyLicenseRemovalPolicy
 		**/
 		public var licenseRemovalPolicy : int = int.MIN_VALUE;
 
@@ -46,7 +46,7 @@ package com.kaltura.vo
 		public var licenseRemovalDuration : int = int.MIN_VALUE;
 
 		/**
-		* @see com.kaltura.types.KalturaPlayReadyMinimumLicenseSecurityLevel
+		* @see com.borhan.types.BorhanPlayReadyMinimumLicenseSecurityLevel
 		**/
 		public var minSecurityLevel : int = int.MIN_VALUE;
 
@@ -78,7 +78,7 @@ package com.kaltura.vo
 			var result:String = '';
 			switch (arrayName) {
 				case 'rights':
-					result = 'KalturaPlayReadyRight';
+					result = 'BorhanPlayReadyRight';
 					break;
 				default:
 					result = super.getElementType(arrayName);

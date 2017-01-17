@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 width="100%" styleName="acpPopUpSectionBox" implements="com.kaltura.edw.view.window.accessControl.IRestrictionsPanel">
+		 width="100%" styleName="acpPopUpSectionBox" implements="com.borhan.edw.view.window.accessControl.IRestrictionsPanel">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.types.KalturaLimitFlavorsRestrictionType;
-			import com.kaltura.vo.KalturaAccessControl;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaLimitFlavorsRestriction;
-			import com.kaltura.windows.popUpWindows.AddRemoveFlavorsPopUpWindow;
+			import com.borhan.vo.FlavorVO;
+			import com.borhan.vo.BorhanFlavorParams;
+			import com.borhan.types.BorhanLimitFlavorsRestrictionType;
+			import com.borhan.vo.BorhanAccessControl;
+			import com.borhan.vo.BorhanBaseRestriction;
+			import com.borhan.vo.BorhanLimitFlavorsRestriction;
+			import com.borhan.windows.popUpWindows.AddRemoveFlavorsPopUpWindow;
 			
 			import mx.collections.ArrayCollection;
 			import mx.managers.PopUpManager;
@@ -18,7 +18,7 @@
 			/**
 			 * the access control object being edited
 			 * */	
-			public var profile:KalturaAccessControl;
+			public var profile:BorhanAccessControl;
 			
 			[Bindable]
 			/**
@@ -43,11 +43,11 @@
 			
 			public function setRestrictions():void {
 				var restrictionFound:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in profile.restrictions) {
-					if (restriction is KalturaLimitFlavorsRestriction) {
+				for each (var restriction:BorhanBaseRestriction in profile.restrictions) {
+					if (restriction is BorhanLimitFlavorsRestriction) {
 						restrictionFound = true;
 						var arr:ArrayCollection;
-						if ((restriction as KalturaLimitFlavorsRestriction).limitFlavorsRestrictionType == KalturaLimitFlavorsRestrictionType.ALLOW_LIST) {
+						if ((restriction as BorhanLimitFlavorsRestriction).limitFlavorsRestrictionType == BorhanLimitFlavorsRestrictionType.ALLOW_LIST) {
 							approvedFlavorsRadioBtn.selected = true;
 							arr = allowedFlavorsArr;
 						}
@@ -56,7 +56,7 @@
 							arr = notAllowedFlavorsArr;
 						}
 						
-						setFlavorsFromString(arr, (restriction as KalturaLimitFlavorsRestriction).flavorParamsIds);
+						setFlavorsFromString(arr, (restriction as BorhanLimitFlavorsRestriction).flavorParamsIds);
 						break;
 					}
 				}
@@ -66,8 +66,8 @@
 			
 			public function updateRestrictions():void {
 				if (allFlavorsRaddioBtn.selected != true) {
-					var flavorRestriction:KalturaLimitFlavorsRestriction = new KalturaLimitFlavorsRestriction();
-					flavorRestriction.limitFlavorsRestrictionType = approvedFlavorsRadioBtn.selected ? KalturaLimitFlavorsRestrictionType.ALLOW_LIST : KalturaLimitFlavorsRestrictionType.RESTRICT_LIST;
+					var flavorRestriction:BorhanLimitFlavorsRestriction = new BorhanLimitFlavorsRestriction();
+					flavorRestriction.limitFlavorsRestrictionType = approvedFlavorsRadioBtn.selected ? BorhanLimitFlavorsRestrictionType.ALLOW_LIST : BorhanLimitFlavorsRestrictionType.RESTRICT_LIST;
 					
 					var list:List = (approvedFlavorsRadioBtn.selected == true) ? approvedFlavorsList : notApprovedFlavorsList;
 					flavorRestriction.flavorParamsIds = getFlavorsList(list.dataProvider as ArrayCollection);
@@ -87,7 +87,7 @@
 			
 			
 			/**
-			 * @param ac	list of KalturaFlavorParams
+			 * @param ac	list of BorhanFlavorParams
 			 * @return comma seperated list of flavor params ids
 			 * */
 			private function getFlavorsList(ac:ArrayCollection):String {
@@ -163,7 +163,7 @@
 							  enabled="{approvedFlavorsRadioBtn.selected}"/>
 					<mx:List width="100%" id="approvedFlavorsList" dataProvider="{allowedFlavorsArr}"
 							 enabled="{approvedFlavorsRadioBtn.selected}" rowCount="5" selectable="false"
-							 itemRenderer="com.kaltura.renderers.FlavorsListItemRenderer"/>
+							 itemRenderer="com.borhan.renderers.FlavorsListItemRenderer"/>
 				</mx:HBox>
 			</mx:VBox>
 			<mx:HBox>
@@ -185,7 +185,7 @@
 							  enabled="{notApprovedFlavorsRadioBtn.selected}"/>
 					<mx:List width="100%" id="notApprovedFlavorsList" dataProvider="{notAllowedFlavorsArr}"
 							 enabled="{notApprovedFlavorsRadioBtn.selected}" rowCount="5" selectable="false"
-							 itemRenderer="com.kaltura.renderers.FlavorsListItemRenderer"/>
+							 itemRenderer="com.borhan.renderers.FlavorsListItemRenderer"/>
 				</mx:HBox>
 			</mx:VBox>
 			<mx:HBox>

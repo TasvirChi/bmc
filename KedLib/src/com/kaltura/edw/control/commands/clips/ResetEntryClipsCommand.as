@@ -1,12 +1,12 @@
-package com.kaltura.edw.control.commands.clips
+package com.borhan.edw.control.commands.clips
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.ClipsDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.ClipsDataPack;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	public class ResetEntryClipsCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			(_model.getDataPack(ClipsDataPack) as ClipsDataPack).clips = null;
 		}
 	}

@@ -3,9 +3,9 @@
 		 horizontalAlign="left" paddingLeft="2" horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalGap="0">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.events.FileUploadEvent;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.vo.FileUploadVO;
+			import com.borhan.events.FileUploadEvent;
+			import com.borhan.managers.FileUploadManager;
+			import com.borhan.vo.FileUploadVO;
 
 
 //			override public function set data(value:Object) :void {

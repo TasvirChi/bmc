@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.business
+package com.borhan.bmc.modules.content.business
 {
-	import com.kaltura.kmc.modules.content.events.CatTrackEvent;
+	import com.borhan.bmc.modules.content.events.CatTrackEvent;
 	
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;

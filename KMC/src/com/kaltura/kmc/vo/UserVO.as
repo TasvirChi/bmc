@@ -1,7 +1,7 @@
-package com.kaltura.kmc.vo
+package com.borhan.bmc.vo
 {
-	import com.kaltura.vo.KalturaUser;
-	import com.kaltura.vo.KalturaUserRole;
+	import com.borhan.vo.BorhanUser;
+	import com.borhan.vo.BorhanUserRole;
 
 	[Bindable]
 	/**
@@ -13,11 +13,11 @@ package com.kaltura.kmc.vo
 		/**
 		 * user details 
 		 */
-		public var user:KalturaUser;
+		public var user:BorhanUser;
 		
 		/**
 		 * the role associated with <code>user</code> 
 		 */		
-		public var role:KalturaUserRole;
+		public var role:BorhanUserRole;
 	}
 }

@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.accessControl.AccessControlList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.AccessControlProfileVO;
-	import com.kaltura.vo.KalturaAccessControl;
-	import com.kaltura.vo.KalturaAccessControlListResponse;
-	import com.kaltura.vo.KalturaBaseRestriction;
+	import com.borhan.commands.accessControl.AccessControlList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.vo.AccessControlProfileVO;
+	import com.borhan.vo.BorhanAccessControl;
+	import com.borhan.vo.BorhanAccessControlListResponse;
+	import com.borhan.vo.BorhanBaseRestriction;
 
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -22,8 +22,8 @@ package com.kaltura.kmc.modules.account.control.command {
 		public function execute(event:CairngormEvent):void {
 			if (_model.filterPager) {
 				var getListAccessControlProfiles:AccessControlList = new AccessControlList(_model.acpFilter, _model.filterPager);
-				getListAccessControlProfiles.addEventListener(KalturaEvent.COMPLETE, result);
-				getListAccessControlProfiles.addEventListener(KalturaEvent.FAILED, fault);
+				getListAccessControlProfiles.addEventListener(BorhanEvent.COMPLETE, result);
+				getListAccessControlProfiles.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(getListAccessControlProfiles);
 			}
 		}
@@ -34,20 +34,20 @@ package com.kaltura.kmc.modules.account.control.command {
 
 			if (data.success) {
 				var tempArr:ArrayCollection = new ArrayCollection();
-				var response:KalturaAccessControlListResponse = data.data as KalturaAccessControlListResponse;
+				var response:BorhanAccessControlListResponse = data.data as BorhanAccessControlListResponse;
 				_model.accessControlProfilesTotalCount = response.totalCount;
 				_model.accessControls = new ArrayCollection();
-				for each (var kac:KalturaAccessControl in response.objects) {
+				for each (var kac:BorhanAccessControl in response.objects) {
 					var acVo:AccessControlProfileVO = new AccessControlProfileVO();
 					acVo.profile = kac;
 					acVo.id = kac.id;
 					if (kac.restrictions) {
 						// remove unknown objects
 						// if any restriction is unknown, we remove it from the list.
-						// this means access control profiles with unknown restrictions CANNOT be edited in KMC,
+						// this means access control profiles with unknown restrictions CANNOT be edited in BMC,
 						// as editing hem will delete the unknown restriction.
 						for (var i:int = 0; i < kac.restrictions.length; i++) {
-							if (!(kac.restrictions[i] is KalturaBaseRestriction)) {
+							if (!(kac.restrictions[i] is BorhanBaseRestriction)) {
 								kac.restrictions.splice(i, 1);
 							}
 						}

@@ -19,9 +19,9 @@
       <Label label="Brand your player with your own logo displayed as a watermark on the video. Upload an image to a location on the web and provide the link below."/>
       <Spacer/>
       <Label label="Watermark URL"/>
-      <Input id="watermarkPath" k_param="watermarkPath" k_value="http://www.kaltura.com/content/uiconf/kaltura/kmc/appstudio/kdp3/exampleWatermark.png"/>
+      <Input id="watermarkPath" k_param="watermarkPath" k_value="http://www.borhan.com/content/uiconf/borhan/bmc/appstudio/bdp3/exampleWatermark.png"/>
       <Label label="Watermark landing page url"/>
-      <Input id="watermarkClickPath" k_param="watermarkClickPath" k_value="http://www.kaltura.com/"/>
+      <Input id="watermarkClickPath" k_param="watermarkClickPath" k_value="http://www.borhan.com/"/>
       <Spacer/>
       <Label label="Watermark location on the video:"/>
       <ComboBox id="watermarkPosition" k_param="watermarkPosition" k_value="topLeft">
@@ -247,7 +247,7 @@
 	  <Label label="DRM - Widevine" bold="true"/>
 	  <Spacer/>
 	  <Label label="Adding the DRM-Widevine option enables license protected playback of encrypted content in the player (flash player only)."/>
-	  <Label label="Note: This option is applicable only when the DRM feature is enabled for the KMC account."/>
+	  <Label label="Note: This option is applicable only when the DRM feature is enabled for the BMC account."/>
 	</feature>
 	
 	<!--===============================================================-->
@@ -269,8 +269,8 @@
 	  <Seperator/>
 	  <Spacer/>
 	  <Label label="Custom Events:"/>
-	  <Label label="A coma separated list of kaltura player events you wish to track. Read more here:"/>
-	  <Label label="http://player.kaltura.com/docs/api#jsapi" link="http://player.kaltura.com/docs/api#jsapi"/>
+	  <Label label="A coma separated list of borhan player events you wish to track. Read more here:"/>
+	  <Label label="http://player.borhan.com/docs/api#jsapi" link="http://player.borhan.com/docs/api#jsapi"/>
 	  <Input id="customEvents" k_param="customEvents" k_value="doPlay,doPause,playerPlayEnd"/>
 	  <Label label="Custom Category sent to google for doPlay event"/>
 	  <Input id="doPlayCategory" k_param="doPlayCategory"/>
@@ -314,7 +314,7 @@
 		<Input id="trackEventMonitor" k_param="trackEventMonitor"/>
 		<Spacer/>
 		<Label label="For more info and advanced configuration click here:"/>
-		<Label label="http://player.kaltura.com/docs/OmnitureOnPage" link="http://player.kaltura.com/docs/OmnitureOnPage"/>
+		<Label label="http://player.borhan.com/docs/OmnitureOnPage" link="http://player.borhan.com/docs/OmnitureOnPage"/>
 	</feature>
   </features>
   <!--===============================================================-->

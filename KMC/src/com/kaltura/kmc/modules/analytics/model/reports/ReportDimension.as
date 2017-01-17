@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.analytics.model.reports
+package com.borhan.bmc.modules.analytics.model.reports
 {
 	[Bindable]
 	public class ReportDimension

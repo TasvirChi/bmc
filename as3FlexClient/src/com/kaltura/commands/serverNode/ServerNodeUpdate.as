@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.serverNode
+package com.borhan.commands.serverNode
 {
-		import com.kaltura.vo.KalturaServerNode;
-	import com.kaltura.delegates.serverNode.ServerNodeUpdateDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanServerNode;
+	import com.borhan.delegates.serverNode.ServerNodeUpdateDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* Update server node by id
 	**/
-	public class ServerNodeUpdate extends KalturaCall
+	public class ServerNodeUpdate extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param serverNodeId int
-		* @param serverNode KalturaServerNode
+		* @param serverNode BorhanServerNode
 		**/
-		public function ServerNodeUpdate( serverNodeId : int,serverNode : KalturaServerNode )
+		public function ServerNodeUpdate( serverNodeId : int,serverNode : BorhanServerNode )
 		{
 			service= 'servernode';
 			action= 'update';
@@ -52,7 +52,7 @@ package com.kaltura.commands.serverNode
 			var keyValArr : Array = new Array();
 			keyArr.push('serverNodeId');
 			valueArr.push(serverNodeId);
-				keyValArr = kalturaObject2Arrays(serverNode, 'serverNode');
+				keyValArr = borhanObject2Arrays(serverNode, 'serverNode');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

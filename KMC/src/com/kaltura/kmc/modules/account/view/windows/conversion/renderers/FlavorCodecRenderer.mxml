@@ -3,7 +3,7 @@
 	horizontalScrollPolicy="off" paddingLeft="4">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.FlavorVO;
+			import com.borhan.vo.FlavorVO;
 			
 			override public function set data(value:Object):void {
 				super.data = value;

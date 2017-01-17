@@ -1,12 +1,12 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.thumb.*;
-	import com.kaltura.edw.control.events.GenerateThumbAssetEvent;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.edw.control.events.UploadFromImageThumbAssetEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.thumb.*;
+	import com.borhan.edw.control.events.GenerateThumbAssetEvent;
+	import com.borhan.edw.control.events.ThumbnailAssetEvent;
+	import com.borhan.edw.control.events.UploadFromImageThumbAssetEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class ThumbTabController extends KMvCController {
+	public class ThumbTabController extends BMvCController {
 		
 		public function ThumbTabController()
 		{

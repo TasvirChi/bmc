@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.create.vo
+package com.borhan.bmc.modules.create.vo
 {
 	import flash.net.FileReference;
 

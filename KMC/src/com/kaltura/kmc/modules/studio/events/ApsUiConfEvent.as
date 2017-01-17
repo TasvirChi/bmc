@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.studio.events
+package com.borhan.bmc.modules.studio.events
 {
-	import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
+	import com.borhan.bmc.modules.studio.vo.PlayerUiConfVo;
 	
 	import flash.events.Event;
 

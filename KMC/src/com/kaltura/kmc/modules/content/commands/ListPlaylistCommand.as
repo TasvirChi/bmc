@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.borhan.bmc.modules.content.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.playlist.PlaylistList;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.vo.ListableVo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-	import com.kaltura.types.KalturaPlaylistOrderBy;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
-	import com.kaltura.vo.KalturaPlaylist;
-	import com.kaltura.vo.KalturaPlaylistFilter;
-	import com.kaltura.vo.KalturaPlaylistListResponse;
+	import com.borhan.commands.playlist.PlaylistList;
+	import com.borhan.edw.control.events.SearchEvent;
+	import com.borhan.edw.vo.ListableVo;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.events.BMCSearchEvent;
+	import com.borhan.types.BorhanPlaylistOrderBy;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
+	import com.borhan.vo.BorhanPlaylist;
+	import com.borhan.vo.BorhanPlaylistFilter;
+	import com.borhan.vo.BorhanPlaylistListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.rpc.IResponder;
 
-	public class ListPlaylistCommand extends KalturaCommand implements ICommand, IResponder {
+	public class ListPlaylistCommand extends BorhanCommand implements ICommand, IResponder {
 		// Atar: I have no idea why we need this.
-		KalturaMediaEntryFilterForPlaylist;
+		BorhanMediaEntryFilterForPlaylist;
 
 		/**
 		 * External Syndication windows don't send a listableVO, playlist panel does. 
@@ -31,24 +31,24 @@ package com.kaltura.kmc.modules.content.commands {
 		 * */
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
-			_caller = (event as KMCSearchEvent).listableVo;
+			_caller = (event as BMCSearchEvent).listableVo;
 
 			if (_caller == null) {
-				var pf:KalturaPlaylistFilter = new KalturaPlaylistFilter();
-				pf.orderBy = KalturaPlaylistOrderBy.CREATED_AT_DESC;
-				var pg:KalturaFilterPager = new KalturaFilterPager();
+				var pf:BorhanPlaylistFilter = new BorhanPlaylistFilter();
+				pf.orderBy = BorhanPlaylistOrderBy.CREATED_AT_DESC;
+				var pg:BorhanFilterPager = new BorhanFilterPager();
 				pg.pageSize = 500;
 				var generalPlaylistList:PlaylistList = new PlaylistList(pf, pg);
-				generalPlaylistList.addEventListener(KalturaEvent.COMPLETE, result);
-				generalPlaylistList.addEventListener(KalturaEvent.FAILED, fault);
+				generalPlaylistList.addEventListener(BorhanEvent.COMPLETE, result);
+				generalPlaylistList.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(generalPlaylistList);
 			}
 			else {
-				var kpf:KalturaPlaylistFilter = KalturaPlaylistFilter(_caller.filterVo);
-				var playlistList:PlaylistList = new PlaylistList(kpf as KalturaPlaylistFilter,
-																 _caller.pagingComponent.kalturaFilterPager);
-				playlistList.addEventListener(KalturaEvent.COMPLETE, result);
-				playlistList.addEventListener(KalturaEvent.FAILED, fault);
+				var kpf:BorhanPlaylistFilter = BorhanPlaylistFilter(_caller.filterVo);
+				var playlistList:PlaylistList = new PlaylistList(kpf as BorhanPlaylistFilter,
+																 _caller.pagingComponent.borhanFilterPager);
+				playlistList.addEventListener(BorhanEvent.COMPLETE, result);
+				playlistList.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(playlistList);
 			}
 		}
@@ -63,8 +63,8 @@ package com.kaltura.kmc.modules.content.commands {
 			if (_caller == null) {
 				// from ext.syn subtab
 				var tempArr:ArrayCollection = new ArrayCollection();
-				var playlistListResult:KalturaPlaylistListResponse = data.data as KalturaPlaylistListResponse;
-				for each (var playList:KalturaPlaylist in playlistListResult.objects) {
+				var playlistListResult:BorhanPlaylistListResponse = data.data as BorhanPlaylistListResponse;
+				for each (var playList:BorhanPlaylist in playlistListResult.objects) {
 					tempArr.addItem(playList);
 				}
 				_model.extSynModel.generalPlayListdata = tempArr;

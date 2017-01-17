@@ -1,9 +1,9 @@
-<layout id="full" skinPath="/content/uiconf/kaltura/kmc/appstudio/kdp3/falcon/skin/v3.6.13/KDP_Blue.swf" isPlaylist="multi">
+<layout id="full" skinPath="/content/uiconf/borhan/bmc/appstudio/bdp3/falcon/skin/v3.6.13/BDP_Blue.swf" isPlaylist="multi">
 	<VBox id="topLevel" width="100%" height="100%">
 		<VBox id="player" width="100%" height="100%" styleName="black">
 			<Plugin id="playlistAPI" width="0%" height="0%" includeInLayout="false"
 					selectedDataProvider="{tabBar.selectedDataProvider}"/>
-			<Plugin id="kalturaMix" width="0%" height="0%" includeInLayout="false" loadingPolicy="onDemand"/>
+			<Plugin id="borhanMix" width="0%" height="0%" includeInLayout="false" loadingPolicy="onDemand"/>
 			<Plugin id="download" width="0%" height="0%" includeInLayout="false" loadingPolicy="noWait"/>
 			<Plugin id="statistics" width="0%" height="0%" includeInLayout="false"/>
 			<Plugin id="widevine" width="0%" height="0%" includeInLayout="false" asyncInit="true" loadInIframe="true" loadingPolicy="preInitialize"
@@ -52,13 +52,13 @@
 						 pauseScreenOverId="pauseScreen" pauseScreenId="pauseScreen" playScreenOverId="playScreen"
 						 endScreenId="endScreen" endScreenOverId="endScreen"/>
 				<Watermark id="watermark" width="100%" height="100%"
-						   watermarkPath="http://www.kaltura.com/content/uiconf/kaltura/kmc/appstudio/kdp3/exampleWatermark.png"
-						   watermarkClickPath="http://www.kaltura.com/" watermarkPosition="topRight"/>
+						   watermarkPath="http://www.borhan.com/content/uiconf/borhan/bmc/appstudio/bdp3/exampleWatermark.png"
+						   watermarkClickPath="http://www.borhan.com/" watermarkPosition="topRight"/>
 				<!-- overlay plugin -->
 				<Plugin id="overlay" swfUrls="{vast.overlays}" overlayStartAt="{vast.overlayStartAt}"
 						overlayInterval="{vast.overlayInterval}" displayDuration="" width="100%" height="100%"/>
 				<!-- new bumper plugin -->
-				<Plugin id="bumper" bumperEntryID="0_c2gx2xjm" clickurl="http://www.kaltura.com" lockUI="true"
+				<Plugin id="bumper" bumperEntryID="0_c2gx2xjm" clickurl="http://www.borhan.com" lockUI="true"
 						playOnce="false" preSequence="1" postSequence="1" width="100%" height="100%"/>
 				<!-- skip button -->
 				<VBox id="skipBtnHolder" width="100%" height="100%">
@@ -78,13 +78,13 @@
 					<Plugin id="captionsOverFader" width="0%" height="0%" includeInLayout="false"
 							target="{ccOverComboBoxWrapper}" hoverTarget="{PlayerHolder}" duration="0.5" autoHide="true"
 							path="faderPlugin.swf" includeForeground="false"/>
-					<ComboBox id="ccOverComboBox" width="90" styleName="_kdp"
+					<ComboBox id="ccOverComboBox" width="90" styleName="_bdp"
 							  selectedIndex="{closedCaptionsOverPlayer.currentCCFileIndex}"
 							  kevent_change="sendNotification( 'closedCaptionsSelected' , ccOverComboBox.selectedItem)"
 							  dataProvider="{closedCaptionsOverPlayer.availableCCFilesLabels}" prompt="Captions"
 							  visible="{closedCaptionsOverPlayer.hasCaptions}"/>
 				</HBox>
-				<Plugin id="kalturaShare" uiconfId="8700151" width="100%" height="100%"/>
+				<Plugin id="borhanShare" uiconfId="8700151" width="100%" height="100%"/>
 				<!-- customAd plugin -->
 				<Plugin id="customAd" path="" preSequence="1" postSequence="1" width="100%" height="100%"/>
 				<!-- moderation plugin -->
@@ -111,8 +111,8 @@
 								<Scrubber id="scrubber" width="100%" height="100%"/>
 							</VBox>
 						</HBox>
-						<Button id="kalturaLogo" minWidth="50" kClick="navigate('http://www.kaltura.com')"
-								styleName="controllerScreen" icon="kalturaLogo"/>
+						<Button id="borhanLogo" minWidth="50" kClick="navigate('http://www.borhan.com')"
+								styleName="controllerScreen" icon="borhanLogo"/>
 					</HBox>
 					<HBox id="ControllerScreen" width="100%" height="100%" horizontalGap="15" paddingLeft="25"
 						  paddingBottom="8" paddingRight="25" verticalAlign="middle">
@@ -143,13 +143,13 @@
 								downIcon="NextIcon_Down" disabeledIcon="NextIcon_Disabled"/>
 						<Spacer id="buttonsPusher" width="100%"/>
 						<!-- Combo box for captions control -->
-						<ComboBox id="ccUnderComboBox" width="90" height="28" styleName="_kdp"
+						<ComboBox id="ccUnderComboBox" width="90" height="28" styleName="_bdp"
 								  selectedIndex="{closedCaptionsUnderPlayer.currentCCFileIndex}"
 								  kevent_change="sendNotification( 'closedCaptionsSelected' , ccUnderComboBox.selectedItem)"
 								  dataProvider="{closedCaptionsUnderPlayer.availableCCFilesLabels}" prompt="Captions"
 								  visible="{closedCaptionsUnderPlayer.hasCaptions}"
 								  includeInLayout="{closedCaptionsUnderPlayer.hasCaptions}"/>
-						<Button id="kalturaShareBtnControllerScreen" kClick="sendNotification('showAdvancedShare')"
+						<Button id="borhanShareBtnControllerScreen" kClick="sendNotification('showAdvancedShare')"
 								height="30" styleName="controllerScreen" icon="shareIcon_Up" overIcon="shareIcon_Hover"
 								downIcon="shareIcon_Down" disabeledIcon="shareIcon_Disabled"
 								k_buttonType="falconButtonIconControllerArea" uiconfId="" buttonType="normal"
@@ -172,7 +172,7 @@
 								downIcon="thumbIcon_Down" disabeledIcon="thumbIcon_Disabled"/>
 						<FlavorCombo id="flavorComboControllerScreen" width="80" height="28"
 									 streamerType="{configProxy.flashvars.streamerType}"
-									 flavorDataProvider="{mediaProxy.kalturaMediaFlavorArray}" styleName="_kdp"
+									 flavorDataProvider="{mediaProxy.borhanMediaFlavorArray}" styleName="_bdp"
 									 hdOn="HD On" hdOff="HD Off" selectedMessage=""
 									 autoMessage="Automatically switches between bitrates"
 									 preferedFlavorBR="{mediaProxy.preferedFlavorBR}"
@@ -242,7 +242,7 @@
 							labelPlacement="bottom" textPadding="5" label="Play" styleName="onScreenBtn"
 							upIcon="OnVideo_playIcon_Up" overIcon="OnVideo_playIcon_Hover"
 							downIcon="OnVideo_playIcon_Down" disabeledIcon="OnVideo_playIcon_Disabled"/>
-					<Button id="kalturaShareBtnStartScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
+					<Button id="borhanShareBtnStartScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
 							minHeight="80" labelPlacement="bottom" textPadding="5" label="Share" styleName="onScreenBtn"
 							icon="OnVideo_shareIcon_Up" upIcon="OnVideo_shareIcon_Up" overIcon="OnVideo_shareIcon_Hover"
 							downIcon="OnVideo_shareIcon_Down" disabeledIcon="OnVideo_shareIcon_Disabled"
@@ -315,7 +315,7 @@
 							labelPlacement="bottom" textPadding="5" label="Play" styleName="onScreenBtn"
 							upIcon="OnVideo_playIcon_Up" overIcon="OnVideo_playIcon_Hover"
 							downIcon="OnVideo_playIcon_Down" disabeledIcon="OnVideo_playIcon_Disabled"/>
-					<Button id="kalturaShareBtnPauseScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
+					<Button id="borhanShareBtnPauseScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
 							minHeight="80" labelPlacement="bottom" textPadding="5" label="Share" styleName="onScreenBtn"
 							icon="OnVideo_shareIcon_Up" upIcon="OnVideo_shareIcon_Up" overIcon="OnVideo_shareIcon_Hover"
 							downIcon="OnVideo_shareIcon_Down" disabeledIcon="OnVideo_shareIcon_Disabled"
@@ -384,7 +384,7 @@
 		<screen id="playScreen">
 			<VBox id="playContainer" width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
 				<Tile id="playTile" width="100%" verticalGap="10" verticalAlign="middle" horizontalAlign="center">
-					<Button id="kalturaShareBtnPlayScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
+					<Button id="borhanShareBtnPlayScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
 							minHeight="80" labelPlacement="bottom" textPadding="5" label="Share" styleName="onScreenBtn"
 							icon="OnVideo_shareIcon_Up" upIcon="OnVideo_shareIcon_Up" overIcon="OnVideo_shareIcon_Hover"
 							downIcon="OnVideo_shareIcon_Down" disabeledIcon="OnVideo_shareIcon_Disabled"
@@ -458,7 +458,7 @@
 							icon="OnVideo_replayIcon_Up" upIcon="OnVideo_replayIcon_Up"
 							overIcon="OnVideo_replayIcon_Hover" downIcon="OnVideo_replayIcon_Down"
 							disabeledIcon="OnVideo_replayIcon_Disabled"/>
-					<Button id="kalturaShareBtnEndScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
+					<Button id="borhanShareBtnEndScreen" kClick="sendNotification('showAdvancedShare')" minWidth="80"
 							minHeight="80" labelPlacement="bottom" textPadding="5" label="Share" styleName="onScreenBtn"
 							icon="OnVideo_shareIcon_Up" upIcon="OnVideo_shareIcon_Up" overIcon="OnVideo_shareIcon_Hover"
 							downIcon="OnVideo_shareIcon_Down" disabeledIcon="OnVideo_shareIcon_Disabled"

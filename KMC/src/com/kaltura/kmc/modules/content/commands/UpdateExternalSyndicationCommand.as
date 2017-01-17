@@ -1,20 +1,20 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.ExternalSyndicationEvent;
-	import com.kaltura.commands.syndicationFeed.SyndicationFeedUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaBaseSyndicationFeed;
+	import com.borhan.bmc.modules.content.events.ExternalSyndicationEvent;
+	import com.borhan.commands.syndicationFeed.SyndicationFeedUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.vo.BorhanBaseSyndicationFeed;
 	
 	import mx.rpc.IResponder;
 	
-	public class UpdateExternalSyndicationCommand extends KalturaCommand implements ICommand, IResponder
+	public class UpdateExternalSyndicationCommand extends BorhanCommand implements ICommand, IResponder
 	{
 		override public function execute(event:CairngormEvent):void
 		{
 			_model.increaseLoadCounter();
-			var feed:KalturaBaseSyndicationFeed = event.data as KalturaBaseSyndicationFeed;
+			var feed:BorhanBaseSyndicationFeed = event.data as BorhanBaseSyndicationFeed;
 			var id:String = feed.id;
 //			feed.id = null;
 //			feed.type = "";
@@ -25,8 +25,8 @@ package com.kaltura.kmc.modules.content.commands
 			feed.setUpdatedFieldsOnly(true);
 		
 		 	var updateFeed:SyndicationFeedUpdate = new SyndicationFeedUpdate(id, feed);
-		 	updateFeed.addEventListener(KalturaEvent.COMPLETE, result);
-			updateFeed.addEventListener(KalturaEvent.FAILED, fault);
+		 	updateFeed.addEventListener(BorhanEvent.COMPLETE, result);
+			updateFeed.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(updateFeed);	   
 		}
 

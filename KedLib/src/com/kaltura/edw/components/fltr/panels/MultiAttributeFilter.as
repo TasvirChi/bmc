@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.fltr.panels
+package com.borhan.edw.components.fltr.panels
 {
-	import com.kaltura.edw.components.fltr.IMultiAttributeFilterComponent;
+	import com.borhan.edw.components.fltr.IMultiAttributeFilterComponent;
 	
 	public class MultiAttributeFilter extends AdditionalFilter implements IMultiAttributeFilterComponent {
 		

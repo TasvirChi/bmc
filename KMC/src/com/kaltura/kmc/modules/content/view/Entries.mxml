@@ -3,50 +3,50 @@
 	 "Manage" part of the content viewstack.
 	 lists all entries, allows filtering, preview and drill-down to entry details.
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.kaltura.controls.*"
-		 implements="com.kaltura.kmc.modules.content.business.IContentPanel,com.kaltura.edw.business.IDataOwner"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.borhan.controls.*"
+		 implements="com.borhan.bmc.modules.content.business.IContentPanel,com.borhan.edw.business.IDataOwner"
 		 creationComplete="creationCompleteHandler(event)" 
-		 xmlns:view="com.kaltura.kmc.modules.content.view.*"
-		 xmlns:business="com.kaltura.kmc.modules.content.business.*"
-		 xmlns:et="com.kaltura.edw.components.et.*" 
-		 xmlns:fltr="com.kaltura.edw.components.fltr.*" 
-		 xmlns:indicators="com.kaltura.edw.components.fltr.indicators.*" 
-		 xmlns:bulkactions="com.kaltura.kmc.modules.content.view.controls.bulkactions.*">
+		 xmlns:view="com.borhan.bmc.modules.content.view.*"
+		 xmlns:business="com.borhan.bmc.modules.content.business.*"
+		 xmlns:et="com.borhan.edw.components.et.*" 
+		 xmlns:fltr="com.borhan.edw.components.fltr.*" 
+		 xmlns:indicators="com.borhan.edw.components.fltr.indicators.*" 
+		 xmlns:bulkactions="com.borhan.bmc.modules.content.view.controls.bulkactions.*">
 
 	<mx:Script>
 		<![CDATA[
 			import com.adobe.cairngorm.control.CairngormEvent;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.components.et.EntryTableColumns;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.LoadEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.DistributionDataPack;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.edw.model.types.WindowsStates;
-			import com.kaltura.edw.vo.ListableVo;
-			import com.kaltura.events.FileUploadEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.events.EntriesEvent;
-			import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-			import com.kaltura.kmc.modules.content.events.PartnerEvent;
-			import com.kaltura.kmc.modules.content.events.SelectionEvent;
-			import com.kaltura.kmc.modules.content.events.SetListableEvent;
-			import com.kaltura.kmc.modules.content.events.SetPlaylistTypeEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.kmvc.control.KMvCEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.managers.FileUploadManager;
-			import com.kaltura.types.KalturaMediaEntryOrderBy;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntryFilter;
-			import com.kaltura.vo.KalturaMediaEntryFilter;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.components.et.EntryTableColumns;
+			import com.borhan.edw.control.KedController;
+			import com.borhan.edw.control.events.KedEntryEvent;
+			import com.borhan.edw.control.events.LoadEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.edw.model.datapacks.DistributionDataPack;
+			import com.borhan.edw.model.datapacks.EntryDataPack;
+			import com.borhan.edw.model.types.WindowsStates;
+			import com.borhan.edw.vo.ListableVo;
+			import com.borhan.events.FileUploadEvent;
+			import com.borhan.bmc.modules.content.events.CategoryEvent;
+			import com.borhan.bmc.modules.content.events.EntriesEvent;
+			import com.borhan.bmc.modules.content.events.BMCSearchEvent;
+			import com.borhan.bmc.modules.content.events.PartnerEvent;
+			import com.borhan.bmc.modules.content.events.SelectionEvent;
+			import com.borhan.bmc.modules.content.events.SetListableEvent;
+			import com.borhan.bmc.modules.content.events.SetPlaylistTypeEvent;
+			import com.borhan.bmc.modules.content.events.WindowEvent;
+			import com.borhan.bmvc.control.BMvCEvent;
+			import com.borhan.bmvc.model.BMvCModel;
+			import com.borhan.managers.FileUploadManager;
+			import com.borhan.types.BorhanMediaEntryOrderBy;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.vo.BorhanBaseEntryFilter;
+			import com.borhan.vo.BorhanMediaEntryFilter;
 			
 			import flash.utils.clearTimeout;
 			import flash.utils.setTimeout;
@@ -72,7 +72,7 @@
 			/**
 			 * data ordering
 			 * */
-			private var _orderBy:String = KalturaMediaEntryOrderBy.CREATED_AT_DESC;
+			private var _orderBy:String = BorhanMediaEntryOrderBy.CREATED_AT_DESC;
 
 			[Bindable]
 			/**
@@ -84,7 +84,7 @@
 			/**
 			 * entries-related data
 			 * */
-			public var entryDetailsModel:KMvCModel;
+			public var entryDetailsModel:BMvCModel;
 
 			/**
 			 * current window state
@@ -101,12 +101,12 @@
 			 * initialize the panel.
 			 * @param initFilter	filter for initial entry loading.
 			 * */
-			public function init(initFilter:KalturaBaseEntryFilter = null):void {
+			public function init(initFilter:BorhanBaseEntryFilter = null):void {
 				paging.selectedPage = 1;
 				paging.pageSize = paging.rowInPageCb.value as int;
 				
-				if (initFilter && initFilter is KalturaMediaEntryFilter) {
-					filter.kalturaFilter = initFilter as KalturaMediaEntryFilter;
+				if (initFilter && initFilter is BorhanMediaEntryFilter) {
+					filter.borhanFilter = initFilter as BorhanMediaEntryFilter;
 				}
 				
 				//When one click on switch tab and get back if the accordion filter is not the first child 
@@ -145,14 +145,14 @@
 			private function loadEntriesNow():void {
 				clearTimeout(_loadEntriesInterval);
 				_loadEntriesInterval = 0; // reset, so next call will trigger again
-				_listableVo = new ListableVo(filter.kalturaFilter, paging, null);
+				_listableVo = new ListableVo(filter.borhanFilter, paging, null);
 				// set the order-by to the filter
 				if (_orderBy) {
 					_listableVo.filterVo.orderBy = _orderBy;
 				}
 				var cgEvent:CairngormEvent = new SetListableEvent(SetListableEvent.SET_NEW_LIST_TO_MODEL, _listableVo);
 				cgEvent.dispatch();
-				cgEvent = new KMCSearchEvent(KMCSearchEvent.DO_SEARCH_ENTRIES, _listableVo);
+				cgEvent = new BMCSearchEvent(BMCSearchEvent.DO_SEARCH_ENTRIES, _listableVo);
 				cgEvent.dispatch();				
 			}
 
@@ -187,7 +187,7 @@
 					Alert.show(resourceManager.getString('cms', 'pleaseSelectEntriesFirst'));
 					return;
 				}
-				var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, null);
+				var kEvent:BMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, null);
 				KedController.getInstance().dispatch(kEvent);
 
 				// add the selected items to the model 
@@ -240,7 +240,7 @@
 
 			private function changeRows():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>Show Rows");
 				loadEntries();
 			}
@@ -248,7 +248,7 @@
 
 			private function nxtPage():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.NEXT_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>NextPage/Page" + paging.selectedPage);
 				loadEntries();
 			}
@@ -256,7 +256,7 @@
 
 			private function prvPage():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.PREV_PAGE, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>PrevPage/Page" + paging.selectedPage);
 				loadEntries();
 			}
@@ -264,7 +264,7 @@
 
 			private function gotoPageNum():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.GO_TO_PAGE_NUM, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, KalturaStatsKmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT, BorhanStatsBmcEventType.CONTENT_CONTENT_GO_TO_PAGE,
 					"content>GoToPage/Page" + paging.selectedPage);
 				loadEntries();
 			}

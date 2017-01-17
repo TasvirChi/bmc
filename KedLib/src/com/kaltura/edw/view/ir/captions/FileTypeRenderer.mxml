@@ -2,17 +2,17 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="center">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.view.captions.CaptionsTable;
-			import com.kaltura.edw.vo.EntryCaptionVO;
-			import com.kaltura.types.KalturaCaptionType;
+			import com.borhan.edw.view.captions.CaptionsTable;
+			import com.borhan.edw.vo.EntryCaptionVO;
+			import com.borhan.types.BorhanCaptionType;
 			
 			import mx.events.ListEvent;
 			import mx.resources.ResourceManager;
 			
 			[Bindable]
 			private static var captionTypes:Array = [
-				{label:ResourceManager.getInstance().getString('drilldown','srtLabel') , value:KalturaCaptionType.SRT},
-				{label:ResourceManager.getInstance().getString('drilldown','dfxpLabel'), value:KalturaCaptionType.DFXP}];
+				{label:ResourceManager.getInstance().getString('drilldown','srtLabel') , value:BorhanCaptionType.SRT},
+				{label:ResourceManager.getInstance().getString('drilldown','dfxpLabel'), value:BorhanCaptionType.DFXP}];
 			
 			
 			override public function set data(value:Object):void {
@@ -57,13 +57,13 @@
 			private function getFormatString(format:String):String
 			{
 				switch (format) {
-					case KalturaCaptionType.SRT:
+					case BorhanCaptionType.SRT:
 						return ResourceManager.getInstance().getString('drilldown','srtLabel');
 						break;
-					case KalturaCaptionType.DFXP:
+					case BorhanCaptionType.DFXP:
 						return ResourceManager.getInstance().getString('drilldown','dfxpLabel');
 						break;
-					case KalturaCaptionType.WEBVTT:
+					case BorhanCaptionType.WEBVTT:
 						return ResourceManager.getInstance().getString('drilldown','vttLabel');
 						break;
 				}

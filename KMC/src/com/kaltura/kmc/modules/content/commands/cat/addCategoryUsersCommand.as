@@ -1,47 +1,47 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryGet;
-	import com.kaltura.commands.categoryUser.CategoryUserAdd;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.utils.CategoryUserUtil;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryUser;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.category.CategoryGet;
+	import com.borhan.commands.categoryUser.CategoryUserAdd;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.bmc.modules.content.utils.CategoryUserUtil;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryUser;
+	import com.borhan.vo.BorhanUser;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 
-	public class addCategoryUsersCommand extends KalturaCommand {
+	public class addCategoryUsersCommand extends BorhanCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
-			// event.data is [categoryid, permission level, update method, ([KalturaUsers])]
+			// event.data is [categoryid, permission level, update method, ([BorhanUsers])]
 			var catid:int = event.data[0];
 			var permLvl:int = event.data[1];
 			var mthd:int = event.data[2];
 			var usrs:ArrayCollection = event.data[3];
 			
 			var mr:MultiRequest = new MultiRequest();
-			var cu:KalturaCategoryUser;
+			var cu:BorhanCategoryUser;
 			
 			for (var i:int = 0; i<usrs.length; i++) {
-				cu = new KalturaCategoryUser();
+				cu = new BorhanCategoryUser();
 				cu.categoryId = catid;
 				cu.permissionLevel = permLvl;
 				cu.permissionNames = CategoryUserUtil.getPermissionNames(permLvl);
 				cu.updateMethod = mthd;
-				cu.userId = (usrs[i] as KalturaUser).id;
+				cu.userId = (usrs[i] as BorhanUser).id;
 				mr.addAction(new CategoryUserAdd(cu));
 			} 	
 			var getCat:CategoryGet = new CategoryGet(catid);
 			mr.addAction(getCat);
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);	   
 		}
 		
@@ -54,7 +54,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 				if (!checkError(data)) {
 					
 					// set new numbers of members to the category object
-					var updatedCat:KalturaCategory = data.data[data.data.length-1] as KalturaCategory;
+					var updatedCat:BorhanCategory = data.data[data.data.length-1] as BorhanCategory;
 					_model.categoriesModel.selectedCategory.membersCount = updatedCat.membersCount;
 					_model.categoriesModel.selectedCategory.pendingMembersCount = updatedCat.pendingMembersCount;
 				}

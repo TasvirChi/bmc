@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="650" height="520"
+<containers:ConfinedTitleWindow xmlns:containers="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="650" height="520"
 				styleName="TitleWindowType2" 
 				showCloseButton="true" close="titlewindow1_closeHandler(event)"
 				layout="vertical" title="{resourceManager.getString('analytics', 'previewEntryWindowTitle')}"
 				creationComplete="titlewindow1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.modules.analytics.model.Context;
-			import com.kaltura.utils.KPlayerUtil;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaMediaEntry;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.modules.analytics.model.Context;
+			import com.borhan.utils.KPlayerUtil;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanMediaEntry;
 			
 			import mx.controls.SWFLoader;
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 
-			[Bindable] public static var kdp:SWFLoader;
+			[Bindable] public static var bdp:SWFLoader;
 			
-			//inoreder of loading the kdp you must pass a context
+			//inoreder of loading the bdp you must pass a context
 			[Bindable] public var context:Context; 
 			
 			//the entry id you preview
-			[Bindable] public var entry:KalturaBaseEntry;
+			[Bindable] public var entry:BorhanBaseEntry;
 			
 			//the entry id you preview
 			[Bindable] public var uiconfId:String;
@@ -39,78 +39,78 @@
 			
 			protected function disposeAll() : void
 			{
-				/*if(kdp && kdp.content)
+				/*if(bdp && bdp.content)
 				{
-					if(kdp.content.hasEventListener("kdpReady"))
-						kdp.content.removeEventListener("kdpReady", showKdp);
-					if(kdp.content.hasEventListener("entryReady"))
-						kdp.content.removeEventListener("entryReady", showKdp);
+					if(bdp.content.hasEventListener("bdpReady"))
+						bdp.content.removeEventListener("bdpReady", showBdp);
+					if(bdp.content.hasEventListener("entryReady"))
+						bdp.content.removeEventListener("entryReady", showBdp);
 				
-					if(kdp.content.hasEventListener("mediaReady"))
-						kdp.content.removeEventListener("mediaReady", showKdp);
+					if(bdp.content.hasEventListener("mediaReady"))
+						bdp.content.removeEventListener("mediaReady", showBdp);
 				}*/
 				
 				cleanMedia();
 			}
 			
-			protected function showKdp( event : Event ) : void
+			protected function showBdp( event : Event ) : void
 			{
-				kdpSection.visible = true;
-				//data = kdp.content['evaluate']('{mediaProxy.entry}');
+				bdpSection.visible = true;
+				//data = bdp.content['evaluate']('{mediaProxy.entry}');
 			}
 			
 			/**
-			 * send to the KDP clean media if exist
+			 * send to the BDP clean media if exist
 			 * */
 			protected function cleanMedia() : void
 			{
-				if (kdp && kdp.content)
-					kdp.content["sendNotification"]('cleanMedia');
+				if (bdp && bdp.content)
+					bdp.content["sendNotification"]('cleanMedia');
 			}
 			
 			/**
-			 * add KDP to the stage
+			 * add BDP to the stage
 			 * */
-			private function addKDP():void {
+			private function addBDP():void {
 				
-				//hide until it loads due to KDP bug that it can't center the preloader
+				//hide until it loads due to BDP bug that it can't center the preloader
 				
 				
-				if (!kdp) {
-					kdp = new SWFLoader();
-					kdp.width = 560;
-					kdp.height = 315;
-					kdp.loaderContext = new LoaderContext(false, new ApplicationDomain());
-					kdp.addEventListener(Event.INIT, onKDP3Loaded);
-					var kdpUrl:String = context.protocol + context.rootUrl + "/index.php/kwidget/wid/_" + context.partnerId + "/uiconf_id/" + uiconfId + "/nowrapper/1/";
-					kdp.source = kdpUrl;
-					kdp.scaleContent = false;
-					kdpSection.addChildAt(kdp, 0);
-					kdpSection.visible = false;
+				if (!bdp) {
+					bdp = new SWFLoader();
+					bdp.width = 560;
+					bdp.height = 315;
+					bdp.loaderContext = new LoaderContext(false, new ApplicationDomain());
+					bdp.addEventListener(Event.INIT, onBDP3Loaded);
+					var bdpUrl:String = context.protocol + context.rootUrl + "/index.php/bwidget/wid/_" + context.partnerId + "/uiconf_id/" + uiconfId + "/nowrapper/1/";
+					bdp.source = bdpUrl;
+					bdp.scaleContent = false;
+					bdpSection.addChildAt(bdp, 0);
+					bdpSection.visible = false;
 
 				}
-				else if (!kdpSection.contains(kdp)) {
-					kdpSection.addChildAt(kdp, 0);
-					kdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
+				else if (!bdpSection.contains(bdp)) {
+					bdpSection.addChildAt(bdp, 0);
+					bdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
 				}
 				else {
-					kdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
+					bdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
 				}
 			}
 			
 			/**
-			 * Kdp loaded
+			 * Bdp loaded
 			 */
-			private function onKDP3Loaded(event:Event):void { 
+			private function onBDP3Loaded(event:Event):void { 
 				
-				if(!kdp.content.hasEventListener("entryReady"))
-					kdp.content.addEventListener("entryReady", showKdp);
+				if(!bdp.content.hasEventListener("entryReady"))
+					bdp.content.addEventListener("entryReady", showBdp);
 				
-				if(!kdp.content.hasEventListener("kdpReady"))
-					kdp.content.addEventListener("kdpReady", showKdp);
+				if(!bdp.content.hasEventListener("bdpReady"))
+					bdp.content.addEventListener("bdpReady", showBdp);
 				
-				if(!kdp.content.hasEventListener("mediaReady"))
-					kdp.content.addEventListener("mediaReady", showKdp); 
+				if(!bdp.content.hasEventListener("mediaReady"))
+					bdp.content.addEventListener("mediaReady", showBdp); 
 				
 				var params:Object = new Object();
 				params.entryId = entry.id;
@@ -130,7 +130,7 @@
 				// set flashvars
 				event.target.content["flashvars"] = params;
 				
-				// start the loading sqeunce of the kdp 
+				// start the loading sqeunce of the bdp 
 				event.target.content["init"]();
 			}
 
@@ -138,13 +138,13 @@
 			protected function titlewindow1_creationCompleteHandler(event:FlexEvent):void
 			{
 				this.mx_internal::closeButton.buttonMode = true;
-				addKDP();
+				addBDP();
 			}
 
 		]]>
 	</mx:Script>
-	<mx:Label text="{resourceManager.getString('analytics','loading')}" visible="{!kdpSection.visible}" includeInLayout="{!kdpSection.visible}"/>
-	<mx:HBox id="kdpSection" width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
+	<mx:Label text="{resourceManager.getString('analytics','loading')}" visible="{!bdpSection.visible}" includeInLayout="{!bdpSection.visible}"/>
+	<mx:HBox id="bdpSection" width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
 		
 	</mx:HBox>
 	<mx:VBox width="100%">

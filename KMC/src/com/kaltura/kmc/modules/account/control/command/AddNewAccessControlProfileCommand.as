@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.borhan.bmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.accessControl.AccessControlAdd;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.account.control.events.AccessControlEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.borhan.commands.accessControl.AccessControlAdd;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.account.control.events.AccessControlEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.vo.AccessControlProfileVO;
 	
 	import flash.external.ExternalInterface;
 	
@@ -22,8 +22,8 @@ package com.kaltura.kmc.modules.account.control.command
 		{
 			var accessControl:AccessControlProfileVO = event.data;
 			var addNewAccessControl:AccessControlAdd = new AccessControlAdd(accessControl.profile);
-		 	addNewAccessControl.addEventListener(KalturaEvent.COMPLETE, result);
-			addNewAccessControl.addEventListener(KalturaEvent.FAILED, fault);
+		 	addNewAccessControl.addEventListener(BorhanEvent.COMPLETE, result);
+			addNewAccessControl.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(addNewAccessControl);
 		}
 		

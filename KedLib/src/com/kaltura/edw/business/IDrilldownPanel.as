@@ -1,7 +1,7 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
-	import com.kaltura.kmvc.model.IDataPackRepository;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.borhan.bmvc.model.IDataPackRepository;
+	import com.borhan.vo.BorhanBaseEntry;
 	
 	import flash.events.IEventDispatcher;
 
@@ -18,8 +18,8 @@ package com.kaltura.edw.business
 		/**
 		 * reference to the current entry 
 		 */		
-		function get selectedEntry():KalturaBaseEntry;		
-		function set selectedEntry(value:KalturaBaseEntry):void;
+		function get selectedEntry():BorhanBaseEntry;		
+		function set selectedEntry(value:BorhanBaseEntry):void;
 		
 		function get styleName():Object;
 		function set styleName(value:Object):void;

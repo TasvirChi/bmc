@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,26 +25,26 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.scheduleEvent
+package com.borhan.commands.scheduleEvent
 {
 		import flash.net.FileReference;
-		import com.kaltura.net.KalturaFileCall;
-		import com.kaltura.vo.KalturaBulkUploadICalJobData;
-	import com.kaltura.delegates.scheduleEvent.ScheduleEventAddFromBulkUploadDelegate;
+		import com.borhan.net.BorhanFileCall;
+		import com.borhan.vo.BorhanBulkUploadICalJobData;
+	import com.borhan.delegates.scheduleEvent.ScheduleEventAddFromBulkUploadDelegate;
 
 	/**
 	* Add new bulk upload batch job
 	**/
-	public class ScheduleEventAddFromBulkUpload extends KalturaFileCall
+	public class ScheduleEventAddFromBulkUpload extends BorhanFileCall
 	{
 		public var fileData:Object;
 
 		
 		/**
 		* @param fileData Object - FileReference or ByteArray
-		* @param bulkUploadData KalturaBulkUploadICalJobData
+		* @param bulkUploadData BorhanBulkUploadICalJobData
 		**/
-		public function ScheduleEventAddFromBulkUpload( fileData : Object,bulkUploadData : KalturaBulkUploadICalJobData=null )
+		public function ScheduleEventAddFromBulkUpload( fileData : Object,bulkUploadData : BorhanBulkUploadICalJobData=null )
 		{
 			service= 'schedule_scheduleevent';
 			action= 'addFromBulkUpload';
@@ -54,7 +54,7 @@ package com.kaltura.commands.scheduleEvent
 			var keyValArr : Array = new Array();
 			this.fileData = fileData;
 			if (bulkUploadData) { 
-				keyValArr = kalturaObject2Arrays(bulkUploadData, 'bulkUploadData');
+				keyValArr = borhanObject2Arrays(bulkUploadData, 'bulkUploadData');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			} 

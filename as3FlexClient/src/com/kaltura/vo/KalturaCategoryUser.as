@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.BaseFlexVo;
+	import com.borhan.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaCategoryUser extends BaseFlexVo
+	public dynamic class BorhanCategoryUser extends BaseFlexVo
 	{
 		/**
 		**/
@@ -48,13 +48,13 @@ package com.kaltura.vo
 
 		/**
 		* Permission level
-		* @see com.kaltura.types.KalturaCategoryUserPermissionLevel
+		* @see com.borhan.types.BorhanCategoryUserPermissionLevel
 		**/
 		public var permissionLevel : int = int.MIN_VALUE;
 
 		/**
 		* Status
-		* @see com.kaltura.types.KalturaCategoryUserStatus
+		* @see com.borhan.types.BorhanCategoryUserStatus
 		**/
 		public var status : int = int.MIN_VALUE;
 
@@ -69,8 +69,8 @@ package com.kaltura.vo
 		public var updatedAt : int = int.MIN_VALUE;
 
 		/**
-		* Update method can be either manual or automatic to distinguish between manual operations (for example in KMC) on automatic - using bulk upload
-		* @see com.kaltura.types.KalturaUpdateMethodType
+		* Update method can be either manual or automatic to distinguish between manual operations (for example in BMC) on automatic - using bulk upload
+		* @see com.borhan.types.BorhanUpdateMethodType
 		**/
 		public var updateMethod : int = int.MIN_VALUE;
 

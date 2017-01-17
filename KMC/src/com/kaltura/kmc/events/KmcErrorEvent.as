@@ -1,22 +1,22 @@
-package com.kaltura.kmc.events
+package com.borhan.bmc.events
 {
 	import flash.events.Event;
 	
 	/**
-	 * The ErrorEvent class represents errors that KMCModules encounter 
-	 * and need to inform the main KMC application. 
+	 * The ErrorEvent class represents errors that BMCModules encounter 
+	 * and need to inform the main BMC application. 
 	 * @author Atar
 	 */	
-	public class KmcErrorEvent extends Event {
+	public class BmcErrorEvent extends Event {
 		
 		
-		public static const ERROR:String = "kmcError";
+		public static const ERROR:String = "bmcError";
 		
 		
 		private var _error:String;
 		
 		
-		public function KmcErrorEvent(type:String, text:String, bubbles:Boolean = true, cancelable:Boolean=false) {
+		public function BmcErrorEvent(type:String, text:String, bubbles:Boolean = true, cancelable:Boolean=false) {
 			super(type, bubbles, cancelable);
 			_error = text;
 		}

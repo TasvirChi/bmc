@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.analytics.model {
+package com.borhan.bmc.modules.analytics.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.kmc.modules.analytics.business.IDateRangeManager;
-	import com.kaltura.kmc.modules.analytics.business.LongTermRangeManager;
-	import com.kaltura.kmc.modules.analytics.business.ShortTermRangeManager;
-	import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-	import com.kaltura.kmc.modules.analytics.model.reports.AggregateHeaders;
-	import com.kaltura.kmc.modules.analytics.model.reports.FilterMasks;
-	import com.kaltura.kmc.modules.analytics.model.reports.ReportDimension;
-	import com.kaltura.kmc.modules.analytics.model.reports.TableHeaders;
-	import com.kaltura.kmc.modules.analytics.model.reports.UnsortableColumnHeaders;
-	import com.kaltura.kmc.modules.analytics.model.types.ScreenTypes;
-	import com.kaltura.kmc.modules.analytics.vo.AccountUsageVO;
-	import com.kaltura.kmc.modules.analytics.vo.FilterVo;
-	import com.kaltura.kmc.modules.analytics.vo.PartnerVO;
+	import com.borhan.BorhanClient;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.bmc.modules.analytics.business.IDateRangeManager;
+	import com.borhan.bmc.modules.analytics.business.LongTermRangeManager;
+	import com.borhan.bmc.modules.analytics.business.ShortTermRangeManager;
+	import com.borhan.bmc.modules.analytics.model.reportdata.ReportData;
+	import com.borhan.bmc.modules.analytics.model.reports.AggregateHeaders;
+	import com.borhan.bmc.modules.analytics.model.reports.FilterMasks;
+	import com.borhan.bmc.modules.analytics.model.reports.ReportDimension;
+	import com.borhan.bmc.modules.analytics.model.reports.TableHeaders;
+	import com.borhan.bmc.modules.analytics.model.reports.UnsortableColumnHeaders;
+	import com.borhan.bmc.modules.analytics.model.types.ScreenTypes;
+	import com.borhan.bmc.modules.analytics.vo.AccountUsageVO;
+	import com.borhan.bmc.modules.analytics.vo.FilterVo;
+	import com.borhan.bmc.modules.analytics.vo.PartnerVO;
 	
 	import mx.collections.ArrayCollection;
 	import mx.resources.ResourceManager;
-	import com.kaltura.edw.vo.LocalizedVo;
+	import com.borhan.edw.vo.LocalizedVo;
 
 	[Bindable]
 	public class AnalyticsModelLocator implements IModelLocator {
@@ -29,9 +29,9 @@ package com.kaltura.kmc.modules.analytics.model {
 		public const END_OF_DAY_IN_SECONDS:Number = 86399;
 
 		/**
-		 * kaltura client that make all kaltura API calls
+		 * borhan client that make all borhan API calls
 		 */
-		public var kc:KalturaClient;
+		public var kc:BorhanClient;
 
 		/**
 		 * application context data
@@ -41,9 +41,9 @@ package com.kaltura.kmc.modules.analytics.model {
 		//---------------------------------------------------------
 
 		/**
-		 * the uiconf that the loaded KDP uses
+		 * the uiconf that the loaded BDP uses
 		 */
-		public var kdpUiConf:String;
+		public var bdpUiConf:String;
 
 		//---------------------------------------------------------
 		//data objects
@@ -85,7 +85,7 @@ package com.kaltura.kmc.modules.analytics.model {
 		 * @param screenType as enumerated in ScreenTypes
 		 * @return filter vo through required mask
 		 * 
-		 * @see com.kaltura.kmc.modules.analytics.model.types.ScreenTypes
+		 * @see com.borhan.bmc.modules.analytics.model.types.ScreenTypes
 		 */		
 		public function getFilterForScreen(screenType:int):FilterVo {
 			var res:FilterVo;
@@ -313,7 +313,7 @@ package com.kaltura.kmc.modules.analytics.model {
 
 
 		/**
-		 * retreives an instance of the KMCModelLocator class
+		 * retreives an instance of the BMCModelLocator class
 		 */
 		public static function getInstance():AnalyticsModelLocator {
 			if (_modelLocator == null) {

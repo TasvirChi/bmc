@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,12 +25,12 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaCuePointFilter;
+	import com.borhan.vo.BorhanCuePointFilter;
 
 	[Bindable]
-	public dynamic class KalturaThumbCuePointBaseFilter extends KalturaCuePointFilter
+	public dynamic class BorhanThumbCuePointBaseFilter extends BorhanCuePointFilter
 	{
 		/**
 		**/
@@ -57,7 +57,7 @@ package com.kaltura.vo
 		public var titleMultiLikeAnd : String = null;
 
 		/**
-		* @see com.kaltura.types.KalturaThumbCuePointSubType
+		* @see com.borhan.types.BorhanThumbCuePointSubType
 		**/
 		public var subTypeEqual : int = int.MIN_VALUE;
 

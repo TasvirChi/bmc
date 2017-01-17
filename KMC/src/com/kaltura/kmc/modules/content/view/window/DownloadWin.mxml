@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HelpTitleWindow xmlns="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+<HelpTitleWindow xmlns="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
 				 close="removeMe()" showCloseButton="true" title="{ resourceManager.getString('cms', 'download') }"
 				 help="{onHelp()}">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.DownloadEvent;
-			import com.kaltura.kmc.modules.content.events.WindowEvent;
-			import com.kaltura.types.KalturaStatsKmcEventType;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaFlavorParams;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.content.events.DownloadEvent;
+			import com.borhan.bmc.modules.content.events.WindowEvent;
+			import com.borhan.types.BorhanStatsBmcEventType;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanFlavorParams;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.mx_internal;
 			use namespace mx_internal;
 
-			[ArrayElementType("KalturaBaseEntry")]
+			[ArrayElementType("BorhanBaseEntry")]
 			/**
 			 * list of entries to download
 			 * */
@@ -40,21 +40,21 @@
 
 
 			private function onHelp():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_download'));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_download'));
 			}
 			
 			private function submit():void {
 				var ids:Array = [];
-				for each (var entry:KalturaBaseEntry in entries) {
+				for each (var entry:BorhanBaseEntry in entries) {
 					ids.push(entry.id);
 				}
 				var cgEvent:DownloadEvent = new DownloadEvent(DownloadEvent.DOWNLOAD_ENTRY, ids.join(','),
-															  (cb.selectedItem as KalturaFlavorParams).id +
+															  (cb.selectedItem as BorhanFlavorParams).id +
 					'');
 				cgEvent.dispatch();
 				removeMe();
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_DOWNLOAD, GoogleAnalyticsConsts.CONTENT);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT,KalturaStatsKmcEventType.CONTENT_DOWNLOAD,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.CONTENT,BorhanStatsBmcEventType.CONTENT_DOWNLOAD,
 														  "EntryTable>Download", entry.id);
 			}
 

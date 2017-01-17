@@ -1,24 +1,24 @@
-package com.kaltura.managers {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.flavorAsset.FlavorAssetAdd;
-	import com.kaltura.commands.flavorAsset.FlavorAssetSetContent;
-	import com.kaltura.commands.media.MediaUpdateContent;
-	import com.kaltura.commands.uploadToken.UploadTokenAdd;
-	import com.kaltura.commands.uploadToken.UploadTokenDelete;
-	import com.kaltura.commands.uploadToken.UploadTokenUpload;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.FileUploadEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.utils.KStringUtil;
-	import com.kaltura.vo.FileUploadVO;
-	import com.kaltura.vo.KalturaAssetParamsResourceContainer;
-	import com.kaltura.vo.KalturaAssetsParamsResourceContainers;
-	import com.kaltura.vo.KalturaFlavorAsset;
-	import com.kaltura.vo.KalturaResource;
-	import com.kaltura.vo.KalturaUploadToken;
-	import com.kaltura.vo.KalturaUploadedFileTokenResource;
+package com.borhan.managers {
+	import com.borhan.BorhanClient;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.flavorAsset.FlavorAssetAdd;
+	import com.borhan.commands.flavorAsset.FlavorAssetSetContent;
+	import com.borhan.commands.media.MediaUpdateContent;
+	import com.borhan.commands.uploadToken.UploadTokenAdd;
+	import com.borhan.commands.uploadToken.UploadTokenDelete;
+	import com.borhan.commands.uploadToken.UploadTokenUpload;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.FileUploadEvent;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.types.BorhanMediaType;
+	import com.borhan.utils.KStringUtil;
+	import com.borhan.vo.FileUploadVO;
+	import com.borhan.vo.BorhanAssetParamsResourceContainer;
+	import com.borhan.vo.BorhanAssetsParamsResourceContainers;
+	import com.borhan.vo.BorhanFlavorAsset;
+	import com.borhan.vo.BorhanResource;
+	import com.borhan.vo.BorhanUploadToken;
+	import com.borhan.vo.BorhanUploadedFileTokenResource;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -30,7 +30,7 @@ package com.kaltura.managers {
 	import mx.resources.ResourceManager;
 
 	/**
-	 * This class will handle all file uploads for the current KMC session, and the 
+	 * This class will handle all file uploads for the current BMC session, and the 
 	 * association of uploaded files with relevant entries / flavors.
 	 * 
 	 * file statuses:
@@ -87,7 +87,7 @@ package com.kaltura.managers {
 		/**
 		 * @copy #kc 
 		 */
-		private var _kc:KalturaClient;
+		private var _kc:BorhanClient;
 
 		
 		/**
@@ -156,23 +156,23 @@ package com.kaltura.managers {
 			*/
 			_preprocessedFiles.push(file);
 			// create upload token
-			var ut:KalturaUploadToken = new KalturaUploadToken();
+			var ut:BorhanUploadToken = new BorhanUploadToken();
 			ut.fileName = file.name;
 			ut.fileSize = file.fileSize;
 			var uta:UploadTokenAdd = new UploadTokenAdd(ut);
 			// add listeners for complete / failed
 			// pass events via fuv so we can retrieve a relevant vo after the call returns.
 			if (isNew) {
-				file.addEventListener(KalturaEvent.COMPLETE, addFlavorAsset/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, addFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.COMPLETE, addFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.FAILED, addFlavorAsset/*, false, 0, true*/);
 			}
 			else {
-				file.addEventListener(KalturaEvent.COMPLETE, updateFlavorAsset/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, updateFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.COMPLETE, updateFlavorAsset/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.FAILED, updateFlavorAsset/*, false, 0, true*/);
 			}
 			
-			uta.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-			uta.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
+			uta.addEventListener(BorhanEvent.COMPLETE, file.bubbleEvent);
+			uta.addEventListener(BorhanEvent.FAILED, file.bubbleEvent);
 			_kc.post(uta);
 		}
 		
@@ -191,13 +191,13 @@ package com.kaltura.managers {
 			*/
 			var mr:MultiRequest = new MultiRequest();
 			var uta:UploadTokenAdd;
-			var ut:KalturaUploadToken;
+			var ut:BorhanUploadToken;
 			var vo:FileUploadVO;
 			for (var i:int = 0; i<filesData.length; i++) {
 				vo = filesData[i];
 				_preprocessedFiles.push(vo);
 				// create upload token
-				ut = new KalturaUploadToken();
+				ut = new BorhanUploadToken();
 				ut.fileName = vo.name;
 				ut.fileSize = vo.fileSize;
 				uta = new UploadTokenAdd(ut);
@@ -205,11 +205,11 @@ package com.kaltura.managers {
 			}
 			// add listeners for complete / failed
 			// pass events via fuv so we can retrieve a relevant vo after the call returns.
-			vo.addEventListener(KalturaEvent.COMPLETE, addContent/*, false, 0, true*/);
-			vo.addEventListener(KalturaEvent.FAILED, addContent/*, false, 0, true*/);
+			vo.addEventListener(BorhanEvent.COMPLETE, addContent/*, false, 0, true*/);
+			vo.addEventListener(BorhanEvent.FAILED, addContent/*, false, 0, true*/);
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, vo.bubbleEvent);
-			mr.addEventListener(KalturaEvent.FAILED, vo.bubbleEvent);
+			mr.addEventListener(BorhanEvent.COMPLETE, vo.bubbleEvent);
+			mr.addEventListener(BorhanEvent.FAILED, vo.bubbleEvent);
 			_kc.post(mr);
 		}
 		
@@ -234,28 +234,28 @@ package com.kaltura.managers {
 		 * add the received tokens to the specified media entry
 		 * @param e
 		 */		
-		protected function addContent(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, addContent);
-			e.target.removeEventListener(KalturaEvent.FAILED, addContent);
+		protected function addContent(e:BorhanEvent):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, addContent);
+			e.target.removeEventListener(BorhanEvent.FAILED, addContent);
 			var er:FileUploadEvent;
-			if (e.type == KalturaEvent.COMPLETE) {
+			if (e.type == BorhanEvent.COMPLETE) {
 				// e.target is a good vo. e.data is the multirequest response
 				// add the uploadTokens to the VOs
-				var ut:KalturaUploadToken;
+				var ut:BorhanUploadToken;
 				var file:FileUploadVO;
 				for each (var o:Object in e.data) {
-					if (o is KalturaUploadToken) {
-						ut = o as KalturaUploadToken;
+					if (o is BorhanUploadToken) {
+						ut = o as BorhanUploadToken;
 						file = getVoByFileName(ut.fileName, true);
 						file.uploadToken = ut.id;
 						if (!file.uploadToken) {
 							trace('no upload token id');
 						}
 					}
-					else if (o is KalturaError) {
+					else if (o is BorhanError) {
 						// dispatch error event with relevant data
 						er = new FileUploadEvent(FileUploadEvent.UPLOAD_ERROR, e.target.entryId);
-						er.error = "Error #209: " + (o as KalturaError).errorMsg;
+						er.error = "Error #209: " + (o as BorhanError).errorMsg;
 						if (debugMode) {
 							trace("UploadTokenAdd failed: ");
 							KStringUtil.traceObject(e.target);
@@ -271,18 +271,18 @@ package com.kaltura.managers {
 				
 				
 				// the actual resource we send is a list of the containers for the resources we want to replace.                
-				var mediaResource:KalturaResource = new KalturaAssetsParamsResourceContainers();
+				var mediaResource:BorhanResource = new BorhanAssetsParamsResourceContainers();
 				mediaResource.resources = new Array();
 				
 				for each (file in _preprocessedFiles) {
 					if (file.entryId == entryid) {
 						// the resource of the flavor we want to replace
-						var subSubResource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+						var subSubResource:BorhanUploadedFileTokenResource = new BorhanUploadedFileTokenResource();
 						subSubResource.token = file.uploadToken;	// the token used to upload the file
 						if (!subSubResource.token) {
 							throw new Error("Token cannot be null");
 						}
-						if (file.entryType == KalturaMediaType.IMAGE) {
+						if (file.entryType == BorhanMediaType.IMAGE) {
 							/* image entries have a single resource and it should 
 							 * not be sent in a container.
 							 * only one asset might fit this entry, so after finding the 
@@ -291,7 +291,7 @@ package com.kaltura.managers {
 							break;
 						}
 						// container for the resource we want to replace
-						var subResource:KalturaAssetParamsResourceContainer = new KalturaAssetParamsResourceContainer();
+						var subResource:BorhanAssetParamsResourceContainer = new BorhanAssetParamsResourceContainer();
 						subResource.resource = subSubResource;
 						subResource.assetParamsId = file.flavorParamsId;
 						
@@ -304,8 +304,8 @@ package com.kaltura.managers {
 				var mac:MediaUpdateContent = new MediaUpdateContent(entryid, mediaResource, parseInt(file.conversionProfile));
 				
 				// listeners
-				mac.addEventListener(KalturaEvent.COMPLETE, startUploadMulti);
-				mac.addEventListener(KalturaEvent.FAILED, startUploadMulti);
+				mac.addEventListener(BorhanEvent.COMPLETE, startUploadMulti);
+				mac.addEventListener(BorhanEvent.FAILED, startUploadMulti);
 				_kc.post(mac);
 			}
 			else {
@@ -326,10 +326,10 @@ package com.kaltura.managers {
 		 * handle errors if any, or start uploading files. 
 		 * @param e
 		 */
-		protected function startUploadMulti(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, startUploadMulti);
-			e.target.removeEventListener(KalturaEvent.FAILED, startUploadMulti);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function startUploadMulti(e:BorhanEvent):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, startUploadMulti);
+			e.target.removeEventListener(BorhanEvent.FAILED, startUploadMulti);
+			if (e.type == BorhanEvent.COMPLETE) {
 				// pass files to files list
 				var entryid:String = e.data.id; // e.data is the updated entry
 				var fuv:FileUploadVO;
@@ -370,10 +370,10 @@ package com.kaltura.managers {
 		 * handle errors if any, or adds the file to upload queue. 
 		 * @param e
 		 */
-		protected function startUploadSingle(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, startUploadSingle);
-			e.target.removeEventListener(KalturaEvent.FAILED, startUploadSingle);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function startUploadSingle(e:BorhanEvent):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, startUploadSingle);
+			e.target.removeEventListener(BorhanEvent.FAILED, startUploadSingle);
+			if (e.type == BorhanEvent.COMPLETE) {
 				// pass files to files list (upload queue)
 				var fuv:FileUploadVO;
 				for (var i:int =_preprocessedFiles.length-1; i>=0; i--) {
@@ -453,8 +453,8 @@ package com.kaltura.managers {
 				utu.queued = false;
 				utu.useTimeout = false;
 				// add listeners with weak references because if upload fails, we can't clean them manually
-				utu.addEventListener(KalturaEvent.COMPLETE, wrapUpUpload, false, 0, true);
-				utu.addEventListener(KalturaEvent.FAILED, wrapUpUpload, false, 0, true);
+				utu.addEventListener(BorhanEvent.COMPLETE, wrapUpUpload, false, 0, true);
+				utu.addEventListener(BorhanEvent.FAILED, wrapUpUpload, false, 0, true);
 				vo.file.addEventListener(IOErrorEvent.IO_ERROR, fileFailed );
 				vo.file.addEventListener(SecurityErrorEvent.SECURITY_ERROR, fileFailed);
 				_kc.post(utu);
@@ -466,11 +466,11 @@ package com.kaltura.managers {
 		/**
 		 * dispatch complete event and remove the file from the list
 		 */
-		protected function wrapUpUpload(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, wrapUpUpload);
-			e.target.removeEventListener(KalturaEvent.FAILED, wrapUpUpload);
+		protected function wrapUpUpload(e:BorhanEvent):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, wrapUpUpload);
+			e.target.removeEventListener(BorhanEvent.FAILED, wrapUpUpload);
 			var file:FileUploadVO;
-			if (e.type == KalturaEvent.COMPLETE) {
+			if (e.type == BorhanEvent.COMPLETE) {
 				file = getUploadByUploadToken(e.data.id);
 				file.status = FileUploadVO.STATUS_COMPLETE;
 				// dispatch "fileUploadComplete" event with relevant unique identifier
@@ -505,26 +505,26 @@ package com.kaltura.managers {
 		 * update a single flavor asset, without creating replacement entry 
 		 * @param file
 		 */
-		protected function updateFlavorAsset(e:KalturaEvent = null):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, updateFlavorAsset);
-			e.target.removeEventListener(KalturaEvent.FAILED, updateFlavorAsset);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function updateFlavorAsset(e:BorhanEvent = null):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, updateFlavorAsset);
+			e.target.removeEventListener(BorhanEvent.FAILED, updateFlavorAsset);
+			if (e.type == BorhanEvent.COMPLETE) {
 				var file:FileUploadVO = e.target as FileUploadVO;
-				if (e && e.data is KalturaUploadToken) {
+				if (e && e.data is BorhanUploadToken) {
 					file.uploadToken = e.data.id;
 				}
-				var resource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+				var resource:BorhanUploadedFileTokenResource = new BorhanUploadedFileTokenResource();
 				// the token we used to upload the file
 				resource.token = file.uploadToken;	
 				var fau:FlavorAssetSetContent = new FlavorAssetSetContent(file.flavorAssetId, resource);
 				
 				// add listeners for complete / failed
 				// pass events via fuv so we can retrieve a relevant vo after the call returns.
-				file.addEventListener(KalturaEvent.COMPLETE, startUploadSingle/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, startUploadSingle/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.COMPLETE, startUploadSingle/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.FAILED, startUploadSingle/*, false, 0, true*/);
 				
-				fau.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-				fau.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
+				fau.addEventListener(BorhanEvent.COMPLETE, file.bubbleEvent);
+				fau.addEventListener(BorhanEvent.FAILED, file.bubbleEvent);
 				_kc.post(fau);
 			}
 			else {
@@ -544,29 +544,29 @@ package com.kaltura.managers {
 		/**
 		 * add a single flavor asset to a no-media entry 
 		 */		
-		protected function addFlavorAsset(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, addFlavorAsset);
-			e.target.removeEventListener(KalturaEvent.FAILED, addFlavorAsset);
-			if (e.type == KalturaEvent.COMPLETE) {
+		protected function addFlavorAsset(e:BorhanEvent):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, addFlavorAsset);
+			e.target.removeEventListener(BorhanEvent.FAILED, addFlavorAsset);
+			if (e.type == BorhanEvent.COMPLETE) {
 				var file:FileUploadVO = e.target as FileUploadVO;
-				file.uploadToken = (e.data as KalturaUploadToken).id;
-				var flavorAsset:KalturaFlavorAsset = new KalturaFlavorAsset();
+				file.uploadToken = (e.data as BorhanUploadToken).id;
+				var flavorAsset:BorhanFlavorAsset = new BorhanFlavorAsset();
 				// pass in the flavorParamsId of the flavor we want this to be;
 				flavorAsset.flavorParamsId = file.flavorParamsId;
 				flavorAsset.setUpdatedFieldsOnly(true);
 				flavorAsset.setInsertedFields(true);
-				var resource:KalturaUploadedFileTokenResource = new KalturaUploadedFileTokenResource();
+				var resource:BorhanUploadedFileTokenResource = new BorhanUploadedFileTokenResource();
 				// the token we used to upload the file
 				resource.token = file.uploadToken;	
 				
 				// add listeners for complete / failed
 				// pass events via fuv so we can retrieve a relevant vo after the call returns.
-				file.addEventListener(KalturaEvent.COMPLETE, saveAssetParamsId/*, false, 0, true*/);
-				file.addEventListener(KalturaEvent.FAILED, saveAssetParamsId/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.COMPLETE, saveAssetParamsId/*, false, 0, true*/);
+				file.addEventListener(BorhanEvent.FAILED, saveAssetParamsId/*, false, 0, true*/);
 				
 				var faa:FlavorAssetAdd = new FlavorAssetAdd(file.entryId, flavorAsset);
-				faa.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-				faa.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
+				faa.addEventListener(BorhanEvent.COMPLETE, file.bubbleEvent);
+				faa.addEventListener(BorhanEvent.FAILED, file.bubbleEvent);
 				// when this call returns, we need to save the assetParamsId to the VO.
 				_kc.post(faa);
 			} 
@@ -588,11 +588,11 @@ package com.kaltura.managers {
 		/**
 		 * saves the result's assetparams id to the target vo 
 		 */
-		protected function saveAssetParamsId(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, saveAssetParamsId);
-			e.target.removeEventListener(KalturaEvent.FAILED, saveAssetParamsId);
-			if (e.type == KalturaEvent.COMPLETE) {
-				(e.target as FileUploadVO).flavorAssetId = (e.data as KalturaFlavorAsset).id;
+		protected function saveAssetParamsId(e:BorhanEvent):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, saveAssetParamsId);
+			e.target.removeEventListener(BorhanEvent.FAILED, saveAssetParamsId);
+			if (e.type == BorhanEvent.COMPLETE) {
+				(e.target as FileUploadVO).flavorAssetId = (e.data as BorhanFlavorAsset).id;
 				updateFlavorAsset(e);
 			}
 			else {
@@ -652,11 +652,11 @@ package com.kaltura.managers {
 			else {
 				// call uploadToken.delete with relevant upload token.
 				var utd:UploadTokenDelete = new UploadTokenDelete(file.uploadToken);
-				file.addEventListener(KalturaEvent.COMPLETE, handleDeleteResult);
-				file.addEventListener(KalturaEvent.FAILED, handleDeleteResult);
+				file.addEventListener(BorhanEvent.COMPLETE, handleDeleteResult);
+				file.addEventListener(BorhanEvent.FAILED, handleDeleteResult);
 				
-				utd.addEventListener(KalturaEvent.COMPLETE, file.bubbleEvent);
-				utd.addEventListener(KalturaEvent.FAILED, file.bubbleEvent);
+				utd.addEventListener(BorhanEvent.COMPLETE, file.bubbleEvent);
+				utd.addEventListener(BorhanEvent.FAILED, file.bubbleEvent);
 				
 				_kc.post(utd);
 			}
@@ -676,10 +676,10 @@ package com.kaltura.managers {
 		/**
 		 * remove delete listeners, handle error. 
 		 */
-		protected function handleDeleteResult(e:KalturaEvent):void {
-			e.target.removeEventListener(KalturaEvent.COMPLETE, handleDeleteResult);
-			e.target.removeEventListener(KalturaEvent.FAILED, handleDeleteResult);
-			if (e.type == KalturaEvent.FAILED) {
+		protected function handleDeleteResult(e:BorhanEvent):void {
+			e.target.removeEventListener(BorhanEvent.COMPLETE, handleDeleteResult);
+			e.target.removeEventListener(BorhanEvent.FAILED, handleDeleteResult);
+			if (e.type == BorhanEvent.FAILED) {
 				// dispatch error event with relevant data
 				var er:FileUploadEvent = new FileUploadEvent(FileUploadEvent.UPLOAD_ERROR, e.target.id);
 				er.error = "Error #208: " + e.error.errorMsg;
@@ -827,7 +827,7 @@ package com.kaltura.managers {
 		/**
 		 * client for API requests
 		 */
-		public function get kc():KalturaClient {
+		public function get kc():BorhanClient {
 			return _kc;
 		}
 
@@ -835,7 +835,7 @@ package com.kaltura.managers {
 		/**
 		 * @private
 		 */
-		public function set kc(value:KalturaClient):void {
+		public function set kc(value:BorhanClient):void {
 			_kc = value;
 		}
 

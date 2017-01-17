@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.studio.vo
+package com.borhan.bmc.modules.studio.vo
 {
 	import mx.resources.ResourceManager;
 

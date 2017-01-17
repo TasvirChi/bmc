@@ -1,10 +1,10 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.cuepoints.*;
-	import com.kaltura.edw.control.events.CuePointEvent;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.cuepoints.*;
+	import com.borhan.edw.control.events.CuePointEvent;
+	import com.borhan.bmvc.control.BMvCController;
 	
-	public class AdsTabController extends KMvCController {
+	public class AdsTabController extends BMvCController {
 		
 		public function AdsTabController()
 		{

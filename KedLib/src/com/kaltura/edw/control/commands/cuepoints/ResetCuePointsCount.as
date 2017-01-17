@@ -1,12 +1,12 @@
-package com.kaltura.edw.control.commands.cuepoints {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
+package com.borhan.edw.control.commands.cuepoints {
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.CuePointsDataPack;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 
 	public class ResetCuePointsCount extends KedCommand {
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			(_model.getDataPack(CuePointsDataPack) as CuePointsDataPack).cuepointsCount = 0;
 		}
 	}

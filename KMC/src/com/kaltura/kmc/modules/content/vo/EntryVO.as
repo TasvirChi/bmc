@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.vo
+package com.borhan.bmc.modules.content.vo
 {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.kmc.modules.content.model.types.MediaTypes;
-	import com.kaltura.utils.pager.Pager;
+	import com.borhan.bmc.modules.content.model.types.MediaTypes;
+	import com.borhan.utils.pager.Pager;
 	
 	import mx.collections.ArrayCollection;
 	

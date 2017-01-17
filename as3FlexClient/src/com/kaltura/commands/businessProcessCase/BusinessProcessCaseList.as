@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,15 +25,15 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.businessProcessCase
+package com.borhan.commands.businessProcessCase
 {
-	import com.kaltura.delegates.businessProcessCase.BusinessProcessCaseListDelegate;
-	import com.kaltura.net.KalturaCall;
+	import com.borhan.delegates.businessProcessCase.BusinessProcessCaseListDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* list business-process cases
 	**/
-	public class BusinessProcessCaseList extends KalturaCall
+	public class BusinessProcessCaseList extends BorhanCall
 	{
 		public var filterFields : String;
 		

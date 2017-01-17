@@ -1,4 +1,4 @@
-package com.kaltura.applications.kClipInterface
+package com.borhan.applications.kClipInterface
 {
 	import flash.events.IEventDispatcher;
 	

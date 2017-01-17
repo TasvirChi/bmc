@@ -1,13 +1,13 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
-	import com.kaltura.vo.KalturaConversionProfile;
+	import com.borhan.vo.BorhanConversionProfile;
 	
 	import mx.collections.ArrayCollection;
 
 	[Bindable]
 	/**
-	 * Couples <code>KalturaConversionProfile</code> with its 
-	 * <code>KalturaConversionProfileAssetParams</code>.
+	 * Couples <code>BorhanConversionProfile</code> with its 
+	 * <code>BorhanConversionProfileAssetParams</code>.
 	 * @author Atar
 	 */
 	public class ConversionProfileWithFlavorParamsVo {
@@ -15,12 +15,12 @@ package com.kaltura.edw.vo
 		/**
 		 * Conversion Profile 
 		 */
-		public var profile:KalturaConversionProfile;
+		public var profile:BorhanConversionProfile;
 		
-		[ArrayElementType("com.kaltura.vo.KalturaConversionProfileAssetParams")]
+		[ArrayElementType("com.borhan.vo.BorhanConversionProfileAssetParams")]
 		/**
 		 * all flavor params objects whos ids are associated with this profile.
-		 * <code>KalturaConversionProfileAssetParams</code> objects 
+		 * <code>BorhanConversionProfileAssetParams</code> objects 
 		 */		
 		public var flavors:ArrayCollection;
 		

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml"
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.borhan.edw.components.fltr.panels.*"
 						 creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaDropFolderFileStatus;
+			import com.borhan.types.BorhanDropFolderFileStatus;
 			
 			import mx.events.FlexEvent;
 
@@ -29,38 +29,38 @@
 					var dropStatusArr:Array = value.toString().split(',');
 					for each (var statusCode:int in dropStatusArr) {
 						switch (statusCode) {
-							case KalturaDropFolderFileStatus.UPLOADING:
-							case KalturaDropFolderFileStatus.DETECTED:
+							case BorhanDropFolderFileStatus.UPLOADING:
+							case BorhanDropFolderFileStatus.DETECTED:
 								transferring.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.DOWNLOADING:
+							case BorhanDropFolderFileStatus.DOWNLOADING:
 								dnlding.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.PENDING:
+							case BorhanDropFolderFileStatus.PENDING:
 								pending.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.PROCESSING:
+							case BorhanDropFolderFileStatus.PROCESSING:
 								processing.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.PARSED:
+							case BorhanDropFolderFileStatus.PARSED:
 								parsed.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.WAITING:
+							case BorhanDropFolderFileStatus.WAITING:
 								waiting.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.NO_MATCH:
+							case BorhanDropFolderFileStatus.NO_MATCH:
 								noMatch.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.ERROR_HANDLING:
+							case BorhanDropFolderFileStatus.ERROR_HANDLING:
 								errHandling.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.ERROR_DELETING:
+							case BorhanDropFolderFileStatus.ERROR_DELETING:
 								errDeleting.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.ERROR_DOWNLOADING:
+							case BorhanDropFolderFileStatus.ERROR_DOWNLOADING:
 								errDnld.selected = true;
 								break;
-							case KalturaDropFolderFileStatus.HANDLED:
+							case BorhanDropFolderFileStatus.HANDLED:
 								handled.selected = true;
 								break;
 						}
@@ -85,47 +85,47 @@
 				var dropFolderFileStatusArray:Array = [];
 				
 				if (all.selected) {
-					dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.UPLOADING, 
-						KalturaDropFolderFileStatus.DETECTED, KalturaDropFolderFileStatus.PENDING, 
-						KalturaDropFolderFileStatus.PROCESSING, KalturaDropFolderFileStatus.PARSED,
-						KalturaDropFolderFileStatus.DOWNLOADING, KalturaDropFolderFileStatus.WAITING, 
-						KalturaDropFolderFileStatus.NO_MATCH, KalturaDropFolderFileStatus.ERROR_HANDLING,
-						KalturaDropFolderFileStatus.ERROR_DELETING, KalturaDropFolderFileStatus.ERROR_DOWNLOADING,
-						KalturaDropFolderFileStatus.HANDLED);
+					dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.UPLOADING, 
+						BorhanDropFolderFileStatus.DETECTED, BorhanDropFolderFileStatus.PENDING, 
+						BorhanDropFolderFileStatus.PROCESSING, BorhanDropFolderFileStatus.PARSED,
+						BorhanDropFolderFileStatus.DOWNLOADING, BorhanDropFolderFileStatus.WAITING, 
+						BorhanDropFolderFileStatus.NO_MATCH, BorhanDropFolderFileStatus.ERROR_HANDLING,
+						BorhanDropFolderFileStatus.ERROR_DELETING, BorhanDropFolderFileStatus.ERROR_DOWNLOADING,
+						BorhanDropFolderFileStatus.HANDLED);
 				} else {
 					if (transferring.selected) { // transferring
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.UPLOADING);
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.DETECTED);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.UPLOADING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.DETECTED);
 					}
 					if (pending.selected) { // pending
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.PENDING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.PENDING);
 					}
 					if (processing.selected) { // processing
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.PROCESSING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.PROCESSING);
 					}
 					if (parsed.selected) { // parsed
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.PARSED);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.PARSED);
 					}
 					if (dnlding.selected) { // downloading
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.DOWNLOADING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.DOWNLOADING);
 					}
 					if (waiting.selected) { // pending
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.WAITING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.WAITING);
 					}
 					if (noMatch.selected) { // pending
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.NO_MATCH);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.NO_MATCH);
 					}
 					if (errHandling.selected) { // error handling
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.ERROR_HANDLING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.ERROR_HANDLING);
 					}
 					if (errDeleting.selected) { // error deleting
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.ERROR_DELETING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.ERROR_DELETING);
 					}
 					if (errDnld.selected) { // error deleting
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.ERROR_DOWNLOADING);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.ERROR_DOWNLOADING);
 					}
 					if (handled.selected) { // handled
-						dropFolderFileStatusArray.push(KalturaDropFolderFileStatus.HANDLED);
+						dropFolderFileStatusArray.push(BorhanDropFolderFileStatus.HANDLED);
 					}
 				}
 				return dropFolderFileStatusArray.join(',');

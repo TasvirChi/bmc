@@ -1,16 +1,16 @@
-package com.kaltura.edw.control
+package com.borhan.edw.control
 {
-	import com.kaltura.edw.control.commands.*;
-	import com.kaltura.edw.control.commands.usrs.GetEntryUserCommand;
-	import com.kaltura.edw.control.events.*;
-	import com.kaltura.kmvc.control.KMvCController;
+	import com.borhan.edw.control.commands.*;
+	import com.borhan.edw.control.commands.usrs.GetEntryUserCommand;
+	import com.borhan.edw.control.events.*;
+	import com.borhan.bmvc.control.BMvCController;
 	
 	/**
-	 * Controller which is accessible from all elements, so that KMC
+	 * Controller which is accessible from all elements, so that BMC
 	 * can use KED commands. 
 	 * @author Atar
 	 */	
-	public class KedController extends KMvCController {
+	public class KedController extends BMvCController {
 		
 		private static var _instance:KedController;
 		

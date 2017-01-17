@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.account.utils {
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
-	import com.kaltura.vo.FlavorVO;
-	import com.kaltura.vo.KalturaConversionProfile;
-	import com.kaltura.vo.KalturaConversionProfileAssetParams;
+package com.borhan.bmc.modules.account.utils {
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.bmc.modules.account.vo.ConversionProfileVO;
+	import com.borhan.vo.FlavorVO;
+	import com.borhan.vo.BorhanConversionProfile;
+	import com.borhan.vo.BorhanConversionProfileAssetParams;
 	
 	import mx.collections.ArrayCollection;
 
@@ -23,7 +23,7 @@ package com.kaltura.kmc.modules.account.utils {
 		public static function handleConversionProfilesList(arr:Array):ArrayCollection {
 			var tempArrCol:ArrayCollection = new ArrayCollection();
 
-			for each (var cProfile:KalturaConversionProfile in arr) {
+			for each (var cProfile:BorhanConversionProfile in arr) {
 				if (cProfile) {
 					var cp:ConversionProfileVO = new ConversionProfileVO();
 					cp.profile = cProfile;
@@ -46,7 +46,7 @@ package com.kaltura.kmc.modules.account.utils {
 			for each (var cpvo:ConversionProfileVO in cps) {
 				cpid = cpvo.profile.id;
 				ar = new Array();
-				for each (var cpap:KalturaConversionProfileAssetParams in cpaps) {
+				for each (var cpap:BorhanConversionProfileAssetParams in cpaps) {
 					if (cpap.conversionProfileId == cpid) {
 						ar.push(cpap);
 					}

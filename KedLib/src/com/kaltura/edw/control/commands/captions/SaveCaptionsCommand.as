@@ -1,30 +1,30 @@
-package com.kaltura.edw.control.commands.captions
+package com.borhan.edw.control.commands.captions
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.captionAsset.CaptionAssetAdd;
-	import com.kaltura.commands.captionAsset.CaptionAssetDelete;
-	import com.kaltura.commands.captionAsset.CaptionAssetSetAsDefault;
-	import com.kaltura.commands.captionAsset.CaptionAssetSetContent;
-	import com.kaltura.commands.captionAsset.CaptionAssetUpdate;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.CaptionsEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.EntryCaptionVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.KalturaContentResource;
-	import com.kaltura.vo.KalturaUploadedFileTokenResource;
-	import com.kaltura.vo.KalturaUrlResource;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.captionAsset.CaptionAssetAdd;
+	import com.borhan.commands.captionAsset.CaptionAssetDelete;
+	import com.borhan.commands.captionAsset.CaptionAssetSetAsDefault;
+	import com.borhan.commands.captionAsset.CaptionAssetSetContent;
+	import com.borhan.commands.captionAsset.CaptionAssetUpdate;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.CaptionsEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.vo.EntryCaptionVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanNullableBoolean;
+	import com.borhan.vo.BorhanContentResource;
+	import com.borhan.vo.BorhanUploadedFileTokenResource;
+	import com.borhan.vo.BorhanUrlResource;
 	
 	public class SaveCaptionsCommand extends KedCommand
 	{
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			var evt:CaptionsEvent = event as CaptionsEvent;	
 			var mr:MultiRequest = new MultiRequest();
 			var requestIndex:int = 1;
 			//set as default
-			if (evt.defaultCaption && evt.defaultCaption.caption.isDefault!=KalturaNullableBoolean.TRUE_VALUE) {
+			if (evt.defaultCaption && evt.defaultCaption.caption.isDefault!=BorhanNullableBoolean.TRUE_VALUE) {
 				var setDefault:CaptionAssetSetAsDefault = new CaptionAssetSetAsDefault(evt.defaultCaption.caption.id);
 				mr.addAction(setDefault);
 				requestIndex++;
@@ -32,13 +32,13 @@ package com.kaltura.edw.control.commands.captions
 			if (evt.captionsToSave) {
 				for each (var caption:EntryCaptionVO in evt.captionsToSave) {
 					//handle resource
-					var resource:KalturaContentResource; 
+					var resource:BorhanContentResource; 
 					if (caption.uploadTokenId) {
-						resource = new KalturaUploadedFileTokenResource();
+						resource = new BorhanUploadedFileTokenResource();
 						resource.token = caption.uploadTokenId;
 					}
 					else if (caption.resourceUrl && (!caption.downloadUrl || (caption.resourceUrl!=caption.downloadUrl))) {
-						resource = new KalturaUrlResource();
+						resource = new BorhanUrlResource();
 						resource.url = caption.resourceUrl;
 					}
 					//new caption
@@ -79,8 +79,8 @@ package com.kaltura.edw.control.commands.captions
 			
 			if (requestIndex > 1) {
 				_model.increaseLoadCounter();
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(BorhanEvent.COMPLETE, result);
+				mr.addEventListener(BorhanEvent.FAILED, fault);
 				
 				_client.post(mr);
 			}

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--- represents a distributor for selectDistributors window -->
 <distribution:CBLabelComponent xmlns:mx="http://www.adobe.com/2006/mxml" 
-		 xmlns:components="com.kaltura.kmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.kaltura.edw.view.distribution.*">
+		 xmlns:components="com.borhan.bmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.borhan.edw.view.distribution.*">
 	<mx:Script>
 		<![CDATA[
 			import com.hurlant.util.der.Integer;
-			import com.kaltura.edw.model.EntryDistributionWithProfile;
-			import com.kaltura.types.KalturaDistributionProfileActionStatus;
-			import com.kaltura.types.KalturaEntryDistributionStatus;
+			import com.borhan.edw.model.EntryDistributionWithProfile;
+			import com.borhan.types.BorhanDistributionProfileActionStatus;
+			import com.borhan.types.BorhanEntryDistributionStatus;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.core.mx_internal;
@@ -17,25 +17,25 @@
 			
 			override public function set data(value:Object):void {
 				_distributionWithProfile= value as EntryDistributionWithProfile;
-				super.labelText = _distributionWithProfile.kalturaDistributionProfile.name;
+				super.labelText = _distributionWithProfile.borhanDistributionProfile.name;
 					
-				switch (_distributionWithProfile.kalturaEntryDistribution.status) {
-					case KalturaEntryDistributionStatus.QUEUED:
-					case KalturaEntryDistributionStatus.PENDING:	
-					case KalturaEntryDistributionStatus.ERROR_SUBMITTING:
+				switch (_distributionWithProfile.borhanEntryDistribution.status) {
+					case BorhanEntryDistributionStatus.QUEUED:
+					case BorhanEntryDistributionStatus.PENDING:	
+					case BorhanEntryDistributionStatus.ERROR_SUBMITTING:
 						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableRemoveDistribution;
 						break;
-					case KalturaEntryDistributionStatus.READY:
-					case KalturaEntryDistributionStatus.ERROR_UPDATING:
-					case KalturaEntryDistributionStatus.ERROR_DELETING:
-						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableRemoveDistribution && (_distributionWithProfile.kalturaDistributionProfile.deleteEnabled != KalturaDistributionProfileActionStatus.DISABLED);
+					case BorhanEntryDistributionStatus.READY:
+					case BorhanEntryDistributionStatus.ERROR_UPDATING:
+					case BorhanEntryDistributionStatus.ERROR_DELETING:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableRemoveDistribution && (_distributionWithProfile.borhanDistributionProfile.deleteEnabled != BorhanDistributionProfileActionStatus.DISABLED);
 						break;
-					case KalturaEntryDistributionStatus.DELETING:
-					case KalturaEntryDistributionStatus.UPDATING:
-					case KalturaEntryDistributionStatus.SUBMITTING:
+					case BorhanEntryDistributionStatus.DELETING:
+					case BorhanEntryDistributionStatus.UPDATING:
+					case BorhanEntryDistributionStatus.SUBMITTING:
 						_distributionWithProfile.enableSelectingDistributor = cbEnabled = false;
 						break;
-					case KalturaEntryDistributionStatus.REMOVED:
+					case BorhanEntryDistributionStatus.REMOVED:
 					case int.MIN_VALUE:
 						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableAddDistribution;
 						break;

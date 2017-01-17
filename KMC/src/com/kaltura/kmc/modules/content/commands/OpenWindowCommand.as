@@ -1,17 +1,17 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.model.types.WindowsStates;
-	import com.kaltura.kmc.modules.content.events.WindowEvent;
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.edw.model.types.WindowsStates;
+	import com.borhan.bmc.modules.content.events.WindowEvent;
+	import com.borhan.bmc.modules.content.model.CategoriesModel;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class OpenWindowCommand extends KalturaCommand
+	public class OpenWindowCommand extends BorhanCommand
 	{
 		private var _requiredState:String;
 		
@@ -55,7 +55,7 @@ package com.kaltura.kmc.modules.content.commands
 					if(_model.categoriesModel.selectedCategories && _model.categoriesModel.selectedCategories.length > 0) {
 						// see if any categories have edit warn tag
 						var hasEditWarn:Boolean;
-						for each (var kCat:KalturaCategory in _model.categoriesModel.selectedCategories) {
+						for each (var kCat:BorhanCategory in _model.categoriesModel.selectedCategories) {
 							if (kCat.tags && kCat.tags.indexOf(CategoriesModel.EDIT_WARN_TAG) > -1) {
 								hasEditWarn = true;
 								break;

@@ -1,7 +1,7 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.vo.KalturaConversionProfile;
+	import com.borhan.vo.BorhanConversionProfile;
 	
 	import flash.events.Event;
 	
@@ -14,11 +14,11 @@ package com.kaltura.edw.vo
 		public static const SELECTED_CHANGED_EVENT : String = "transcodeProfileSelectedChanged";
 		
 		private var _selected:Boolean = false;
-		public var profile:KalturaConversionProfile;
+		public var profile:BorhanConversionProfile;
 		
 		public function ConversionProfileVO()
 		{
-			profile = new KalturaConversionProfile();
+			profile = new BorhanConversionProfile();
 		}
 		
 		public function get selected():Boolean

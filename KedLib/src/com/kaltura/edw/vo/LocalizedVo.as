@@ -1,4 +1,4 @@
-package com.kaltura.edw.vo
+package com.borhan.edw.vo
 {
 	import mx.resources.ResourceManager;
 	import flash.events.EventDispatcher;

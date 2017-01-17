@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.account.control
+package com.borhan.bmc.modules.account.control
 {
 	import com.adobe.cairngorm.control.FrontController;
-	import com.kaltura.kmc.modules.account.control.command.*;
-	import com.kaltura.kmc.modules.account.control.events.*;
+	import com.borhan.bmc.modules.account.control.command.*;
+	import com.borhan.bmc.modules.account.control.events.*;
 	
 	
 	public class AccountController extends FrontController
@@ -29,7 +29,7 @@ package com.kaltura.kmc.modules.account.control
 			addCommand(EntryEvent.RESET_DEFAULT_ENTRY, ResetDefaultEntryCommand);
 			
 			
-			// Kaltura Events
+			// Borhan Events
 			 addCommand( ContactEvent.CONTACT_US , ContactSalesForceCommand );
 			
 			// Access Control Events

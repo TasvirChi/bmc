@@ -1,12 +1,12 @@
-package com.kaltura.edw.control.commands.thumb
+package com.borhan.edw.control.commands.thumb
 {
-	import com.kaltura.commands.thumbAsset.ThumbAssetDelete;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.commands.thumbAsset.ThumbAssetDelete;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.ThumbnailAssetEvent;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.vo.ThumbnailWithDimensions;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	import mx.collections.ArrayCollection;
 
@@ -14,13 +14,13 @@ package com.kaltura.edw.control.commands.thumb
 	{
 		private var _thumbToRemove:ThumbnailWithDimensions;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_thumbToRemove = (event as ThumbnailAssetEvent).thumbnailAsset;
 			var deleteThumb:ThumbAssetDelete = new ThumbAssetDelete(_thumbToRemove.thumbAsset.id);
-			deleteThumb.addEventListener(KalturaEvent.COMPLETE, result);
-			deleteThumb.addEventListener(KalturaEvent.FAILED, fault);
+			deleteThumb.addEventListener(BorhanEvent.COMPLETE, result);
+			deleteThumb.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(deleteThumb);
 		}
 		

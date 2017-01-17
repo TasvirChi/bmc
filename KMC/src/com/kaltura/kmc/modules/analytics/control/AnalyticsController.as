@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.analytics.control
+package com.borhan.bmc.modules.analytics.control
 {
 	import com.adobe.cairngorm.control.FrontController;
-	import com.kaltura.kmc.modules.analytics.commands.*;
+	import com.borhan.bmc.modules.analytics.commands.*;
 
 	public class AnalyticsController extends FrontController
 	{

@@ -1,8 +1,8 @@
-package com.kaltura.kmc.business.module
+package com.borhan.bmc.business.module
 {
-	import com.kaltura.kmc.business.KmcModuleLoader;
-	import com.kaltura.kmc.events.KmcModuleEvent;
-	import com.kaltura.kmc.modules.KmcModule;KmcModule;
+	import com.borhan.bmc.business.BmcModuleLoader;
+	import com.borhan.bmc.events.BmcModuleEvent;
+	import com.borhan.bmc.modules.BmcModule;BmcModule;
 	
 	
 	import mx.modules.ModuleLoader;
@@ -15,15 +15,15 @@ package com.kaltura.kmc.business.module
 	public class TestModuleLoaded
 	{		
 		
-		private var _kmcModuleLoader:KmcModuleLoader;
+		private var _bmcModuleLoader:BmcModuleLoader;
 		private var _ml:ModuleLoader;
 		
 		[Before( async, ui )]
 		public function setUp():void
 		{
-			_kmcModuleLoader = new KmcModuleLoader();
-			_ml = _kmcModuleLoader.loadKmcModule("bin-debug/modules/Dashboard.swf", "dashboard");
-			Async.proceedOnEvent( this, _kmcModuleLoader, KmcModuleEvent.MODULE_LOADED, 2000 );
+			_bmcModuleLoader = new BmcModuleLoader();
+			_ml = _bmcModuleLoader.loadBmcModule("bin-debug/modules/Dashboard.swf", "dashboard");
+			Async.proceedOnEvent( this, _bmcModuleLoader, BmcModuleEvent.MODULE_LOADED, 2000 );
 			UIImpersonator.addChild( _ml );
 		}
 		
@@ -32,14 +32,14 @@ package com.kaltura.kmc.business.module
 		{
 			UIImpersonator.removeChild( _ml );
 			_ml = null;
-			_kmcModuleLoader = null;
+			_bmcModuleLoader = null;
 			
 		}
 		
 		[Test(async, description="return the id a module was loaded with")]
 		public function testGetModuleId():void
 		{
-			Assert.assertEquals(_kmcModuleLoader.getModuleLoadId(_ml), "dashboard");
+			Assert.assertEquals(_bmcModuleLoader.getModuleLoadId(_ml), "dashboard");
 		}
 		
 		

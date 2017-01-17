@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,23 +25,23 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.businessProcessServer
+package com.borhan.commands.businessProcessServer
 {
-		import com.kaltura.vo.KalturaBusinessProcessServer;
-	import com.kaltura.delegates.businessProcessServer.BusinessProcessServerAddDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanBusinessProcessServer;
+	import com.borhan.delegates.businessProcessServer.BusinessProcessServerAddDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* Allows you to add a new Business-Process server object
 	**/
-	public class BusinessProcessServerAdd extends KalturaCall
+	public class BusinessProcessServerAdd extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param businessProcessServer KalturaBusinessProcessServer
+		* @param businessProcessServer BorhanBusinessProcessServer
 		**/
-		public function BusinessProcessServerAdd( businessProcessServer : KalturaBusinessProcessServer )
+		public function BusinessProcessServerAdd( businessProcessServer : BorhanBusinessProcessServer )
 		{
 			service= 'businessprocessnotification_businessprocessserver';
 			action= 'add';
@@ -49,7 +49,7 @@ package com.kaltura.commands.businessProcessServer
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(businessProcessServer, 'businessProcessServer');
+				keyValArr = borhanObject2Arrays(businessProcessServer, 'businessProcessServer');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

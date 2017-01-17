@@ -1,10 +1,10 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	import flash.net.FileReference;
 
-	public class UploadFromImageThumbAssetEvent extends KMvCEvent
+	public class UploadFromImageThumbAssetEvent extends BMvCEvent
 	{
 		public static const ADD_FROM_IMAGE:String = "content_addFromImage";
 		public var entryId:String;

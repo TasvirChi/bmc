@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.utils
+package com.borhan.bmc.modules.content.utils
 {
 	public class StringUtil {
 		

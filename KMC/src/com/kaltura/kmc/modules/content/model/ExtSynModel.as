@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.model
+package com.borhan.bmc.modules.content.model
 {
-	import com.kaltura.kmc.modules.content.vo.PartnerVO;
-	import com.kaltura.vo.KalturaBaseSyndicationFeedFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.bmc.modules.content.vo.PartnerVO;
+	import com.borhan.vo.BorhanBaseSyndicationFeedFilter;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
@@ -23,12 +23,12 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * a list of players which can be used to display syndicated content.
 		 * */
-		[ArrayElementType("KalturaUiConf")]
+		[ArrayElementType("BorhanUiConf")]
 		public var uiConfData:ArrayCollection = new ArrayCollection();
 		
-		public var syndicationFeedsFilterPager:KalturaFilterPager;
+		public var syndicationFeedsFilterPager:BorhanFilterPager;
 		
-		public var syndicationFeedsFilter:KalturaBaseSyndicationFeedFilter;
+		public var syndicationFeedsFilter:BorhanBaseSyndicationFeedFilter;
 		
 		/**
 		 * total number of syndication feeds for current partner

@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.business
+package com.borhan.bmc.modules.content.business
 {
-	import com.kaltura.vo.KalturaBaseEntryFilter;
+	import com.borhan.vo.BorhanBaseEntryFilter;
 
 	/**
 	 * This interface declares methods that allow the Content module to comunicate with its subtabs.
@@ -13,7 +13,7 @@ package com.kaltura.kmc.modules.content.business
 		 * initialize the panel, refresh data, etc.
 		 * @param kbef	(optional) initial filtering data
 		 */		
-		function init(kbef:KalturaBaseEntryFilter = null):void;
+		function init(kbef:BorhanBaseEntryFilter = null):void;
 		
 
 	}

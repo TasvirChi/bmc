@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <renderers:AccessControlRendererBase xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
 									 horizontalScrollPolicy="off" styleName="tableCellBoxRendererStyle" paddingLeft="4"
-									 xmlns:renderers="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.*">
+									 xmlns:renderers="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaIpAddressRestrictionType;
-			import com.kaltura.vo.AccessControlProfileVO;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaIpAddressRestriction;
+			import com.borhan.types.BorhanIpAddressRestrictionType;
+			import com.borhan.vo.AccessControlProfileVO;
+			import com.borhan.vo.BorhanBaseRestriction;
+			import com.borhan.vo.BorhanIpAddressRestriction;
 			
 			[Bindable]
 			private var _text:String;
@@ -18,14 +18,14 @@
 				
 				var acProfile:AccessControlProfileVO = value as AccessControlProfileVO;
 				var foundRestriction:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in acProfile.profile.restrictions) {
-					if (restriction is KalturaIpAddressRestriction) {
+				for each (var restriction:BorhanBaseRestriction in acProfile.profile.restrictions) {
+					if (restriction is BorhanIpAddressRestriction) {
 						foundRestriction = true;
-						_text = (restriction as KalturaIpAddressRestriction).ipAddressRestrictionType == KalturaIpAddressRestrictionType.ALLOW_LIST 
+						_text = (restriction as BorhanIpAddressRestriction).ipAddressRestrictionType == BorhanIpAddressRestrictionType.ALLOW_LIST 
 							? resourceManager.getString('account', 'ALLOW_IPS') + ":  " 
 							: resourceManager.getString('account', 'RESTRICT_IPS') + ":  ";
 						
-						_text += (restriction as KalturaIpAddressRestriction).ipAddressList;
+						_text += (restriction as BorhanIpAddressRestriction).ipAddressList;
 						break;
 					}
 					

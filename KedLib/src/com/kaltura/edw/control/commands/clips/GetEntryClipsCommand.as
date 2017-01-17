@@ -1,32 +1,32 @@
-package com.kaltura.edw.control.commands.clips
+package com.borhan.edw.control.commands.clips
 {
-	import com.kaltura.commands.baseEntry.BaseEntryList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.ClipsDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntryFilter;
-	import com.kaltura.vo.KalturaBaseEntryListResponse;
+	import com.borhan.commands.baseEntry.BaseEntryList;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.ClipsDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanBaseEntryFilter;
+	import com.borhan.vo.BorhanBaseEntryListResponse;
 	
 	public class GetEntryClipsCommand extends KedCommand {
 		
 		
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
-			var f:KalturaBaseEntryFilter = new KalturaBaseEntryFilter();
+			var f:BorhanBaseEntryFilter = new BorhanBaseEntryFilter();
 			f.rootEntryIdEqual = event.data.id;
 			f.orderBy = event.data.orderBy;
 			
 			var list:BaseEntryList = new BaseEntryList(f, event.data.pager);
-			list.addEventListener(KalturaEvent.COMPLETE, result);
-			list.addEventListener(KalturaEvent.FAILED, fault);
+			list.addEventListener(BorhanEvent.COMPLETE, result);
+			list.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(list);
 		}
 		
 		override public function result(data:Object):void {
 			super.result(data);
-			var res:Array = (data.data as KalturaBaseEntryListResponse).objects;
+			var res:Array = (data.data as BorhanBaseEntryListResponse).objects;
 			if (res) {
 				(_model.getDataPack(ClipsDataPack) as ClipsDataPack).clips = res;
 			}

@@ -1,13 +1,13 @@
-package com.kaltura.edw.control.commands.usrs
+package com.borhan.edw.control.commands.usrs
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.user.UserGet;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.UsersEvent;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.user.UserGet;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.UsersEvent;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -16,7 +16,7 @@ package com.kaltura.edw.control.commands.usrs
 		
 		private var _type:String;
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_type = event.type;
 			_model.increaseLoadCounter();
 			
@@ -30,8 +30,8 @@ package com.kaltura.edw.control.commands.usrs
 					
 			}
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(mr);
 		}

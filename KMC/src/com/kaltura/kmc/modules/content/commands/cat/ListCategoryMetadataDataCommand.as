@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.metadata.MetadataList;
-	import com.kaltura.edw.model.FilterModel;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.business.CategoryFormBuilder;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
-	import com.kaltura.types.KalturaMetadataObjectType;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMetadata;
-	import com.kaltura.vo.KalturaMetadataFilter;
-	import com.kaltura.vo.KalturaMetadataListResponse;
+	import com.borhan.commands.metadata.MetadataList;
+	import com.borhan.edw.model.FilterModel;
+	import com.borhan.edw.vo.CustomMetadataDataVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.business.CategoryFormBuilder;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.model.CategoriesModel;
+	import com.borhan.types.BorhanMetadataObjectType;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanMetadata;
+	import com.borhan.vo.BorhanMetadataFilter;
+	import com.borhan.vo.BorhanMetadataListResponse;
 	
 	import mx.collections.ArrayCollection;
 	
-	public class ListCategoryMetadataDataCommand extends KalturaCommand
+	public class ListCategoryMetadataDataCommand extends BorhanCommand
 	{
 		
 		/**
@@ -34,14 +34,14 @@ package com.kaltura.kmc.modules.content.commands.cat
 			if (!filterModel.categoryMetadataProfiles || !catModel.selectedCategory)
 				return;
 			
-			var filter:KalturaMetadataFilter = new KalturaMetadataFilter();
+			var filter:BorhanMetadataFilter = new BorhanMetadataFilter();
 			filter.objectIdEqual = String(catModel.selectedCategory.id);	
-			filter.metadataObjectTypeEqual = KalturaMetadataObjectType.CATEGORY;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			filter.metadataObjectTypeEqual = BorhanMetadataObjectType.CATEGORY;
+			var pager:BorhanFilterPager = new BorhanFilterPager();
 			
 			var listMetadataData:MetadataList = new MetadataList(filter, pager);
-			listMetadataData.addEventListener(KalturaEvent.COMPLETE, result);
-			listMetadataData.addEventListener(KalturaEvent.FAILED, fault);
+			listMetadataData.addEventListener(BorhanEvent.COMPLETE, result);
+			listMetadataData.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_model.context.kc.post(listMetadataData);
 		}
@@ -55,7 +55,7 @@ package com.kaltura.kmc.modules.content.commands.cat
 		{
 			super.result(data);
 			
-			var metadataResponse:KalturaMetadataListResponse = data.data as KalturaMetadataListResponse;
+			var metadataResponse:BorhanMetadataListResponse = data.data as BorhanMetadataListResponse;
 			
 			var filterModel:FilterModel = _model.filterModel;
 			var catModel:CategoriesModel = _model.categoriesModel;
@@ -70,9 +70,9 @@ package com.kaltura.kmc.modules.content.commands.cat
 				var formBuilder:CategoryFormBuilder = filterModel.categoryFormBuilders[i] as CategoryFormBuilder;
 				formBuilder.metadataInfo = categoryMetadata;
 				
-				// add the KalturaMetadata of this profile to the EntryMetadataDataVO
-				var profileId:int = (filterModel.categoryMetadataProfiles[i] as KMCMetadataProfileVO).profile.id;
-				for each (var metadata:KalturaMetadata in metadataResponse.objects) {
+				// add the BorhanMetadata of this profile to the EntryMetadataDataVO
+				var profileId:int = (filterModel.categoryMetadataProfiles[i] as BMCMetadataProfileVO).profile.id;
+				for each (var metadata:BorhanMetadata in metadataResponse.objects) {
 					if (metadata.metadataProfileId == profileId) {
 						categoryMetadata.metadata = metadata;
 						break;

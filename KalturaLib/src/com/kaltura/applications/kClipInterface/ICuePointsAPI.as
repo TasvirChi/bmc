@@ -1,4 +1,4 @@
-package com.kaltura.applications.kClipInterface
+package com.borhan.applications.kClipInterface
 {
 	public interface ICuePointsAPI extends IClipperAPI
 	{

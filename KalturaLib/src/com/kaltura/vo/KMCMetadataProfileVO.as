@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users
+This file is part of the Borhan Collaborative Media Suite which allows users
 to do with audio, video, and animation what Wiki platfroms allow them to do with
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Borhan Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.vo {
+package com.borhan.vo {
 	import com.adobe.cairngorm.vo.IValueObject;
 	
 	import mx.collections.ArrayCollection;
@@ -31,7 +31,7 @@ package com.kaltura.vo {
 	 * @author Michal
 	 *
 	 */
-	public class KMCMetadataProfileVO implements IValueObject {
+	public class BMCMetadataProfileVO implements IValueObject {
 		
 		public static var serveURL:String = "/api_v3/index.php/service/metadata_metadataprofile/action/serve";
 
@@ -45,7 +45,7 @@ package com.kaltura.vo {
 		 */		
 		public var id:int;
 		
-		public var profile:KalturaMetadataProfile = new KalturaMetadataProfile();
+		public var profile:BorhanMetadataProfile = new BorhanMetadataProfile();
 		public var metadataFieldVOArray:ArrayCollection = new ArrayCollection();
 		public var metadataProfileChanged:Boolean = false;
 
@@ -64,10 +64,10 @@ package com.kaltura.vo {
 
 
 		/**
-		 *  Constructs a new KMCMetadataProfileVO class
+		 *  Constructs a new BMCMetadataProfileVO class
 		 *
 		 */
-		public function KMCMetadataProfileVO():void {
+		public function BMCMetadataProfileVO():void {
 		}
 
 

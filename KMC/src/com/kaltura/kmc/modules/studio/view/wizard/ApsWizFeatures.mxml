@@ -3,25 +3,25 @@
 	 graphic interface for changing player attributes such as controlls, subtitles, etc.
 -->
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
-		   xmlns:wizardCode="com.kaltura.kmc.modules.studio.business.wizard.*"
-		   xmlns:wizardView="com.kaltura.kmc.modules.studio.view.wizard.*"
+		   xmlns:wizardCode="com.borhan.bmc.modules.studio.business.wizard.*"
+		   xmlns:wizardView="com.borhan.bmc.modules.studio.view.wizard.*"
 		   height="100%" width="100%" horizontalScrollPolicy="off"
 		   disabledOverlayAlpha="0">
 	
 	<mx:Metadata>
 		[Event(name="alertUser", type="flash.events.ErrorEvent")]
-		[Event(name="refreshKdp", type="flash.events.Event")] 
+		[Event(name="refreshBdp", type="flash.events.Event")] 
 		[Event(name="detailsChanged", type="flash.events.Event")]
 	</mx:Metadata>
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.events.ApsFeatureEvent;
-			import com.kaltura.kmc.modules.studio.view.ApsWizard;
-			import com.kaltura.kmc.modules.studio.view.wizard.itemRenderers.BoxedList;
-			import com.kaltura.kmc.modules.studio.view.wizard.itemRenderers.KeyValueIr;
-			import com.kaltura.kmc.modules.studio.vo.KeyValVo;
-			import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
+			import com.borhan.bmc.modules.studio.events.ApsFeatureEvent;
+			import com.borhan.bmc.modules.studio.view.ApsWizard;
+			import com.borhan.bmc.modules.studio.view.wizard.itemRenderers.BoxedList;
+			import com.borhan.bmc.modules.studio.view.wizard.itemRenderers.KeyValueIr;
+			import com.borhan.bmc.modules.studio.vo.KeyValVo;
+			import com.borhan.bmc.modules.studio.vo.PlayerUiConfVo;
 			
 			import mx.collections.ArrayCollection;
 			import mx.collections.XMLListCollection;
@@ -50,9 +50,9 @@
 			private var _featuresListCollection:XMLListCollection;
 			
 			/**
-			 * The constant defines the value of the type property of a refreshKdp event object.
+			 * The constant defines the value of the type property of a refreshBdp event object.
 			 * */
-			public static const REFRESH_KDP:String = "refreshKdp";
+			public static const REFRESH_BDP:String = "refreshBdp";
 
 			
 			/**
@@ -93,7 +93,7 @@
 			 * it appears on (coltroller/start screen/ end screen etc')
 			 */
 			private function showFeature():void {
-				dispatchEvent(new Event(REFRESH_KDP));
+				dispatchEvent(new Event(REFRESH_BDP));
 			}
 
 
@@ -353,7 +353,7 @@
 			protected function featureScreen_savedFeatureHandler(event:Event):void
 			{
 				dispatchEvent(new Event("detailsChanged"));
-				dispatchEvent(new Event(REFRESH_KDP));
+				dispatchEvent(new Event(REFRESH_BDP));
 			}
 
 
@@ -399,6 +399,6 @@
 						   click="{deleteAll()}"/>
 		</mx:HBox>
 		<mx:List id="kvList" width="100%" height="100%" dataProvider="{keyvals}"  
-				 itemRenderer="com.kaltura.kmc.modules.studio.view.wizard.itemRenderers.KeyValueIr" />
+				 itemRenderer="com.borhan.bmc.modules.studio.view.wizard.itemRenderers.KeyValueIr" />
 	</mx:VBox>
 </mx:Canvas>

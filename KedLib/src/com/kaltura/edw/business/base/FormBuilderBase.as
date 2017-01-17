@@ -1,19 +1,19 @@
-package com.kaltura.edw.business.base
+package com.borhan.edw.business.base
 {
 	import com.google.analytics.debug.Label;
-	import com.kaltura.base.types.MetadataCustomFieldMaxOccursTypes;
-	import com.kaltura.base.types.MetadataCustomFieldTypes;
-	import com.kaltura.dataStructures.HashMap;
-	import com.kaltura.edw.business.MetadataDataParser;
-	import com.kaltura.edw.model.MetadataDataObject;
-	import com.kaltura.edw.model.types.CustomMetadataConstantTypes;
-	import com.kaltura.edw.view.customData.ConsistentDateField;
-	import com.kaltura.edw.view.customData.DateFieldWithTime;
-	import com.kaltura.edw.view.customData.DeselectionComboBox;
-	import com.kaltura.edw.view.customData.MultiComponent;
-	import com.kaltura.edw.vo.CustomMetadataDataVO;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.MetadataFieldVO;
+	import com.borhan.base.types.MetadataCustomFieldMaxOccursTypes;
+	import com.borhan.base.types.MetadataCustomFieldTypes;
+	import com.borhan.dataStructures.HashMap;
+	import com.borhan.edw.business.MetadataDataParser;
+	import com.borhan.edw.model.MetadataDataObject;
+	import com.borhan.edw.model.types.CustomMetadataConstantTypes;
+	import com.borhan.edw.view.customData.ConsistentDateField;
+	import com.borhan.edw.view.customData.DateFieldWithTime;
+	import com.borhan.edw.view.customData.DeselectionComboBox;
+	import com.borhan.edw.view.customData.MultiComponent;
+	import com.borhan.edw.vo.CustomMetadataDataVO;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.MetadataFieldVO;
 	
 	import flash.display.DisplayObject;
 	import flash.utils.getDefinitionByName;
@@ -58,7 +58,7 @@ package com.kaltura.edw.business.base
 		
 		private var _isInvalidView:Boolean = false;
 		
-		protected var _metadataProfile:KMCMetadataProfileVO;
+		protected var _metadataProfile:BMCMetadataProfileVO;
 		
 		/**
 		 * HashMap holding linkage ids with a reference to the source (host) component instance  
@@ -67,7 +67,7 @@ package com.kaltura.edw.business.base
 		
 		private var _metadataInfo:CustomMetadataDataVO;
 		
-		public function FormBuilderBase(metadataProfile:KMCMetadataProfileVO) {
+		public function FormBuilderBase(metadataProfile:BMCMetadataProfileVO) {
 			_metadataProfile = metadataProfile;
 			_objectsHM = new HashMap();
 		}
@@ -583,11 +583,11 @@ package com.kaltura.edw.business.base
 			return fieldInstance;
 		}
 		
-		public function set metadataProfile(value:KMCMetadataProfileVO):void{
+		public function set metadataProfile(value:BMCMetadataProfileVO):void{
 			_metadataProfile = value;
 		}
 		
-		public function get metadataProfile():KMCMetadataProfileVO{
+		public function get metadataProfile():BMCMetadataProfileVO{
 			return _metadataProfile;
 		}
 		

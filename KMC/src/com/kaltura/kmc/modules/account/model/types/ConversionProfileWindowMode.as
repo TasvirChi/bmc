@@ -1,10 +1,10 @@
-package com.kaltura.kmc.modules.account.model.types
+package com.borhan.bmc.modules.account.model.types
 {
 	/**
 	 * list of optional modes for everything that is derived from conversion profile type 
-	 * (roughly corresponds to com.kaltura.types.KalturaConversionProfileType)
+	 * (roughly corresponds to com.borhan.types.BorhanConversionProfileType)
 	 * @author atar.shadmi
-	 * @see com.kaltura.types.KalturaConversionProfileType
+	 * @see com.borhan.types.BorhanConversionProfileType
 	 */
 	public class ConversionProfileWindowMode
 	{

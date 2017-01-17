@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.account.model {
+package com.borhan.bmc.modules.account.model {
 	import com.adobe.cairngorm.model.IModelLocator;
-	import com.kaltura.kmc.modules.account.model.types.ConversionProfileWindowMode;
-	import com.kaltura.kmc.modules.account.vo.AdminVO;
-	import com.kaltura.kmc.modules.account.vo.PackagesVO;
-	import com.kaltura.kmc.modules.account.vo.PartnerVO;
-	import com.kaltura.types.KalturaAccessControlOrderBy;
-	import com.kaltura.types.KalturaConversionProfileOrderBy;
-	import com.kaltura.types.KalturaConversionProfileType;
-	import com.kaltura.vo.FlavorVO;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaAccessControlFilter;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaConversionProfileFilter;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaStorageProfile;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.bmc.modules.account.model.types.ConversionProfileWindowMode;
+	import com.borhan.bmc.modules.account.vo.AdminVO;
+	import com.borhan.bmc.modules.account.vo.PackagesVO;
+	import com.borhan.bmc.modules.account.vo.PartnerVO;
+	import com.borhan.types.BorhanAccessControlOrderBy;
+	import com.borhan.types.BorhanConversionProfileOrderBy;
+	import com.borhan.types.BorhanConversionProfileType;
+	import com.borhan.vo.FlavorVO;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.BorhanAccessControlFilter;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanConversionProfileFilter;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanStorageProfile;
+	import com.borhan.vo.BorhanUser;
 	
 	import flash.events.EventDispatcher;
 	
@@ -38,7 +38,7 @@ package com.kaltura.kmc.modules.account.model {
 		* account info
 		**************************************************** */
 		
-		[ArrayElementType("KalturaUser")]
+		[ArrayElementType("BorhanUser")]
 		/**
 		 * a list of users with administrator role of the current partner
 		 */		
@@ -50,7 +50,7 @@ package com.kaltura.kmc.modules.account.model {
 		 * integration
 		 **************************************************** */
 		
-		[ArrayElementType("KalturaCategory")]
+		[ArrayElementType("BorhanCategory")]
 		/**
 		 * list of categorys with a defined privacy context 
 		 */		
@@ -62,8 +62,8 @@ package com.kaltura.kmc.modules.account.model {
 		 * metadata
 		 **************************************************** */
 		public var metadataProfilesArray:ArrayCollection = new ArrayCollection();
-		public var selectedMetadataProfile:KMCMetadataProfileVO;
-		public var metadataFilterPager:KalturaFilterPager;
+		public var selectedMetadataProfile:BMCMetadataProfileVO;
+		public var metadataFilterPager:BorhanFilterPager;
 		public var metadataProfilesTotalCount:int = 10;
 
 		
@@ -72,16 +72,16 @@ package com.kaltura.kmc.modules.account.model {
 		 **************************************************** */
 		public var accessControls:ArrayCollection = new ArrayCollection();
 		public var accessControlProfilesTotalCount:int = 10;
-		public var filterPager:KalturaFilterPager;
-		public var acpFilter:KalturaAccessControlFilter;
+		public var filterPager:BorhanFilterPager;
+		public var acpFilter:BorhanAccessControlFilter;
 
 		/* ****************************************************
 		 * conversion
 		 **************************************************** */
-		[ArrayElementType("KalturaStorageProfile")]
+		[ArrayElementType("BorhanStorageProfile")]
 		/**
 		 * a list of remote storages configured for the partner.
-		 * <code>KalturaStorageProfile</code> objects 
+		 * <code>BorhanStorageProfile</code> objects 
 		 */
 		public var storageProfiles:ArrayCollection;
 		
@@ -89,7 +89,7 @@ package com.kaltura.kmc.modules.account.model {
 		 * the default entry for the current conversion profile
 		 * (only loaded during save for validation) 
 		 */
-		public var defaultEntry:KalturaBaseEntry;
+		public var defaultEntry:BorhanBaseEntry;
 		
 		/**
 		 * list of thumbnail flavors 
@@ -123,14 +123,14 @@ package com.kaltura.kmc.modules.account.model {
 		public var mediaCPAPs:Array;
 		
 		/**
-		 * default filter for media conversion profiles in KMC 
+		 * default filter for media conversion profiles in BMC 
 		 * */
-		public var mediaCPFilter:KalturaConversionProfileFilter;
+		public var mediaCPFilter:BorhanConversionProfileFilter;
 		
 		/**
-		 * default pager for conversion profiles in KMC
+		 * default pager for conversion profiles in BMC
 		 * */
-		public var mediaCPPager:KalturaFilterPager;
+		public var mediaCPPager:BorhanFilterPager;
 		
 		
 		// live conversion profiles
@@ -160,14 +160,14 @@ package com.kaltura.kmc.modules.account.model {
 		public var liveFlavorsData:ArrayCollection = new ArrayCollection();
 		
 		/**
-		 * default filter for live conversion profiles in KMC 
+		 * default filter for live conversion profiles in BMC 
 		 * */
-		public var liveCPFilter:KalturaConversionProfileFilter;
+		public var liveCPFilter:BorhanConversionProfileFilter;
 		
 		/**
-		 * default pager for live conversion profiles in KMC
+		 * default pager for live conversion profiles in BMC
 		 * */
-		public var liveCPPager:KalturaFilterPager;
+		public var liveCPPager:BorhanFilterPager;
 		
 		
 		/* ****************************************************
@@ -212,16 +212,16 @@ package com.kaltura.kmc.modules.account.model {
 
 		public function AccountModelLocator(enforcer:Enforcer) {
 			context = new Context();
-			acpFilter = new KalturaAccessControlFilter();
-			acpFilter.orderBy = KalturaAccessControlOrderBy.CREATED_AT_DESC;
+			acpFilter = new BorhanAccessControlFilter();
+			acpFilter.orderBy = BorhanAccessControlOrderBy.CREATED_AT_DESC;
 
-			mediaCPFilter = new KalturaConversionProfileFilter();
-			mediaCPFilter.orderBy = KalturaConversionProfileOrderBy.CREATED_AT_DESC;
-			mediaCPFilter.typeEqual = KalturaConversionProfileType.MEDIA;
+			mediaCPFilter = new BorhanConversionProfileFilter();
+			mediaCPFilter.orderBy = BorhanConversionProfileOrderBy.CREATED_AT_DESC;
+			mediaCPFilter.typeEqual = BorhanConversionProfileType.MEDIA;
 
-			liveCPFilter = new KalturaConversionProfileFilter();
-			liveCPFilter.orderBy = KalturaConversionProfileOrderBy.CREATED_AT_DESC;
-			liveCPFilter.typeEqual = KalturaConversionProfileType.LIVE_STREAM;
+			liveCPFilter = new BorhanConversionProfileFilter();
+			liveCPFilter.orderBy = BorhanConversionProfileOrderBy.CREATED_AT_DESC;
+			liveCPFilter.typeEqual = BorhanConversionProfileType.LIVE_STREAM;
 				
 		}
 		

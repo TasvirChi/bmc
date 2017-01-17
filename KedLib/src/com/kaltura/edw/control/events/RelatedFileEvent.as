@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaAttachmentAsset;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanAttachmentAsset;
 	
-	public class RelatedFileEvent extends KMvCEvent
+	public class RelatedFileEvent extends BMvCEvent
 	{
 		public static const LIST_RELATED_FILES:String = "listRelatedFiles";
 		public static const SAVE_ALL_RELATED:String = "saveAllRelated";
 		public static const UPDATE_RELATED_FILE:String = "updateRelatedFile";
 
-		public var attachmentAsset:KalturaAttachmentAsset;
+		public var attachmentAsset:BorhanAttachmentAsset;
 		/**
 		 * array of related files to add 
 		 */		

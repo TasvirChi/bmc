@@ -2,19 +2,19 @@
 <!---
 	 graphic interface for setting advertizing configurations.
 -->
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:wizard="com.kaltura.kmc.modules.studio.view.wizard.*"
-		 xmlns:form="com.kaltura.kmc.modules.studio.view.form.*" xmlns:controls="com.kaltura.controls.*"
-		 xmlns:validators="com.kaltura.validators.*" width="100%" minWidth="620" horizontalScrollPolicy="off"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:wizard="com.borhan.bmc.modules.studio.view.wizard.*"
+		 xmlns:form="com.borhan.bmc.modules.studio.view.form.*" xmlns:controls="com.borhan.controls.*"
+		 xmlns:validators="com.borhan.validators.*" width="100%" minWidth="620" horizontalScrollPolicy="off"
 		 backgroundColor="#F7F7F7" hide="update()" show="onShow()">
 	<mx:Metadata>
 		[Event(name="detailsChanged", type="flash.events.Event")]
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
-			import com.kaltura.kmc.modules.studio.vo.ads.AdSourceVo;
-			import com.kaltura.kmc.modules.studio.vo.ads.AdvertizingVo;
-			import com.kaltura.utils.KUtils;
+			import com.borhan.bmc.modules.studio.vo.PlayerUiConfVo;
+			import com.borhan.bmc.modules.studio.vo.ads.AdSourceVo;
+			import com.borhan.bmc.modules.studio.vo.ads.AdvertizingVo;
+			import com.borhan.utils.KUtils;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.ComboBox;

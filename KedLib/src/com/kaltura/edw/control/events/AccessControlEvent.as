@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
-	public class AccessControlEvent extends KMvCEvent {
+	public class AccessControlEvent extends BMvCEvent {
 		
 		public static const LIST_ACCESS_CONTROLS_PROFILES:String = "listAllAccessControlProfiles";
 		

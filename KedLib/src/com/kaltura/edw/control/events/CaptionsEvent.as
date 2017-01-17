@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.edw.vo.EntryCaptionVO;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.vo.EntryCaptionVO;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
-	public class CaptionsEvent extends KMvCEvent
+	public class CaptionsEvent extends BMvCEvent
 	{
 		public static const LIST_CAPTIONS:String = "listCaptions";
 		public static const SAVE_ALL:String = "saveAllCaptions";

@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.SetPlaylistTypeEvent;
+	import com.borhan.bmc.modules.content.events.SetPlaylistTypeEvent;
 
 	/**
 	 * set the _model.playlistModel.onTheFlyPlaylistType 
 	 * to manual, to rule based or to none
 	 */
-	public class SetPlaylistTypeCommand extends KalturaCommand
+	public class SetPlaylistTypeCommand extends BorhanCommand
 	{
 		override public function execute(event:CairngormEvent):void
 		{

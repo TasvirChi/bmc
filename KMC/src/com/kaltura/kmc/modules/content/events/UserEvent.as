@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.vo.UserVO;
+	import com.borhan.bmc.modules.content.vo.UserVO;
 
 	public class UserEvent extends CairngormEvent
 	{

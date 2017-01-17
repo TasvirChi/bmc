@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.analytics.model.reportdata {
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaFilterPager;
+package com.borhan.bmc.modules.analytics.model.reportdata {
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanFilterPager;
 
 	import mx.collections.ArrayCollection;
 
@@ -10,7 +10,7 @@ package com.kaltura.kmc.modules.analytics.model.reportdata {
 
 		/**
 		 * report type
-		 * @see com.kaltura.types.KalturaReportType
+		 * @see com.borhan.types.BorhanReportType
 		 * */
 		public var type:String;
 
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.analytics.model.reportdata {
 		 * report general message,
 		 * i.e. "X media entries were played Y times"
 		 * @private
-		 * set in KalturaReportView's holders selectedReportChange() methods
+		 * set in BorhanReportView's holders selectedReportChange() methods
 		 */
 		public var message:String;
 
@@ -100,7 +100,7 @@ package com.kaltura.kmc.modules.analytics.model.reportdata {
 		/**
 		 * in entry reports, the selected entry 
 		 */		
-		public var selectedMediaEntry:KalturaBaseEntry;
+		public var selectedMediaEntry:BorhanBaseEntry;
 
 		/**
 		 * the data field for each table column 
@@ -121,7 +121,7 @@ package com.kaltura.kmc.modules.analytics.model.reportdata {
 		
 		public var wasObjectIdDropped:Boolean = false;
 		public var tableDp:ArrayCollection;
-		public var pager:KalturaFilterPager;
+		public var pager:BorhanFilterPager;
 		public var totalCount:int = 0;
 
 		public var mapDp:ArrayCollection;

@@ -1,8 +1,8 @@
-package com.kaltura.kmc.modules.content.model
+package com.borhan.bmc.modules.content.model
 {
-	import com.kaltura.vo.KalturaDropFolder;
-	import com.kaltura.vo.KalturaDropFolderFileFilter;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.vo.BorhanDropFolder;
+	import com.borhan.vo.BorhanDropFolderFileFilter;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 
@@ -12,7 +12,7 @@ package com.kaltura.kmc.modules.content.model
 //		/**
 //		 * currently selected drop folder 
 //		 */		
-//		public var selectedDropFolder:KalturaDropFolder;	
+//		public var selectedDropFolder:BorhanDropFolder;	
 		
 		/**
 		 * list of DropFolders 
@@ -28,12 +28,12 @@ package com.kaltura.kmc.modules.content.model
 		/**
 		 * drop folders files filter
 		 * */
-		public var filter:KalturaDropFolderFileFilter;
+		public var filter:BorhanDropFolderFileFilter;
 
 		/**
 		 * drop folders files pager
 		 * */
-		public var pager:KalturaFilterPager;
+		public var pager:BorhanFilterPager;
 		
 		/**
 		 * total amount of drop folder files

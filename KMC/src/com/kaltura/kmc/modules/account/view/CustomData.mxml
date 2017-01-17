@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
-		 implements="com.kaltura.kmc.modules.account.view.interfaces.IAccountPanel" 
-		 xmlns:controls="com.kaltura.controls.*" creationComplete="creationCompleteHandler(event)"
-		 xmlns:customdata="com.kaltura.kmc.modules.account.view.windows.customdata.*">
+		 implements="com.borhan.bmc.modules.account.view.interfaces.IAccountPanel" 
+		 xmlns:controls="com.borhan.controls.*" creationComplete="creationCompleteHandler(event)"
+		 xmlns:customdata="com.borhan.bmc.modules.account.view.windows.customdata.*">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.kmc.modules.account.control.events.MetadataProfileEvent;
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.kmc.modules.account.view.windows.customdata.popupWindows.CustomDataProfileDetails;
-			import com.kaltura.vo.KMCMetadataProfileVO;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.bmc.modules.account.control.events.MetadataProfileEvent;
+			import com.borhan.bmc.modules.account.model.AccountModelLocator;
+			import com.borhan.bmc.modules.account.view.windows.customdata.popupWindows.CustomDataProfileDetails;
+			import com.borhan.vo.BMCMetadataProfileVO;
 
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -41,7 +41,7 @@
 
 
 			private function onPagerCreationComplete(event:Event):void {
-				AccountModelLocator.getInstance().metadataFilterPager = paging.kalturaFilterPager;
+				AccountModelLocator.getInstance().metadataFilterPager = paging.borhanFilterPager;
 				paging.selectedPage = 1;
 				paging.pageSize = paging.rowInPageCb.value as int;
 				loadProfiles();
@@ -89,7 +89,7 @@
 			public function saveChanges():void {
 			}
 			
-			private function setSelectedProfile(profile:KMCMetadataProfileVO):void {
+			private function setSelectedProfile(profile:BMCMetadataProfileVO):void {
 				var selectProfileEvent:MetadataProfileEvent = new MetadataProfileEvent(MetadataProfileEvent.SELECT, profile);
 				selectProfileEvent.dispatch();
 			}
@@ -101,12 +101,12 @@
 			private function addEditProfile(e:Event = null):void {
 				var addProfileWindow:CustomDataProfileDetails = new CustomDataProfileDetails();
 
-				var profile:KMCMetadataProfileVO;
+				var profile:BMCMetadataProfileVO;
 				if (e) {
-					profile = e.target.data as KMCMetadataProfileVO;
+					profile = e.target.data as BMCMetadataProfileVO;
 				}
 				else {
-					profile = new KMCMetadataProfileVO();
+					profile = new BMCMetadataProfileVO();
 					profile.isNewProfile = true;
 					addProfileWindow.currentState = 'newProfileState';
 				}

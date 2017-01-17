@@ -1,20 +1,20 @@
-package com.kaltura.edw.control.commands.captions {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.captionAsset.CaptionAssetGetUrl;
-	import com.kaltura.commands.captionAsset.CaptionAssetList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.CaptionsDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.EntryCaptionVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaCaptionAssetStatus;
-	import com.kaltura.types.KalturaFlavorAssetStatus;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.KalturaAssetFilter;
-	import com.kaltura.vo.KalturaCaptionAsset;
-	import com.kaltura.vo.KalturaCaptionAssetListResponse;
-	import com.kaltura.vo.KalturaFilterPager;
+package com.borhan.edw.control.commands.captions {
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.captionAsset.CaptionAssetGetUrl;
+	import com.borhan.commands.captionAsset.CaptionAssetList;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.CaptionsDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.vo.EntryCaptionVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanCaptionAssetStatus;
+	import com.borhan.types.BorhanFlavorAssetStatus;
+	import com.borhan.types.BorhanNullableBoolean;
+	import com.borhan.vo.BorhanAssetFilter;
+	import com.borhan.vo.BorhanCaptionAsset;
+	import com.borhan.vo.BorhanCaptionAssetListResponse;
+	import com.borhan.vo.BorhanFilterPager;
 
 	public class ListCaptionsCommand extends KedCommand {
 		private var _captionsArray:Array;
@@ -24,36 +24,36 @@ package com.kaltura.edw.control.commands.captions {
 		private var _readyCaptionsArray:Array;
 
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
-			var filter:KalturaAssetFilter = new KalturaAssetFilter();
+			var filter:BorhanAssetFilter = new BorhanAssetFilter();
 			filter.entryIdEqual = (_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var pager:BorhanFilterPager = new BorhanFilterPager();
 			pager.pageSize = 100;
 			var listCaptions:CaptionAssetList = new CaptionAssetList(filter, pager);
-			listCaptions.addEventListener(KalturaEvent.COMPLETE, listResult);
-			listCaptions.addEventListener(KalturaEvent.FAILED, fault);
+			listCaptions.addEventListener(BorhanEvent.COMPLETE, listResult);
+			listCaptions.addEventListener(BorhanEvent.FAILED, fault);
 
 			_client.post(listCaptions);
 		}
 
 
 		private function listResult(data:Object):void {
-			var listResponse:KalturaCaptionAssetListResponse = data.data as KalturaCaptionAssetListResponse;
+			var listResponse:BorhanCaptionAssetListResponse = data.data as BorhanCaptionAssetListResponse;
 			if (listResponse) {
 				var mr:MultiRequest = new MultiRequest();
 				_captionsArray = new Array();
 				_readyCaptionsArray = new Array();
-				for each (var caption:KalturaCaptionAsset in listResponse.objects) {
+				for each (var caption:BorhanCaptionAsset in listResponse.objects) {
 					var entryCaption:EntryCaptionVO = new EntryCaptionVO();
 					entryCaption.caption = caption;
-					entryCaption.kmcStatus = getKMCStatus(caption);
+					entryCaption.bmcStatus = getBMCStatus(caption);
 					entryCaption.serveUrl = _client.protocol + _client.domain + EntryCaptionVO.generalServeURL + "/ks/" + _client.ks + "/captionAssetId/" + caption.id;
-					if (caption.isDefault == KalturaNullableBoolean.TRUE_VALUE) {
-						entryCaption.isKmcDefault = true;
+					if (caption.isDefault == BorhanNullableBoolean.TRUE_VALUE) {
+						entryCaption.isBmcDefault = true;
 					}
 					_captionsArray.push(entryCaption);
-					if (caption.status == KalturaFlavorAssetStatus.READY) {
+					if (caption.status == BorhanFlavorAssetStatus.READY) {
 						var getUrl:CaptionAssetGetUrl = new CaptionAssetGetUrl(caption.id);
 						mr.addAction(getUrl);
 						_readyCaptionsArray.push(entryCaption);
@@ -61,8 +61,8 @@ package com.kaltura.edw.control.commands.captions {
 				}
 
 				if (_readyCaptionsArray.length) {
-					mr.addEventListener(KalturaEvent.COMPLETE, handleDownloadUrls);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(BorhanEvent.COMPLETE, handleDownloadUrls);
+					mr.addEventListener(BorhanEvent.FAILED, fault);
 					_client.post(mr);
 				}
 				else //go strait to result
@@ -71,18 +71,18 @@ package com.kaltura.edw.control.commands.captions {
 		}
 
 
-		private function getKMCStatus(caption:KalturaCaptionAsset):String {
+		private function getBMCStatus(caption:BorhanCaptionAsset):String {
 			var result:String;
 			switch (caption.status) {
-				case KalturaCaptionAssetStatus.ERROR:
+				case BorhanCaptionAssetStatus.ERROR:
 					result = EntryCaptionVO.ERROR;
 					break;
-				case KalturaCaptionAssetStatus.READY:
+				case BorhanCaptionAssetStatus.READY:
 					result = EntryCaptionVO.SAVED;
 					break;
-//				case KalturaCaptionAssetStatus.DELETED:
-//				case KalturaCaptionAssetStatus.IMPORTING:
-//				case KalturaCaptionAssetStatus.QUEUED:
+//				case BorhanCaptionAssetStatus.DELETED:
+//				case BorhanCaptionAssetStatus.IMPORTING:
+//				case BorhanCaptionAssetStatus.QUEUED:
 				default:
 					result = EntryCaptionVO.PROCESSING;
 					break;

@@ -17,17 +17,17 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.commands.playlist.PlaylistList;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.modules.studio.model.types.PlaylistTypes;
-			import com.kaltura.kmc.modules.studio.view.ApsWizard;
-			import com.kaltura.kmc.modules.studio.vo.PlaylistVO;
-			import com.kaltura.types.KalturaPlaylistOrderBy;
-			import com.kaltura.vo.KalturaFilterPager;
-			import com.kaltura.vo.KalturaMediaEntryFilterForPlaylist;
-			import com.kaltura.vo.KalturaPlaylist;
-			import com.kaltura.vo.KalturaPlaylistFilter;
-			import com.kaltura.vo.KalturaPlaylistListResponse;
+			import com.borhan.commands.playlist.PlaylistList;
+			import com.borhan.events.BorhanEvent;
+			import com.borhan.bmc.modules.studio.model.types.PlaylistTypes;
+			import com.borhan.bmc.modules.studio.view.ApsWizard;
+			import com.borhan.bmc.modules.studio.vo.PlaylistVO;
+			import com.borhan.types.BorhanPlaylistOrderBy;
+			import com.borhan.vo.BorhanFilterPager;
+			import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
+			import com.borhan.vo.BorhanPlaylist;
+			import com.borhan.vo.BorhanPlaylistFilter;
+			import com.borhan.vo.BorhanPlaylistListResponse;
 			
 			import modules.Studio;
 			
@@ -74,14 +74,14 @@
 			 * get a list of all the partner's playlists
 			 * */
 			public function listPlaylists():void {
-				var pager:KalturaFilterPager = new KalturaFilterPager();
+				var pager:BorhanFilterPager = new BorhanFilterPager();
 				pager.pageIndex = 1;
 				pager.pageSize = 500;	// large number, should get all
-				var kplfilter:KalturaPlaylistFilter = new KalturaPlaylistFilter();
-				kplfilter.orderBy = KalturaPlaylistOrderBy.CREATED_AT_DESC;
+				var kplfilter:BorhanPlaylistFilter = new BorhanPlaylistFilter();
+				kplfilter.orderBy = BorhanPlaylistOrderBy.CREATED_AT_DESC;
 				var listPlaylist:PlaylistList = new PlaylistList(kplfilter, pager);
-				listPlaylist.addEventListener(KalturaEvent.COMPLETE, onPlaylistsLoaded);
-				listPlaylist.addEventListener(KalturaEvent.FAILED, fault);
+				listPlaylist.addEventListener(BorhanEvent.COMPLETE, onPlaylistsLoaded);
+				listPlaylist.addEventListener(BorhanEvent.FAILED, fault);
 				Studio.kc.post(listPlaylist);
 			}
 
@@ -89,14 +89,14 @@
 			/**
 			 * All playlists were loaded - place them on the left side table
 			 */
-			private function onPlaylistsLoaded(event:KalturaEvent):void {
-				var kmplf:KalturaMediaEntryFilterForPlaylist;
+			private function onPlaylistsLoaded(event:BorhanEvent):void {
+				var kmplf:BorhanMediaEntryFilterForPlaylist;
 
 				var arr:Array = new Array();
 				var plstVo:PlaylistVO;
 				// create a VO for each playlist and it them to dataProvider
-				// event.data is KalturaPlaylistListResponse
-				for each (var playlist:KalturaPlaylist in event.data.objects) {
+				// event.data is BorhanPlaylistListResponse
+				for each (var playlist:BorhanPlaylist in event.data.objects) {
 					plstVo = new PlaylistVO();
 					plstVo.entryId = playlist.id;
 					plstVo.name = playlist.name.split("'").join("´");
@@ -113,7 +113,7 @@
 			}
 
 
-			private function fault(event:KalturaEvent):void {
+			private function fault(event:BorhanEvent):void {
 				var s:String = "Content fault: \n" + event.error.errorMsg;
 				dispatchEvent(new ErrorEvent(ApsWizard.ALERT_USER, false, false, s));
 			}

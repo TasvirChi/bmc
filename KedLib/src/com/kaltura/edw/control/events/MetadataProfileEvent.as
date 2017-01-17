@@ -1,12 +1,12 @@
-package com.kaltura.edw.control.events {
-	import com.kaltura.kmvc.control.KMvCEvent;
+package com.borhan.edw.control.events {
+	import com.borhan.bmvc.control.BMvCEvent;
 
 	/**
 	 * this class represents events related to metadataProfile
 	 * @author Michal
 	 *
 	 */
-	public class MetadataProfileEvent extends KMvCEvent {
+	public class MetadataProfileEvent extends BMvCEvent {
 		public static const LIST:String = "content_listMetadataProfile";
 //		public static const ADD : String = "content_addMetadataProfile";
 //		public static const UPDATE : String = "content_updateMetadataProfile";

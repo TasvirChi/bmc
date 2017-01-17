@@ -1,11 +1,11 @@
-package com.kaltura.events
+package com.borhan.events
 {
 	/**
-	 * KdpEventTypes lists KDP3 (3.4.8) event types for 
+	 * BdpEventTypes lists BDP3 (3.4.8) event types for 
 	 * events a loaded player dispatches and can handle.
 	 * @author Atar
 	 */	
-	public class KdpEventTypes {
+	public class BdpEventTypes {
 		
 		/**
 		 * the first command that register the main proxys and main view mediator
@@ -47,7 +47,7 @@ package com.kaltura.events
 		 */	
 		public static const SOURCE_READY			:String = "sourceReady";
 		/**
-		 * Start the init macro command of the KDP 
+		 * Start the init macro command of the BDP 
 		 */	
 		public static const LOAD_MEDIA				:String	= "loadMedia";
 		/**
@@ -112,13 +112,13 @@ package com.kaltura.events
 		 */
 		static public const DO_SWITCH					:String = "doSwitch";
 		/**
-		 * Dispahed when the KDP is Ready  
+		 * Dispahed when the BDP is Ready  
 		 */		
-		static public const KDP_READY 				:String = "kdpReady";		
+		static public const BDP_READY 				:String = "bdpReady";		
 		/**
-		 * Dispahed when the KDP is Ready and has no source loaded  
+		 * Dispahed when the BDP is Ready and has no source loaded  
 		 */		
-		static public const KDP_EMPTY 				:String = "kdpEmpty";
+		static public const BDP_EMPTY 				:String = "bdpEmpty";
 		/**
 		 * Dispahed when the init macro command is done and the layout is ready  
 		 */		
@@ -280,7 +280,7 @@ package com.kaltura.events
 		 */		 
 		static public const DO_REPLAY		         :String = "doReplay";
 		/**
-		 * dispatched when capture thumbnail button is clicked in KDP
+		 * dispatched when capture thumbnail button is clicked in BDP
 		 * */
 		public static const CAPTURE_THUMBNAIL:String = "captureThumbnail";
 		

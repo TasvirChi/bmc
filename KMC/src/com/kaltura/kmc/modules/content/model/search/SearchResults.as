@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.content.model.search
+package com.borhan.bmc.modules.content.model.search
 {
-	import com.kaltura.utils.pager.Pager;
+	import com.borhan.utils.pager.Pager;
 	
 	[Bindable]
 	public class SearchResults

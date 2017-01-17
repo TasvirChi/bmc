@@ -1,7 +1,7 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
-	import com.kaltura.vo.KalturaDropFolder;
+	import com.borhan.bmvc.model.IDataPack;
+	import com.borhan.vo.BorhanDropFolder;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -13,7 +13,7 @@ package com.kaltura.edw.model.datapacks
 		/**
 		 * currently selected drop folder 
 		 */		
-		public var selectedDropFolder:KalturaDropFolder;
+		public var selectedDropFolder:BorhanDropFolder;
 		
 		/**
 		 * list of DropFolders 

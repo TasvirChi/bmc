@@ -1,4 +1,4 @@
-package com.kaltura.edw.components.et
+package com.borhan.edw.components.et
 {
 	/**
 	 * entry table's columns  

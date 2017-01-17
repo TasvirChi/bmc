@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,27 +25,27 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.filesyncImportBatch
+package com.borhan.commands.filesyncImportBatch
 {
-		import com.kaltura.vo.KalturaFileSyncFilter;
-	import com.kaltura.delegates.filesyncImportBatch.FilesyncImportBatchLockPendingFileSyncsDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanFileSyncFilter;
+	import com.borhan.delegates.filesyncImportBatch.FilesyncImportBatchLockPendingFileSyncsDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
 	* batch lockPendingFileSyncs action locks file syncs for import by the file sync periodic worker
 	**/
-	public class FilesyncImportBatchLockPendingFileSyncs extends KalturaCall
+	public class FilesyncImportBatchLockPendingFileSyncs extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
-		* @param filter KalturaFileSyncFilter
+		* @param filter BorhanFileSyncFilter
 		* @param workerId int
 		* @param sourceDc int
 		* @param maxCount int
 		* @param maxSize int
 		**/
-		public function FilesyncImportBatchLockPendingFileSyncs( filter : KalturaFileSyncFilter,workerId : int,sourceDc : int,maxCount : int,maxSize : int=int.MIN_VALUE )
+		public function FilesyncImportBatchLockPendingFileSyncs( filter : BorhanFileSyncFilter,workerId : int,sourceDc : int,maxCount : int,maxSize : int=int.MIN_VALUE )
 		{
 			service= 'multicenters_filesyncimportbatch';
 			action= 'lockPendingFileSyncs';
@@ -53,7 +53,7 @@ package com.kaltura.commands.filesyncImportBatch
 			var keyArr : Array = new Array();
 			var valueArr : Array = new Array();
 			var keyValArr : Array = new Array();
-				keyValArr = kalturaObject2Arrays(filter, 'filter');
+				keyValArr = borhanObject2Arrays(filter, 'filter');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			keyArr.push('workerId');

@@ -5,32 +5,32 @@ The main window for new player wizard.
 
 -->
 <containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
-		xmlns:wv="com.kaltura.kmc.modules.studio.view.wizard.*" xmlns:containers="com.kaltura.containers.*" 
+		xmlns:wv="com.borhan.bmc.modules.studio.view.wizard.*" xmlns:containers="com.borhan.containers.*" 
 		showCloseButton="true" close="onWizardCancel()" help="{help()}" 
 		creationComplete="{onCreationComplete()}" resize="{onResize()}" width="100%"
 		height="100%" minWidth="980" minHeight="510" horizontalScrollPolicy="off"
-		verticalScrollPolicy="off" layout="horizontal" xmlns:controls="com.kaltura.controls.*">
+		verticalScrollPolicy="off" layout="horizontal" xmlns:controls="com.borhan.controls.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.commands.uiConf.UiConfAdd;
-			import com.kaltura.commands.uiConf.UiConfGet;
-			import com.kaltura.commands.uiConf.UiConfUpdate;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.studio.business.wizard.ApsWizardXmlController;
-			import com.kaltura.kmc.modules.studio.events.ApsNavigationEvent;
-			import com.kaltura.kmc.modules.studio.vo.KeyValVo;
-			import com.kaltura.kmc.modules.studio.vo.PlayerContentVo;
-			import com.kaltura.kmc.modules.studio.vo.PlayerUiConfVo;
-			import com.kaltura.kmc.modules.studio.vo.StyleVo;
-			import com.kaltura.kmc.modules.studio.vo.TemplateVo;
-			import com.kaltura.kmc.modules.studio.vo.ads.AdvertizingVo;
-			import com.kaltura.kmc.vo.Context;
-			import com.kaltura.types.KalturaUiConfCreationMode;
-			import com.kaltura.vo.KalturaUiConf;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.commands.uiConf.UiConfAdd;
+			import com.borhan.commands.uiConf.UiConfGet;
+			import com.borhan.commands.uiConf.UiConfUpdate;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.events.BorhanEvent;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.studio.business.wizard.ApsWizardXmlController;
+			import com.borhan.bmc.modules.studio.events.ApsNavigationEvent;
+			import com.borhan.bmc.modules.studio.vo.KeyValVo;
+			import com.borhan.bmc.modules.studio.vo.PlayerContentVo;
+			import com.borhan.bmc.modules.studio.vo.PlayerUiConfVo;
+			import com.borhan.bmc.modules.studio.vo.StyleVo;
+			import com.borhan.bmc.modules.studio.vo.TemplateVo;
+			import com.borhan.bmc.modules.studio.vo.ads.AdvertizingVo;
+			import com.borhan.bmc.vo.Context;
+			import com.borhan.types.BorhanUiConfCreationMode;
+			import com.borhan.vo.BorhanUiConf;
 			
 			import modules.Studio;
 			
@@ -143,7 +143,7 @@ The main window for new player wizard.
 				resizeWizardViewStack();
 				//Event Listners
 				this.parent.addEventListener(Event.RESIZE, onResize);
-				previewPlayerPage.addEventListener(ApsWizPreviewPlayer.REFRESH_KDP, previewKdp);
+				previewPlayerPage.addEventListener(ApsWizPreviewPlayer.REFRESH_BDP, previewBdp);
 				
 				// remove / add tabs according to roles and permissions
 				if (_isNewPlayer) {
@@ -167,18 +167,18 @@ The main window for new player wizard.
 			 * dispatch help event with relevant data
 			 * */
 			private function help():void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_studio_player'));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_studio_player'));
 			}
 			
 			
 			/**
-			 * Refresh button was clicked - refresh the KDP
+			 * Refresh button was clicked - refresh the BDP
 			 */
-			private function previewKdp(event:Event = null):void {
+			private function previewBdp(event:Event = null):void {
 				previewPlayerPage.enabled = false;
 				stylePage.enabled = false;
 				featurePage.enabled = false;
-				// only disable relevant panels during KDP load
+				// only disable relevant panels during BDP load
 //				enabled = false;
 				var style:StyleVo = stylePage.getStyleData();
 				var template:TemplateVo = templatePage.templateData;
@@ -197,8 +197,8 @@ The main window for new player wizard.
 				delete newUiConfXML..Plugin.(@id == "shortcuts508")[0];
 				// don't send stats inside Studio
 				delete newUiConfXML..Plugin.(@id == "statistics")[0];
-				previewPlayerPage.unLoadKdp();
-				previewPlayerPage.loadKdp(swfUrl, newUiConfXML);
+				previewPlayerPage.unLoadBdp();
+				previewPlayerPage.loadBdp(swfUrl, newUiConfXML);
 			}
 			
 			
@@ -253,7 +253,7 @@ The main window for new player wizard.
 				// if this is not a multi playlist or if it is a new multiplaylist - load the player preview
 				var currentUiVars:XMLList = _playerUiConfVO.snapshot.uiVars.children().(String(attribute("key").toString()).indexOf("kpl") > -1);
 				if (!_playerUiConfVO.isMultiPlaylistTemplate || _isNewPlayer || currentUiVars.length() == 0)
-					previewKdp();
+					previewBdp();
 				else
 					_shouldWaitForPreview = true;
 			}
@@ -372,8 +372,8 @@ The main window for new player wizard.
 			private function loadTemplateUiconf(playerId:String):void {
 				cursorManager.setBusyCursor();
 				var fullUiconfGet:UiConfGet = new UiConfGet(int(playerId));
-				fullUiconfGet.addEventListener(KalturaEvent.COMPLETE, onTemplateUiConfLoaded);
-				fullUiconfGet.addEventListener(KalturaEvent.FAILED, fault);
+				fullUiconfGet.addEventListener(BorhanEvent.COMPLETE, onTemplateUiConfLoaded);
+				fullUiconfGet.addEventListener(BorhanEvent.FAILED, fault);
 				Studio.kc.post(fullUiconfGet)
 			}
 			
@@ -436,11 +436,11 @@ The main window for new player wizard.
 			 * this method is triggered when the player template is loaded.
 			 * set loaded data on the different panels
 			 * */
-			private function onTemplateUiConfLoaded(evt:KalturaEvent):void {
+			private function onTemplateUiConfLoaded(evt:BorhanEvent):void {
 				if (_isNewPlayer) {
 					// use template data as player data
-					var fpXMl:XML = XML((evt.data as KalturaUiConf).confFile);
-					var ss:XML = XML((evt.data as KalturaUiConf).confFileFeatures);
+					var fpXMl:XML = XML((evt.data as BorhanUiConf).confFile);
+					var ss:XML = XML((evt.data as BorhanUiConf).confFileFeatures);
 					/* set the template player id on the snapshot. When saving the new
 					player, this is the value used for template id (fullPlayerId).
 					This is needed because the values saved in the template-uiconfs
@@ -454,12 +454,12 @@ The main window for new player wizard.
 				else {
 					// when we start, playerUiconfVo holds the edited-player's data.
 					// template features with layout data:
-					var templateXml:XML = XML((evt.data as KalturaUiConf).confFileFeatures);
+					var templateXml:XML = XML((evt.data as BorhanUiConf).confFileFeatures);
 					
 					// keep the current skin path, in case the template doesn't declare themeSkinPath-es (backwards comp.)
 					var oldSkinPath:String = _playerUiConfVO.fullplayer.@skinPath.toString(); 
 					// start with a "fresh" player:
-					_playerUiConfVO.fullplayer = XML((evt.data as KalturaUiConf).confFile);
+					_playerUiConfVO.fullplayer = XML((evt.data as BorhanUiConf).confFile);
 					
 					// features of the edited player:
 					var featuresData:XML = _playerUiConfVO.snapshot.featuresData[0];
@@ -600,9 +600,9 @@ The main window for new player wizard.
 			}
 			
 			
-			private function onSaved(evt:KalturaEvent):void {
+			private function onSaved(evt:BorhanEvent):void {
 				cursorManager.removeBusyCursor();
-				var alert:Alert = Alert.show(ResourceManager.getInstance().getString("aps", "savedPlayer", [(evt.data as KalturaUiConf).name, (evt.data as KalturaUiConf).id]));
+				var alert:Alert = Alert.show(ResourceManager.getInstance().getString("aps", "savedPlayer", [(evt.data as BorhanUiConf).name, (evt.data as BorhanUiConf).id]));
 				alert.addEventListener(CloseEvent.CLOSE, onPlayerSavedAlertClose);
 			}
 			
@@ -775,7 +775,7 @@ The main window for new player wizard.
 				params.uiconf_automuted = template.autoMute ? "true" : "false";
 				params.uiconf_creationMode = "2";
 				_templateType = getTemplateType(_playerUiConfVO.fullplayer.@isPlaylist);
-				params.uiconf_tags = "kdp3," + _templateType;
+				params.uiconf_tags = "bdp3," + _templateType;
 				return params;
 			}
 			
@@ -793,7 +793,7 @@ The main window for new player wizard.
 				if (_playerUiConfVO.isMultiPlaylistTemplate) {
 					isPlaylist = "true";
 				}
-				ExternalInterface.call("kmc.preview_embed.updateList", isPlaylist);
+				ExternalInterface.call("bmc.preview_embed.updateList", isPlaylist);
 				
 				dispatchEvent(new ApsNavigationEvent(ApsNavigationEvent.CLOSE_WIZARD));
 			}
@@ -803,11 +803,11 @@ The main window for new player wizard.
 			 * Update a new existing player with the new changed
 			 */
 			private function updateExistingPlayer(playerXml:XML, snapshotXML:XML):void {
-				var uiconf:KalturaUiConf = new KalturaUiConf();
+				var uiconf:BorhanUiConf = new BorhanUiConf();
 				var params:Object = buildParamObject(playerXml, snapshotXML);
 				uiconf.confFile = params.uiconf_confFile;
 				uiconf.confFileFeatures = params.uiconf_confFileFeatures;
-				uiconf.creationMode = KalturaUiConfCreationMode.WIZARD;
+				uiconf.creationMode = BorhanUiConfCreationMode.WIZARD;
 				uiconf.height = params.uiconf_height;
 				uiconf.width = params.uiconf_width;
 				uiconf.swfUrl = params.uiconf_swfUrl;
@@ -817,8 +817,8 @@ The main window for new player wizard.
 				uiconf.useCdn = true;
 				uiconf.objType = params.uiconf_objType;
 				var uiconfUpdate:UiConfUpdate = new UiConfUpdate(params.uiconf_id, uiconf);
-				uiconfUpdate.addEventListener(KalturaEvent.COMPLETE, onSaved);
-				uiconfUpdate.addEventListener(KalturaEvent.FAILED, fault);
+				uiconfUpdate.addEventListener(BorhanEvent.COMPLETE, onSaved);
+				uiconfUpdate.addEventListener(BorhanEvent.FAILED, fault);
 				Studio.kc.post(uiconfUpdate);
 			}
 			
@@ -828,10 +828,10 @@ The main window for new player wizard.
 			 */
 			private function saveNewPlayer(playerXml:XML, snapshotXML:XML):void {
 				var params:Object = buildParamObject(playerXml, snapshotXML);
-				var uiconf:KalturaUiConf = new KalturaUiConf();
+				var uiconf:BorhanUiConf = new BorhanUiConf();
 				uiconf.confFile = params.uiconf_confFile;
 				uiconf.confFileFeatures = params.uiconf_confFileFeatures;
-				uiconf.creationMode = KalturaUiConfCreationMode.WIZARD;
+				uiconf.creationMode = BorhanUiConfCreationMode.WIZARD;
 				uiconf.height = params.uiconf_height;
 				uiconf.width = params.uiconf_width;
 				uiconf.swfUrl = params.uiconf_swfUrl;
@@ -841,13 +841,13 @@ The main window for new player wizard.
 				uiconf.objType = params.uiconf_objType;
 				uiconf.useCdn = true;
 				var uiConfAdd:UiConfAdd = new UiConfAdd(uiconf);
-				uiConfAdd.addEventListener(KalturaEvent.COMPLETE, onSaved);
-				uiConfAdd.addEventListener(KalturaEvent.FAILED, fault);
+				uiConfAdd.addEventListener(BorhanEvent.COMPLETE, onSaved);
+				uiConfAdd.addEventListener(BorhanEvent.FAILED, fault);
 				Studio.kc.post(uiConfAdd);
 			}
 			
 			
-			private function fault(evt:KalturaEvent):void {
+			private function fault(evt:BorhanEvent):void {
 				Alert.show("httpFault \n" + evt.error.errorMsg);
 			}
 			
@@ -934,9 +934,9 @@ The main window for new player wizard.
 					if (contentPage)
 						contentPage.setWidgetPlaylistXML(contentXML);
 					
-					// race condition - available playlists & KDP preview  
+					// race condition - available playlists & BDP preview  
 					if (_shouldWaitForPreview) {
-						previewKdp();
+						previewBdp();
 					}
 					_shouldWaitForPreview = false;
 				}
@@ -944,7 +944,7 @@ The main window for new player wizard.
 			
 			
 			/**
-			 * remember that the KDP was loaded for the 1st time and
+			 * remember that the BDP was loaded for the 1st time and
 			 * enable the semi-live preview behavior
 			 */
 			private function onFirstTimeLoaded(evt:Event = null):void {
@@ -954,18 +954,18 @@ The main window for new player wizard.
 			
 			/**
 			 * Whenever a feature was added or saved, or a color / theme / font was changed,
-			 * update KDP auto preview if requested.
+			 * update BDP auto preview if requested.
 			 */
 			private function onFeatureChanged(evt:Event = null):void {
 				if (_wasFirstPreview) {
 					if (_autoPreview)
-						previewKdp();
+						previewBdp();
 				}
 			}
 			
 			
 			/**
-			 * enable the wizard once KDP loading is done.
+			 * enable the wizard once BDP loading is done.
 			 * */
 			private function onFinishLoading(evt:Event = null):void {
 				previewPlayerPage.enabled = true;
@@ -980,7 +980,7 @@ The main window for new player wizard.
 			 * in appstudio, errors probably origin there.
 			 * */
 			protected function onErrorLoading(event:Event):void {
-				var s:String = ResourceManager.getInstance().getString('aps', 'kdpLayoutError');
+				var s:String = ResourceManager.getInstance().getString('aps', 'bdpLayoutError');
 				alertUser(new ErrorEvent(ApsWizard.ALERT_USER, false, false, s));
 				previewPlayerPage.enabled = true;
 				stylePage.enabled = true;
@@ -1110,14 +1110,14 @@ The main window for new player wizard.
 								   alertUser="{alertUser(event)}" detailsChanged="{_isChanged=true}"/>
 				
 				<wv:ApsWizFeatures id="featurePage" height="{previewPlayerPage.height - 35}"
-								   refreshKdp="onFeatureChanged()" playerUiconfVo="{_playerUiConfVO}"
+								   refreshBdp="onFeatureChanged()" playerUiconfVo="{_playerUiConfVO}"
 								   label="{resourceManager.getString('aps','featureTab')}"
 								   alertUser="{alertUser(event)}" detailsChanged="{_isChanged=true}"/>
 				
 				<wv:ApsWizAdvertizing id="advertizingPage" playerUiconfVo="{_playerUiConfVO}"
 									  label="{resourceManager.getString('aps','advertising')}" detailsChanged="{_isChanged=true}"/>
 				
-				<wv:ApsWizStyle id="stylePage" height="100%" refreshKdp="onFeatureChanged()"
+				<wv:ApsWizStyle id="stylePage" height="100%" refreshBdp="onFeatureChanged()"
 								label="{resourceManager.getString('aps','style')}" detailsChanged="{_isChanged=true}"/>
 				
 				<wv:ApsWizardContent id="contentPage" height="100%" width="100%" 

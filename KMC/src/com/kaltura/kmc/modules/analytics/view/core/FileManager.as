@@ -1,6 +1,6 @@
-package  com.kaltura.kmc.modules.analytics.view.core
+package  com.borhan.bmc.modules.analytics.view.core
 {
-	import com.kaltura.kmc.modules.analytics.view.window.ProgressWin;
+	import com.borhan.bmc.modules.analytics.view.window.ProgressWin;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.DataEvent;

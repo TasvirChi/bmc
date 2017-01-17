@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- change entry owner window -->
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.borhan.containers.*"
 							height="170" width="400" layout="vertical" showCloseButton="true" showHelpButton="true"
 							help="helpHandler(event)"
 							title="{resourceManager.getString('drilldown', 'changeOwnerTitle')}"
@@ -15,16 +15,16 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACUsersController;
-			import com.kaltura.autocomplete.itemRenderers.selection.UserSelectedItem;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.UsersEvent;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.model.datapacks.EntryDataPack;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.vo.KalturaUser;
+			import com.borhan.BorhanClient;
+			import com.borhan.autocomplete.controllers.KACUsersController;
+			import com.borhan.autocomplete.itemRenderers.selection.UserSelectedItem;
+			import com.borhan.edw.control.KedController;
+			import com.borhan.edw.control.events.KedEntryEvent;
+			import com.borhan.edw.control.events.UsersEvent;
+			import com.borhan.edw.events.GeneralNonCairngormEvent;
+			import com.borhan.edw.model.datapacks.EntryDataPack;
+			import com.borhan.edw.view.EntryDetailsWin;
+			import com.borhan.vo.BorhanUser;
 
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -39,7 +39,7 @@
 			/**
 			 * client for autocomplete API calls
 			 * */
-			public var kClient:KalturaClient
+			public var kClient:BorhanClient
 
 			private var _userWatcher:ChangeWatcher;
 
@@ -55,18 +55,18 @@
 			/**
 			 * container for selected user if not creationComplete yet
 			 * */
-			private var _selectedUser:KalturaUser
+			private var _selectedUser:BorhanUser
 
 
 			/**
 			 * retreive the currently selected user
 			 * */
-			public function get selectedUser():KalturaUser {
-				return usersComplete.selectedItem as KalturaUser;
+			public function get selectedUser():BorhanUser {
+				return usersComplete.selectedItem as BorhanUser;
 			}
 
 
-			public function set selectedUser(value:KalturaUser):void {
+			public function set selectedUser(value:BorhanUser):void {
 				if (usersComplete) {
 					usersComplete.selectedItems = new ArrayCollection([value]);
 				}

@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.account.control.events
+package com.borhan.bmc.modules.account.control.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
 	

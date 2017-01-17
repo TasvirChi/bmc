@@ -29,9 +29,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 @ignore
 */
-package com.kaltura.kmvc.commands
+package com.borhan.bmvc.commands
 { 
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
    
 
    /**
@@ -92,6 +92,6 @@ package com.kaltura.kmvc.commands
        * different ways to similar user gesture requests.
        * </p>
        */
-      function execute( event : KMvCEvent ) : void;
+      function execute( event : BMvCEvent ) : void;
    }
 }

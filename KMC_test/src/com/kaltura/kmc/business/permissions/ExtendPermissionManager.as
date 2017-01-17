@@ -1,8 +1,8 @@
-package com.kaltura.kmc.business.permissions
+package com.borhan.bmc.business.permissions
 {
-	import com.kaltura.edw.business.permissions.PermissionManager;
-	import com.kaltura.vo.KalturaPermission;
-	import com.kaltura.vo.KalturaPermissionListResponse;
+	import com.borhan.edw.business.permissions.PermissionManager;
+	import com.borhan.vo.BorhanPermission;
+	import com.borhan.vo.BorhanPermissionListResponse;
 	
 	import org.flexunit.Assert;
 
@@ -30,23 +30,23 @@ package com.kaltura.kmc.business.permissions
 		
 		[Test]
 		public function testGetPartnerPermissionsUi():void {
-			var partnerPermissionsListResult:KalturaPermissionListResponse = new KalturaPermissionListResponse();
+			var partnerPermissionsListResult:BorhanPermissionListResponse = new BorhanPermissionListResponse();
 			var perms:Array = new Array();
-			var perm:KalturaPermission = new KalturaPermission();
+			var perm:BorhanPermission = new BorhanPermission();
 			perm.id = 1;
 			perm.name = "METADATA_PLUGIN_PERMISSION";
 			perms.push(perm);
 			//<item><id>1</id><name>METADATA_PLUGIN_PERMISSION</name><friendlyName>metadata Plugin</friendlyName><description>Permission to use metadata plugin</description><status>1</status><partnerId>569</partnerId><createdAt>1292842684</createdAt><updatedAt>1292842684</updatedAt></item>
-//			perm = new KalturaPermission();
+//			perm = new BorhanPermission();
 //			perm.id = 5;
 //			perm.name = "FEATURE_VAST";
 //			perms.push(perm);
-			//<item><objectType>KalturaPermission</objectType><id>5</id><name>FEATURE_VAST</name><friendlyName>VAST feature</friendlyName><description>Permission to use VAST</description><status>1</status><partnerId>569</partnerId><createdAt>1292842685</createdAt><updatedAt>1292842685</updatedAt></item>
-			perm = new KalturaPermission();
+			//<item><objectType>BorhanPermission</objectType><id>5</id><name>FEATURE_VAST</name><friendlyName>VAST feature</friendlyName><description>Permission to use VAST</description><status>1</status><partnerId>569</partnerId><createdAt>1292842685</createdAt><updatedAt>1292842685</updatedAt></item>
+			perm = new BorhanPermission();
 			perm.id = 6;
 			perm.name = "FEATURE_LIVE_STREAM";
 			perms.push(perm);
-			//<item><objectType>KalturaPermission</objectType><id>6</id><name>FEATURE_LIVE_STREAM</name><friendlyName>Live stream feature</friendlyName><description>Permission to use live stream</description><status>1</status><partnerId>569</partnerId><createdAt>1292842685</createdAt><updatedAt>1292842685</updatedAt></item>
+			//<item><objectType>BorhanPermission</objectType><id>6</id><name>FEATURE_LIVE_STREAM</name><friendlyName>Live stream feature</friendlyName><description>Permission to use live stream</description><status>1</status><partnerId>569</partnerId><createdAt>1292842685</createdAt><updatedAt>1292842685</updatedAt></item>
 			partnerPermissionsListResult.objects = perms;
 			
 			var uidef:XML = <partnerPermissions>
@@ -87,7 +87,7 @@ package com.kaltura.kmc.business.permissions
 						<permissionGroup text="Upload Files" id="CONTENT_INGEST_UPLOAD_BASE" hideGroup="true">
 							<permission text="Upload Files" id="CONTENT_INGEST_UPLOAD">
 								<ui id="content.upload.profilesCb" enabled="false"/>
-								<ui id="content.upload.kcwBtn" enabled="false" buttonMode="false"/>
+								<ui id="content.upload.bcwBtn" enabled="false" buttonMode="false"/>
 								<ui id="dashboard.uploadPanel.uploadOption2Button" enabled="false" buttonMode="false"/>
 							</permission>
 						</permissionGroup>
@@ -133,7 +133,7 @@ package com.kaltura.kmc.business.permissions
 		</permissionGroup></permissions>;
 			var rolePermissions:Array = "CONTENT_MODERATE_BASE,CONTENT_MODERATE_METADATA,CONTENT_MODERATE_CUSTOM_DATA".split(",");
 			
-			var partnerPermissions:KalturaPermissionListResponse = new KalturaPermissionListResponse();
+			var partnerPermissions:BorhanPermissionListResponse = new BorhanPermissionListResponse();
 			
 			var ar:Array = removeRestrictedPermissions(uiDefinitions, rolePermissions, partnerPermissions);
 			

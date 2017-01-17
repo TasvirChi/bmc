@@ -1,11 +1,11 @@
-package com.kaltura.kmc.modules.content.view.dropfolder
+package com.borhan.bmc.modules.content.view.dropfolder
 {
-	import com.kaltura.vo.KalturaDropFolder;
+	import com.borhan.vo.BorhanDropFolder;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Button;
 	import mx.events.FlexEvent;
-	import com.kaltura.edw.components.fltr.panels.AdditionalFilter;
+	import com.borhan.edw.components.fltr.panels.AdditionalFilter;
 
 	public class DropFoldersFilter extends AdditionalFilter {
 		
@@ -39,7 +39,7 @@ package com.kaltura.kmc.modules.content.view.dropfolder
 					for each (var profid:int in profids) {
 						// find a matching checkbox and mark it
 						for (i = 1; i < _buttons.length; i++) {
-							if ((_buttons[i].data as KalturaDropFolder).id == profid) {
+							if ((_buttons[i].data as BorhanDropFolder).id == profid) {
 								_buttons[i].selected = true;
 								break;
 							}

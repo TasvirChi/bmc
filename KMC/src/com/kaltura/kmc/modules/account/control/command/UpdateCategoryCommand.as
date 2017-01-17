@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.IntegrationEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.category.CategoryUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.control.events.IntegrationEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
@@ -19,17 +19,17 @@ package com.kaltura.kmc.modules.account.control.command {
 
 		public function execute(event:CairngormEvent):void {
 			_model.loadingFlag = true;
-			var kCat:KalturaCategory = event.data as KalturaCategory;
+			var kCat:BorhanCategory = event.data as BorhanCategory;
 			kCat.setUpdatedFieldsOnly(true);
 			var update:CategoryUpdate = new CategoryUpdate(kCat.id, kCat);
-			update.addEventListener(KalturaEvent.COMPLETE, result);
-			update.addEventListener(KalturaEvent.FAILED, fault);
+			update.addEventListener(BorhanEvent.COMPLETE, result);
+			update.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(update);
 		}
 
 
 		public function result(data:Object):void {
-			var event:KalturaEvent = data as KalturaEvent;
+			var event:BorhanEvent = data as BorhanEvent;
 			_model.loadingFlag = false;
 			if (event.success) {
 				// list categories with context again
@@ -37,7 +37,7 @@ package com.kaltura.kmc.modules.account.control.command {
 				list.dispatch();
 			}
 			else {
-				Alert.show((data as KalturaEvent).error.errorMsg, ResourceManager.getInstance().getString('account', 'error'));
+				Alert.show((data as BorhanEvent).error.errorMsg, ResourceManager.getInstance().getString('account', 'error'));
 			}
 
 		}

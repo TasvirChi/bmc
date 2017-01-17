@@ -1,7 +1,7 @@
-package com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers
+package com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers
 {
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.borhan.types.BorhanNullableBoolean;
+	import com.borhan.vo.AccessControlProfileVO;
 	
 	import mx.containers.HBox;
 
@@ -14,7 +14,7 @@ package com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers
 		
 		public function setDefaultContainer():void
 		{
-			if((data as AccessControlProfileVO).profile.isDefault == KalturaNullableBoolean.TRUE_VALUE)
+			if((data as AccessControlProfileVO).profile.isDefault == BorhanNullableBoolean.TRUE_VALUE)
 			{
 				this.toolTip = resourceManager.getString('account', 'defaultAccessContolProfileToolTip');
 				this.setStyle("backgroundColor", "#FFFDEF");

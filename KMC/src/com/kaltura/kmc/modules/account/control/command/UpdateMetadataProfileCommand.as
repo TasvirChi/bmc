@@ -1,15 +1,15 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.borhan.bmc.modules.account.control.command
 {	
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.base.types.XSDConstants;
-	import com.kaltura.commands.metadataProfile.MetadataProfileUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.business.CustomDataStringUtil;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.utils.parsers.MetadataProfileParser;
-	import com.kaltura.vo.KalturaMetadataProfile;
+	import com.borhan.base.types.XSDConstants;
+	import com.borhan.commands.metadataProfile.MetadataProfileUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.business.CustomDataStringUtil;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.utils.parsers.MetadataProfileParser;
+	import com.borhan.vo.BorhanMetadataProfile;
 	
 	import flash.profiler.profile;
 	
@@ -51,8 +51,8 @@ package com.kaltura.kmc.modules.account.control.command
 			}
 			
 			var updateMetadataProfle:MetadataProfileUpdate = new MetadataProfileUpdate(_model.selectedMetadataProfile.profile.id, _model.selectedMetadataProfile.profile, xsd.toString());
-			updateMetadataProfle.addEventListener(KalturaEvent.COMPLETE, result);
-			updateMetadataProfle.addEventListener(KalturaEvent.FAILED, fault);
+			updateMetadataProfle.addEventListener(BorhanEvent.COMPLETE, result);
+			updateMetadataProfle.addEventListener(BorhanEvent.FAILED, fault);
 
 			_model.context.kc.post(updateMetadataProfle); 
 		}
@@ -65,7 +65,7 @@ package com.kaltura.kmc.modules.account.control.command
 		public function result(data:Object):void
 		{
 			_model.loadingFlag = false;
-			var recievedProfile:KalturaMetadataProfile = KalturaMetadataProfile(data.data);
+			var recievedProfile:BorhanMetadataProfile = BorhanMetadataProfile(data.data);
 			_model.selectedMetadataProfile.isCurrentlyEdited = false;
 			if (recievedProfile) {
 				_model.selectedMetadataProfile.profile = recievedProfile;

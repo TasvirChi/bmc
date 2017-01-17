@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
 	
-	public class SetSelectedCategoryUsersCommand extends KalturaCommand {
+	public class SetSelectedCategoryUsersCommand extends BorhanCommand {
 		
 		override public function execute(event:CairngormEvent):void {
-			// event.data is [KalturaCategoryUser]
+			// event.data is [BorhanCategoryUser]
 			_model.categoriesModel.selectedCategoryUsers = event.data;
 		}
 	}

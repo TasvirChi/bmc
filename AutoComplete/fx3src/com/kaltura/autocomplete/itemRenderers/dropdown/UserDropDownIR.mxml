@@ -2,11 +2,11 @@
 <mx:Label xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.vo.KalturaUser;
+			import com.borhan.vo.BorhanUser;
 			override public function set data(value:Object):void{
 				super.data = value;
 				
-				var user:KalturaUser = data as KalturaUser;
+				var user:BorhanUser = data as BorhanUser;
 				if (user.screenName != null && user.screenName != ""){
 					htmlText = user.screenName + " (" + user.id + ")";
 				} else {

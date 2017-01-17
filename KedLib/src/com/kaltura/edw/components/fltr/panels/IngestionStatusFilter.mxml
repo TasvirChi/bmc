@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml"
-						 xmlns:panels="com.kaltura.edw.components.fltr.panels.*"
+						 xmlns:panels="com.borhan.edw.components.fltr.panels.*"
 						 creationComplete="additionalfilter1_creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaEntryStatus;
+			import com.borhan.types.BorhanEntryStatus;
 			
 			import mx.controls.Button;
 			import mx.events.FlexEvent;
@@ -25,28 +25,28 @@
 					var convStatusArr:Array = value.split(',');
 					for each (var convCode:String in convStatusArr) {
 						switch (convCode) {
-							case KalturaEntryStatus.ERROR_CONVERTING:
-							case KalturaEntryStatus.ERROR_IMPORTING:
+							case BorhanEntryStatus.ERROR_CONVERTING:
+							case BorhanEntryStatus.ERROR_IMPORTING:
 								errorBtn.selected = true;
 								break;
 							
-							case KalturaEntryStatus.IMPORT:
+							case BorhanEntryStatus.IMPORT:
 								uploadingBtn.selected = true;
 								break;
 							
-							case KalturaEntryStatus.PRECONVERT:
+							case BorhanEntryStatus.PRECONVERT:
 								convertingBtn.selected = true;
 								break;
 							
-							case KalturaEntryStatus.READY:
+							case BorhanEntryStatus.READY:
 								readyBtn.selected = true;
 								break;
 							
-							case KalturaEntryStatus.NO_CONTENT:
+							case BorhanEntryStatus.NO_CONTENT:
 								noMediaBtn.selected = true;
 								break;
 							
-							case KalturaEntryStatus.PENDING:
+							case BorhanEntryStatus.PENDING:
 								pendingBtn.selected = true;
 								break;
 							
@@ -71,32 +71,32 @@
 				var convStatusArray:Array;
 				
 				if (allBtn.selected) {
-					convStatusArray = [ KalturaEntryStatus.ERROR_CONVERTING, KalturaEntryStatus.ERROR_IMPORTING,
-						KalturaEntryStatus.IMPORT,
-						KalturaEntryStatus.PRECONVERT,
-						KalturaEntryStatus.READY,
-						KalturaEntryStatus.NO_CONTENT,
-						KalturaEntryStatus.PENDING ];
+					convStatusArray = [ BorhanEntryStatus.ERROR_CONVERTING, BorhanEntryStatus.ERROR_IMPORTING,
+						BorhanEntryStatus.IMPORT,
+						BorhanEntryStatus.PRECONVERT,
+						BorhanEntryStatus.READY,
+						BorhanEntryStatus.NO_CONTENT,
+						BorhanEntryStatus.PENDING ];
 				}
 				else {
 					convStatusArray = [];
 					if (errorBtn.selected) { // for error
-						convStatusArray.push(KalturaEntryStatus.ERROR_CONVERTING, KalturaEntryStatus.ERROR_IMPORTING);
+						convStatusArray.push(BorhanEntryStatus.ERROR_CONVERTING, BorhanEntryStatus.ERROR_IMPORTING);
 					}
 					if (uploadingBtn.selected) { // for uploading 
-						convStatusArray.push(KalturaEntryStatus.IMPORT);
+						convStatusArray.push(BorhanEntryStatus.IMPORT);
 					}
 					if (convertingBtn.selected) { // for converting
-						convStatusArray.push(KalturaEntryStatus.PRECONVERT);
+						convStatusArray.push(BorhanEntryStatus.PRECONVERT);
 					}
 					if (readyBtn.selected) { // for ready 
-						convStatusArray.push(KalturaEntryStatus.READY);
+						convStatusArray.push(BorhanEntryStatus.READY);
 					}
 					if (noMediaBtn.selected) { // for no media 
-						convStatusArray.push(KalturaEntryStatus.NO_CONTENT);
+						convStatusArray.push(BorhanEntryStatus.NO_CONTENT);
 					}
 					if (pendingBtn.selected) { // for pending
-						convStatusArray.push(KalturaEntryStatus.PENDING);
+						convStatusArray.push(BorhanEntryStatus.PENDING);
 					}
 				}
 				return convStatusArray.join(',');

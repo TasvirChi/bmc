@@ -1,7 +1,7 @@
-package com.kaltura.edw.control.commands.cuepoints
+package com.borhan.edw.control.commands.cuepoints
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -14,9 +14,9 @@ package com.kaltura.edw.control.commands.cuepoints
 	
 	public class DownloadCuePoints extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
-//			http://devtests.kaltura.co.cc/api_v3/index.php/service/cuepoint_cuepoint/action/serveBulk/filter:entryIdEqual/0_sfdsfsf/pager:pageSize/1000/ks/NzU1Zm
+//			http://devtests.borhan.co.cc/api_v3/index.php/service/cuepoint_cuepoint/action/serveBulk/filter:entryIdEqual/0_sfdsfsf/pager:pageSize/1000/ks/NzU1Zm
 			var serveURL:String = "/api_v3/index.php/service/cuepoint_cuepoint/action/serveBulk";
 			var fp:String = "/filter:entryIdEqual/" + event.data + "/filter:orderBy/+startTime/pager:pageSize/1000";
 			var filePath:String = _client.protocol + _client.domain + serveURL + fp + "/ks/" + _client.ks;

@@ -4,12 +4,12 @@
 		<language>en_US</language>
 	</locale>
 	<uiconf>
-		<kdp>
+		<bdp>
 			<moderation>@@ModerationUIConfID@@</moderation>
-			<drilldown>@@KdpDrilldownForContentUIConfID@@</drilldown>
-			<drilldownAds>@@KdpAdsTabUIConfID@@</drilldownAds>
-			<captureThumbnail>@@KdpCaptureThumbnailForContentUIConfID@@</captureThumbnail>
-		</kdp>
+			<drilldown>@@BdpDrilldownForContentUIConfID@@</drilldown>
+			<drilldownAds>@@BdpAdsTabUIConfID@@</drilldownAds>
+			<captureThumbnail>@@BdpCaptureThumbnailForContentUIConfID@@</captureThumbnail>
+		</bdp>
 		<metadata>@@MetadataUIConfID@@</metadata>
 		<kclip>
 			<ads>@@KClipAdsDrillDownUIConfID@@</ads>
@@ -37,7 +37,7 @@
 		singleLevelMax: max categories to show in tree per single level-->
 	<categories sampleRate="30000" singleLevelMax="1500" />
 	<!-- bulkupload sample files -->
-	<bulkupload>/content/docs/kaltura_batch_upload_eagle.zip</bulkupload>
+	<bulkupload>/content/docs/borhan_batch_upload_eagle.zip</bulkupload>
 	<!-- cueopints sample -->
 	<cuepoints>/content/docs/xml/adCuePointSampleFile.xml</cuepoints>
 	<!-- file types -->

@@ -4,19 +4,19 @@ Yahoo syndication details.
 used as part of <Code>ExternalSyndicationPopUpWindow</code>
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 xmlns:validators="com.kaltura.validators.*"
-		 implements="com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed"
+		 xmlns:validators="com.borhan.validators.*"
+		 implements="com.borhan.bmc.modules.content.view.interfaces.IExternalSyndicationFeed"
 		 label="{resourceManager.getString('cms', 'yahoo')}"
 		 width="100%" height="100%"
 		 paddingRight="10">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaSyndicationFeedType;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.vo.KalturaUiConf;
-			import com.kaltura.vo.KalturaYahooSyndicationFeed;
+			import com.borhan.types.BorhanSyndicationFeedType;
+			import com.borhan.vo.BorhanBaseSyndicationFeed;
+			import com.borhan.vo.BorhanFlavorParams;
+			import com.borhan.vo.BorhanUiConf;
+			import com.borhan.vo.BorhanYahooSyndicationFeed;
 			
 			import mx.collections.ArrayCollection;
 			import mx.collections.ListCollectionView;
@@ -30,7 +30,7 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 			
 			private static const LABEL_WIDTH:Number = 180;
 			
-			private var feed:KalturaBaseSyndicationFeed;
+			private var feed:BorhanBaseSyndicationFeed;
 			
 			[Bindable]
 			/**
@@ -59,9 +59,9 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 			
 
 
-			public function get syndication():KalturaBaseSyndicationFeed {
-				var yahooFeed:KalturaYahooSyndicationFeed = (feed != null) ? (feed as KalturaYahooSyndicationFeed) : new KalturaYahooSyndicationFeed();
-				yahooFeed.type = KalturaSyndicationFeedType.YAHOO;
+			public function get syndication():BorhanBaseSyndicationFeed {
+				var yahooFeed:BorhanYahooSyndicationFeed = (feed != null) ? (feed as BorhanYahooSyndicationFeed) : new BorhanYahooSyndicationFeed();
+				yahooFeed.type = BorhanSyndicationFeedType.YAHOO;
 				yahooFeed.landingPage = StringUtil.trim(landingPageInputText.text);
 				yahooFeed.flavorParamId = getFlavorParamID();
 				yahooFeed.addToDefaultConversionProfile = defaultCPCheckBox.selected;
@@ -76,8 +76,8 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 			}
 
 
-			public function set syndication(syndication:KalturaBaseSyndicationFeed):void {
-				feed = syndication as KalturaYahooSyndicationFeed;
+			public function set syndication(syndication:BorhanBaseSyndicationFeed):void {
+				feed = syndication as BorhanYahooSyndicationFeed;
 
 				setFeedFlavorAndSettings();
 				setFeedLandingPage();
@@ -98,13 +98,13 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 				if (videoPlayerComboBox.selectedItem == null) {
 					Alert.show(resourceManager.getString('cms', 'noPlayersDataErrorMsg'), resourceManager.getString('cms', 'error'));
 				}
-				var selectedPlayer:KalturaUiConf = videoPlayerComboBox.selectedItem as KalturaUiConf;
+				var selectedPlayer:BorhanUiConf = videoPlayerComboBox.selectedItem as BorhanUiConf;
 				return selectedPlayer.id;
 			}
 
 
 			private function setPlayerUIConf(playerUiconfId:int):void {
-				for each (var uiconf:KalturaUiConf in videoPlayerComboBox.dataProvider) {
+				for each (var uiconf:BorhanUiConf in videoPlayerComboBox.dataProvider) {
 					if (uiconf.id == playerUiconfId) {
 						videoPlayerComboBox.selectedItem = uiconf;
 						break;
@@ -189,7 +189,7 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 			private function setFeedFlavorAndSettings():void {
 				// flavor param
 				var fpId:int = feed.flavorParamId;
-				for each (var fp:KalturaFlavorParams in flavorsComboBox.dataProvider) {
+				for each (var fp:BorhanFlavorParams in flavorsComboBox.dataProvider) {
 					if (fpId == fp.id) {
 						flavorsComboBox.selectedItem = fp;
 						break;
@@ -209,7 +209,7 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 
 
 			private function getFlavorParamID():int {
-				return (flavorsComboBox.selectedItem as KalturaFlavorParams).id;
+				return (flavorsComboBox.selectedItem as BorhanFlavorParams).id;
 			}
 		]]>
 	</mx:Script>

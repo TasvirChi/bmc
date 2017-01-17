@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- change category owner popup window -->
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.borhan.containers.*"
 							creationComplete="onInit(event)" showCloseButton="true" showHelpButton="true"
 							help="helpHandler(event)"
 							title="{resourceManager.getString('cms','changeOwner')}" 
 							layout="vertical" width="400" height="170"
-							xmlns:controllers="com.kaltura.autocomplete.controllers.*"
+							xmlns:controllers="com.borhan.autocomplete.controllers.*"
 							xmlns:components="com.hillelcoren.components.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACUsersController;
-			import com.kaltura.autocomplete.itemRenderers.selection.UserSelectedItem;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.model.CmsModelLocator;
-			import com.kaltura.vo.KalturaCategory;
-			import com.kaltura.vo.KalturaUser;
+			import com.borhan.BorhanClient;
+			import com.borhan.autocomplete.controllers.KACUsersController;
+			import com.borhan.autocomplete.itemRenderers.selection.UserSelectedItem;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.content.model.CmsModelLocator;
+			import com.borhan.vo.BorhanCategory;
+			import com.borhan.vo.BorhanUser;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -23,7 +23,7 @@
 			import mx.managers.PopUpManager;
 
 			
-			public var ownerUser:KalturaUser;
+			public var ownerUser:BorhanUser;
 
 
 			private function onInit(event:FlexEvent):void {
@@ -57,7 +57,7 @@
 
 			private function helpHandler(event:Event):void
 			{
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, "section_cats_owner", true));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, "section_cats_owner", true));
 			}
 
 		]]>

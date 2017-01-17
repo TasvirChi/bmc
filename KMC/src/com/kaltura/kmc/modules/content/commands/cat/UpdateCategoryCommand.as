@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.edw.control.KedController;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.vo.CategoryVO;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.utils.ObjectUtil;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.category.CategoryUpdate;
+	import com.borhan.edw.control.KedController;
+	import com.borhan.edw.control.events.SearchEvent;
+	import com.borhan.edw.vo.CategoryVO;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.utils.ObjectUtil;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.PropertyChangeEvent;
 	import mx.resources.ResourceManager;
 	
-	public class UpdateCategoryCommand extends KalturaCommand 
+	public class UpdateCategoryCommand extends BorhanCommand 
 	{
 		
 		override public function execute(event:CairngormEvent):void
@@ -24,8 +24,8 @@ package com.kaltura.kmc.modules.content.commands.cat
 			var cat:CategoryVO = event.data[0] as CategoryVO;
 			cat.category.setUpdatedFieldsOnly(true);
 		 	var updateCategory:CategoryUpdate = new CategoryUpdate(cat.id, cat.category);
-		 	updateCategory.addEventListener(KalturaEvent.COMPLETE, result);
-			updateCategory.addEventListener(KalturaEvent.FAILED, fault);
+		 	updateCategory.addEventListener(BorhanEvent.COMPLETE, result);
+			updateCategory.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(updateCategory);	   
 		}
 		

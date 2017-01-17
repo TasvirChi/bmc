@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 
-	public class DistributionProfileEvent extends KMvCEvent
+	public class DistributionProfileEvent extends BMvCEvent
 	{
 		public static const LIST:String = "content_listDistributionProfile";
 		public static const UPDATE:String = "content_updateDistributionProfiles";

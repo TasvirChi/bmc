@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.business.EntryUtil;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.borhan.edw.business.EntryUtil;
+	import com.borhan.vo.BorhanBaseEntry;
 
-	public class UpdateEntryInListCommand extends KalturaCommand {
+	public class UpdateEntryInListCommand extends BorhanCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			//if in the entries list there's an entry with the same id, replace it.
-			EntryUtil.updateSelectedEntryInList((event.data as KalturaBaseEntry), _model.listableVo.arrayCollection);
+			EntryUtil.updateSelectedEntryInList((event.data as BorhanBaseEntry), _model.listableVo.arrayCollection);
 		}
 	}
 }

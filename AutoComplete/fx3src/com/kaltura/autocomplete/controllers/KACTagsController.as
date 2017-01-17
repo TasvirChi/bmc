@@ -1,16 +1,16 @@
-package com.kaltura.autocomplete.controllers
+package com.borhan.autocomplete.controllers
 {
 	import com.hillelcoren.components.AutoComplete;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.autocomplete.controllers.base.KACControllerBase;
-	import com.kaltura.autocomplete.itemRenderers.selection.TagsSelectedItem;
-	import com.kaltura.commands.tag.TagSearch;
-	import com.kaltura.net.KalturaCall;
-	import com.kaltura.types.KalturaTaggedObjectType;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaTag;
-	import com.kaltura.vo.KalturaTagFilter;
-	import com.kaltura.vo.KalturaTagListResponse;
+	import com.borhan.BorhanClient;
+	import com.borhan.autocomplete.controllers.base.KACControllerBase;
+	import com.borhan.autocomplete.itemRenderers.selection.TagsSelectedItem;
+	import com.borhan.commands.tag.TagSearch;
+	import com.borhan.net.BorhanCall;
+	import com.borhan.types.BorhanTaggedObjectType;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanTag;
+	import com.borhan.vo.BorhanTagFilter;
+	import com.borhan.vo.BorhanTagListResponse;
 	
 	import mx.core.ClassFactory;
 	
@@ -18,7 +18,7 @@ package com.kaltura.autocomplete.controllers
 	{
 		private var _objType:String;
 		
-		public function KACTagsController(autoComp:AutoComplete, client:KalturaClient, objType:String)
+		public function KACTagsController(autoComp:AutoComplete, client:BorhanClient, objType:String)
 		{
 			super(autoComp, client);
 //			autoComp.allowEditingSelectedValues = true;
@@ -27,11 +27,11 @@ package com.kaltura.autocomplete.controllers
 			_objType = objType;
 		}
 		
-		override protected function createCallHook():KalturaCall{
-			var filter:KalturaTagFilter = new KalturaTagFilter();
+		override protected function createCallHook():BorhanCall{
+			var filter:BorhanTagFilter = new BorhanTagFilter();
 			filter.tagStartsWith = _autoComp.searchText;
 			filter.objectTypeEqual = _objType;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var pager:BorhanFilterPager = new BorhanFilterPager();
 			
 			// TODO: Check size limit?
 			pager.pageSize = 30;
@@ -42,11 +42,11 @@ package com.kaltura.autocomplete.controllers
 		}
 		
 		override protected function fetchElements(data:Object):Array{
-			if ((data.data as KalturaTagListResponse).objects != null) {
-			var tags:Vector.<KalturaTag> = Vector.<KalturaTag>((data.data as KalturaTagListResponse).objects);
+			if ((data.data as BorhanTagListResponse).objects != null) {
+			var tags:Vector.<BorhanTag> = Vector.<BorhanTag>((data.data as BorhanTagListResponse).objects);
 			var tagNames:Array = new Array();
 			
-			for each (var tag:KalturaTag in tags){
+			for each (var tag:BorhanTag in tags){
 				tagNames.push(tag.tag);
 			}
 				

@@ -1,30 +1,30 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.RuleBasedTypeEvent;
-	import com.kaltura.commands.playlist.PlaylistExecuteFromFilters;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.utils.KTimeUtil;
-	import com.kaltura.vo.KalturaPlaylist;
+	import com.borhan.bmc.modules.content.events.RuleBasedTypeEvent;
+	import com.borhan.commands.playlist.PlaylistExecuteFromFilters;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.utils.KTimeUtil;
+	import com.borhan.vo.BorhanPlaylist;
 	
 	import mx.rpc.IResponder;
-	import com.kaltura.kmc.modules.content.events.KMCEntryEvent;
+	import com.borhan.bmc.modules.content.events.BMCEntryEvent;
 
-	public class GetRuleBasedPlaylistCommand extends KalturaCommand implements ICommand, IResponder
+	public class GetRuleBasedPlaylistCommand extends BorhanCommand implements ICommand, IResponder
 	{
-		private var _currentPlaylist : KalturaPlaylist;
+		private var _currentPlaylist : BorhanPlaylist;
 		
 		override public function execute(event:CairngormEvent):void
 		{	
 			_model.increaseLoadCounter();
- 			var e : KMCEntryEvent = event as KMCEntryEvent;
-			_currentPlaylist = e.entryVo as KalturaPlaylist;
+ 			var e : BMCEntryEvent = event as BMCEntryEvent;
+			_currentPlaylist = e.entryVo as BorhanPlaylist;
 			if(_currentPlaylist.totalResults == int.MIN_VALUE)
 				_currentPlaylist.totalResults = 50; // Ariel definition - up to 50 per playlist 
 			var playlistGet:PlaylistExecuteFromFilters = new PlaylistExecuteFromFilters(_currentPlaylist.filters,_currentPlaylist.totalResults);
-			playlistGet.addEventListener(KalturaEvent.COMPLETE, result);
-			playlistGet.addEventListener(KalturaEvent.FAILED, fault);
+			playlistGet.addEventListener(BorhanEvent.COMPLETE, result);
+			playlistGet.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(playlistGet);
 		}
 		

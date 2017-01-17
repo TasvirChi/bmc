@@ -1,7 +1,7 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.borhan.BorhanClient;
+	import com.borhan.bmvc.model.IDataPack;
 	
 	import flash.events.IEventDispatcher;
 	
@@ -80,7 +80,7 @@ package com.kaltura.edw.model.datapacks
 		 * The PS3 - new flex client API
 		 * 
 		 */
-		public var kc:KalturaClient;
+		public var kc:BorhanClient;
 		
 		
 		/**
@@ -89,14 +89,14 @@ package com.kaltura.edw.model.datapacks
 		public var protocol:String;
 		
 		/**
-		* protocol (like http://) and then  domain (like www.kaltura.com)
+		* protocol (like http://) and then  domain (like www.borhan.com)
 		* e.g: swf that came from http://www.yourdomain.com/dir/file.swf will have "http://www.yourdomain.com/" as its root url
 		*/
 		public var rootUrl : String;
 		
 		/**
-		 * host from which to load media, for entry drilldown KDP.
-		 * protocol (like http://) and then  domain (like www.kaltura.com)
+		 * host from which to load media, for entry drilldown BDP.
+		 * protocol (like http://) and then  domain (like www.borhan.com)
 		 */
 		public var cdnHost : String;
 		
@@ -107,7 +107,7 @@ package com.kaltura.edw.model.datapacks
 		public var sourceUrl:String;
 
 		/**
-		 *The hosting server name, e.g. "kaltura.com"
+		 *The hosting server name, e.g. "borhan.com"
 		 */
 		public var hostName:String;
 

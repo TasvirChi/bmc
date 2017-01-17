@@ -4,7 +4,7 @@
 -->
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" width="224" layout="vertical" styleName="addPanel"
 		   preinitialize="createShowingHandler(event)" creationComplete="creationCompleteHandler(event)"
-		   implements="com.kaltura.kmc.business.IKmcPlugin,com.kaltura.kmc.business.IPopupMenu" visible="false" xmlns:view="com.kaltura.kmc.modules.create.view.*" xmlns:controls="com.kaltura.controls.*">
+		   implements="com.borhan.bmc.business.IBmcPlugin,com.borhan.bmc.business.IPopupMenu" visible="false" xmlns:view="com.borhan.bmc.modules.create.view.*" xmlns:controls="com.borhan.controls.*">
 	<mx:Metadata>
 		[ResourceBundle("create")]
 		[ResourceBundle("common")]
@@ -12,22 +12,22 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.commands.conversionProfile.ConversionProfileList;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmc.business.IKmcPlugin;
-			import com.kaltura.kmc.business.IPopupMenu;
-			import com.kaltura.kmc.business.JSGate;
-			import com.kaltura.kmc.business.MenuHandler;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.create.MultipleMediaFilesSelector;
-			import com.kaltura.kmc.modules.create.types.BulkTypes;
-			import com.kaltura.kmc.modules.create.view.FileUploadSettings;
-			import com.kaltura.types.KalturaConversionProfileType;
-			import com.kaltura.vo.KalturaConversionProfile;
-			import com.kaltura.vo.KalturaConversionProfileFilter;
-			import com.kaltura.vo.KalturaFilterPager;
+			import com.borhan.BorhanClient;
+			import com.borhan.commands.conversionProfile.ConversionProfileList;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.events.BorhanEvent;
+			import com.borhan.bmc.business.IBmcPlugin;
+			import com.borhan.bmc.business.IPopupMenu;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.business.MenuHandler;
+			import com.borhan.bmc.events.BmcNavigationEvent;
+			import com.borhan.bmc.modules.create.MultipleMediaFilesSelector;
+			import com.borhan.bmc.modules.create.types.BulkTypes;
+			import com.borhan.bmc.modules.create.view.FileUploadSettings;
+			import com.borhan.types.BorhanConversionProfileType;
+			import com.borhan.vo.BorhanConversionProfile;
+			import com.borhan.vo.BorhanConversionProfileFilter;
+			import com.borhan.vo.BorhanFilterPager;
 			
 			import flash.net.navigateToURL;
 			
@@ -39,7 +39,7 @@
 			/**
 			 * extra config the plugin needs - files filters
 			 * @internal
-			 * passed in from uiconf plugin node by KmcPluginManager
+			 * passed in from uiconf plugin node by BmcPluginManager
 			 * */
 			public var config:XML;
 
@@ -47,7 +47,7 @@
 			/**
 			 * url of samples file
 			 * @internal
-			 * passed in from uiconf plugin node by KmcPluginManager
+			 * passed in from uiconf plugin node by BmcPluginManager
 			 * */
 			public var samplesUrl:String;
 			
@@ -99,7 +99,7 @@
 			/**
 			 * @copy #client
 			 * */
-			private var _kc:KalturaClient;
+			private var _kc:BorhanClient;
 
 			/**
 			 * files selector for media upload
@@ -148,7 +148,7 @@
 			}
 
 			/**
-			 * opens a KCW with only webcam recording option
+			 * opens a BCW with only webcam recording option
 			 * */
 			protected function btnWebcam_clickHandler(event:MouseEvent):void {
 				_state = WEBCAM_STATE;
@@ -167,7 +167,7 @@
 
 
 			/**
-			 * show a kaltura corp upgrade page
+			 * show a borhan corp upgrade page
 			 * */
 			protected function btnAsperaUpgrade_clickHandler(event:MouseEvent):void {
 				var urlreq:URLRequest = new URLRequest(config.aspera.upgrade);
@@ -176,7 +176,7 @@
 
 
 			/**
-			 * Opens a KCW with audio/video/image online services options only
+			 * Opens a BCW with audio/video/image online services options only
 			 * */
 			protected function btnServices_clickHandler(event:MouseEvent):void {
 				_state = SERVICES_STATE;
@@ -195,7 +195,7 @@
 					showOptionsScreen(resourceManager.getString('create', 'draftvideo_state_title'));
 				}
 				else {
-					dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createVideoEntry"}, true));
+					dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, "content", "manage", {bmcFunction: "content.createVideoEntry"}, true));
 					hidePanel();
 				}
 			}
@@ -211,7 +211,7 @@
 					showOptionsScreen(resourceManager.getString('create', 'draftaudio_state_title'));
 				}
 				else {
-					dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createAudioEntry"}, true));
+					dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, "content", "manage", {bmcFunction: "content.createAudioEntry"}, true));
 					hidePanel();
 				}
 			}
@@ -221,7 +221,7 @@
 			 * Opens the new live stream window on top of content management page
 			 * */
 			protected function btnLive_clickHandler(event:MouseEvent):void {
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createLiveEntry"}, true));
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, "content", "manage", {bmcFunction: "content.createLiveEntry"}, true));
 				hidePanel();
 			}
 
@@ -236,13 +236,13 @@
 				// get conversion profiles list
 				if (!cbConvProfiles.dataProvider.length) {
 					enabled = false;
-					var f:KalturaConversionProfileFilter = new KalturaConversionProfileFilter();
-					f.typeEqual = KalturaConversionProfileType.MEDIA;
-					var p:KalturaFilterPager = new KalturaFilterPager();
+					var f:BorhanConversionProfileFilter = new BorhanConversionProfileFilter();
+					f.typeEqual = BorhanConversionProfileType.MEDIA;
+					var p:BorhanFilterPager = new BorhanFilterPager();
 					p.pageSize = 500;	// realy big number that even QA won't reach
 					var cpl:ConversionProfileList = new ConversionProfileList(f, p);
-					cpl.addEventListener(KalturaEvent.COMPLETE, onConvProfListed);
-					cpl.addEventListener(KalturaEvent.FAILED, onConvProfListed);
+					cpl.addEventListener(BorhanEvent.COMPLETE, onConvProfListed);
+					cpl.addEventListener(BorhanEvent.FAILED, onConvProfListed);
 					_kc.post(cpl);
 				}
 				else {
@@ -251,18 +251,18 @@
 				}
 			}
 
-			protected function onConvProfListed(e:KalturaEvent):void {
+			protected function onConvProfListed(e:BorhanEvent):void {
 				enabled = true;
-				if (e.type == KalturaEvent.FAILED) {
+				if (e.type == BorhanEvent.FAILED) {
 					Alert.show(e.error.errorMsg, resourceManager.getString('common', 'error'));
 				}
 				else {
 					var ar:Array = new Array();
-					var def:KalturaConversionProfile;
+					var def:BorhanConversionProfile;
 					for each (var cp:Object in e.data.objects) {
-						if (cp is KalturaConversionProfile) {
-							if ((cp as KalturaConversionProfile).isDefault) {
-								def = cp as KalturaConversionProfile;
+						if (cp is BorhanConversionProfile) {
+							if ((cp as BorhanConversionProfile).isDefault) {
+								def = cp as BorhanConversionProfile;
 							}
 							else {
 								ar.push(cp);
@@ -280,10 +280,10 @@
 			
 			
 			protected function selectDefaultProfile():void {
-				var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
-				var defaultProfileId:int = kmcSO.data.lastConversionProfile;
+				var bmcSO:SharedObject = SharedObject.getLocal("bmcSO");
+				var defaultProfileId:int = bmcSO.data.lastConversionProfile;
 				if (defaultProfileId) {
-					for each (var cp:KalturaConversionProfile in cbConvProfiles.dataProvider) {
+					for each (var cp:BorhanConversionProfile in cbConvProfiles.dataProvider) {
 						if (cp.id == defaultProfileId) {
 							cbConvProfiles.selectedItem = cp;
 						}
@@ -294,10 +294,10 @@
 			
 			
 			protected function saveDefaultProfile():void {
-				var kmcSO:SharedObject = SharedObject.getLocal("kmcSO");
-				if (kmcSO.data.lastConversionProfile != cbConvProfiles.selectedItem.id) {
-					kmcSO.data.lastConversionProfile = cbConvProfiles.selectedItem.id;
-					kmcSO.flush();
+				var bmcSO:SharedObject = SharedObject.getLocal("bmcSO");
+				if (bmcSO.data.lastConversionProfile != cbConvProfiles.selectedItem.id) {
+					bmcSO.data.lastConversionProfile = cbConvProfiles.selectedItem.id;
+					bmcSO.flush();
 				}
 			}
 			
@@ -308,21 +308,21 @@
 
 
 			/**
-			 * open KCW with desired config
+			 * open BCW with desired config
 			 * */
-			protected function openKcw(event:MouseEvent):void {
+			protected function openBcw(event:MouseEvent):void {
 				switch (_state) {
 					case WEBCAM_STATE: 
-						JSGate.openKcw(cbConvProfiles.selectedItem.id, "uploadWebCam");
+						JSGate.openBcw(cbConvProfiles.selectedItem.id, "uploadWebCam");
 						break;
 					case SERVICES_STATE:
-						JSGate.openKcw(cbConvProfiles.selectedItem.id, "uploadImport");
+						JSGate.openBcw(cbConvProfiles.selectedItem.id, "uploadImport");
 						break;
 					case DRAFT_VIDEO_STATE:
-						dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createVideoEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
+						dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, "content", "manage", {bmcFunction: "content.createVideoEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
 						break;
 					case DRAFT_VIDEO_STATE:
-						dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, "content", "manage", {kmcFunction: "content.createAudioEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
+						dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, "content", "manage", {bmcFunction: "content.createAudioEntry(" + cbConvProfiles.selectedItem.id + ")"}, true));
 						break;
 				}
 				// save selected profile as default
@@ -348,7 +348,7 @@
 
 			public function setRoot(doc:DisplayObjectContainer):void {
 				_approot = doc;
-				doc.addEventListener(KmcNavigationEvent.NAVIGATION_COMPLETE, hidePanel);
+				doc.addEventListener(BmcNavigationEvent.NAVIGATION_COMPLETE, hidePanel);
 				if (_showingHandler) {
 					_showingHandler.setRoot(doc);
 				}
@@ -389,14 +389,14 @@
 
 
 			/**
-			 * KalturaClient used for API calls
+			 * BorhanClient used for API calls
 			 * */
-			public function get client():KalturaClient {
+			public function get client():BorhanClient {
 				return _kc;
 			}
 
 
-			public function set client(value:KalturaClient):void {
+			public function set client(value:BorhanClient):void {
 				_kc = value;
 			}
 
@@ -496,7 +496,7 @@
 			<mx:HBox horizontalAlign="right" width="100%">
 				<mx:LinkButton click="cancel_clickHandler(event)" styleName="addPanelCancelBtn"
 							   label="{resourceManager.getString('create', 'cancel_label')}" />
-				<mx:Button click="openKcw(event)" styleName="addPanelNextBtn" buttonMode="true"
+				<mx:Button click="openBcw(event)" styleName="addPanelNextBtn" buttonMode="true"
 						   label="{resourceManager.getString('create', 'next_label')}" />
 			</mx:HBox>
 		</mx:VBox>

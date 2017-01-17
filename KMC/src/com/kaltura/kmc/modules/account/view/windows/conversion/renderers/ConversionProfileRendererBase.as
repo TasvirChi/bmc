@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.account.view.windows.conversion.renderers
+package com.borhan.bmc.modules.account.view.windows.conversion.renderers
 {
-	import com.kaltura.kmc.modules.account.vo.ConversionProfileVO;
+	import com.borhan.bmc.modules.account.vo.ConversionProfileVO;
 	
 	import mx.containers.HBox;
 	import mx.controls.listClasses.BaseListData;

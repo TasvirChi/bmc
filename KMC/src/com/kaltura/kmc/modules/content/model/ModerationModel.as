@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.content.model {
+package com.borhan.bmc.modules.content.model {
 	import mx.collections.ArrayCollection;
 
 	[Bindable]
@@ -14,7 +14,7 @@ package com.kaltura.kmc.modules.content.model {
 
 		/**
 		 * list of moderation data (comments) per entry.
-		 * <code>KalturaModerationFlag</code> objects
+		 * <code>BorhanModerationFlag</code> objects
 		 * */
 		public var moderationsArray:ArrayCollection;
 		

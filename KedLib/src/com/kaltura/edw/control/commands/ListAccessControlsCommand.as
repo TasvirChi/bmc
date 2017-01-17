@@ -1,16 +1,16 @@
-package com.kaltura.edw.control.commands {
-	import com.kaltura.commands.accessControl.AccessControlList;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.FilterDataPack;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.types.KalturaAccessControlOrderBy;
-	import com.kaltura.vo.AccessControlProfileVO;
-	import com.kaltura.vo.KalturaAccessControl;
-	import com.kaltura.vo.KalturaAccessControlFilter;
-	import com.kaltura.vo.KalturaAccessControlListResponse;
-	import com.kaltura.vo.KalturaBaseRestriction;
-	import com.kaltura.vo.KalturaFilterPager;
+package com.borhan.edw.control.commands {
+	import com.borhan.commands.accessControl.AccessControlList;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.FilterDataPack;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.types.BorhanAccessControlOrderBy;
+	import com.borhan.vo.AccessControlProfileVO;
+	import com.borhan.vo.BorhanAccessControl;
+	import com.borhan.vo.BorhanAccessControlFilter;
+	import com.borhan.vo.BorhanAccessControlListResponse;
+	import com.borhan.vo.BorhanBaseRestriction;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -18,15 +18,15 @@ package com.kaltura.edw.control.commands {
 
 	public class ListAccessControlsCommand extends KedCommand {
 
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			_model.increaseLoadCounter();
-			var filter:KalturaAccessControlFilter = new KalturaAccessControlFilter();
-			filter.orderBy = KalturaAccessControlOrderBy.CREATED_AT_DESC;
-			var pager:KalturaFilterPager = new KalturaFilterPager();
+			var filter:BorhanAccessControlFilter = new BorhanAccessControlFilter();
+			filter.orderBy = BorhanAccessControlOrderBy.CREATED_AT_DESC;
+			var pager:BorhanFilterPager = new BorhanFilterPager();
 			pager.pageSize = 1000;
 			var listAcp:AccessControlList = new AccessControlList(filter, pager);
-			listAcp.addEventListener(KalturaEvent.COMPLETE, result);
-			listAcp.addEventListener(KalturaEvent.FAILED, fault);
+			listAcp.addEventListener(BorhanEvent.COMPLETE, result);
+			listAcp.addEventListener(BorhanEvent.FAILED, fault);
 			_client.post(listAcp);
 		}
 
@@ -34,18 +34,18 @@ package com.kaltura.edw.control.commands {
 		override public function result(data:Object):void {
 			super.result(data);
 			if (data.success) {
-				var response:KalturaAccessControlListResponse = data.data as KalturaAccessControlListResponse;
+				var response:BorhanAccessControlListResponse = data.data as BorhanAccessControlListResponse;
 				var tempArrCol:ArrayCollection = new ArrayCollection();
-				for each (var kac:KalturaAccessControl in response.objects) {
+				for each (var kac:BorhanAccessControl in response.objects) {
 					var acVo:AccessControlProfileVO = new AccessControlProfileVO();
 					acVo.profile = kac;
 					acVo.id = kac.id;
 					if (kac.restrictions ) {
 						// remove unknown objects
 						// if any restriction is unknown, we remove it from the list.
-						// this means it is not supported in KMC at the moment
+						// this means it is not supported in BMC at the moment
 						for (var i:int = 0; i<kac.restrictions.length; i++) {
-							if (! (kac.restrictions[i] is KalturaBaseRestriction)) {
+							if (! (kac.restrictions[i] is BorhanBaseRestriction)) {
 								kac.restrictions.splice(i, 1);
 							}
 						}

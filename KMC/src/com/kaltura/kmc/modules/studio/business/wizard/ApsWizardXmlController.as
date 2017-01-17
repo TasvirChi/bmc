@@ -1,16 +1,16 @@
-package com.kaltura.kmc.modules.studio.business.wizard {
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizFeatures;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizPreviewPlayer;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizStyle;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizTemplate;
-	import com.kaltura.kmc.modules.studio.view.wizard.ApsWizardContent;
-	import com.kaltura.kmc.modules.studio.vo.StyleVo;
-	import com.kaltura.kmc.modules.studio.vo.TemplateVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.AdSourceVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.AdvertizingVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.CompanionAdVo;
-	import com.kaltura.kmc.modules.studio.vo.ads.InPlayerAdVo;
-	import com.kaltura.utils.ObjectUtil;
+package com.borhan.bmc.modules.studio.business.wizard {
+	import com.borhan.bmc.modules.studio.view.wizard.ApsWizFeatures;
+	import com.borhan.bmc.modules.studio.view.wizard.ApsWizPreviewPlayer;
+	import com.borhan.bmc.modules.studio.view.wizard.ApsWizStyle;
+	import com.borhan.bmc.modules.studio.view.wizard.ApsWizTemplate;
+	import com.borhan.bmc.modules.studio.view.wizard.ApsWizardContent;
+	import com.borhan.bmc.modules.studio.vo.StyleVo;
+	import com.borhan.bmc.modules.studio.vo.TemplateVo;
+	import com.borhan.bmc.modules.studio.vo.ads.AdSourceVo;
+	import com.borhan.bmc.modules.studio.vo.ads.AdvertizingVo;
+	import com.borhan.bmc.modules.studio.vo.ads.CompanionAdVo;
+	import com.borhan.bmc.modules.studio.vo.ads.InPlayerAdVo;
+	import com.borhan.utils.ObjectUtil;
 	
 	import flash.events.EventDispatcher;
 	

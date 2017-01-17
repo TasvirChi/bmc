@@ -1,16 +1,16 @@
-package com.kaltura.analytics
+package com.borhan.analytics
 {
 //	import com.adobe.crypto.MD5;
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.stats.StatsKmcCollect;
-	import com.kaltura.vo.KalturaStatsKmcEvent;
+	import com.borhan.BorhanClient;
+	import com.borhan.commands.stats.StatsBmcCollect;
+	import com.borhan.vo.BorhanStatsBmcEvent;
 	
 	import flash.net.URLRequestMethod;
 	
 	public class KAnalyticsTracker
 	{
 		private static var _instance:KAnalyticsTracker;
-		private var _kc:KalturaClient;
+		private var _kc:BorhanClient;
 	//	private var _sessionId:String;   - No need for it, the server will use the KS of the user.
 		private var _clientVersion:String;
 		private var _swfName:String;
@@ -28,7 +28,7 @@ package com.kaltura.analytics
 			return _instance;
 		}
         
-        public function init(kc:KalturaClient, swfName:String, clientVersion:String, userId:String):void
+        public function init(kc:BorhanClient, swfName:String, clientVersion:String, userId:String):void
         {
         	_kc = kc;
  //       	_sessionId = MD5.hash(_kc.ks);
@@ -41,9 +41,9 @@ package com.kaltura.analytics
         {
 			// if not intialised, don't log.
 			if (!_kc) return;
-        	var analyticsEvent:KalturaStatsKmcEvent = new KalturaStatsKmcEvent();
-        	analyticsEvent.kmcEventType = eventCode;
-        	analyticsEvent.kmcEventActionPath = eventPath;
+        	var analyticsEvent:BorhanStatsBmcEvent = new BorhanStatsBmcEvent();
+        	analyticsEvent.bmcEventType = eventCode;
+        	analyticsEvent.bmcEventActionPath = eventPath;
 //        	analyticsEvent.sessionId = _sessionId;
         	analyticsEvent.partnerId = int(_kc.partnerId);
         	analyticsEvent.clientVer = "1.0:" + moduleName + ":" + _clientVersion;
@@ -55,10 +55,10 @@ package com.kaltura.analytics
         	analyticsEvent.widgetId = widgetId;// when manipulating widgets (relevant for the embed code)
         	
         	
-        	var statsKmcCall:StatsKmcCollect = new StatsKmcCollect(analyticsEvent);
-        	statsKmcCall.method = URLRequestMethod.GET;
-			statsKmcCall.queued = false;
-        	_kc.post(statsKmcCall);
+        	var statsBmcCall:StatsBmcCollect = new StatsBmcCollect(analyticsEvent);
+        	statsBmcCall.method = URLRequestMethod.GET;
+			statsBmcCall.queued = false;
+        	_kc.post(statsBmcCall);
         }
         
        

@@ -1,22 +1,22 @@
-package com.kaltura.edw.control.commands.thumb
+package com.borhan.edw.control.commands.thumb
 {
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.thumbAsset.ThumbAssetGetByEntryId;
-	import com.kaltura.commands.thumbAsset.ThumbAssetSetAsDefault;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-	import com.kaltura.edw.model.datapacks.DistributionDataPack;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.edw.vo.ThumbnailWithDimensions;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.thumbAsset.ThumbAssetGetByEntryId;
+	import com.borhan.commands.thumbAsset.ThumbAssetSetAsDefault;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.ThumbnailAssetEvent;
+	import com.borhan.edw.model.datapacks.DistributionDataPack;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.edw.vo.ThumbnailWithDimensions;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanThumbAsset;
 
 	public class SetAsDefaultThumbnailAsset extends KedCommand
 	{
 		private var _defaultThumb:ThumbnailWithDimensions;
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			_model.increaseLoadCounter();
 			_defaultThumb = (event as ThumbnailAssetEvent).thumbnailAsset;
@@ -26,8 +26,8 @@ package com.kaltura.edw.control.commands.thumb
 			var listThumbs:ThumbAssetGetByEntryId = new ThumbAssetGetByEntryId((_model.getDataPack(EntryDataPack) as EntryDataPack).selectedEntry.id);
 			multiRequest.addAction(listThumbs);
 			
-			multiRequest.addEventListener(KalturaEvent.COMPLETE, result);
-			multiRequest.addEventListener(KalturaEvent.FAILED, fault);
+			multiRequest.addEventListener(BorhanEvent.COMPLETE, result);
+			multiRequest.addEventListener(BorhanEvent.FAILED, fault);
 			
 			_client.post(multiRequest);
 		}
@@ -47,7 +47,7 @@ package com.kaltura.edw.control.commands.thumb
 			var ddp:DistributionDataPack = _model.getDataPack(DistributionDataPack) as DistributionDataPack;
 			var currentThumbsArray:Array = ddp.distributionInfo.thumbnailDimensions;
 			for (var i:int=0; i<thumbsArray.length; i++) {
-				var thumbAsset:KalturaThumbAsset = thumbsArray[i] as KalturaThumbAsset;
+				var thumbAsset:BorhanThumbAsset = thumbsArray[i] as BorhanThumbAsset;
 				for (var j:int=0; j<currentThumbsArray.length; j++) {
 					var thumbWithDimensions:ThumbnailWithDimensions = currentThumbsArray[j] as ThumbnailWithDimensions;
 					if (thumbWithDimensions.thumbAsset && (thumbWithDimensions.thumbAsset.id == thumbAsset.id)) {

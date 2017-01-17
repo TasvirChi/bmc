@@ -1,12 +1,12 @@
-package com.kaltura.kmc.modules.admin.model
+package com.borhan.bmc.modules.admin.model
 {
-	import com.kaltura.kmc.vo.UserVO;
-	import com.kaltura.types.KalturaNullableBoolean;
-	import com.kaltura.types.KalturaUserOrderBy;
-	import com.kaltura.types.KalturaUserStatus;
-	import com.kaltura.vo.KalturaUser;
-	import com.kaltura.vo.KalturaUserFilter;
-	import com.kaltura.vo.KalturaUserRole;
+	import com.borhan.bmc.vo.UserVO;
+	import com.borhan.types.BorhanNullableBoolean;
+	import com.borhan.types.BorhanUserOrderBy;
+	import com.borhan.types.BorhanUserStatus;
+	import com.borhan.vo.BorhanUser;
+	import com.borhan.vo.BorhanUserFilter;
+	import com.borhan.vo.BorhanUserRole;
 	
 	import mx.collections.ArrayCollection;
 
@@ -14,12 +14,12 @@ package com.kaltura.kmc.modules.admin.model
 	public class UsersModel {
 		
 		public function UsersModel() {
-			// init filter - only admin users who have access to KMC and are either active or blocked.
-			usersFilter = new KalturaUserFilter();
-			usersFilter.isAdminEqual = KalturaNullableBoolean.TRUE_VALUE;
-			usersFilter.loginEnabledEqual = KalturaNullableBoolean.TRUE_VALUE;
-			usersFilter.statusIn = KalturaUserStatus.ACTIVE + "," + KalturaUserStatus.BLOCKED;
-			usersFilter.orderBy = KalturaUserOrderBy.CREATED_AT_ASC;
+			// init filter - only admin users who have access to BMC and are either active or blocked.
+			usersFilter = new BorhanUserFilter();
+			usersFilter.isAdminEqual = BorhanNullableBoolean.TRUE_VALUE;
+			usersFilter.loginEnabledEqual = BorhanNullableBoolean.TRUE_VALUE;
+			usersFilter.statusIn = BorhanUserStatus.ACTIVE + "," + BorhanUserStatus.BLOCKED;
+			usersFilter.orderBy = BorhanUserOrderBy.CREATED_AT_ASC;
 		}
 		
 		/**
@@ -30,11 +30,11 @@ package com.kaltura.kmc.modules.admin.model
 		/**
 		 * the active user entry.
 		 * */
-		public var selectedUser:KalturaUser;
+		public var selectedUser:BorhanUser;
 		
-		[ArrayElementType("KalturaUser")]
+		[ArrayElementType("BorhanUser")]
 		/**
-		 * a list of all users (KalturaUser objects)
+		 * a list of all users (BorhanUser objects)
 		 * */
 		public var users:ArrayCollection;
 		
@@ -51,7 +51,7 @@ package com.kaltura.kmc.modules.admin.model
 		/**
 		 * the filter used for listing users. 
 		 */		
-		public var usersFilter:KalturaUserFilter;
+		public var usersFilter:BorhanUserFilter;
 		
 		/**
 		 * link to upgrade page on corp website
@@ -73,10 +73,10 @@ package com.kaltura.kmc.modules.admin.model
 		
 		/**
 		 * when creating a new role from the user drilldown, need to pass  
-		 * the KalturaUserRole returned from the server back to the user drilldown   
+		 * the BorhanUserRole returned from the server back to the user drilldown   
 		 * window via the model. 
 		 */		
-		public var newRole:KalturaUserRole;
+		public var newRole:BorhanUserRole;
 		
 		[ArrayElementType("String")]
 		/**

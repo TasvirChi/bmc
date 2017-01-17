@@ -1,13 +1,13 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -20,20 +20,20 @@ package com.kaltura.kmc.modules.account.control.command {
 
 
 		public function execute(event:CairngormEvent):void {
-			var filter:KalturaCategoryFilter = new KalturaCategoryFilter();
+			var filter:BorhanCategoryFilter = new BorhanCategoryFilter();
 			filter.privacyContextEqual = "*";	
 			var list:CategoryList = new CategoryList(filter);
-			list.addEventListener(KalturaEvent.COMPLETE, result);
-			list.addEventListener(KalturaEvent.FAILED, fault);
+			list.addEventListener(BorhanEvent.COMPLETE, result);
+			list.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(list);
 		}
 
 
 		public function result(data:Object):void {
-			var listResult:KalturaCategoryListResponse = data.data as KalturaCategoryListResponse;
+			var listResult:BorhanCategoryListResponse = data.data as BorhanCategoryListResponse;
 			if (!listResult.objects || listResult.objects.length == 0) {
 				var n_a:String = ResourceManager.getInstance().getString('account', 'n_a');
-				var dummy:KalturaCategory = new KalturaCategory();
+				var dummy:BorhanCategory = new BorhanCategory();
 				dummy.name = n_a;
 				dummy.privacyContext = n_a;
 				dummy.disabled = true;	// will later use this value to disable actions in IR

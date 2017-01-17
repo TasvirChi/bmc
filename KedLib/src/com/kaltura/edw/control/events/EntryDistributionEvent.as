@@ -1,9 +1,9 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaEntryDistribution;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanEntryDistribution;
 	
-	public class EntryDistributionEvent extends KMvCEvent
+	public class EntryDistributionEvent extends BMvCEvent
 	{
 		public static const LIST:String = "content_listEntryDistribution";
 		public static const UPDATE_LIST:String = "content_updateEntryDistributionList";
@@ -15,14 +15,14 @@ package com.kaltura.edw.control.events
 		public static const GET_SENT_DATA:String = "content_getSentDataEntryDistribution";
 		public static const GET_RETURNED_DATA:String = "content_getReturnedDataEntryDistribution";
 		
-		public var entryDistribution:KalturaEntryDistribution;
+		public var entryDistribution:BorhanEntryDistribution;
 		public var distributionsWithProfilesToAddArray:Array;
 		public var distributionsToRemoveArray:Array;
 		
 		public function EntryDistributionEvent( type:String, 
 												distributionsWithProfilesToAddArray:Array = null,
 												distributionsToRemoveArray:Array = null,
-												entryDistribution: KalturaEntryDistribution = null,
+												entryDistribution: BorhanEntryDistribution = null,
 												bubbles:Boolean=false, 
 												cancelable:Boolean=false)
 		{

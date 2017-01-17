@@ -1,9 +1,9 @@
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users
+This file is part of the Borhan Collaborative Media Suite which allows users
 to do with audio, video, and animation what Wiki platfroms allow them to do with
 text.
 
-Copyright (C) 2006-2008  Kaltura Inc.
+Copyright (C) 2006-2008  Borhan Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,22 +20,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @ignore
 */
-package com.kaltura.controls.kobjecthadles
+package com.borhan.controls.kobjecthadles
 {
-	import com.kaltura.controls.kobjecthadles.events.KPropChangeEvent;
-	import com.kaltura.controls.kobjecthadles.events.RotateKohEvent;
-	import com.kaltura.controls.kobjecthadles.handles.DownHandle;
-	import com.kaltura.controls.kobjecthadles.handles.DownLeftHandle;
-	import com.kaltura.controls.kobjecthadles.handles.DownRightHandle;
-	import com.kaltura.controls.kobjecthadles.handles.FlipHandle;
-	import com.kaltura.controls.kobjecthadles.handles.LeftHandle;
-	import com.kaltura.controls.kobjecthadles.handles.RightHandle;
-	import com.kaltura.controls.kobjecthadles.handles.RotateHandle;
-	import com.kaltura.controls.kobjecthadles.handles.UpHandle;
-	import com.kaltura.controls.kobjecthadles.handles.UpLeftHandle;
-	import com.kaltura.controls.kobjecthadles.handles.UpRightHandle;
-	import com.kaltura.controls.kobjecthadles.managers.HandleCursorManager;
-	import com.kaltura.controls.kobjecthadles.managers.HandleDisplayManager;
+	import com.borhan.controls.kobjecthadles.events.KPropChangeEvent;
+	import com.borhan.controls.kobjecthadles.events.RotateKohEvent;
+	import com.borhan.controls.kobjecthadles.handles.DownHandle;
+	import com.borhan.controls.kobjecthadles.handles.DownLeftHandle;
+	import com.borhan.controls.kobjecthadles.handles.DownRightHandle;
+	import com.borhan.controls.kobjecthadles.handles.FlipHandle;
+	import com.borhan.controls.kobjecthadles.handles.LeftHandle;
+	import com.borhan.controls.kobjecthadles.handles.RightHandle;
+	import com.borhan.controls.kobjecthadles.handles.RotateHandle;
+	import com.borhan.controls.kobjecthadles.handles.UpHandle;
+	import com.borhan.controls.kobjecthadles.handles.UpLeftHandle;
+	import com.borhan.controls.kobjecthadles.handles.UpRightHandle;
+	import com.borhan.controls.kobjecthadles.managers.HandleCursorManager;
+	import com.borhan.controls.kobjecthadles.managers.HandleDisplayManager;
 
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
@@ -50,10 +50,10 @@ package com.kaltura.controls.kobjecthadles
 	/**
 	 * Dispatched when object handles rotateion occour.
 	 */
-	[Event(name="rotate", type="com.kaltura.kobjecthandles.events.RotateKohEvent")]
-	[Event(name="selectonChanged", type="com.kaltura.kobjecthandles.events.SelectionKohEvent")]
-	[Event(name="widthChangedEvent", type="com.kaltura.controls.kobjecthadles.events.KPropChangeEvent")]
-	[Event(name="heightChangedEvent", type="com.kaltura.controls.kobjecthadles.events.KPropChangeEvent")]
+	[Event(name="rotate", type="com.borhan.kobjecthandles.events.RotateKohEvent")]
+	[Event(name="selectonChanged", type="com.borhan.kobjecthandles.events.SelectionKohEvent")]
+	[Event(name="widthChangedEvent", type="com.borhan.controls.kobjecthadles.events.KPropChangeEvent")]
+	[Event(name="heightChangedEvent", type="com.borhan.controls.kobjecthadles.events.KPropChangeEvent")]
 
 	/**
 	* Defines the Dash Stroke Color.

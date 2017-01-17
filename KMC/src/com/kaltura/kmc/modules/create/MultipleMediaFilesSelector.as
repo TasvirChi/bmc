@@ -1,6 +1,6 @@
-package com.kaltura.kmc.modules.create
+package com.borhan.bmc.modules.create
 {
-	import com.kaltura.KalturaClient;
+	import com.borhan.BorhanClient;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

@@ -1,4 +1,4 @@
-package com.kaltura.utils
+package com.borhan.utils
 {
 	import mx.formatters.DateFormatter;
 	

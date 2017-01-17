@@ -1,19 +1,19 @@
-package com.kaltura.kmc.modules.content.commands.cat
+package com.borhan.bmc.modules.content.commands.cat
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryUpdate;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.CategoryUtils;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.category.CategoryUpdate;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.CategoryUtils;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.ResourceManager;
 	
-	public class UpdateCategoriesCommand extends KalturaCommand {
+	public class UpdateCategoriesCommand extends BorhanCommand {
 		
 		private var _categories:Array;
 		
@@ -33,15 +33,15 @@ package com.kaltura.kmc.modules.content.commands.cat
 			else {
 				_model.increaseLoadCounter();
 				var mr:MultiRequest = new MultiRequest();
-				for each (var kCat:KalturaCategory in _categories) {
+				for each (var kCat:BorhanCategory in _categories) {
 					kCat.setUpdatedFieldsOnly(true);
 					CategoryUtils.resetUnupdateableFields(kCat);
 					var update:CategoryUpdate = new CategoryUpdate(kCat.id, kCat);
 					mr.addAction(update);
 				}
 				
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(BorhanEvent.COMPLETE, result);
+				mr.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(mr); 
 			}
 		}
@@ -65,15 +65,15 @@ package com.kaltura.kmc.modules.content.commands.cat
 				var mr:MultiRequest;
 				for (var groupIndex:int = 0; groupIndex < _numOfGroups; groupIndex++) {
 					mr = new MultiRequest();
-					mr.addEventListener(KalturaEvent.COMPLETE, result);
-					mr.addEventListener(KalturaEvent.FAILED, fault);
+					mr.addEventListener(BorhanEvent.COMPLETE, result);
+					mr.addEventListener(BorhanEvent.FAILED, fault);
 					mr.queued = false;
 					
 					groupSize = (groupIndex < (_numOfGroups - 1)) ? 50 : lastGroupSize;
 					for (var entryIndexInGroup:int = 0; entryIndexInGroup < groupSize; entryIndexInGroup++) {
 						var index:int = ((groupIndex * 50) + entryIndexInGroup);
-						var keepId:int = (_categories[index] as KalturaCategory).id;
-						var kCat:KalturaCategory = _categories[index] as KalturaCategory;
+						var keepId:int = (_categories[index] as BorhanCategory).id;
+						var kCat:BorhanCategory = _categories[index] as BorhanCategory;
 						kCat.setUpdatedFieldsOnly(true);
 						CategoryUtils.resetUnupdateableFields(kCat);
 						

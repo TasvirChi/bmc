@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 
-	public class CategoriesTreeEvent extends KMvCEvent {
+	public class CategoriesTreeEvent extends BMvCEvent {
 		
 		
 		/**

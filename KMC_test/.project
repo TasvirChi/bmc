@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>KMC_test</name>
+	<name>BMC_test</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -17,29 +17,29 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>[source path] KMC</name>
+			<name>[source path] BMC</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC</locationURI>
+			<locationURI>DOCUMENTS/BMC</locationURI>
 		</link>
 		<link>
 			<name>[source path] content</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC/locale/%7Blocale%7D/content</locationURI>
+			<locationURI>DOCUMENTS/BMC/locale/%7Blocale%7D/content</locationURI>
 		</link>
 		<link>
 			<name>[source path] src</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC/src</locationURI>
+			<locationURI>DOCUMENTS/BMC/src</locationURI>
 		</link>
 		<link>
 			<name>[source path] studio</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC/locale/%7Blocale%7D/studio</locationURI>
+			<locationURI>DOCUMENTS/BMC/locale/%7Blocale%7D/studio</locationURI>
 		</link>
 		<link>
 			<name>[source path] {locale}</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC/locale/%7Blocale%7D</locationURI>
+			<locationURI>DOCUMENTS/BMC/locale/%7Blocale%7D</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" styleName="TitleWindowType2"
+<containers:ConfinedTitleWindow xmlns:containers="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" styleName="TitleWindowType2"
 				title="{resourceManager.getString('drilldown','grabFromVideo')}" showCloseButton="true"
 				horizontalAlign="center" close="{closeWindow(event)}" height="400" width="500"
 				creationComplete="{onCreationComplete()}">
@@ -10,19 +10,19 @@
 		<![CDATA[
 			import mx.resources.ResourceManager;
 			import mx.resources.ResourceBundle;
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.control.events.ThumbnailAssetEvent;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.events.KdpEventTypes;
-			import com.kaltura.kmvc.control.KMvCController;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.edw.control.events.ThumbnailAssetEvent;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.events.BdpEventTypes;
+			import com.borhan.bmvc.control.BMvCController;
+			import com.borhan.vo.BorhanBaseEntry;
 			
 			import mx.managers.PopUpManager;
 			
-			private static var _kdp3SwfLoader:SWFLoader;
+			private static var _bdp3SwfLoader:SWFLoader;
 			
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 			
 			private var _refreshRequired:Boolean = true;
 
@@ -31,15 +31,15 @@
 			/**
 			 * application controller
 			 * */
-			public var controller:KMvCController;
+			public var controller:BMvCController;
 			
 
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
 
 
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:BorhanBaseEntry):void {
 				_selectedEntry = value;
 			}
 
@@ -50,8 +50,8 @@
 					controller.dispatch(listThumbs);
 				}
 
-				if (_kdp3SwfLoader && _kdp3SwfLoader.content) {
-					_kdp3SwfLoader.content['sendNotification'](KdpEventTypes.DO_PAUSE);
+				if (_bdp3SwfLoader && _bdp3SwfLoader.content) {
+					_bdp3SwfLoader.content['sendNotification'](BdpEventTypes.DO_PAUSE);
 				}
 				PopUpManager.removePopUp(this);
 			}
@@ -60,45 +60,45 @@
 			private function onCreationComplete():void {
 				this.mx_internal::closeButton.buttonMode = true;
 				_refreshRequired = false;
-				loadKdp();
+				loadBdp();
 			}
 
 
-			private function loadKdp():void {
+			private function loadBdp():void {
 				//if this is the second time we open the content
-				if (_kdp3SwfLoader && _kdp3SwfLoader.content) {
-					var kdp3LoaderParent:DisplayObjectContainer = kdp3Loader.parent;
+				if (_bdp3SwfLoader && _bdp3SwfLoader.content) {
+					var bdp3LoaderParent:DisplayObjectContainer = bdp3Loader.parent;
 
-					kdp3LoaderParent.addChildAt(_kdp3SwfLoader, kdp3LoaderParent.getChildIndex(kdp3Loader));
-					kdp3LoaderParent.removeChild(kdp3Loader);
-					//listen to kdp ready to show it because on the second time if we won't do that we will see the prev thumb
-					//because this is static KDP (due to performance issue that we fixed)
-					_kdp3SwfLoader.visible = false;
-					_kdp3SwfLoader.content.addEventListener(KdpEventTypes.ENTRY_READY, showKDP);
-					_kdp3SwfLoader.content.addEventListener(KdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
-					_kdp3SwfLoader.content["sendNotification"](KdpEventTypes.CHANGE_MEDIA, {entryId: _selectedEntry.id});
+					bdp3LoaderParent.addChildAt(_bdp3SwfLoader, bdp3LoaderParent.getChildIndex(bdp3Loader));
+					bdp3LoaderParent.removeChild(bdp3Loader);
+					//listen to bdp ready to show it because on the second time if we won't do that we will see the prev thumb
+					//because this is static BDP (due to performance issue that we fixed)
+					_bdp3SwfLoader.visible = false;
+					_bdp3SwfLoader.content.addEventListener(BdpEventTypes.ENTRY_READY, showBDP);
+					_bdp3SwfLoader.content.addEventListener(BdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+					_bdp3SwfLoader.content["sendNotification"](BdpEventTypes.CHANGE_MEDIA, {entryId: _selectedEntry.id});
 				}
 				else {
-					var newUrl:String = context.protocol + context.cdnHost + "/kwidget/wid/_" + context.kc.partnerId + "/ui_conf_id/" + context.captureThumbnailUiconf + "/nowrapper/1/a";
-					kdp3Loader.scaleContent = false;
-					kdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain()/* , SecurityDomain.currentDomain */);
-					kdp3Loader.load(newUrl);
+					var newUrl:String = context.protocol + context.cdnHost + "/bwidget/wid/_" + context.kc.partnerId + "/ui_conf_id/" + context.captureThumbnailUiconf + "/nowrapper/1/a";
+					bdp3Loader.scaleContent = false;
+					bdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain()/* , SecurityDomain.currentDomain */);
+					bdp3Loader.load(newUrl);
 				}
 			}
 
 
-			private function showKDP(event:Event = null):void {
-				_kdp3SwfLoader.visible = true;
+			private function showBDP(event:Event = null):void {
+				_bdp3SwfLoader.visible = true;
 			}
 
 
 			/**
-			 * Kdp loaded, initialize it.
+			 * Bdp loaded, initialize it.
 			 */
-			private function onKDP3Loaded(event:Event):void {
-				_kdp3SwfLoader = kdp3Loader;
+			private function onBDP3Loaded(event:Event):void {
+				_bdp3SwfLoader = bdp3Loader;
 
-				//set kdp params
+				//set bdp params
 				var params:Object = new Object();
 				params.entryId = _selectedEntry.id;
 				params.ks = context.kc.ks;
@@ -108,23 +108,23 @@
 				params.host = context.rootUrl;
 				params.debugMode = context.debugMode;
 				params.allowCookies = true;
-				params = overrideKDPStrings(params);
+				params = overrideBDPStrings(params);
 				
-				_kdp3SwfLoader.content.addEventListener(KdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
-				_kdp3SwfLoader.content["flashvars"] = params;
-				//start the loading sqeunce of the kdp	
-				_kdp3SwfLoader.content["init"]();
+				_bdp3SwfLoader.content.addEventListener(BdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+				_bdp3SwfLoader.content["flashvars"] = params;
+				//start the loading sqeunce of the bdp	
+				_bdp3SwfLoader.content["init"]();
 
 			}
 			
 			
 			/**
-			 * override the messages KDP shows for captureThumbnail.
+			 * override the messages BDP shows for captureThumbnail.
 			 * first get all en_US strings (last locale in chain), then override whatever appears in any previous locale
-			 * @param params	KDP parameters object
+			 * @param params	BDP parameters object
 			 * @return	adjusted parameters object with required strings, if they appear in locale file.
 			 * */
-			private function overrideKDPStrings(params:Object):Object {
+			private function overrideBDPStrings(params:Object):Object {
 				var rb:ResourceBundle;
 				// get the first locale that has this resource bundle
 				for (var i:int = resourceManager.localeChain.length-1; i>=0; i--) {
@@ -141,14 +141,14 @@
 
 
 			private function onThumbnailSaved(event:Event):void {
-				_kdp3SwfLoader.content.removeEventListener(KdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+				_bdp3SwfLoader.content.removeEventListener(BdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
 				_refreshRequired = true;
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_DRILLDOWN_THUMBNAIL_ADD, GoogleAnalyticsConsts.CONTENT);
 			}
 		]]>
 	</mx:Script>
 	<mx:VBox width="300" height="285" verticalAlign="middle" horizontalAlign="center">
-		<mx:SWFLoader id="kdp3Loader" width="300" height="255" complete="{onKDP3Loaded(event)}"/>
+		<mx:SWFLoader id="bdp3Loader" width="300" height="255" complete="{onBDP3Loaded(event)}"/>
 	</mx:VBox>
 
 	<mx:Text width="300" text="{resourceManager.getString('drilldown','grabFromVideoText')}"/>

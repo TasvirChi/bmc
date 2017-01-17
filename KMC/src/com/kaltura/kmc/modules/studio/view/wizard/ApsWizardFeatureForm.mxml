@@ -4,8 +4,8 @@
 		 creationComplete="onCreationComplete()">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.studio.events.ApsPrefixEvent;
-			import com.kaltura.kmc.modules.studio.vo.ApsOptionItemVo;
+			import com.borhan.bmc.modules.studio.events.ApsPrefixEvent;
+			import com.borhan.bmc.modules.studio.vo.ApsOptionItemVo;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;

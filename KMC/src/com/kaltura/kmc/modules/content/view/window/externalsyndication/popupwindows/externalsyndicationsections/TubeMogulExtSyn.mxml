@@ -4,32 +4,32 @@ TubeMogul syndication details.
 used as part of <Code>ExternalSyndicationPopUpWindow</code>
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-		 xmlns:controls="com.kaltura.controls.*"
-		 xmlns:validators="com.kaltura.validators.*"
-		 implements="com.kaltura.kmc.modules.content.view.interfaces.IExternalSyndicationFeed"
+		 xmlns:controls="com.borhan.controls.*"
+		 xmlns:validators="com.borhan.validators.*"
+		 implements="com.borhan.bmc.modules.content.view.interfaces.IExternalSyndicationFeed"
 		 width="100%" height="100%"
 		 label="{resourceManager.getString('cms', 'tubeMogul')}">
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.types.KalturaSyndicationFeedType;
-			import com.kaltura.vo.KalturaBaseSyndicationFeed;
-			import com.kaltura.vo.KalturaFlavorParams;
-			import com.kaltura.vo.KalturaTubeMogulSyndicationFeed;
+			import com.borhan.types.BorhanSyndicationFeedType;
+			import com.borhan.vo.BorhanBaseSyndicationFeed;
+			import com.borhan.vo.BorhanFlavorParams;
+			import com.borhan.vo.BorhanTubeMogulSyndicationFeed;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
 			
 
-			private var _feed:KalturaBaseSyndicationFeed;
+			private var _feed:BorhanBaseSyndicationFeed;
 			
 			[Bindable]
 			public var flavorParams:ArrayCollection;
 
 
-			public function get syndication():KalturaBaseSyndicationFeed {
-				var tmFeed:KalturaTubeMogulSyndicationFeed = (_feed != null) ? (_feed as KalturaTubeMogulSyndicationFeed) : new KalturaTubeMogulSyndicationFeed();
-				tmFeed.type = KalturaSyndicationFeedType.TUBE_MOGUL;
+			public function get syndication():BorhanBaseSyndicationFeed {
+				var tmFeed:BorhanTubeMogulSyndicationFeed = (_feed != null) ? (_feed as BorhanTubeMogulSyndicationFeed) : new BorhanTubeMogulSyndicationFeed();
+				tmFeed.type = BorhanSyndicationFeedType.TUBE_MOGUL;
 
 				tmFeed.flavorParamId = getFlavorParamID();
 				tmFeed.addToDefaultConversionProfile = defaultCPCheckBox.selected;
@@ -40,8 +40,8 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 			}
 
 
-			public function set syndication(syndication:KalturaBaseSyndicationFeed):void {
-				_feed = syndication as KalturaTubeMogulSyndicationFeed;
+			public function set syndication(syndication:BorhanBaseSyndicationFeed):void {
+				_feed = syndication as BorhanTubeMogulSyndicationFeed;
 
 				setFeedFlavorAndSettings();
 
@@ -65,7 +65,7 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 			private function setFeedFlavorAndSettings():void {
 				// flavor param
 				var fpId:int = _feed.flavorParamId;
-				for each (var fp:KalturaFlavorParams in flavorsComboBox.dataProvider) {
+				for each (var fp:BorhanFlavorParams in flavorsComboBox.dataProvider) {
 					if (fpId == fp.id) {
 						flavorsComboBox.selectedItem = fp;
 						break;
@@ -79,7 +79,7 @@ used as part of <Code>ExternalSyndicationPopUpWindow</code>
 
 
 			private function getFlavorParamID():int {
-				return (flavorsComboBox.selectedItem as KalturaFlavorParams).id;
+				return (flavorsComboBox.selectedItem as BorhanFlavorParams).id;
 			}
 
 

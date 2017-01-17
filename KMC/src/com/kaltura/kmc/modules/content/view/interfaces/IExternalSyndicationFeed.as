@@ -1,14 +1,14 @@
-package com.kaltura.kmc.modules.content.view.interfaces
+package com.borhan.bmc.modules.content.view.interfaces
 {
-	import com.kaltura.vo.KalturaBaseSyndicationFeed;
+	import com.borhan.vo.BorhanBaseSyndicationFeed;
 	
 	/**
 	 * This interface declares the methods necessary for an external syndication feed. 
 	 */	
 	public interface IExternalSyndicationFeed
 	{
-		function get syndication():KalturaBaseSyndicationFeed
-		function set syndication(syndication:KalturaBaseSyndicationFeed):void
+		function get syndication():BorhanBaseSyndicationFeed
+		function set syndication(syndication:BorhanBaseSyndicationFeed):void
 		
 		function validate():Boolean
 	}

@@ -1,4 +1,4 @@
-package com.kaltura.resources
+package com.borhan.resources
 {
 	public class ResourceModifiers
 	{

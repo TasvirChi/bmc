@@ -1,6 +1,6 @@
-package com.kaltura.edw.model.datapacks
+package com.borhan.edw.model.datapacks
 {
-	import com.kaltura.kmvc.model.IDataPack;
+	import com.borhan.bmvc.model.IDataPack;
 	
 	import mx.collections.ArrayCollection;
 	
@@ -21,7 +21,7 @@ package com.kaltura.edw.model.datapacks
 		
 		/**
 		 * list of partner's storage profiles, 
-		 * <code>KalturaStorageProfile</code> objects 
+		 * <code>BorhanStorageProfile</code> objects 
 		 */
 		public var storageProfiles:ArrayCollection;
 		
@@ -41,7 +41,7 @@ package com.kaltura.edw.model.datapacks
 		public var flavorParams:Array;
 		
 		/**
-		 * a list of KalturaConversionProfile where type = live 
+		 * a list of BorhanConversionProfile where type = live 
 		 */
 		public var liveConversionProfiles:ArrayCollection;
 		

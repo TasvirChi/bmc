@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<containers:ConfinedTitleWindow xmlns:containers="com.kaltura.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="470" height="470" 
-				xmlns:cat="com.kaltura.edw.components.fltr.cat.*"
+<containers:ConfinedTitleWindow xmlns:containers="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="470" height="470" 
+				xmlns:cat="com.borhan.edw.components.fltr.cat.*"
 				creationComplete="creationCompleteHandler(event)" 
 				styleName="TitleWindowType2" showCloseButton="true" close="clearSelection(event)"
 				title="{resourceManager.getString('drilldown', 'catTree')}">
@@ -12,13 +12,13 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.edw.components.fltr.FilterComponentEvent;
-			import com.kaltura.edw.components.fltr.cat.CatTreeSelectionMode;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.vo.CategoryVO;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.BorhanClient;
+			import com.borhan.edw.components.fltr.FilterComponentEvent;
+			import com.borhan.edw.components.fltr.cat.CatTreeSelectionMode;
+			import com.borhan.edw.events.GeneralNonCairngormEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.vo.CategoryVO;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.collections.ArrayCollection;
 			import mx.core.mx_internal;
@@ -29,7 +29,7 @@
 			public var filterModel:FilterModel;
 			
 			[Bindable]
-			public var kClient:KalturaClient;
+			public var kClient:BorhanClient;
 			
 			[Bindable]
 			/**
@@ -44,13 +44,13 @@
 			
 			/**
 			 * set categories which will appear as selected
-			 * @param value	Array of KalturaCategory objects
+			 * @param value	Array of BorhanCategory objects
 			 * */
 			public function setCategories(value:Array):void {
 				if (catComplete) {
 					catComplete.selectedItems = new ArrayCollection(value);
 					var catids:String = '';
-					for each (var kCat:KalturaCategory in value) {
+					for each (var kCat:BorhanCategory in value) {
 						catids += kCat.id + ",";
 					}
 					catTree.filter = catids;
@@ -61,7 +61,7 @@
 			}
 			
 			/**
-			 * get list of selected categories (KalturaCategory objects)
+			 * get list of selected categories (BorhanCategory objects)
 			 * */
 			public function getCategories():Array {
 				return catComplete.selectedItems.source;
@@ -85,11 +85,11 @@
 			protected function catTree_valueChangeHandler(event:FilterComponentEvent):void
 			{
 				var fromTree:Array = catTree.getSelectedCategories(); // CategoryVo objects
-				var fromAC:ArrayCollection = catComplete.selectedItems;			// KalturaCategory objects
+				var fromAC:ArrayCollection = catComplete.selectedItems;			// BorhanCategory objects
 				
-				var kCat:KalturaCategory;
+				var kCat:BorhanCategory;
 				if (event.kind == FilterComponentEvent.EVENT_KIND_ADD) {
-					// get unique KalturaCategories
+					// get unique BorhanCategories
 					var found:Boolean;
 					for each (var catvo:CategoryVO in fromTree) {
 						found = false;
@@ -107,7 +107,7 @@
 				else if (event.kind == FilterComponentEvent.EVENT_KIND_REMOVE) {
 					// event.data.value is cat.id
 					for (var i:int = 0; i< fromAC.length; i++) {
-						kCat = fromAC.getItemAt(i) as KalturaCategory;
+						kCat = fromAC.getItemAt(i) as BorhanCategory;
 						if (kCat.id == event.data.value) {
 							// if in autocomplete, remove it.
 							fromAC.removeItemAt(i);
@@ -120,13 +120,13 @@
 			protected function catComplete_valueChangeHandler(event:GeneralNonCairngormEvent):void {
 				if (event.data) {
 					// event.data is selected item in autocomplete
-					var cat:KalturaCategory = event.data as KalturaCategory;
+					var cat:BorhanCategory = event.data as BorhanCategory;
 					catTree.addByCatId(cat.id.toString(), true, cat);
 				}
 				else {
 					// reset selected items in tree
 					var catids:String = '';
-					for each (var kCat:KalturaCategory in catComplete.selectedItems) {
+					for each (var kCat:BorhanCategory in catComplete.selectedItems) {
 						catids += kCat.id + ",";
 					}
 					if (catids.length) {

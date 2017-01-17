@@ -1,25 +1,25 @@
-package com.kaltura.edw.control.commands.flavor
+package com.borhan.edw.control.commands.flavor
 {
-	import com.kaltura.commands.flavorAsset.FlavorAssetConvert;
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.control.events.KedEntryEvent;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaFlavorAssetWithParams;
+	import com.borhan.commands.flavorAsset.FlavorAssetConvert;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.control.events.KedEntryEvent;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanFlavorAssetWithParams;
 	
 	public class ConvertFlavorAssetCommand extends KedCommand
 	{
 		private var selectedEntryId:String;
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{	
 			_dispatcher = event.dispatcher;
 			_model.increaseLoadCounter();
-			var obj:KalturaFlavorAssetWithParams = event.data as KalturaFlavorAssetWithParams;
+			var obj:BorhanFlavorAssetWithParams = event.data as BorhanFlavorAssetWithParams;
 			selectedEntryId = obj.entryId;
 			var convertCommand:FlavorAssetConvert = new FlavorAssetConvert(selectedEntryId, obj.flavorParams.id);
-            convertCommand.addEventListener(KalturaEvent.COMPLETE, result);
-	        convertCommand.addEventListener(KalturaEvent.FAILED, fault);
+            convertCommand.addEventListener(BorhanEvent.COMPLETE, result);
+	        convertCommand.addEventListener(BorhanEvent.FAILED, fault);
     	    _client.post(convertCommand);
 		}
 		
@@ -27,7 +27,7 @@ package com.kaltura.edw.control.commands.flavor
 		{
 			super.result(event);
  			_model.decreaseLoadCounter();
- 			var entry:KalturaBaseEntry = new KalturaBaseEntry();
+ 			var entry:BorhanBaseEntry = new BorhanBaseEntry();
  			entry.id = selectedEntryId;
  			var cgEvent : KedEntryEvent = new KedEntryEvent(KedEntryEvent.GET_FLAVOR_ASSETS, entry);
 			_dispatcher.dispatch(cgEvent);

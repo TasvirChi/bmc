@@ -1,42 +1,42 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.categoryEntry.CategoryEntryDelete;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.events.EntriesEvent;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.categoryEntry.CategoryEntryDelete;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.events.EntriesEvent;
+	import com.borhan.bmc.modules.content.events.BMCSearchEvent;
+	import com.borhan.vo.BorhanBaseEntry;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class RemoveCategoriesEntriesCommand extends KalturaCommand {
+	public class RemoveCategoriesEntriesCommand extends BorhanCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 			
 			var e:EntriesEvent = event as EntriesEvent;
-			var categories:Array = e.data as Array; // elements are KalturaCategories
+			var categories:Array = e.data as Array; // elements are BorhanCategories
 			// for each entry, if it has the category remove it.
 			var entries:Array = _model.selectedEntries;
 			
 			var ced:CategoryEntryDelete;
 			var mr:MultiRequest = new MultiRequest();
-			for each (var kbe:KalturaBaseEntry in entries) {
-				for each (var kc:KalturaCategory in categories) {
+			for each (var kbe:BorhanBaseEntry in entries) {
+				for each (var kc:BorhanCategory in categories) {
 					ced = new CategoryEntryDelete(kbe.id, kc.id);
 					mr.addAction(ced);
 				}
 			}
 			
 			
-			mr.addEventListener(KalturaEvent.COMPLETE, result);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, result);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(mr);
 			
 		}
@@ -47,7 +47,7 @@ package com.kaltura.kmc.modules.content.commands
 			
 			// look for error
 			var str:String = '';
-			var er:KalturaError = (data as KalturaEvent).error;
+			var er:BorhanError = (data as BorhanEvent).error;
 			var rm:IResourceManager = ResourceManager.getInstance();
 			if (er) {
 				str = rm.getString('cms', er.errorCode);
@@ -60,7 +60,7 @@ package com.kaltura.kmc.modules.content.commands
 			else {
 				// look inside MR, ignore irrelevant
 				for each (var o:Object in data.data) {
-					er = o as KalturaError;
+					er = o as BorhanError;
 					if (er) {
 						if (er.errorCode != "ENTRY_IS_NOT_ASSIGNED_TO_CATEGORY") {
 							str = rm.getString('cms', er.errorCode);
@@ -82,7 +82,7 @@ package com.kaltura.kmc.modules.content.commands
 					}
 				}	
 			}
-			var searchEvent:KMCSearchEvent = new KMCSearchEvent(KMCSearchEvent.DO_SEARCH_ENTRIES , _model.listableVo  );
+			var searchEvent:BMCSearchEvent = new BMCSearchEvent(BMCSearchEvent.DO_SEARCH_ENTRIES , _model.listableVo  );
 			searchEvent.dispatch();
 		}
 	}

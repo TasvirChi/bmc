@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.events.SelectionEvent;
+	import com.borhan.bmc.modules.content.events.SelectionEvent;
 	
-	public class SelectionCommand extends KalturaCommand
+	public class SelectionCommand extends BorhanCommand
 	{
 		
 		override public function execute(event:CairngormEvent):void {

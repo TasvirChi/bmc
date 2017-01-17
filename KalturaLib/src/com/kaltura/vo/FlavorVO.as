@@ -1,6 +1,6 @@
-package com.kaltura.vo {
+package com.borhan.vo {
 	import com.adobe.cairngorm.vo.IValueObject;
-	import com.kaltura.utils.ObjectUtil;
+	import com.borhan.utils.ObjectUtil;
 	
 	import flash.events.Event;
 	import flash.utils.getDefinitionByName;
@@ -10,7 +10,7 @@ package com.kaltura.vo {
 
 	[Bindable]
 	/**
-	 * wrapper for KalturaFlavorParams 
+	 * wrapper for BorhanFlavorParams 
 	 */	
 	public class FlavorVO extends ObjectProxy implements IValueObject {
 		public static const SELECTED_CHANGED_EVENT:String = "flavorSelectedChanged";
@@ -18,9 +18,9 @@ package com.kaltura.vo {
 		private var _selected:Boolean = false;
 		
 		/**
-		 * the KalturaFlavorParams this vo represents 
+		 * the BorhanFlavorParams this vo represents 
 		 */
-		public var kFlavor:KalturaFlavorParams = new KalturaFlavorParams();
+		public var kFlavor:BorhanFlavorParams = new BorhanFlavorParams();
 		
 
 		/**
@@ -48,7 +48,7 @@ package com.kaltura.vo {
 			// need to make kFlavor the same type as current!!
 			var kFlavorClassName:String = getQualifiedClassName(this.kFlavor);
 			var kFlavorClass:Class = getDefinitionByName(kFlavorClassName) as Class; 
-			newFlavor.kFlavor = (new kFlavorClass()) as KalturaFlavorParams;
+			newFlavor.kFlavor = (new kFlavorClass()) as BorhanFlavorParams;
 			var ar:Array = ObjectUtil.getObjectAllKeys(this.kFlavor);
 			for (var i:int = 0; i < ar.length; i++) {
 				newFlavor.kFlavor[ar[i]] = kFlavor[ar[i]];

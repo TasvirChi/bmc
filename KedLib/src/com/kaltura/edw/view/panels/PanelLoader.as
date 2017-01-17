@@ -1,4 +1,4 @@
-package com.kaltura.edw.view.panels
+package com.borhan.edw.view.panels
 {
 	import flash.errors.IllegalOperationError;
 
@@ -22,9 +22,9 @@ package com.kaltura.edw.view.panels
 		}
 	}
 }
-import com.kaltura.edw.business.IDrilldownPanel;
-import com.kaltura.edw.view.panels.IPanelLoaderImp;
-import com.kaltura.edw.view.panels.PanelMetadataVO;
+import com.borhan.edw.business.IDrilldownPanel;
+import com.borhan.edw.view.panels.IPanelLoaderImp;
+import com.borhan.edw.view.panels.PanelMetadataVO;
 
 import flash.errors.IOError;
 import flash.system.ApplicationDomain;

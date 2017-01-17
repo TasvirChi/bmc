@@ -1,11 +1,11 @@
-package com.kaltura.edw.business
+package com.borhan.edw.business
 {
-	import com.kaltura.containers.HelpTitleWindow;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.kmvc.model.KMvCModel;
-	import com.kaltura.types.KalturaEntryStatus;
-	import com.kaltura.types.KalturaMediaType;
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.borhan.containers.HelpTitleWindow;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.bmvc.model.BMvCModel;
+	import com.borhan.types.BorhanEntryStatus;
+	import com.borhan.types.BorhanMediaType;
+	import com.borhan.vo.BorhanMediaEntry;
 	
 	import mx.collections.ArrayCollection;
 	

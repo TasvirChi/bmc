@@ -3,8 +3,8 @@
 
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.view.captions.CaptionsTable;
-			import com.kaltura.edw.vo.EntryCaptionVO;
+			import com.borhan.edw.view.captions.CaptionsTable;
+			import com.borhan.edw.vo.EntryCaptionVO;
 
 
 			protected function clickHandler(event:MouseEvent):void {
@@ -29,7 +29,7 @@
 
 			private function getLabel(data:Object):String {
 				var result:String;
-				if (data.isKmcDefault) {
+				if (data.isBmcDefault) {
 					result = resourceManager.getString('drilldown', 'default');
 				}
 				else {
@@ -41,18 +41,18 @@
 	</mx:Script>
 
 	<mx:LinkButton id="upload" label="{resourceManager.getString('drilldown', 'uploadCaption')}" styleName="plusIcon"
-				   click="clickHandler(event)" visible="{data.kmcStatus == EntryCaptionVO.EMPTY}"
-				   includeInLayout="{data.kmcStatus == EntryCaptionVO.EMPTY}"/>
+				   click="clickHandler(event)" visible="{data.bmcStatus == EntryCaptionVO.EMPTY}"
+				   includeInLayout="{data.bmcStatus == EntryCaptionVO.EMPTY}"/>
 	<mx:LinkButton id="remove" label="{resourceManager.getString('drilldown','remove')}"
 				   styleName="deleteThumbLinkButton" click="clickHandler(event)"
-				   visible="{data.kmcStatus != EntryCaptionVO.EMPTY}"
-				   includeInLayout="{data.kmcStatus != EntryCaptionVO.EMPTY}"/>
+				   visible="{data.bmcStatus != EntryCaptionVO.EMPTY}"
+				   includeInLayout="{data.bmcStatus != EntryCaptionVO.EMPTY}"/>
 	<mx:LinkButton id="download" label="{resourceManager.getString('drilldown','downloadFile')}"
 				   styleName="downloadThumbLinkButton" click="clickHandler(event)"
-				   visible="{data.kmcStatus == EntryCaptionVO.SAVED}"
-				   includeInLayout="{data.kmcStatus == EntryCaptionVO.SAVED}"/>
-	<mx:LinkButton id="setDefault" label="{getLabel(data)}" enabled="{!(data.isKmcDefault)}"
+				   visible="{data.bmcStatus == EntryCaptionVO.SAVED}"
+				   includeInLayout="{data.bmcStatus == EntryCaptionVO.SAVED}"/>
+	<mx:LinkButton id="setDefault" label="{getLabel(data)}" enabled="{!(data.isBmcDefault)}"
 				   styleName="setDefaultLinkButton" click="clickHandler(event)"
-				   visible="{data.kmcStatus == EntryCaptionVO.SAVED}"
-				   includeInLayout="{data.kmcStatus == EntryCaptionVO.SAVED}"/>
+				   visible="{data.bmcStatus == EntryCaptionVO.SAVED}"
+				   includeInLayout="{data.bmcStatus == EntryCaptionVO.SAVED}"/>
 </mx:Tile>

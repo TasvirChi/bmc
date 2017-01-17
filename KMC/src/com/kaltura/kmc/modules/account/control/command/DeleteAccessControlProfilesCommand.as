@@ -1,18 +1,18 @@
-package com.kaltura.kmc.modules.account.control.command {
+package com.borhan.bmc.modules.account.control.command {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.analytics.GoogleAnalyticsConsts;
-	import com.kaltura.analytics.GoogleAnalyticsTracker;
-	import com.kaltura.analytics.KAnalyticsTracker;
-	import com.kaltura.analytics.KAnalyticsTrackerConsts;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.accessControl.AccessControlDelete;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.control.events.AccessControlEvent;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.types.KalturaStatsKmcEventType;
-	import com.kaltura.vo.AccessControlProfileVO;
+	import com.borhan.analytics.GoogleAnalyticsConsts;
+	import com.borhan.analytics.GoogleAnalyticsTracker;
+	import com.borhan.analytics.KAnalyticsTracker;
+	import com.borhan.analytics.KAnalyticsTrackerConsts;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.accessControl.AccessControlDelete;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.control.events.AccessControlEvent;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.types.BorhanStatsBmcEventType;
+	import com.borhan.vo.AccessControlProfileVO;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
@@ -55,11 +55,11 @@ package com.kaltura.kmc.modules.account.control.command {
 					mr.addAction(deleteProf);
 				}
 				
-				mr.addEventListener(KalturaEvent.COMPLETE, result);
-				mr.addEventListener(KalturaEvent.FAILED, fault);
+				mr.addEventListener(BorhanEvent.COMPLETE, result);
+				mr.addEventListener(BorhanEvent.FAILED, fault);
 				_model.context.kc.post(mr);
 				
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, KalturaStatsKmcEventType.ACCOUNT_ACCESS_CONTROL_DELETE, "Account>Access Control Delete");
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.ACCOUNT, BorhanStatsBmcEventType.ACCOUNT_ACCESS_CONTROL_DELETE, "Account>Access Control Delete");
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.ACCOUNT_ACCESS_CONTROL_DELETE, GoogleAnalyticsConsts.ACCOUNT);
 			}
 		}

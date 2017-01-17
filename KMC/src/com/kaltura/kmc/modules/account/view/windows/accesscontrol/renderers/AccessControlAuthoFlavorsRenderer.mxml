@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <renderers:AccessControlRendererBase xmlns:mx="http://www.adobe.com/2006/mxml" width="100%"
 									 horizontalScrollPolicy="off" styleName="tableCellBoxRendererStyle" paddingLeft="4"
-									 xmlns:renderers="com.kaltura.kmc.modules.account.view.windows.accesscontrol.renderers.*">
+									 xmlns:renderers="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-			import com.kaltura.types.KalturaIpAddressRestrictionType;
-			import com.kaltura.types.KalturaLimitFlavorsRestrictionType;
-			import com.kaltura.vo.AccessControlProfileVO;
-			import com.kaltura.vo.FlavorVO;
-			import com.kaltura.vo.KalturaBaseRestriction;
-			import com.kaltura.vo.KalturaIpAddressRestriction;
-			import com.kaltura.vo.KalturaLimitFlavorsRestriction;
+			import com.borhan.bmc.modules.account.model.AccountModelLocator;
+			import com.borhan.types.BorhanIpAddressRestrictionType;
+			import com.borhan.types.BorhanLimitFlavorsRestrictionType;
+			import com.borhan.vo.AccessControlProfileVO;
+			import com.borhan.vo.FlavorVO;
+			import com.borhan.vo.BorhanBaseRestriction;
+			import com.borhan.vo.BorhanIpAddressRestriction;
+			import com.borhan.vo.BorhanLimitFlavorsRestriction;
 			
 			import mx.collections.ArrayCollection;
 			
@@ -26,18 +26,18 @@
 				
 				var acProfile:AccessControlProfileVO = value as AccessControlProfileVO;
 				var foundRestriction:Boolean = false;
-				for each (var restriction:KalturaBaseRestriction in acProfile.profile.restrictions) {
-					if (restriction is KalturaLimitFlavorsRestriction) {
+				for each (var restriction:BorhanBaseRestriction in acProfile.profile.restrictions) {
+					if (restriction is BorhanLimitFlavorsRestriction) {
 						foundRestriction = true;
 						// header:
-						if ((restriction as KalturaLimitFlavorsRestriction).limitFlavorsRestrictionType == KalturaLimitFlavorsRestrictionType.ALLOW_LIST) {
+						if ((restriction as BorhanLimitFlavorsRestriction).limitFlavorsRestrictionType == BorhanLimitFlavorsRestrictionType.ALLOW_LIST) {
 							_text = resourceManager.getString('account', 'ALLOW_IPS') + ":  ";  
 						}
 						else {
 							_text = resourceManager.getString('account', 'RESTRICT_IPS') + ":  ";
 						}
 						// values:
-						var flavorsIds:Array = (restriction as KalturaLimitFlavorsRestriction).flavorParamsIds.split(','); 
+						var flavorsIds:Array = (restriction as BorhanLimitFlavorsRestriction).flavorParamsIds.split(','); 
 						for each (var flavorParamsId:int in flavorsIds) {
 							_text += getFlavorNameById(flavorParamsId) + ", ";
 						}

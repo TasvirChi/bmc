@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KalturaFilterPager;
+	import com.borhan.vo.BorhanFilterPager;
 	
 	public class SetSyndicationPagerEvent extends CairngormEvent {
 		
 		public static const SET_PAGER:String = "content_setPager";
 		
-		private var _pager:KalturaFilterPager;
+		private var _pager:BorhanFilterPager;
 		
-		public function SetSyndicationPagerEvent(type:String, pager:KalturaFilterPager = null, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function SetSyndicationPagerEvent(type:String, pager:BorhanFilterPager = null, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			_pager = pager;
 			super(type, bubbles, cancelable);
 		}
 
-		public function get pager():KalturaFilterPager
+		public function get pager():BorhanFilterPager
 		{
 			return _pager;
 		}

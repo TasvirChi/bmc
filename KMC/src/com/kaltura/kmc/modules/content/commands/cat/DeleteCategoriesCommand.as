@@ -1,23 +1,23 @@
-package com.kaltura.kmc.modules.content.commands.cat {
+package com.borhan.bmc.modules.content.commands.cat {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.analytics.GoogleAnalyticsConsts;
-	import com.kaltura.analytics.GoogleAnalyticsTracker;
-	import com.kaltura.commands.MultiRequest;
-	import com.kaltura.commands.category.CategoryDelete;
-	import com.kaltura.errors.KalturaError;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.kmc.modules.content.events.CatTrackEvent;
-	import com.kaltura.kmc.modules.content.events.CategoryEvent;
-	import com.kaltura.kmc.modules.content.model.CategoriesModel;
-	import com.kaltura.vo.KalturaCategory;
+	import com.borhan.analytics.GoogleAnalyticsConsts;
+	import com.borhan.analytics.GoogleAnalyticsTracker;
+	import com.borhan.commands.MultiRequest;
+	import com.borhan.commands.category.CategoryDelete;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CatTrackEvent;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.bmc.modules.content.model.CategoriesModel;
+	import com.borhan.vo.BorhanCategory;
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
 
-	public class DeleteCategoriesCommand extends KalturaCommand {
+	public class DeleteCategoriesCommand extends BorhanCommand {
 
 		private var _ids:Array;
 
@@ -38,7 +38,7 @@ package com.kaltura.kmc.modules.content.commands.cat {
 			}
 			if (!_ids) {	// handling bulk, get from model
 				_ids = [];
-				for each (var kCat:KalturaCategory in _model.categoriesModel.selectedCategories) {
+				for each (var kCat:BorhanCategory in _model.categoriesModel.selectedCategories) {
 					_ids.push(kCat.id);
 					if (!hasEditWarn && kCat.tags && kCat.tags.indexOf(CategoriesModel.EDIT_WARN_TAG) > -1) {
 						hasEditWarn = true;
@@ -130,8 +130,8 @@ package com.kaltura.kmc.modules.content.commands.cat {
 		
 		private function deleteGroup():void {
 			var mr:MultiRequest = new MultiRequest();
-			mr.addEventListener(KalturaEvent.COMPLETE, deleteGroupResult);
-			mr.addEventListener(KalturaEvent.FAILED, fault);
+			mr.addEventListener(BorhanEvent.COMPLETE, deleteGroupResult);
+			mr.addEventListener(BorhanEvent.FAILED, fault);
 			mr.queued = false;
 			
 			// get number of categories in group
@@ -148,7 +148,7 @@ package com.kaltura.kmc.modules.content.commands.cat {
 		}
 		
 		
-		private function deleteGroupResult(data:KalturaEvent):void {
+		private function deleteGroupResult(data:BorhanEvent):void {
 			super.result(data);
 			_model.decreaseLoadCounter();
 			

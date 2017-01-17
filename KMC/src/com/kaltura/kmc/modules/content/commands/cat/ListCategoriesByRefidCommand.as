@@ -1,23 +1,23 @@
-package com.kaltura.kmc.modules.content.commands.cat {
+package com.borhan.bmc.modules.content.commands.cat {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.category.CategoryList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.modules.content.commands.KalturaCommand;
-	import com.kaltura.vo.KalturaCategory;
-	import com.kaltura.vo.KalturaCategoryFilter;
-	import com.kaltura.vo.KalturaCategoryListResponse;
+	import com.borhan.commands.category.CategoryList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.vo.BorhanCategory;
+	import com.borhan.vo.BorhanCategoryFilter;
+	import com.borhan.vo.BorhanCategoryListResponse;
 
-	public class ListCategoriesByRefidCommand extends KalturaCommand {
+	public class ListCategoriesByRefidCommand extends BorhanCommand {
 		
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 
-			var f:KalturaCategoryFilter = new KalturaCategoryFilter();
-			f.referenceIdEqual = (event.data as KalturaCategory).referenceId;
+			var f:BorhanCategoryFilter = new BorhanCategoryFilter();
+			f.referenceIdEqual = (event.data as BorhanCategory).referenceId;
 			
 			var catList:CategoryList = new CategoryList(f);
-			catList.addEventListener(KalturaEvent.COMPLETE, result);
-			catList.addEventListener(KalturaEvent.FAILED, fault);
+			catList.addEventListener(BorhanEvent.COMPLETE, result);
+			catList.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(catList);
 		}
 
@@ -25,7 +25,7 @@ package com.kaltura.kmc.modules.content.commands.cat {
 		override public function result(data:Object):void {
 			super.result(data);
 			if (!checkError(data)) {
-				var recievedData:KalturaCategoryListResponse = KalturaCategoryListResponse(data.data);
+				var recievedData:BorhanCategoryListResponse = BorhanCategoryListResponse(data.data);
 				_model.categoriesModel.categoriesWSameRefidAsSelected = recievedData.objects;
 			}
 			_model.decreaseLoadCounter();

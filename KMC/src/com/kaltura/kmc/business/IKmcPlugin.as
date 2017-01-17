@@ -1,11 +1,11 @@
-package com.kaltura.kmc.business
+package com.borhan.bmc.business
 {
-	import com.kaltura.KalturaClient;
+	import com.borhan.BorhanClient;
 
-	public interface IKmcPlugin {
+	public interface IBmcPlugin {
 		
-		function set client(value:KalturaClient):void;
-		function get client():KalturaClient;
+		function set client(value:BorhanClient):void;
+		function get client():BorhanClient;
 		
 		function set flashvars(value:Object):void;
 		function get flashvars():Object;

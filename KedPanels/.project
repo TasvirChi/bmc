@@ -4,7 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>KedLib</project>
-		<project>KMC</project>
+		<project>BMC</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -21,12 +21,12 @@
 		<link>
 			<name>bin-debug</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/KMC/bin-debug</locationURI>
+			<locationURI>DOCUMENTS/BMC/bin-debug</locationURI>
 		</link>
 		<link>
 			<name>bin-release</name>
 			<type>2</type>
-			<location>C:/workspaces/kmc/KMC/bin-release</location>
+			<location>C:/workspaces/bmc/BMC/bin-release</location>
 		</link>
 	</linkedResources>
 </projectDescription>

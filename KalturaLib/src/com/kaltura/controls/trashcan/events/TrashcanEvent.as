@@ -1,4 +1,4 @@
-package com.kaltura.controls.trashcan.events
+package com.borhan.controls.trashcan.events
 {
 	import flash.events.Event;
 

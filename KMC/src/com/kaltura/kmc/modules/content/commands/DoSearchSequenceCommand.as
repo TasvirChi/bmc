@@ -1,19 +1,19 @@
-package com.kaltura.kmc.modules.content.commands
+package com.borhan.bmc.modules.content.commands
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.edw.control.events.SearchEvent;
-	import com.kaltura.edw.control.KedController;
-	import com.kaltura.kmc.modules.content.events.KMCSearchEvent;
+	import com.borhan.edw.control.events.SearchEvent;
+	import com.borhan.edw.control.KedController;
+	import com.borhan.bmc.modules.content.events.BMCSearchEvent;
 
 	/**
-	 * this command adds some KMC specific actions around the list action 
+	 * this command adds some BMC specific actions around the list action 
 	 * @author Atar
 	 */	
-	public class DoSearchSequenceCommand extends KalturaCommand {
+	public class DoSearchSequenceCommand extends BorhanCommand {
 		
 		
 		override public function execute(event:CairngormEvent):void {
-			var e:KMCSearchEvent = event as KMCSearchEvent;
+			var e:BMCSearchEvent = event as BMCSearchEvent;
 			// reset selected entries list
 			_model.selectedEntries = new Array();
 			// search for new entries

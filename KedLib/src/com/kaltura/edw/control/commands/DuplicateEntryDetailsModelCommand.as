@@ -1,19 +1,19 @@
-package com.kaltura.edw.control.commands
+package com.borhan.edw.control.commands
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.EntryDetailsModel;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.kmvc.model.KMvCModel;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.EntryDetailsModel;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.bmvc.model.BMvCModel;
 
 	public class DuplicateEntryDetailsModelCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void
+		override public function execute(event:BMvCEvent):void
 		{
 			// need to copy maxCats because entry data pack is not shared.
-			var maxCats:int = (KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories;
-			KMvCModel.addModel();
-			(KMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories = maxCats;
+			var maxCats:int = (BMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories;
+			BMvCModel.addModel();
+			(BMvCModel.getInstance().getDataPack(EntryDataPack) as EntryDataPack).maxNumCategories = maxCats;
 		}
 	}
 }

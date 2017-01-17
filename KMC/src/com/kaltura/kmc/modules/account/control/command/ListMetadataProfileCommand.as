@@ -1,21 +1,21 @@
-package com.kaltura.kmc.modules.account.control.command
+package com.borhan.bmc.modules.account.control.command
 {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.commands.metadataProfile.MetadataProfileList;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.kmc.business.JSGate;
-	import com.kaltura.kmc.modules.account.model.AccountModelLocator;
-	import com.kaltura.kmc.utils.ListMetadataProfileUtil;
-	import com.kaltura.types.KalturaMetadataObjectType;
-	import com.kaltura.types.KalturaMetadataOrderBy;
-	import com.kaltura.types.KalturaMetadataProfileCreateMode;
-	import com.kaltura.utils.parsers.MetadataProfileParser;
-	import com.kaltura.vo.KMCMetadataProfileVO;
-	import com.kaltura.vo.KalturaFilterPager;
-	import com.kaltura.vo.KalturaMetadataProfile;
-	import com.kaltura.vo.KalturaMetadataProfileFilter;
-	import com.kaltura.vo.KalturaMetadataProfileListResponse;
+	import com.borhan.commands.metadataProfile.MetadataProfileList;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.business.JSGate;
+	import com.borhan.bmc.modules.account.model.AccountModelLocator;
+	import com.borhan.bmc.utils.ListMetadataProfileUtil;
+	import com.borhan.types.BorhanMetadataObjectType;
+	import com.borhan.types.BorhanMetadataOrderBy;
+	import com.borhan.types.BorhanMetadataProfileCreateMode;
+	import com.borhan.utils.parsers.MetadataProfileParser;
+	import com.borhan.vo.BMCMetadataProfileVO;
+	import com.borhan.vo.BorhanFilterPager;
+	import com.borhan.vo.BorhanMetadataProfile;
+	import com.borhan.vo.BorhanMetadataProfileFilter;
+	import com.borhan.vo.BorhanMetadataProfileListResponse;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -40,13 +40,13 @@ package com.kaltura.kmc.modules.account.control.command
 		 */		
 		public function execute(event:CairngormEvent):void
 		{
-			var filter:KalturaMetadataProfileFilter = new KalturaMetadataProfileFilter();
-			filter.orderBy = KalturaMetadataOrderBy.CREATED_AT_DESC;
-			filter.createModeNotEqual = KalturaMetadataProfileCreateMode.APP;
-			filter.metadataObjectTypeIn = KalturaMetadataObjectType.ENTRY + "," + KalturaMetadataObjectType.CATEGORY;
+			var filter:BorhanMetadataProfileFilter = new BorhanMetadataProfileFilter();
+			filter.orderBy = BorhanMetadataOrderBy.CREATED_AT_DESC;
+			filter.createModeNotEqual = BorhanMetadataProfileCreateMode.APP;
+			filter.metadataObjectTypeIn = BorhanMetadataObjectType.ENTRY + "," + BorhanMetadataObjectType.CATEGORY;
 			var listMetadataProfile:MetadataProfileList = new MetadataProfileList(filter, _model.metadataFilterPager);
-			listMetadataProfile.addEventListener(KalturaEvent.COMPLETE, result);
-			listMetadataProfile.addEventListener(KalturaEvent.FAILED, fault);
+			listMetadataProfile.addEventListener(BorhanEvent.COMPLETE, result);
+			listMetadataProfile.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(listMetadataProfile);
 		}
 		
@@ -58,7 +58,7 @@ package com.kaltura.kmc.modules.account.control.command
 		public function result(data:Object):void
 		{
 			//last request is always the list request
-			var listResult:KalturaMetadataProfileListResponse  = data.data as KalturaMetadataProfileListResponse;
+			var listResult:BorhanMetadataProfileListResponse  = data.data as BorhanMetadataProfileListResponse;
 			_model.metadataProfilesTotalCount = listResult.totalCount;
 			_model.metadataProfilesArray = ListMetadataProfileUtil.handleListMetadataResult(listResult, _model.context);
 		}

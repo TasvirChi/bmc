@@ -1,6 +1,6 @@
-package com.kaltura.autocomplete.itemRenderers
+package com.borhan.autocomplete.itemRenderers
 {
-	import com.kaltura.autocomplete.itemRenderers.selection.UserSelectedItem;
+	import com.borhan.autocomplete.itemRenderers.selection.UserSelectedItem;
 	
 	public class UserFilterSelectedItem extends UserSelectedItem
 	{

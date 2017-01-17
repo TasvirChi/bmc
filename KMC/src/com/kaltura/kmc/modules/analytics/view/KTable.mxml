@@ -7,10 +7,10 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.kmc.modules.analytics.control.ReportEvent;
-			import com.kaltura.kmc.modules.analytics.model.reportdata.ReportData;
-			import com.kaltura.kmc.modules.analytics.view.renderers.DrillDownLinkButton;
-			import com.kaltura.kmc.modules.analytics.view.renderers.TooltipedColumnHeader;
+			import com.borhan.bmc.modules.analytics.control.ReportEvent;
+			import com.borhan.bmc.modules.analytics.model.reportdata.ReportData;
+			import com.borhan.bmc.modules.analytics.view.renderers.DrillDownLinkButton;
+			import com.borhan.bmc.modules.analytics.view.renderers.TooltipedColumnHeader;
 			
 			import mx.controls.Alert;
 			import mx.controls.dataGridClasses.DataGridColumn;
@@ -34,7 +34,7 @@
 			/**
 			 * the type of report currently being shown in table
 			 * (used for re-ordering requests)
-			 * @see KalturaReportType
+			 * @see BorhanReportType
 			 * */
 			public var reportType:String;
 
@@ -46,7 +46,7 @@
 			
 			/**
 			 * list of columns by which the table cannot be sorted
-			 * @see com.kaltura.kmc.modules.analytics.model.reports.UnsortableColumnHeaders
+			 * @see com.borhan.bmc.modules.analytics.model.reports.UnsortableColumnHeaders
 			 * */
 			public var nonSortableHeaders:Array;
 			

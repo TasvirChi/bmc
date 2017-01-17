@@ -2,11 +2,11 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" styleName="noPadding">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.EntryLiveStreamingHelper;
-			import com.kaltura.vo.KalturaLiveStreamEntry;
+			import com.borhan.edw.business.EntryLiveStreamingHelper;
+			import com.borhan.vo.BorhanLiveStreamEntry;
 			
 			[Bindable]
-			public var selectedEntry:KalturaLiveStreamEntry;
+			public var selectedEntry:BorhanLiveStreamEntry;
 		]]>
 	</mx:Script>
 	<mx:Label text="{resourceManager.getString('drilldown', 'encodingIp')}" styleName="drillDownLabel"/>

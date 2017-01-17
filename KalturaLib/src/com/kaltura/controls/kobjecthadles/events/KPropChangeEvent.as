@@ -1,4 +1,4 @@
-package com.kaltura.controls.kobjecthadles.events
+package com.borhan.controls.kobjecthadles.events
 {
 	import flash.events.Event;
 

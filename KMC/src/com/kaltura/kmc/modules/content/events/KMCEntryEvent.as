@@ -1,9 +1,9 @@
-package com.kaltura.kmc.modules.content.events
+package com.borhan.bmc.modules.content.events
 {
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.vo.KalturaBaseEntry;
+	import com.borhan.vo.BorhanBaseEntry;
 
-	public class KMCEntryEvent extends CairngormEvent
+	public class BMCEntryEvent extends CairngormEvent
 	{
 		
 		public static const LIST_ENTRY_MODERATION : String = "content_listEntryModeration";
@@ -26,12 +26,12 @@ package com.kaltura.kmc.modules.content.events
 		
 		
 		
-		private var _entryVo : KalturaBaseEntry;
+		private var _entryVo : BorhanBaseEntry;
 		private var _entryId : String;
 		private var _entryIndex: int;
 		private var _reloadEntry:Boolean;
 		
-		public function KMCEntryEvent(type:String, entryVo:KalturaBaseEntry, entryId:String = '', entryIIndex:int = -1, reloadEntry:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function BMCEntryEvent(type:String, entryVo:BorhanBaseEntry, entryId:String = '', entryIIndex:int = -1, reloadEntry:Boolean = false, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 			_entryVo = entryVo;
@@ -40,7 +40,7 @@ package com.kaltura.kmc.modules.content.events
 			_reloadEntry = reloadEntry;
 		}
 
-		public function get entryVo():KalturaBaseEntry
+		public function get entryVo():BorhanBaseEntry
 		{
 			return _entryVo;
 		}

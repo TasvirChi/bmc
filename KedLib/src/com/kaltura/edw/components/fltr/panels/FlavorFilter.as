@@ -1,6 +1,6 @@
-package com.kaltura.edw.components.fltr.panels
+package com.borhan.edw.components.fltr.panels
 {
-	import com.kaltura.vo.KalturaFlavorParams;
+	import com.borhan.vo.BorhanFlavorParams;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.CheckBox;
@@ -36,7 +36,7 @@ package com.kaltura.edw.components.fltr.panels
 					for each (var fpid:int in fpids) {
 						// find a matching checkbox and mark it
 						for (i = 1; i < _buttons.length; i++) {
-							if ((_buttons[i].data as KalturaFlavorParams).id == fpid) {
+							if ((_buttons[i].data as BorhanFlavorParams).id == fpid) {
 								_buttons[i].selected = true;
 								break;
 							}
@@ -54,7 +54,7 @@ package com.kaltura.edw.components.fltr.panels
 			var str:String = '';
 			for each (var cb:CheckBox in _buttons) {
 				if (cb.selected && cb.data) {
-					str += (cb.data as KalturaFlavorParams).id + ",";
+					str += (cb.data as BorhanFlavorParams).id + ",";
 				}
 			}
 			if (str) {

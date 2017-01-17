@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>KMC</name>
+	<name>BMC</name>
 	<comment></comment>
 	<projects>
 		<project>as3corelib</project>
@@ -8,9 +8,9 @@
 		<project>AutoComplete</project>
 		<project>Cairngorm</project>
 		<project>flexlib</project>
-		<project>KalturaLib</project>
+		<project>BorhanLib</project>
 		<project>KedLib</project>
-		<project>KMvC</project>
+		<project>BMvC</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

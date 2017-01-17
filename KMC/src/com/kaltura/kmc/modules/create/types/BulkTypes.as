@@ -1,4 +1,4 @@
-package com.kaltura.kmc.modules.create.types
+package com.borhan.bmc.modules.create.types
 {
 	
 	/**

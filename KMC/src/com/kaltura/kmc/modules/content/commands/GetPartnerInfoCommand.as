@@ -1,24 +1,24 @@
-package com.kaltura.kmc.modules.content.commands {
+package com.borhan.bmc.modules.content.commands {
 	import com.adobe.cairngorm.commands.ICommand;
 	import com.adobe.cairngorm.control.CairngormEvent;
-	import com.kaltura.kmc.modules.content.vo.NotificationVO;
-	import com.kaltura.kmc.modules.content.vo.PartnerVO;
-	import com.kaltura.commands.partner.PartnerGetInfo;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.vo.KalturaPartner;
+	import com.borhan.bmc.modules.content.vo.NotificationVO;
+	import com.borhan.bmc.modules.content.vo.PartnerVO;
+	import com.borhan.commands.partner.PartnerGetInfo;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.vo.BorhanPartner;
 
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.resources.ResourceManager;
 	import mx.rpc.IResponder;
 
-	public class GetPartnerInfoCommand extends KalturaCommand implements ICommand, IResponder {
+	public class GetPartnerInfoCommand extends BorhanCommand implements ICommand, IResponder {
 		override public function execute(event:CairngormEvent):void {
 			_model.increaseLoadCounter();
 
 			var getPartnerInfo:PartnerGetInfo = new PartnerGetInfo();
-			getPartnerInfo.addEventListener(KalturaEvent.COMPLETE, result);
-			getPartnerInfo.addEventListener(KalturaEvent.FAILED, fault);
+			getPartnerInfo.addEventListener(BorhanEvent.COMPLETE, result);
+			getPartnerInfo.addEventListener(BorhanEvent.FAILED, fault);
 			_model.context.kc.post(getPartnerInfo);
 
 
@@ -28,8 +28,8 @@ package com.kaltura.kmc.modules.content.commands {
 		override public function result(data:Object):void {
 			super.result(data);
 			_model.decreaseLoadCounter();
-			if (data.data is KalturaPartner) {
-				var resultKp:KalturaPartner = data.data as KalturaPartner;
+			if (data.data is BorhanPartner) {
+				var resultKp:BorhanPartner = data.data as BorhanPartner;
 				var pvo:PartnerVO = new PartnerVO;
 				pvo.subPId = _model.context.subpId + '';
 

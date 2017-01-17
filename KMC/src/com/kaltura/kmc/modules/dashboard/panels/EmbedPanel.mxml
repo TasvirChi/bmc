@@ -7,16 +7,16 @@
 
 -->
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" horizontalAlign="left"
-		 styleName="dashboardBox" xmlns:controls="com.kaltura.controls.*">
+		 styleName="dashboardBox" xmlns:controls="com.borhan.controls.*">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTracker;
-			import com.kaltura.analytics.KAnalyticsTrackerConsts;
-			import com.kaltura.kmc.events.KmcNavigationEvent;
-			import com.kaltura.kmc.modules.dashboard.DashboardManager;
-			import com.kaltura.types.KalturaStatsKmcEventType;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTracker;
+			import com.borhan.analytics.KAnalyticsTrackerConsts;
+			import com.borhan.bmc.events.BmcNavigationEvent;
+			import com.borhan.bmc.modules.dashboard.DashboardManager;
+			import com.borhan.types.BorhanStatsBmcEventType;
 			
 			import modules.Dashboard;
 
@@ -27,19 +27,19 @@
 
 			private function manage():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_EMBED_PLAYER, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_EMBED_PLAYER,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,BorhanStatsBmcEventType.DASHBOARD_EMBED_PLAYER,
 														  "DashBoard>Embed Player")
-//				DashboardManager.instance.loadKMCModule('content', 'Manage');
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'content', 'manage'));
+//				DashboardManager.instance.loadBMCModule('content', 'Manage');
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, 'content', 'manage'));
 			}
 
 
 			private function publish():void {
 				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.DASHBOARD_EMBED_PLAYLIST, GoogleAnalyticsConsts.DASHBOARD);
-				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,KalturaStatsKmcEventType.DASHBOARD_EMBED_PLAYLIST,
+				KAnalyticsTracker.getInstance().sendEvent(KAnalyticsTrackerConsts.DASHBOARD,BorhanStatsBmcEventType.DASHBOARD_EMBED_PLAYLIST,
 														  "DashBoard>Embed PlayList")
-//				DashboardManager.instance.loadKMCModule('content', 'Publish');
-				dispatchEvent(new KmcNavigationEvent(KmcNavigationEvent.NAVIGATE, 'content', 'playlists'));
+//				DashboardManager.instance.loadBMCModule('content', 'Publish');
+				dispatchEvent(new BmcNavigationEvent(BmcNavigationEvent.NAVIGATE, 'content', 'playlists'));
 			}
 		]]>
 	</mx:Script>

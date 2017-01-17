@@ -1,8 +1,8 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 
-	public class LiveEvent extends KMvCEvent
+	public class LiveEvent extends BMvCEvent
 	{
 		/**
 		 * regenerate live stream security token

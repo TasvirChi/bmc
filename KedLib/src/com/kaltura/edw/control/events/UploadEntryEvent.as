@@ -1,11 +1,11 @@
-package com.kaltura.edw.control.events
+package com.borhan.edw.control.events
 {
-	import com.kaltura.kmvc.control.KMvCEvent;
+	import com.borhan.bmvc.control.BMvCEvent;
 	
 	import flash.net.FileReference;
 	
 
-	public class UploadEntryEvent extends KMvCEvent
+	public class UploadEntryEvent extends BMvCEvent
 	{
 		public static const UPLOAD_THUMBNAIL : String = "content_uploadThumbnail";
 		

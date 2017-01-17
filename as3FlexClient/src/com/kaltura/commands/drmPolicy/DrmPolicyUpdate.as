@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2016  Kaltura Inc.
+// Copyright (C) 2006-2016  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,24 +25,24 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.commands.drmPolicy
+package com.borhan.commands.drmPolicy
 {
-		import com.kaltura.vo.KalturaDrmPolicy;
-	import com.kaltura.delegates.drmPolicy.DrmPolicyUpdateDelegate;
-	import com.kaltura.net.KalturaCall;
+		import com.borhan.vo.BorhanDrmPolicy;
+	import com.borhan.delegates.drmPolicy.DrmPolicyUpdateDelegate;
+	import com.borhan.net.BorhanCall;
 
 	/**
-	* Update an existing KalturaDrmPolicy object
+	* Update an existing BorhanDrmPolicy object
 	**/
-	public class DrmPolicyUpdate extends KalturaCall
+	public class DrmPolicyUpdate extends BorhanCall
 	{
 		public var filterFields : String;
 		
 		/**
 		* @param drmPolicyId int
-		* @param drmPolicy KalturaDrmPolicy
+		* @param drmPolicy BorhanDrmPolicy
 		**/
-		public function DrmPolicyUpdate( drmPolicyId : int,drmPolicy : KalturaDrmPolicy )
+		public function DrmPolicyUpdate( drmPolicyId : int,drmPolicy : BorhanDrmPolicy )
 		{
 			service= 'drm_drmpolicy';
 			action= 'update';
@@ -52,7 +52,7 @@ package com.kaltura.commands.drmPolicy
 			var keyValArr : Array = new Array();
 			keyArr.push('drmPolicyId');
 			valueArr.push(drmPolicyId);
-				keyValArr = kalturaObject2Arrays(drmPolicy, 'drmPolicy');
+				keyValArr = borhanObject2Arrays(drmPolicy, 'drmPolicy');
 				keyArr = keyArr.concat(keyValArr[0]);
 				valueArr = valueArr.concat(keyValArr[1]);
 			applySchema(keyArr, valueArr);

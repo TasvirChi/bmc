@@ -1,4 +1,4 @@
-package com.kaltura.controls.tooltips
+package com.borhan.controls.tooltips
 {
 	 import flash.display.Bitmap;
 	 import flash.events.Event;

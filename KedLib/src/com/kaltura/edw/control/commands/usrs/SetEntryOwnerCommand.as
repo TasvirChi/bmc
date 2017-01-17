@@ -1,15 +1,15 @@
-package com.kaltura.edw.control.commands.usrs
+package com.borhan.edw.control.commands.usrs
 {
-	import com.kaltura.edw.control.commands.KedCommand;
-	import com.kaltura.edw.model.datapacks.EntryDataPack;
-	import com.kaltura.kmvc.control.KMvCEvent;
-	import com.kaltura.vo.KalturaUser;
+	import com.borhan.edw.control.commands.KedCommand;
+	import com.borhan.edw.model.datapacks.EntryDataPack;
+	import com.borhan.bmvc.control.BMvCEvent;
+	import com.borhan.vo.BorhanUser;
 	
 	public class SetEntryOwnerCommand extends KedCommand {
 		
-		override public function execute(event:KMvCEvent):void {
+		override public function execute(event:BMvCEvent):void {
 			var edp:EntryDataPack = _model.getDataPack(EntryDataPack) as EntryDataPack;
-			edp.selectedEntryOwner = event.data as KalturaUser;
+			edp.selectedEntryOwner = event.data as BorhanUser;
 		}
 	}
 }

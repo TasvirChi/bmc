@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- add new category users popup -->
-<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.kaltura.containers.*"
+<containers:HelpTitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="com.borhan.containers.*"
 							xmlns:components="com.hillelcoren.components.*"
 							layout="vertical" width="550" height="230"
 							showCloseButton="true" close="closeHandler(event)"
@@ -8,16 +8,16 @@
 							creationComplete="creationCompleteHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.autocomplete.controllers.KACUsersController;
-			import com.kaltura.autocomplete.itemRenderers.selection.UserSelectedItem;
-			import com.kaltura.kmc.events.KmcHelpEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryEvent;
-			import com.kaltura.kmc.modules.content.events.CategoryUserEvent;
-			import com.kaltura.types.KalturaCategoryUserPermissionLevel;
-			import com.kaltura.types.KalturaCategoryUserStatus;
-			import com.kaltura.types.KalturaUpdateMethodType;
-			import com.kaltura.vo.KalturaCategory;
+			import com.borhan.BorhanClient;
+			import com.borhan.autocomplete.controllers.KACUsersController;
+			import com.borhan.autocomplete.itemRenderers.selection.UserSelectedItem;
+			import com.borhan.bmc.events.BmcHelpEvent;
+			import com.borhan.bmc.modules.content.events.CategoryEvent;
+			import com.borhan.bmc.modules.content.events.CategoryUserEvent;
+			import com.borhan.types.BorhanCategoryUserPermissionLevel;
+			import com.borhan.types.BorhanCategoryUserStatus;
+			import com.borhan.types.BorhanUpdateMethodType;
+			import com.borhan.vo.BorhanCategory;
 			
 			import mx.collections.ArrayCollection;
 			import mx.events.CloseEvent;
@@ -30,35 +30,35 @@
 			
 			
 			
-			private var _category:KalturaCategory;
+			private var _category:BorhanCategory;
 
-			public function get category():KalturaCategory {
+			public function get category():BorhanCategory {
 				return _category;
 			}
 
-			public function set category(value:KalturaCategory):void {
+			public function set category(value:BorhanCategory):void {
 				_category = value;
 				title = resourceManager.getString('cms', 'categoryAddUsers', [value.name]);
 			}
 			
 			/**
-			 * KalturaClient for autocomplete's API calls
+			 * BorhanClient for autocomplete's API calls
 			 * */
-			public var kClient:KalturaClient;
+			public var kClient:BorhanClient;
 			
 			
 			private function creationCompleteHandler(event:FlexEvent):void {
 				permCb.dataProvider = [
-					{label:resourceManager.getString('cms', 'member'), data:KalturaCategoryUserPermissionLevel.MEMBER},
-					{label:resourceManager.getString('cms', 'contributor'), data: KalturaCategoryUserPermissionLevel.CONTRIBUTOR},
-					{label:resourceManager.getString('cms', 'moderator'), data: KalturaCategoryUserPermissionLevel.MODERATOR},
-					{label:resourceManager.getString('cms', 'manager'), data:KalturaCategoryUserPermissionLevel.MANAGER}
+					{label:resourceManager.getString('cms', 'member'), data:BorhanCategoryUserPermissionLevel.MEMBER},
+					{label:resourceManager.getString('cms', 'contributor'), data: BorhanCategoryUserPermissionLevel.CONTRIBUTOR},
+					{label:resourceManager.getString('cms', 'moderator'), data: BorhanCategoryUserPermissionLevel.MODERATOR},
+					{label:resourceManager.getString('cms', 'manager'), data:BorhanCategoryUserPermissionLevel.MANAGER}
 				];
 				permCb.selectedIndex = 0;
 				
 				methodCb.dataProvider = [
-					{label:resourceManager.getString('cms', 'manual'), data: KalturaUpdateMethodType.MANUAL},
-					{label:resourceManager.getString('cms', 'automatic'), data: KalturaUpdateMethodType.AUTOMATIC},
+					{label:resourceManager.getString('cms', 'manual'), data: BorhanUpdateMethodType.MANUAL},
+					{label:resourceManager.getString('cms', 'automatic'), data: BorhanUpdateMethodType.AUTOMATIC},
 				];
 				methodCb.selectedIndex = 0;
 				
@@ -71,7 +71,7 @@
 			 * */
 			private function submit(event:MouseEvent):void {
 				var cge:CategoryUserEvent = new CategoryUserEvent(CategoryUserEvent.ADD_CATEGORY_USERS);
-				// [categoryid, permission level, update method, ([KalturaUsers])]
+				// [categoryid, permission level, update method, ([BorhanUsers])]
 				cge.data = [_category.id, permCb.selectedItem.data, methodCb.selectedItem.data, usersComplete.selectedItems];
 				cge.dispatch();
 				
@@ -97,7 +97,7 @@
 
 
 			private function helpHandler(event:Event):void {
-				dispatchEvent(new KmcHelpEvent(KmcHelpEvent.HELP, 'section_cat_user_add', true));
+				dispatchEvent(new BmcHelpEvent(BmcHelpEvent.HELP, 'section_cat_user_add', true));
 			}
 
 
