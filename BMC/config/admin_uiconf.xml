@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<locale>
+		<path>locale/{locale}/admin_{locale}_ResourceModule.swf</path>
+		<language>en_US</language>
+	</locale>
+	<upgradePage>http://corp.borhan.com</upgradePage>
+	<upgradeUsersPage>http://site.borhan.com/Request-Users.html</upgradeUsersPage>
+	<upgradePartnerFeaturesPage>http://corp.borhan.com</upgradePartnerFeaturesPage>
+</root>

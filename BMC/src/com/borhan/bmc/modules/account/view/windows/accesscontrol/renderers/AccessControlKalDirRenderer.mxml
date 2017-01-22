@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<renderers:AccessControlRendererBase 
+									 xmlns:mx="http://www.adobe.com/2006/mxml"
+									 creationComplete="onCreationComplete(event)" width="100%" height="100%"
+									 verticalAlign="middle" paddingLeft="4" horizontalScrollPolicy="off"
+									 styleName="tableCellBoxRendererStyle"
+									 xmlns:renderers="com.borhan.bmc.modules.account.view.windows.accesscontrol.renderers.*">
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.vo.AccessControlProfileVO;
+			import com.borhan.types.BorhanDirectoryRestrictionType;
+			import com.borhan.vo.BorhanDirectoryRestriction;
+			import com.borhan.types.BorhanSiteRestrictionType;
+			import com.borhan.vo.BorhanSiteRestriction;
+			import com.borhan.vo.BorhanBaseRestriction;
+
+
+			private function onCreationComplete(event:Event = null):void {
+				var acProfile:AccessControlProfileVO = this.data as AccessControlProfileVO;
+				if (acProfile != null) {
+					var foundRestriction:Boolean = false;
+					for each (var restriction:BorhanBaseRestriction in acProfile.profile.restrictions) {
+						if (restriction is BorhanDirectoryRestriction) {
+							foundRestriction = true;
+							kalDirLabel.text = (restriction as BorhanDirectoryRestriction).directoryRestrictionType == BorhanDirectoryRestrictionType.DONT_DISPLAY ? "Not Appear" : "Listing Only";
+
+							break;
+						}
+					}
+
+					kalDirLabel.text = foundRestriction ? kalDirLabel.text : "Listing & Playback";
+				}
+			}
+
+
+			override public function validateNow():void {
+				super.validateNow();
+				onCreationComplete();
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Label id='kalDirLabel' width="100%"/>
+</renderers:AccessControlRendererBase>

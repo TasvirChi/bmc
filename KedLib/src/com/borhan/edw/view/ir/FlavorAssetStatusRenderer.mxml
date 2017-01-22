@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ir:FlavorAssetRendererBase xmlns="com.borhan.bmc.modules.content.view.window.entrydetailswindowsections.renderers.*"
+							xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
+							xmlns:renderers="com.borhan.bmc.modules.content.view.window.entrydetails.renderers.*"
+							xmlns:ir="com.borhan.edw.view.ir.*">
+	<mx:Metadata>
+		[ResourceBundle("drilldown")]
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.types.BorhanFlavorAssetStatus;
+			
+			private function setStatusLabel():void
+			{
+				var statusStr:String = '';
+				var fontColor:String = "#000000";
+				var tooltip:String = '';
+				
+				if(data.borhanFlavorAssetWithParams.flavorAsset != null)
+				{
+					switch(int(data.borhanFlavorAssetWithParams.flavorAsset.status))
+					{
+						case BorhanFlavorAssetStatus.CONVERTING:
+						{
+							statusStr = resourceManager.getString('drilldown','convertingStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.ERROR:
+						{
+							statusStr = resourceManager.getString('drilldown','errorStatus');
+							fontColor = "#FF0000";
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.DELETED:
+						{
+							statusStr = resourceManager.getString('drilldown','deleteStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.QUEUED:
+						{
+							statusStr = resourceManager.getString('drilldown','inqueueStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.READY:
+						{
+							statusStr = resourceManager.getString('drilldown','readyStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.NOT_APPLICABLE:
+						{
+							statusStr = resourceManager.getString('drilldown','notAppStatus');
+							tooltip = resourceManager.getString('drilldown','notAppStatusTooltip');
+							break;
+						}
+						case BorhanFlavorAssetStatus.TEMP:
+						{
+							statusStr = resourceManager.getString('drilldown','tmpStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.WAIT_FOR_CONVERT:
+						{
+							statusStr = resourceManager.getString('drilldown','waitCnvrtStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.IMPORTING:
+						{
+							statusStr = resourceManager.getString('drilldown','importStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.VALIDATING:
+						{
+							statusStr = resourceManager.getString('drilldown','validateStatus');
+							tooltip = statusStr;
+							break;
+						}
+						case BorhanFlavorAssetStatus.EXPORTING:
+						{
+							statusStr = resourceManager.getString('drilldown','exportStatus');
+							tooltip = statusStr;
+							break;
+						}
+							
+					}
+				}
+				else
+				{
+					statusStr = resourceManager.getString('drilldown','notRequiredStatus');
+					tooltip = statusStr;
+				}
+				statusLabel.enabled = (data.borhanFlavorAssetWithParams.flavorAsset != null);
+				statusLabel.text = statusStr;
+				statusLabel.toolTip = tooltip;
+				statusLabel.setStyle("color", fontColor);
+			}
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				setStatusLabel();
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:Label id="statusLabel" creationComplete="setStatusLabel()" selectable="true" />
+</ir:FlavorAssetRendererBase>

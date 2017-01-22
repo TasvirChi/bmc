@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" verticalAlign="middle"
+		 xmlns:view="com.borhan.bmc.modules.studio.view.*"
+		 horizontalAlign="center" disabledOverlayAlpha="0"
+		 creationComplete="onCreationComplete()"
+		 addedToStage="addedToStageHandler(event)">
+	
+	<mx:Metadata>
+		[Event(name="errorLoading", type="flash.events.Event")] 
+		[Event(name="finishLoading", type="flash.events.Event")] 
+		[Event(name="autoPreviewChanged", type="flash.events.Event")] 
+		[Event(name="firstTimeLoad", type="flash.events.Event")] 
+		[Event(name="openPreview", type="flash.events.Event")] 
+		[Event(name="closePreview", type="flash.events.Event")] 
+		[Event(name="alertUser", type="flash.events.ErrorEvent")] 
+		[Event(name="detailsChanged", type="flash.events.Event")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.events.BdpEventTypes;
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.modules.studio.view.ApsWizard;
+			import com.borhan.bmc.modules.studio.vo.PlayerContentVo;
+			import com.borhan.bmc.modules.studio.vo.PlayerUiConfVo;
+			import com.borhan.bmc.vo.Context;
+			import com.borhan.utils.KPlayerUtil;
+			
+			import modules.Studio;
+			
+			import mx.controls.Button;
+			import mx.events.NumericStepperEvent;
+			import mx.resources.ResourceManager;
+
+			public static const PREVIEW_PLAYER_READY:String = "previewPlayerReady";
+			public static const FIRST_TIME_LOAD:String = "firstTimeLoad";
+			public static const FINISH_LOADING:String = "finishLoading";
+			public static const ERROR_LOADING:String = "errorLoading";
+			public static const AUTO_PREVIEW_CHANGED:String = "autoPreviewChanged";
+			public static const CLOSE_PREVIEW:String = "closePreview";
+			public static const OPEN_PREVIEW:String = "openPreview";
+			public static const REFRESH_BDP:String = "refreshBdp";
+
+			/**
+			 * application context (partner data etc)
+			 * */
+			public var context:Context;
+			
+			/**
+			 * media BDP should display in appstudio
+			 * */
+			public var content:PlayerContentVo;
+			
+			/**
+			 * player config
+			 * */
+			public var playerUiConfVo:PlayerUiConfVo;
+			
+//			/**
+//			 * the url from which to load BDP
+//			 * */
+//			public var swfUrl:String;
+
+			private const _tolorance169:Number = 0.1;
+			private const _tolorance34:Number = 0.1;
+			
+			[Bindable]
+			private var _playerHeight:Number;
+			[Bindable]
+			private var _playerWidth:Number;
+			[Bindable]
+			private var _playerRatio:Number;
+			
+			/**
+			 * locally save autopreview preferences
+			 * */
+			private var _mySo:SharedObject;
+
+			/**
+			 * only disaptch <code>ApsWizPreviewPlayer.FIRST_TIME_LOAD</code> once
+			 * */
+			private var _firstTime:Boolean;
+
+			/**
+			 * player XML data passed to BDP for preview 
+			 * */
+			private var _tempUiConf:XML;
+
+			private var _bdpFirstTimeLoad:Boolean = true;
+
+			/**
+			 * unload the BDP
+			 * */
+			public function unLoadBdp():void {
+				removeEventListener(SecurityErrorEvent.SECURITY_ERROR, handleBDPError);
+				if (bdp3Loader.content) {
+					bdp3Loader.content.removeEventListener(BdpEventTypes.SKIN_LOAD_FAILED, handleBDPError);
+					bdp3Loader.content.removeEventListener(BdpEventTypes.BDP_EMPTY, onBDPReady);
+					bdp3Loader.content.removeEventListener(BdpEventTypes.BDP_READY, onBDPReady);
+					bdp3Loader.content.removeEventListener(BdpEventTypes.MEDIA_READY, onBDPMediaReady);
+				}
+//				if(bdp3Loader.loaderInfo.hasOwnProperty("uncaughtErrorEvents")){
+//					IEventDispatcher(bdp3Loader.loaderInfo["uncaughtErrorEvents"]).removeEventListener("uncaughtError", handleBDPError);
+//				}
+				bdp3Loader.unloadAndStop();
+			}
+
+
+			/**
+			 * init the loading proccess of the BDP
+			 * @param bdpUrl	url from where to load BDP
+			 * @param xmlToPreview	player config
+			 * */
+			public function loadBdp(bdpUrl:String, xmlToPreview:XML = null):void {
+				if (xmlToPreview) {
+					_tempUiConf = xmlToPreview
+				}
+				else {
+					_tempUiConf = null;
+				}
+				var url:String = bdpUrl;
+				if (Studio.flashvars.bdpurl) {
+					url = Studio.flashvars.bdpurl;
+				}
+				// this is for debugging a local BDP swf
+				if (Studio.flashvars.hasOwnProperty("debugmode") 
+					&& (Studio.flashvars.debugmode == '1' || Studio.flashvars.debugmode == 'true')) {
+					url = Studio.flashvars.protocol ? Studio.flashvars.protocol : "http://";  
+					url += Studio.flashvars.host + bdpUrl;
+				}
+				if (bdp3Loader.content != null) {
+					unLoadBdp();
+				}
+				bdp3Loader.scaleContent = false;
+				bdp3Loader.trustContent = true;
+				bdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain()/* , SecurityDomain.currentDomain */); // DON'T use security domain here, it gets BDP confused when loading plugins via CDN.
+				// if we don't set size here wierd things happen.
+				bdp3Loader.width = bdpWidth.value;
+				bdp3Loader.height = bdpHeight.value;
+				bdp3Loader.visible = false;
+				bdp3Loader.load(url);
+			}
+
+			
+			/**
+			 * change the dimensions of preview BDP 
+			 * */
+			private function changePlayerSize():void {
+				if (bdp3Loader.content) {
+					bdp3Loader.content.width = bdpWidth.value;
+					bdp3Loader.content.height = bdpHeight.value;
+					var objProxy:Object = bdp3Loader.content["evaluate"]("{this}");
+					if (objProxy.hasOwnProperty("video")) {
+						_playerWidth = objProxy.video.width;
+						_playerHeight = objProxy.video.height;
+						_playerRatio = objProxy.video.width / objProxy.video.height;
+					}
+				}
+			}
+
+ 
+			/**
+			 * make this panel eligible for garbage collection
+			 * */
+			public function dispose():void {
+				unLoadBdp();
+				if (stage) {
+					stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyboard);
+				}
+			}
+
+
+			/**
+			 * make all buttons same size by content of the widest one
+			 * */
+			private function onCreationComplete():void {
+				enabled = false;
+				var autopreview:Boolean = true;
+				// get the sharedObject if available and set it 
+				_mySo = SharedObject.getLocal("content");
+				if (_mySo.data) {
+					if (_mySo.data.autoPreview == false) {
+						autopreview = false;
+					}
+					else {
+						autopreview = true;
+					}
+				}
+				autoPreview.selected = autopreview;
+				autoPreviewChanged();
+				trace("use alt+ctrl+p to trace current uiconf");
+			}
+
+
+			private function toggolePreview():void {
+				if (openClosePreview.styleName == "openPreview") {
+					openClosePreview.styleName = "closePreview";
+					dispatchEvent(new Event(ApsWizPreviewPlayer.CLOSE_PREVIEW));
+				}
+				else {
+					openClosePreview.styleName = "openPreview";
+					dispatchEvent(new Event(ApsWizPreviewPlayer.OPEN_PREVIEW));
+				}
+			}
+
+
+			/**
+			 * Preview player loaded and ready
+			 */
+			private function onBDP3Loaded(event:Event):void {
+				if (!_firstTime) {
+					dispatchEvent(new Event(ApsWizPreviewPlayer.FIRST_TIME_LOAD));
+					_firstTime = true;
+				}
+				var params:Object = new Object();
+				params.autoPlay = "false";
+				params.loop = "false";
+				params.autoRewind = "false";
+				params.sourceType = "entryId";
+//				params.debugMode = "true";
+
+				//check if this ui already has a playlist in it and show defaults if no playlist 
+				if (!_tempUiConf.uiVars.children().(attribute("key") == "playlistAPI.kpl0Name").length()) {
+					params["playlistAPI.kpl0Name"] = content.kpl0Name;
+					params["playlistAPI.kpl0Url"] = content.kpl0Url;
+					params["playlistAPI.kpl1Name"] = content.kpl1Name;
+					params["playlistAPI.kpl1Url"] = content.kpl1Url;
+					params["playlistAPI.autoInsert"] = "true";
+				}
+				
+				if (!playerUiConfVo.isSinglePlaylist && !playerUiConfVo.isMultiPlaylistTemplate) {
+					// only load entry if not a playlist player
+					params.entryId = content.entryId;
+				}
+
+				params.cdnHost = params.cdnUrl = (Studio.flashvars.cdnhost) ? Studio.flashvars.cdnhost : Studio.flashvars.host;
+				params.host = Studio.flashvars.host;
+				params.partnerId = context.partner_id;
+				params.widgetId = "_" + context.partner_id;
+				params.subpId = context.subp_id;
+				params.uiConfId = playerUiConfVo.playerId;
+				params.allowCookies = true;
+
+				params.ks = context.ks;
+
+				if (_tempUiConf) {
+					params.kml = "inject";
+				}
+				
+				params = KPlayerUtil.overrideStrings(params);
+				
+				bdp3Loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleBDPError);
+				bdp3Loader.loaderInfo.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleBDPError);
+				bdp3Loader.content.addEventListener(Event.RESIZE, stopPropagation);
+				bdp3Loader.content.addEventListener(BdpEventTypes.SKIN_LOAD_FAILED, handleBDPError);
+				bdp3Loader.content.addEventListener(BdpEventTypes.BDP_EMPTY, onBDPReady);
+				bdp3Loader.content.addEventListener(BdpEventTypes.BDP_READY, onBDPReady);
+				bdp3Loader.content.addEventListener(BdpEventTypes.MEDIA_READY, onBDPMediaReady);
+				// set BDP flashvars
+				bdp3Loader.content["flashvars"] = params; 
+
+				//start the loading sqeunce of the bdp
+				if (!_tempUiConf)
+					bdp3Loader.content["init"](); 
+				else
+					bdp3Loader.content["init"](_tempUiConf); 
+
+				enabled = true;
+
+				if (_bdpFirstTimeLoad)
+					dispatchEvent(new Event(PREVIEW_PLAYER_READY));
+			}
+
+			private function stopPropagation(e:Event):void {
+				e.stopImmediatePropagation();
+			}
+			
+			/**
+			 * handles BDP errors 
+			 * */
+			private function handleBDPError(e:Event):void {
+				// enable the appstudio
+				dispatchEvent(new Event(ERROR_LOADING));
+				// we have no BDP, so we don't autopreview.
+				autoPreview.selected = false;
+				autoPreview.enabled = false;
+			}
+			
+
+			private function onBDPMediaReady(event:Event):void {
+				bdp3Loader.visible = true;
+			}
+			
+			private function onBDPReady(event:Event):void {
+				changePlayerSize();
+				dispatchEvent(new Event(FINISH_LOADING));
+			}
+
+
+			/**
+			 * unloads and reloads the preview BDP
+			 * */
+			private function reloadPlayer():void {
+				_bdpFirstTimeLoad = false;
+				unLoadBdp();
+				dispatchEvent(new Event(ApsWizPreviewPlayer.REFRESH_BDP));
+			}
+
+
+			/**
+			 * Calculate if the offset of the ration is too large. if so, return a red color code,
+			 * if not return a green color code
+			 */
+			private function calcIfOkRatio(ratio:Number, idealRatio:Number, ratioOffset:Number):Number {
+				var offset:Number = Math.abs(idealRatio - ratio);
+				if (offset <= ratioOffset)
+					return 0x008000;
+				return 0xCC0000;
+			}
+
+
+			private function onAutoPreviewChanged():void {
+				_mySo.data.autoPreview = true;
+				_mySo.flush();
+				autoPreviewChanged();
+
+			}
+
+
+			private function autoPreviewChanged():void {
+				dispatchEvent(new Event(AUTO_PREVIEW_CHANGED));
+			}
+
+
+			/**
+			 * {playerWidth, playerHeight}
+			 * */
+			public function get previewPlayerData():Object {
+				return {playerWidth: bdpWidth.value, playerHeight: bdpHeight.value};
+			}
+
+
+			/**
+			 * @private
+			 * */
+			public function set previewPlayerData(value:Object):void {
+				bdpHeight.value = value.playerHeight;
+				bdpWidth.value = value.playerWidth;
+			}
+
+			private function addedToStageHandler(event:Event):void {
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyboard, false, 0, true);
+			}
+			
+			/**
+			 * if alt+ctrl+p, trace the current uiconf
+			 * */
+			private function handleKeyboard(e:KeyboardEvent):void {
+				if (e.altKey && e.ctrlKey && e.keyCode == 80) {
+//					JSGate.alerti(_tempUiConf);
+					trace(_tempUiConf);
+				}
+			}
+
+
+			private function sizeChangeHandler(event:NumericStepperEvent):void {
+				dispatchEvent(new Event("detailsChanged"));
+			}
+
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%" verticalAlign="middle">
+		<mx:Button id="openClosePreview" styleName="closePreview" click="toggolePreview()" buttonMode="true"/>
+		<mx:Label text="{resourceManager.getString('aps','preview')}" styleName="pageTitle"/>
+		<mx:Spacer width="100%"/>
+	</mx:HBox>
+
+	<mx:VBox id="controls" disabledOverlayAlpha="0">
+		<mx:HBox id="resizeContainer">
+			<mx:Label text="{resourceManager.getString('aps','playerSize')}"/>
+			<mx:NumericStepper id="bdpWidth" width="60" value="500" maximum="2300" minimum="100"
+							   change="sizeChangeHandler(event)"/>
+			<mx:Label text="x" textAlign="center"/>
+			<mx:NumericStepper id="bdpHeight" width="60" value="500" maximum="2300" minimum="30"
+							   change="sizeChangeHandler(event)"/>
+			<mx:Spacer width="10"/>
+			<mx:Button id="refreshBdp3" buttonMode="true" label="{resourceManager.getString('aps','preview')}"
+					   click="reloadPlayer()"/>
+			<mx:Spacer width="10"/>
+			<mx:CheckBox id="autoPreview" 
+						 label="{resourceManager.getString('aps','autoPreview')}" 
+						 change="{onAutoPreviewChanged()}"/>
+		</mx:HBox>
+		<mx:VBox>
+			<mx:Label 
+					  text="{resourceManager.getString('aps','videoScreenSize')}: {int(_playerWidth)} x {int(_playerHeight)}"/>
+		</mx:VBox>
+		<mx:VBox width="100%">
+			<mx:HBox>
+				<mx:Text text="{resourceManager.getString('aps','videoRatio')}:" selectable="false"/>
+				<mx:VBox>
+					<mx:Label text="16 : {(int(16/_playerRatio*100))/100}"
+							  color="{calcIfOkRatio(16/_playerRatio,9,_tolorance169)}"/>
+					<mx:Label text=" 4 : {(int(4/_playerRatio*100))/100}"
+							  color="{calcIfOkRatio(4/_playerRatio,3,_tolorance34)}"/>
+				</mx:VBox>
+				<mx:Text text="{resourceManager.getString('aps','videoRecomendation')}" height="100%" selectable="false"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:VBox>
+	<mx:SWFLoader id="bdp3Loader" width="400" height="400" complete="{onBDP3Loaded(event)}"/>
+</mx:VBox>

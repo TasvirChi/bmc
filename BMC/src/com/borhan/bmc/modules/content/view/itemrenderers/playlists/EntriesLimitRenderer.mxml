@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
+			/**
+			 * return the limit property
+			 */
+			public function renderLimit(data:Object):String {
+				var kmefpl:BorhanMediaEntryFilterForPlaylist = data as BorhanMediaEntryFilterForPlaylist;
+				return kmefpl.limit.toString();
+			}
+		]]>
+	</mx:Script>
+	<mx:Label text="{renderLimit(data)}" selectable="false"/>
+</mx:HBox>

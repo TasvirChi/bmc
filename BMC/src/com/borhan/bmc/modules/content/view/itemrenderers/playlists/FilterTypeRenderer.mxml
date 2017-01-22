@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.edw.components.playlist.PlaylistEntries;
+			import com.borhan.vo.BorhanMediaEntryFilterForPlaylist;
+			/**
+			 * return the filter type property
+			 */
+			private function renderFilterType(data:Object):String {
+				var kmefpl:BorhanMediaEntryFilterForPlaylist = data as BorhanMediaEntryFilterForPlaylist;
+				var result:String = '';
+				
+				for (var i:uint = 0; i < PlaylistEntries.ORDER_BY_ARR.length; i++) {
+					if (PlaylistEntries.ORDER_BY_ARR[i].value == kmefpl.orderBy)
+						result = PlaylistEntries.ORDER_BY_ARR[i].label;
+				}
+				return result;
+			}
+		]]>
+	</mx:Script>
+	<mx:Label text="{renderFilterType(data)}" selectable="false"/>
+</mx:HBox>

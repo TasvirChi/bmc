@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" version="3">
+  <includeClasses>
+    <classEntry path="com.borhan.bmvc.BMvCError"/>
+    <classEntry path="com.borhan.bmvc.BMvCMessageCodes"/>
+    <classEntry path="com.borhan.bmvc.commands.ICommand"/>
+    <classEntry path="com.borhan.bmvc.commands.SequenceCommand"/>
+    <classEntry path="com.borhan.bmvc.control.BMvCController"/>
+    <classEntry path="com.borhan.bmvc.control.BMvCEvent"/>
+    <classEntry path="com.borhan.bmvc.model.IModelLocator"/>
+    <classEntry path="com.borhan.bmvc.model.BMvCModel"/>
+    <classEntry path="com.borhan.bmvc.model.IDataPack"/>
+  </includeClasses>
+  <includeResources>
+    <resourceEntry destPath="BMvCMessages.properties" sourcePath="BMvCMessages.properties"/>
+  </includeResources>
+  <namespaceManifests/>
+</flexLibProperties>

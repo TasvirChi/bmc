@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<panels:AdditionalFilter xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="com.borhan.edw.components.fltr.panels.*"
+						 creationComplete="additionalfilter1_creationCompleteHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.types.BorhanBatchJobStatus;
+			
+			import mx.events.FlexEvent;
+			
+			protected function additionalfilter1_creationCompleteHandler(event:FlexEvent):void
+			{
+				_buttons = [allBtn, finishedBtn, finishedErrBtn, failedBtn, otherBtn];
+				friendlyName = resourceManager.getString('filter', 'buStatusTooltip');
+			}
+			
+			override public function get filter():Object {
+				var typesString:String = "";
+				//if non of the items are selected or all selected
+				if ((finishedBtn.selected && finishedErrBtn.selected && failedBtn.selected && otherBtn.selected) 
+					|| (!finishedBtn.selected && !finishedErrBtn.selected && !failedBtn.selected && !otherBtn.selected)) {
+					typesString = "";
+				}
+				else {
+					if (finishedBtn.selected) {
+						typesString += BorhanBatchJobStatus.FINISHED + ",";
+					}
+					if (finishedErrBtn.selected) {
+						typesString += BorhanBatchJobStatus.FINISHED_PARTIALLY + ",";
+					}
+					if (failedBtn.selected) {
+						typesString += BorhanBatchJobStatus.FAILED + "," + BorhanBatchJobStatus.FATAL + ",";
+					}
+					if (otherBtn.selected) {
+						typesString += BorhanBatchJobStatus.ABORTED + "," + 
+							BorhanBatchJobStatus.ALMOST_DONE + "," + BorhanBatchJobStatus.DONT_PROCESS + "," +
+							BorhanBatchJobStatus.MOVEFILE + "," + BorhanBatchJobStatus.PENDING + "," +
+							BorhanBatchJobStatus.PROCESSED + "," + BorhanBatchJobStatus.PROCESSING + "," +
+							BorhanBatchJobStatus.QUEUED + "," + BorhanBatchJobStatus.RETRY + ",";
+					}
+					//remove last , 
+					typesString = typesString.slice(0, typesString.length - 1);
+				}
+				return typesString;
+			}
+			
+			
+			override public function set filter(value:Object):void {
+				if (!value) {
+					// no duration 
+					allBtn.selected = true;
+					finishedBtn.selected = false;
+					finishedErrBtn.selected = false;
+					failedBtn.selected = false;
+					otherBtn.selected = false;
+				}
+				else {
+					//set all duration to unselected
+					allBtn.selected = false;
+					
+					var arr:Array = value.split(',');
+					for each (var code:String in arr) {
+						switch (code) {
+							case BorhanBatchJobStatus.FINISHED:
+								finishedBtn.selected = true;
+								break;
+							
+							case BorhanBatchJobStatus.FINISHED_PARTIALLY:
+								finishedErrBtn.selected = true;
+								break;
+							
+							case BorhanBatchJobStatus.FAILED:
+							case BorhanBatchJobStatus.FATAL:
+								failedBtn.selected = true;
+								break;
+							
+							case BorhanBatchJobStatus.ABORTED:
+							case BorhanBatchJobStatus.ALMOST_DONE:
+							case BorhanBatchJobStatus.DONT_PROCESS:
+							case BorhanBatchJobStatus.MOVEFILE:
+							case BorhanBatchJobStatus.PENDING:
+							case BorhanBatchJobStatus.PROCESSED:
+							case BorhanBatchJobStatus.PROCESSING:
+							case BorhanBatchJobStatus.QUEUED:
+							case BorhanBatchJobStatus.RETRY:
+								otherBtn.selected = true;
+								break;
+						}
+					}
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:CheckBox id="allBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusAllBtn')}"
+				 selected="true" click="onDynamicTitleClicked(event)" styleName="mainFilterGroupButton"/>
+	<mx:CheckBox id="finishedBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusFinished')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+	<mx:CheckBox id="finishedErrBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusFinishedWErr')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+	<mx:CheckBox id="failedBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusFailed')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+	<mx:CheckBox id="otherBtn" width="100%" label="{resourceManager.getString('filter', 'buStatusOther')}"
+				 click="onDynamicMemberClicked(event)" styleName="innerFilterGroupButton"/>
+</panels:AdditionalFilter>

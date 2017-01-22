@@ -1,0 +1,13 @@
+<distribution:DateRenderer xmlns:mx="http://www.adobe.com/2006/mxml" 
+		   xmlns:renderers="com.borhan.bmc.modules.content.view.window.entrydetails.renderers.distributionRenderers.*" xmlns:distribution="com.borhan.edw.view.ir.distribution.*">
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.edw.model.EntryDistributionWithProfile;
+			override public function set data(value:Object):void {
+				var input:EntryDistributionWithProfile = value as EntryDistributionWithProfile;
+				super.data = input.borhanEntryDistribution.sunrise;
+			}
+		]]>
+	</mx:Script>
+	
+</distribution:DateRenderer>

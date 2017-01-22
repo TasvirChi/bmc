@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--- represents a distributor for selectDistributors window -->
+<distribution:CBLabelComponent xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 xmlns:components="com.borhan.bmc.modules.content.view.window.entrydetails.distributionComponents.*" xmlns:distribution="com.borhan.edw.view.distribution.*">
+	<mx:Script>
+		<![CDATA[
+			import com.hurlant.util.der.Integer;
+			import com.borhan.edw.model.EntryDistributionWithProfile;
+			import com.borhan.types.BorhanDistributionProfileActionStatus;
+			import com.borhan.types.BorhanEntryDistributionStatus;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.core.mx_internal;
+			
+			public var initState:Boolean;
+			private var _distributionWithProfile:EntryDistributionWithProfile;
+			
+			override public function set data(value:Object):void {
+				_distributionWithProfile= value as EntryDistributionWithProfile;
+				super.labelText = _distributionWithProfile.borhanDistributionProfile.name;
+					
+				switch (_distributionWithProfile.borhanEntryDistribution.status) {
+					case BorhanEntryDistributionStatus.QUEUED:
+					case BorhanEntryDistributionStatus.PENDING:	
+					case BorhanEntryDistributionStatus.ERROR_SUBMITTING:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableRemoveDistribution;
+						break;
+					case BorhanEntryDistributionStatus.READY:
+					case BorhanEntryDistributionStatus.ERROR_UPDATING:
+					case BorhanEntryDistributionStatus.ERROR_DELETING:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableRemoveDistribution && (_distributionWithProfile.borhanDistributionProfile.deleteEnabled != BorhanDistributionProfileActionStatus.DISABLED);
+						break;
+					case BorhanEntryDistributionStatus.DELETING:
+					case BorhanEntryDistributionStatus.UPDATING:
+					case BorhanEntryDistributionStatus.SUBMITTING:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = false;
+						break;
+					case BorhanEntryDistributionStatus.REMOVED:
+					case int.MIN_VALUE:
+						_distributionWithProfile.enableSelectingDistributor = cbEnabled = parentDocument.enableAddDistribution;
+						break;
+				}
+				
+				BindingUtils.bindProperty(this, 'cbSelected', _distributionWithProfile, 'distributorSelected');
+			
+			}
+			
+			
+			override protected function onCbClick():void {
+				super.onCbClick();
+				_distributionWithProfile.distributorSelected = cbSelected;
+			}
+		
+		
+		]]>
+	</mx:Script>
+</distribution:CBLabelComponent>

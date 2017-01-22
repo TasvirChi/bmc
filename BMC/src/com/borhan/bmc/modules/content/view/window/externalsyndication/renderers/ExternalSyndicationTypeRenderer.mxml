@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" verticalAlign="middle"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off" paddingLeft="4">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.bmc.modules.content.vo.ExternalSyndicationVO;
+			import com.borhan.types.BorhanSyndicationFeedType;
+			
+			private function createTypeLabel():void
+			{
+				var vo:ExternalSyndicationVO = data as ExternalSyndicationVO;
+				switch(vo.kSyndicationFeed.type)
+				{
+					case BorhanSyndicationFeedType.GOOGLE_VIDEO:
+					{
+						typeLabel.text = 'Google';
+						break;
+					}
+					case BorhanSyndicationFeedType.YAHOO:
+					{
+						typeLabel.text = 'Yahoo';
+						break;
+					}
+					case BorhanSyndicationFeedType.ITUNES:
+					{
+						typeLabel.text = 'ITunes';
+						break;
+					}
+					case BorhanSyndicationFeedType.TUBE_MOGUL:
+					{
+						typeLabel.text = 'Tube Mogul';
+						break;
+					}
+					case BorhanSyndicationFeedType.BORHAN_XSLT:
+					{
+						typeLabel.text = resourceManager.getString('cms','flexibleFormatFeed');
+						break;
+					}
+				}
+			}
+			
+			override public function validateNow():void
+			{
+				super.validateNow();
+				createTypeLabel();
+			}
+			
+		]]>
+	</mx:Script>
+
+	<mx:Label id='typeLabel' creationComplete="createTypeLabel()"/>
+</mx:HBox>
+
+

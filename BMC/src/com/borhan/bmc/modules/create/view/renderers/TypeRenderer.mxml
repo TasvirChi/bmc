@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.bmc.modules.create.view.FilesTable;
+			import com.borhan.bmc.modules.create.vo.UploadFile;
+			import com.borhan.types.BorhanMediaType;
+			
+			import mx.events.ListEvent;
+			import mx.resources.ResourceManager;
+			
+			public static const TYPES:Array = [
+				{value:BorhanMediaType.AUDIO, name:ResourceManager.getInstance().getString('create', 'audio_files')},
+				{value:BorhanMediaType.VIDEO, name:ResourceManager.getInstance().getString('create', 'video_files')},
+				{value:BorhanMediaType.IMAGE, name:ResourceManager.getInstance().getString('create', 'image_files')}];
+			
+			override public function set data(value:Object):void {
+				super.data = value;
+				// show type from VO:
+				switch ((data as UploadFile).mediaType) {
+					case BorhanMediaType.AUDIO:
+						cb.selectedIndex = 0;
+						break;
+					case BorhanMediaType.VIDEO:
+						cb.selectedIndex = 1;
+						break;
+					case BorhanMediaType.IMAGE:
+						cb.selectedIndex = 2;
+						break;
+					default:
+						cb.prompt = ResourceManager.getInstance().getString('create', 'select');
+						cb.selectedIndex = -1;
+						break;
+				}
+			}
+
+			protected function cb_changeHandler(event:ListEvent):void {
+				dispatchEvent(new Event(FilesTable.TYPE_SELECTED, true));
+			}
+			
+			public function get selectedType():int {
+				return cb.selectedItem.value;
+			}
+
+		]]>
+	</mx:Script>
+	<mx:ComboBox id="cb" change="cb_changeHandler(event)" dataProvider="{TYPES}" labelField="name" width="100%"/>
+</mx:VBox>

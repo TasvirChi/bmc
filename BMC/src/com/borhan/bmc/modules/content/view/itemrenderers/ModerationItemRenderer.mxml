@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox width="100%" xmlns:mx="http://www.adobe.com/2006/mxml" >
+<mx:Script>
+	<![CDATA[
+		import com.borhan.types.BorhanModerationFlagType;
+		import com.borhan.vo.BorhanModerationFlag;
+		
+		import mx.formatters.DateFormatter;
+		import mx.resources.ResourceManager;
+        public function formatDate( date : Number ) : String
+        {
+        	var df:DateFormatter = new DateFormatter();
+        	df.formatString = resourceManager.getString('cms', 'listdateformat');
+        	var dt:Date = new Date();
+        	dt.setTime(date * 1000);
+        	return df.format(dt);
+        }
+		
+		override public function set data(o:Object):void {
+			super.data = o;
+			header.text = getReason(o as BorhanModerationFlag);
+		} 
+		
+		private function getReason(data:BorhanModerationFlag):String {
+			if (data) {
+				var reason:String = '';
+				switch (data.flagType) {
+					case BorhanModerationFlagType.SEXUAL_CONTENT:
+						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_sex');
+						break;
+					case BorhanModerationFlagType.HARMFUL_DANGEROUS:
+						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_harmful');
+						break;
+					case BorhanModerationFlagType.SPAM_COMMERCIALS:
+						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_spam');
+						break;
+					case BorhanModerationFlagType.VIOLENT_REPULSIVE:
+						reason = ResourceManager.getInstance().getString('cms', 'moderation_reason_violence');
+						break;
+				}
+				return formatDate(data.createdAt) + ", " + reason;
+			} 
+			else {
+				return '';
+			}
+		}
+	]]>
+</mx:Script>
+	<mx:Text id="header" width="100%" styleName="modItemText"/> 
+	<mx:Text text="{data.comments}" width="100%" styleName="modItemText"/> 
+	<mx:Spacer height="100%" />
+	<mx:HRule width="100%" />
+</mx:VBox>
+

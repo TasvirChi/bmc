@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ir:FlavorAssetRendererBase xmlns="com.borhan.bmc.modules.content.view.window.entrydetailswindowsections.renderers.*" 
+							xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"  xmlns:ir="com.borhan.edw.view.ir.*">
+
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.edw.vo.FlavorAssetWithParamsVO;
+			import com.borhan.vo.BorhanFlavorAsset;
+
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				setCodecLabel();
+			}
+
+			private function setCodecLabel():void
+			{
+				var kfa:BorhanFlavorAsset = (data as FlavorAssetWithParamsVO).borhanFlavorAssetWithParams.flavorAsset;
+				codecLabel.enabled = (kfa != null);
+
+				if (kfa && kfa.videoCodecId) {
+					codecLabel.text = kfa.videoCodecId;
+				}
+				else {
+					codecLabel.text = '';
+				}
+				codecLabel.toolTip = codecLabel.text;
+			}
+
+		]]>
+	</mx:Script>
+
+	<mx:Label id='codecLabel' creationComplete="setCodecLabel()" selectable="true"/>
+</ir:FlavorAssetRendererBase>

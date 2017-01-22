@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" minWidth="930" minHeight="595"
-				implements="com.kaltura.edw.business.IDataOwner"
+				implements="com.borhan.edw.business.IDataOwner"
 				creationComplete="creationCompleteHandler(event)"
 				addedToStage="initTracker(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.commands.uiConf.UiConfGet;
-			import com.kaltura.config.KalturaConfig;
-			import com.kaltura.edw.business.IDataOwner;
-			import com.kaltura.edw.control.DataTabController;
-			import com.kaltura.edw.control.KedController;
-			import com.kaltura.edw.control.events.KedEntryEvent;
-			import com.kaltura.edw.control.events.LoadEvent;
-			import com.kaltura.edw.control.events.MetadataProfileEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.model.FilterModel;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.CuePointsDataPack;
-			import com.kaltura.edw.model.datapacks.CustomDataDataPack;
-			import com.kaltura.edw.model.datapacks.FilterDataPack;
-			import com.kaltura.edw.view.EntryDetailsWin;
-			import com.kaltura.events.KalturaEvent;
-			import com.kaltura.kmvc.model.KMvCModel;
-			import com.kaltura.utils.ObjectHelpers;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaUiConf;
+			import com.borhan.BorhanClient;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.commands.uiConf.UiConfGet;
+			import com.borhan.config.BorhanConfig;
+			import com.borhan.edw.business.IDataOwner;
+			import com.borhan.edw.control.DataTabController;
+			import com.borhan.edw.control.KedController;
+			import com.borhan.edw.control.events.KedEntryEvent;
+			import com.borhan.edw.control.events.LoadEvent;
+			import com.borhan.edw.control.events.MetadataProfileEvent;
+			import com.borhan.edw.events.KedDataEvent;
+			import com.borhan.edw.model.FilterModel;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.edw.model.datapacks.CuePointsDataPack;
+			import com.borhan.edw.model.datapacks.CustomDataDataPack;
+			import com.borhan.edw.model.datapacks.FilterDataPack;
+			import com.borhan.edw.view.EntryDetailsWin;
+			import com.borhan.events.BorhanEvent;
+			import com.borhan.bmvc.model.BMvCModel;
+			import com.borhan.utils.ObjectHelpers;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanUiConf;
 			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
@@ -46,14 +46,14 @@
 			private var _flashvars:Object;
 			
 			/**
-			 * timer to flush KalturaCalls queue
+			 * timer to flush BorhanCalls queue
 			 * */
 			private var _kcTimer:Timer;
 			
 			/**
-			 * Kaltura Client for making API calls
+			 * Borhan Client for making API calls
 			 * */
-			private var _client:KalturaClient;
+			private var _client:BorhanClient;
 			
 			/**
 			 * list of EDWs opened by this app (to allow replacement, parent, etc)
@@ -63,7 +63,7 @@
 			/**
 			 * configuration object
 			 * */
-			protected var _uiconf:KalturaUiConf;
+			protected var _uiconf:BorhanUiConf;
 			
 			/**
 			 * currently showing locale code
@@ -79,7 +79,7 @@
 				_client = createClient(_flashvars);
 				
 				// load resources
-				loadSkin("assets/kmc_skin.swf");
+				loadSkin("assets/bmc_skin.swf");
 				loadUiconf(_flashvars.uiconf_id);
 			}
 			
@@ -137,7 +137,7 @@
 			 * */
 			protected function onSkinLoaded(event:StyleEvent):void {
 				if (event.type == StyleEvent.ERROR) {
-					Alert.show(event.errorText, ResourceManager.getInstance().getString('kmc', 'skin_load_error_title'));
+					Alert.show(event.errorText, ResourceManager.getInstance().getString('bmc', 'skin_load_error_title'));
 				}
 			}
 			
@@ -176,7 +176,7 @@
 //				}
 				
 				
-				edw.entryDetailsModel = KMvCModel.getInstance();
+				edw.entryDetailsModel = BMvCModel.getInstance();
 //				if (state != EntryDetailsWindowState.NORMAL_ENTRY)
 				edw.showNextPrevBtns = false;
 //				else if (_model.listableVo)	// only for normal entries
@@ -189,7 +189,7 @@
 			
 			private function initModel():void {
 				var uiconf:XML = new XML (_uiconf.confFile);
-				var model:KMvCModel = KMvCModel.getInstance();
+				var model:BMvCModel = BMvCModel.getInstance();
 				
 				// filter
 				(model.getDataPack(FilterDataPack) as FilterDataPack).filterModel = new FilterModel();
@@ -199,12 +199,12 @@
 				(model.getDataPack(CuePointsDataPack)as CuePointsDataPack).cuepointsSamplesUrl = getFullUrl(uiconf.cuepoints.text().toString());
 				
 				// context
-				var contextData:ContextDataPack = KMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack;
+				var contextData:ContextDataPack = BMvCModel.getInstance().getDataPack(ContextDataPack) as ContextDataPack;
 				contextData.showEmbedCode = true; //_model.showSingleEntryEmbedCode;
 				contextData.landingPage = "testLandingPage.html?entryId={entryId}";//_model.extSynModel.partnerData.landingPage;
 				contextData.openPlayerFunc = _flashvars.openPlayerFunc; 
 				contextData.panelsConfig = uiconf.uiconf.entryDrilldown.panels[0];
-				contextData.drilldownUiconf = uiconf.uiconf.kdp.drilldown.text().toString();
+				contextData.drilldownUiconf = uiconf.uiconf.bdp.drilldown.text().toString();
 				contextData.kClipAdsUiconf = uiconf.uiconf.kclip.ads.text().toString();
 				contextData.sourceUrl = systemManager.loaderInfo.url.substr(0, systemManager.loaderInfo.url.lastIndexOf("/"));
 				contextData.debugMode = _flashvars.debugmode;
@@ -227,12 +227,12 @@
 			
 			
 			/**
-			 * create KalturaClient using given parameters 
+			 * create BorhanClient using given parameters 
 			 * @param params	application parameters
 			 * */
-			private function createClient(params:Object):KalturaClient {
+			private function createClient(params:Object):BorhanClient {
 				// 
-				var configuration:KalturaConfig = new KalturaConfig();
+				var configuration:BorhanConfig = new BorhanConfig();
 				configuration.partnerId = params.partnerid;
 				configuration.ignoreNull = 1;
 				configuration.protocol = params.protocol ? params.protocol : "http://";
@@ -241,12 +241,12 @@
 				configuration.clientTag = "ked:" + VERSION;
 				configuration.ks = params.ks;
 				
-				var kalturaClient:KalturaClient = new KalturaClient(configuration);
-				kalturaClient.queueing = true;
-				kalturaClient.addEventListener(KalturaClient.CALL_QUEUED, setTimer);
-				kalturaClient.addEventListener(KalturaClient.QUEUE_FLUSHED, setTimer);
+				var borhanClient:BorhanClient = new BorhanClient(configuration);
+				borhanClient.queueing = true;
+				borhanClient.addEventListener(BorhanClient.CALL_QUEUED, setTimer);
+				borhanClient.addEventListener(BorhanClient.QUEUE_FLUSHED, setTimer);
 				
-				return kalturaClient;
+				return borhanClient;
 			}
 			
 			
@@ -271,7 +271,7 @@
 						break;
 					
 					case KedDataEvent.OPEN_ENTRY:
-						var kEvent:KMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, e.data as KalturaBaseEntry);
+						var kEvent:BMvCEvent = new KedEntryEvent(KedEntryEvent.SET_SELECTED_ENTRY, e.data as BorhanBaseEntry);
 						KedController.getInstance().dispatch(kEvent);
 						break;
 				}
@@ -296,8 +296,8 @@
 			 * */
 			protected function loadUiconf(uiconfId:String):void {
 				var uiconf:UiConfGet = new UiConfGet(int(uiconfId));
-				uiconf.addEventListener(KalturaEvent.COMPLETE, configurationLoadHandler);
-				uiconf.addEventListener(KalturaEvent.FAILED, configurationLoadHandler);
+				uiconf.addEventListener(BorhanEvent.COMPLETE, configurationLoadHandler);
+				uiconf.addEventListener(BorhanEvent.FAILED, configurationLoadHandler);
 				_client.post(uiconf);
 			}
 			
@@ -306,9 +306,9 @@
 			 * use configuration info
 			 * @param e		data from server
 			 * */
-			protected function configurationLoadHandler(e:KalturaEvent):void {
-				if (e.type == KalturaEvent.COMPLETE) {
-					_uiconf = e.data as KalturaUiConf;
+			protected function configurationLoadHandler(e:BorhanEvent):void {
+				if (e.type == BorhanEvent.COMPLETE) {
+					_uiconf = e.data as BorhanUiConf;
 					// update any values from flashvars
 //					_uiconf.confFile = overrideDataByFlashvars(_uiconf.confFile, _flashvars);
 					var confFile:XML = new XML(_uiconf.confFile);
@@ -323,12 +323,12 @@
 			protected function start():void {
 				_popups = new Vector.<EntryDetailsWin>();
 				initModel();
-				var filterData:FilterModel = (KMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
+				var filterData:FilterModel = (BMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 				// get default metadata view
 				if (filterData.enableCustomData) {
 					//if we asked for metadata view, listen to propertyChangeEvent on the DP,
 					// only when appropriate event received ask for drilldown. otherwise open drilldown
-					var cddp:CustomDataDataPack = KMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
+					var cddp:CustomDataDataPack = BMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
 					if (!CustomDataDataPack.metadataDefaultUiconfXML) {
 						cddp.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onMetadataViewUiconfLoaded);
 						var getMetadataUiconf:MetadataProfileEvent = new MetadataProfileEvent(MetadataProfileEvent.GET_METADATA_UICONF);
@@ -342,7 +342,7 @@
 			
 			
 			protected function loadFilterData():void {
-				var filterData:FilterModel = (KMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
+				var filterData:FilterModel = (BMvCModel.getInstance().getDataPack(FilterDataPack) as FilterDataPack).filterModel;
 				var fe:LoadEvent = new LoadEvent(LoadEvent.LOAD_FILTER_DATA, this, filterData);
 				KedController.getInstance().dispatch(fe);
 				
@@ -351,7 +351,7 @@
 			
 			protected function onMetadataViewUiconfLoaded(e:PropertyChangeEvent):void {
 				if (e.property == "metadataDefaultUiconfXML" && e.newValue != null) {
-					var cddp:CustomDataDataPack = KMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
+					var cddp:CustomDataDataPack = BMvCModel.getInstance().getDataPack(CustomDataDataPack) as CustomDataDataPack;
 					cddp.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, onMetadataViewUiconfLoaded);
 					
 					loadFilterData();
@@ -363,7 +363,7 @@
 			 * */
 			private function setTimer(e:Event):void {
 				switch (e.type) {
-					case KalturaClient.CALL_QUEUED:
+					case BorhanClient.CALL_QUEUED:
 						if (!_kcTimer) {
 							_kcTimer = new Timer(250);
 							_kcTimer.addEventListener(TimerEvent.TIMER, handleTimer, false, 0, true);
@@ -372,7 +372,7 @@
 							_kcTimer.start();
 						}
 						break;
-					case KalturaClient.QUEUE_FLUSHED:
+					case BorhanClient.QUEUE_FLUSHED:
 						if (_kcTimer) {
 							_kcTimer.stop();
 						}

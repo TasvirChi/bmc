@@ -3,32 +3,32 @@
 Distribution tab of EntryDetailsWin
 -->
 <mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:controls="flexlib.controls.*"
-		   implements="com.kaltura.edw.business.IDrilldownPanel" xmlns:control="com.kaltura.edw.control.*"
+		   implements="com.borhan.edw.business.IDrilldownPanel" xmlns:control="com.borhan.edw.control.*"
 		   creationComplete="vbox1_creationCompleteHandler(event)"
 		   label="{resourceManager.getString('drilldown', 'distribution')}">
 
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.borhan.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.borhan.edw.events.InternalKedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.DistributionActionType;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.EntryDistributionEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.KedDataEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.EntryDistributionWithProfile;
-			import com.kaltura.edw.model.datapacks.ContextDataPack;
-			import com.kaltura.edw.model.datapacks.DistributionDataPack;
-			import com.kaltura.edw.view.window.DistributionDetailsWindow;
-			import com.kaltura.edw.view.window.SelectDistributorsWindow;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.KalturaEntryDistributionStatus;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaEntryDistribution;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.constants.DistributionActionType;
+			import com.borhan.edw.constants.PanelConsts;
+			import com.borhan.edw.control.events.EntryDistributionEvent;
+			import com.borhan.edw.events.InternalKedEvent;
+			import com.borhan.edw.events.KedDataEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.edw.model.EntryDistributionWithProfile;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.edw.model.datapacks.DistributionDataPack;
+			import com.borhan.edw.view.window.DistributionDetailsWindow;
+			import com.borhan.edw.view.window.SelectDistributorsWindow;
+			import com.borhan.bmvc.model.IDataPackRepository;
+			import com.borhan.types.BorhanEntryDistributionStatus;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanEntryDistribution;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.binding.utils.ChangeWatcher;
@@ -38,14 +38,14 @@ Distribution tab of EntryDetailsWin
 			import mx.managers.PopUpManager;
 			
 			
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 			private var _dpModel:IDataPackRepository;
 			private var _distributionData:DistributionDataPack;
 			
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:BorhanBaseEntry):void {
 				if (!value)
 					return;
 				_selectedEntry = value;
@@ -161,7 +161,7 @@ Distribution tab of EntryDetailsWin
 				_notDeletedEntries = new Array();
 				for each (var entryDis:EntryDistributionWithProfile in value) {
 					//do not display removed entries
-					if (entryDis.kalturaEntryDistribution.status != KalturaEntryDistributionStatus.REMOVED) {
+					if (entryDis.borhanEntryDistribution.status != BorhanEntryDistributionStatus.REMOVED) {
 						_notDeletedEntries.push(entryDis);
 					}
 				}
@@ -186,12 +186,12 @@ Distribution tab of EntryDetailsWin
 			}
 			
 			private function compareSunrise(distribution1:EntryDistributionWithProfile, distribution2:EntryDistributionWithProfile):int {
-				return compareDates(distribution1.kalturaEntryDistribution.sunrise, distribution2.kalturaEntryDistribution.sunrise);
+				return compareDates(distribution1.borhanEntryDistribution.sunrise, distribution2.borhanEntryDistribution.sunrise);
 			}
 			
 			
 			private function compareSunset(distribution1:EntryDistributionWithProfile, distribution2:EntryDistributionWithProfile):int {
-				return compareDates(distribution1.kalturaEntryDistribution.sunset, distribution2.kalturaEntryDistribution.sunset);
+				return compareDates(distribution1.borhanEntryDistribution.sunset, distribution2.borhanEntryDistribution.sunset);
 			}
 			
 			
@@ -225,9 +225,9 @@ Distribution tab of EntryDetailsWin
 				_distributionDetailsWindow.model = _dpModel;
 				_distributionDetailsWindow.entryDis = distribution;
 				//don't allow editing if we are in the middle of some process
-				if ((distribution.kalturaEntryDistribution.status==KalturaEntryDistributionStatus.DELETING) ||
-					(distribution.kalturaEntryDistribution.status==KalturaEntryDistributionStatus.SUBMITTING) ||
-					(distribution.kalturaEntryDistribution.status==KalturaEntryDistributionStatus.UPDATING)) {
+				if ((distribution.borhanEntryDistribution.status==BorhanEntryDistributionStatus.DELETING) ||
+					(distribution.borhanEntryDistribution.status==BorhanEntryDistributionStatus.SUBMITTING) ||
+					(distribution.borhanEntryDistribution.status==BorhanEntryDistributionStatus.UPDATING)) {
 					_distributionDetailsWindow.enableChanges = false;
 				}
 				_distributionDetailsWindow.addEventListener(DistributionDetailsWindow.WINDOW_CLOSE, closeDistributionDetailsWindow);
@@ -248,12 +248,12 @@ Distribution tab of EntryDetailsWin
 				else if (event.type == DistributionDetailsWindow.GET_SENT_DATA) {
 					etype = EntryDistributionEvent.GET_SENT_DATA;
 				}
-				var requestXML:EntryDistributionEvent = new EntryDistributionEvent(etype, null, null, _distributionDetailsWindow.entryDis.kalturaEntryDistribution);
+				var requestXML:EntryDistributionEvent = new EntryDistributionEvent(etype, null, null, _distributionDetailsWindow.entryDis.borhanEntryDistribution);
 				controller.dispatch(requestXML);
 			}
 			
 			private function updateDistribution(event:Event):void {
-				var ud:EntryDistributionEvent = new EntryDistributionEvent(EntryDistributionEvent.UPDATE, null, null, _distributionDetailsWindow.entryDis.kalturaEntryDistribution);
+				var ud:EntryDistributionEvent = new EntryDistributionEvent(EntryDistributionEvent.UPDATE, null, null, _distributionDetailsWindow.entryDis.borhanEntryDistribution);
 				controller.dispatch(ud);
 			}
 			
@@ -271,7 +271,7 @@ Distribution tab of EntryDetailsWin
 			{
 				event.stopPropagation();
 				var actionEvent:EntryDistributionEvent;
-				var edata:KalturaEntryDistribution = (event.target.data as EntryDistributionWithProfile).kalturaEntryDistribution;
+				var edata:BorhanEntryDistribution = (event.target.data as EntryDistributionWithProfile).borhanEntryDistribution;
 				if (event.type == DistributionActionType.SUBMIT) {
 					actionEvent = new EntryDistributionEvent(EntryDistributionEvent.SUBMIT, null, null, edata);
 				}
@@ -301,19 +301,19 @@ Distribution tab of EntryDetailsWin
 		<mx:columns>
 			<mx:DataGridColumn id="distributorCol" width="110" sortable="false"
 							   headerText="{resourceManager.getString('drilldown','distributorCol')}"
-							   itemRenderer="com.kaltura.edw.view.ir.distribution.DistributorRenderer" />
+							   itemRenderer="com.borhan.edw.view.ir.distribution.DistributorRenderer" />
 			<mx:DataGridColumn id="startDateCol" headerText="{resourceManager.getString('drilldown','startDateCol')}"
-							   itemRenderer="com.kaltura.edw.view.ir.distribution.SunriseRenderer" sortable="true"
+							   itemRenderer="com.borhan.edw.view.ir.distribution.SunriseRenderer" sortable="true"
 							   width="85" sortCompareFunction="compareSunrise"/>
 			<mx:DataGridColumn id="endDateCol" headerText="{resourceManager.getString('drilldown','endDateCol')}"
-							   itemRenderer="com.kaltura.edw.view.ir.distribution.SunsetRenderer" sortable="true"
+							   itemRenderer="com.borhan.edw.view.ir.distribution.SunsetRenderer" sortable="true"
 							   width="85" sortCompareFunction="compareSunset"/>
 			<mx:DataGridColumn id="submissionsStatusCol"
 							   headerText="{resourceManager.getString('drilldown','submissionsStatusCol')}"
-							   itemRenderer="com.kaltura.edw.view.ir.distribution.SubmissionStatusRenderer" width="300"
+							   itemRenderer="com.borhan.edw.view.ir.distribution.SubmissionStatusRenderer" width="300"
 							   sortable="false"/>
 			<mx:DataGridColumn id="actionCol" headerText="{resourceManager.getString('drilldown','actionAvailableCol')}"
-							   itemRenderer="com.kaltura.edw.view.ir.distribution.DistributionActionRenderer"
+							   itemRenderer="com.borhan.edw.view.ir.distribution.DistributionActionRenderer"
 							   minWidth="122" sortable="false"/>
 		</mx:columns>
 	</mx:DataGrid>

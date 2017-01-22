@@ -4,26 +4,26 @@ scheduling tab of EntryDetailsWin.
 also used in SetSchedulingWin.
 -->
 <mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="schedulingVbox"
-		   xmlns:controls="com.kaltura.controls.*" implements="com.kaltura.edw.business.IDrilldownPanel"
+		   xmlns:controls="com.borhan.controls.*" implements="com.borhan.edw.business.IDrilldownPanel"
 		   label="{resourceManager.getString('drilldown', 'scheduling')}">
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.borhan.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.borhan.edw.events.InternalKedEvent")] 
 	</mx:Metadata>
 	
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.KalturaClient;
-			import com.kaltura.controls.SM_TimeEntry;
-			import com.kaltura.edw.business.IDrilldownPanel;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.utils.DateFieldWithTimeStepperLogic;
-			import com.kaltura.utils.KUtils;
-			import com.kaltura.vo.KalturaBaseEntry;
+			import com.borhan.BorhanClient;
+			import com.borhan.controls.SM_TimeEntry;
+			import com.borhan.edw.business.IDrilldownPanel;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.constants.PanelConsts;
+			import com.borhan.edw.events.InternalKedEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.bmvc.model.IDataPackRepository;
+			import com.borhan.utils.DateFieldWithTimeStepperLogic;
+			import com.borhan.utils.KUtils;
+			import com.borhan.vo.BorhanBaseEntry;
 			
 			
 			[Bindable]
@@ -37,13 +37,13 @@ also used in SetSchedulingWin.
 			private var _timeManager:DateFieldWithTimeStepperLogic;
 			
 			
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 			private var _dpModel:IDataPackRepository;
 			
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
-			public function set selectedEntry(selectedEntry:KalturaBaseEntry):void {
+			public function set selectedEntry(selectedEntry:BorhanBaseEntry):void {
 				_selectedEntry = selectedEntry;
 			}
 			
@@ -103,7 +103,7 @@ also used in SetSchedulingWin.
 				var endTime:int = getEndTime();
 				
 				if (_selectedEntry.startDate > 0) {
-					_selectedEntry.startDate = (startTime > 0) ? startTime : KalturaClient.NULL_INT;
+					_selectedEntry.startDate = (startTime > 0) ? startTime : BorhanClient.NULL_INT;
 				}
 				else if (startTime > 0) {
 					// was not set before and is set now
@@ -111,7 +111,7 @@ also used in SetSchedulingWin.
 				}
 				
 				if (_selectedEntry.endDate > 0) {
-					_selectedEntry.endDate = (endTime > 0) ? endTime : KalturaClient.NULL_INT;
+					_selectedEntry.endDate = (endTime > 0) ? endTime : BorhanClient.NULL_INT;
 				}
 				else if (endTime > 0) {
 					// was not set before and is set now

@@ -1,0 +1,90 @@
+package com.borhan.bmc.modules.content.commands.cat
+{
+	import com.adobe.cairngorm.control.CairngormEvent;
+	import com.borhan.commands.category.CategoryMove;
+	import com.borhan.errors.BorhanError;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.bmc.modules.content.commands.BorhanCommand;
+	import com.borhan.bmc.modules.content.events.CatTrackEvent;
+	import com.borhan.bmc.modules.content.events.CategoryEvent;
+	import com.borhan.vo.BorhanCategory;
+	
+	import mx.controls.Alert;
+	import mx.events.CloseEvent;
+	import mx.resources.IResourceManager;
+	import mx.resources.ResourceManager;
+
+	public class ReparentCategoriesCommand extends BorhanCommand {
+		
+		
+		private var cats:Array;
+		
+		private var newParent:int;
+		
+		override public function execute(event:CairngormEvent):void
+		{
+			cats = event.data[0] as Array;
+			newParent = (event.data[1] as BorhanCategory).id;
+			var rm:IResourceManager = ResourceManager.getInstance();
+			
+			if (!cats || cats.length == 0) {
+				// no categories
+				Alert.show(rm.getString('entrytable', 'selectCategoriesFirst'), rm.getString('cms', 'selectCategoriesFirstTitle'));
+				return;
+			}
+			// verify all cats have the same parent:
+			var origParentId:int = (cats[0] as BorhanCategory).parentId;
+			for each (var kCat:BorhanCategory in cats) {
+				if (kCat.parentId != origParentId) {
+					Alert.show(rm.getString('cms', 'bulkMoveDeny'));
+					return;
+				}
+			}
+			
+			// let the user know this is an async action:
+			Alert.show(rm.getString('cms', 'asyncCategoryWarn'), rm.getString('cms', 'attention'), Alert.OK|Alert.CANCEL, null, moveCats);
+			
+		}
+		
+		
+		/**
+		 * move categories to new parent
+		 * */
+		private function moveCats(e:CloseEvent):void {
+			if (e.detail == Alert.OK) {
+				_model.increaseLoadCounter();
+				var idstr:String = '';;
+				for each (var kCat:BorhanCategory in cats) {
+					idstr += kCat.id + ",";
+				}
+				var move:CategoryMove = new CategoryMove(idstr, newParent);
+				
+				move.addEventListener(BorhanEvent.COMPLETE, result);
+				move.addEventListener(BorhanEvent.FAILED, fault);
+				_model.context.kc.post(move);
+				
+			}
+		}
+		
+		override public function result(data:Object):void {
+			super.result(data);
+			_model.decreaseLoadCounter();
+			var rm:IResourceManager = ResourceManager.getInstance();
+			var er:BorhanError = (data as BorhanEvent).error;
+			if (er) { 
+				Alert.show(getErrorText(er), rm.getString('cms', 'error'));
+				return;
+			}
+			
+			if (_model.filterModel.catTreeDataManager) {
+				_model.filterModel.catTreeDataManager.resetData();
+			}
+			
+			var cgEvent:CairngormEvent = new CategoryEvent(CategoryEvent.LIST_CATEGORIES);
+			cgEvent.dispatch();
+			cgEvent = new CatTrackEvent(CatTrackEvent.UPDATE_STATUS);
+			cgEvent.dispatch();
+			
+		}
+	}
+}

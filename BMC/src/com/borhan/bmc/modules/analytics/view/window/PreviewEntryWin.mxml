@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<containers:ConfinedTitleWindow xmlns:containers="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="650" height="520"
+				styleName="TitleWindowType2" 
+				showCloseButton="true" close="titlewindow1_closeHandler(event)"
+				layout="vertical" title="{resourceManager.getString('analytics', 'previewEntryWindowTitle')}"
+				creationComplete="titlewindow1_creationCompleteHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			import com.borhan.bmc.business.JSGate;
+			import com.borhan.bmc.modules.analytics.model.Context;
+			import com.borhan.utils.KPlayerUtil;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanMediaEntry;
+			
+			import mx.controls.SWFLoader;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+
+			[Bindable] public static var bdp:SWFLoader;
+			
+			//inoreder of loading the bdp you must pass a context
+			[Bindable] public var context:Context; 
+			
+			//the entry id you preview
+			[Bindable] public var entry:BorhanBaseEntry;
+			
+			//the entry id you preview
+			[Bindable] public var uiconfId:String;
+			
+			private const _lblWidth : Number = 140;
+			
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				disposeAll();
+				PopUpManager.removePopUp(this);
+				JSGate.maskHeader(true);
+			}
+			
+			protected function disposeAll() : void
+			{
+				/*if(bdp && bdp.content)
+				{
+					if(bdp.content.hasEventListener("bdpReady"))
+						bdp.content.removeEventListener("bdpReady", showBdp);
+					if(bdp.content.hasEventListener("entryReady"))
+						bdp.content.removeEventListener("entryReady", showBdp);
+				
+					if(bdp.content.hasEventListener("mediaReady"))
+						bdp.content.removeEventListener("mediaReady", showBdp);
+				}*/
+				
+				cleanMedia();
+			}
+			
+			protected function showBdp( event : Event ) : void
+			{
+				bdpSection.visible = true;
+				//data = bdp.content['evaluate']('{mediaProxy.entry}');
+			}
+			
+			/**
+			 * send to the BDP clean media if exist
+			 * */
+			protected function cleanMedia() : void
+			{
+				if (bdp && bdp.content)
+					bdp.content["sendNotification"]('cleanMedia');
+			}
+			
+			/**
+			 * add BDP to the stage
+			 * */
+			private function addBDP():void {
+				
+				//hide until it loads due to BDP bug that it can't center the preloader
+				
+				
+				if (!bdp) {
+					bdp = new SWFLoader();
+					bdp.width = 560;
+					bdp.height = 315;
+					bdp.loaderContext = new LoaderContext(false, new ApplicationDomain());
+					bdp.addEventListener(Event.INIT, onBDP3Loaded);
+					var bdpUrl:String = context.protocol + context.rootUrl + "/index.php/bwidget/wid/_" + context.partnerId + "/uiconf_id/" + uiconfId + "/nowrapper/1/";
+					bdp.source = bdpUrl;
+					bdp.scaleContent = false;
+					bdpSection.addChildAt(bdp, 0);
+					bdpSection.visible = false;
+
+				}
+				else if (!bdpSection.contains(bdp)) {
+					bdpSection.addChildAt(bdp, 0);
+					bdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
+				}
+				else {
+					bdp.content["sendNotification"]('changeMedia', {entryId: entry.id});
+				}
+			}
+			
+			/**
+			 * Bdp loaded
+			 */
+			private function onBDP3Loaded(event:Event):void { 
+				
+				if(!bdp.content.hasEventListener("entryReady"))
+					bdp.content.addEventListener("entryReady", showBdp);
+				
+				if(!bdp.content.hasEventListener("bdpReady"))
+					bdp.content.addEventListener("bdpReady", showBdp);
+				
+				if(!bdp.content.hasEventListener("mediaReady"))
+					bdp.content.addEventListener("mediaReady", showBdp); 
+				
+				var params:Object = new Object();
+				params.entryId = entry.id;
+				params.ks = context.ks;
+				params.partnerId = context.partnerId;
+				params.subpId = context.subpId;
+				params.cdnHost = context.cdnHost;
+				params.host = context.hostName;
+				params.allowCookies = true;
+				
+				params = KPlayerUtil.overrideStrings(params);
+				params = KPlayerUtil.overrideElementStrings(params);
+				
+				if (context.debugMode)
+					params.debugMode = "true";
+				
+				// set flashvars
+				event.target.content["flashvars"] = params;
+				
+				// start the loading sqeunce of the bdp 
+				event.target.content["init"]();
+			}
+
+
+			protected function titlewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.mx_internal::closeButton.buttonMode = true;
+				addBDP();
+			}
+
+		]]>
+	</mx:Script>
+	<mx:Label text="{resourceManager.getString('analytics','loading')}" visible="{!bdpSection.visible}" includeInLayout="{!bdpSection.visible}"/>
+	<mx:HBox id="bdpSection" width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
+		
+	</mx:HBox>
+	<mx:VBox width="100%">
+		<mx:HBox width="100%" >
+			<mx:Label text="{resourceManager.getString('analytics','name_entry')}:" width="{_lblWidth}" styleName="boldLabel"/>
+			<mx:Text width="100%" text="{entry.name}" />
+		</mx:HBox>
+		<mx:HBox width="100%" >
+			<mx:Label text="{resourceManager.getString('analytics','description')}:" width="{_lblWidth}" styleName="boldLabel"/>
+			<mx:Text width="100%" text="{entry.description}" />
+		</mx:HBox>
+		<mx:HBox width="100%" >
+			<mx:Label text="{resourceManager.getString('analytics','tags')}:" width="{_lblWidth}" styleName="boldLabel"/>
+			<mx:Text width="100%" text="{entry.tags}" />
+		</mx:HBox>
+		<mx:HBox width="100%">
+			<mx:Label text="{resourceManager.getString('analytics','adminOwner')}:" width="{_lblWidth}" styleName="boldLabel"/>
+			<mx:Text width="100%" text="{entry.userId}"/>
+		</mx:HBox>
+	</mx:VBox>
+</containers:ConfinedTitleWindow>

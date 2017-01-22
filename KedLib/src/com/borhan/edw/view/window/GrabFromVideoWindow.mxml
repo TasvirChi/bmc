@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<containers:ConfinedTitleWindow xmlns:containers="com.borhan.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" styleName="TitleWindowType2"
+				title="{resourceManager.getString('drilldown','grabFromVideo')}" showCloseButton="true"
+				horizontalAlign="center" close="{closeWindow(event)}" height="400" width="500"
+				creationComplete="{onCreationComplete()}">
+	<mx:Metadata>
+		[ResourceBundle("capturethumbs")]
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceManager;
+			import mx.resources.ResourceBundle;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.edw.control.events.ThumbnailAssetEvent;
+			import com.borhan.edw.model.datapacks.ContextDataPack;
+			import com.borhan.events.BdpEventTypes;
+			import com.borhan.bmvc.control.BMvCController;
+			import com.borhan.vo.BorhanBaseEntry;
+			
+			import mx.managers.PopUpManager;
+			
+			private static var _bdp3SwfLoader:SWFLoader;
+			
+			private var _selectedEntry:BorhanBaseEntry;
+			
+			private var _refreshRequired:Boolean = true;
+
+			public var context:ContextDataPack;
+
+			/**
+			 * application controller
+			 * */
+			public var controller:BMvCController;
+			
+
+			public function get selectedEntry():BorhanBaseEntry {
+				return _selectedEntry;
+			}
+
+
+			public function set selectedEntry(value:BorhanBaseEntry):void {
+				_selectedEntry = value;
+			}
+
+
+			private function closeWindow(event:Event):void {
+				if (_refreshRequired) {
+					var listThumbs:ThumbnailAssetEvent = new ThumbnailAssetEvent(ThumbnailAssetEvent.LIST);
+					controller.dispatch(listThumbs);
+				}
+
+				if (_bdp3SwfLoader && _bdp3SwfLoader.content) {
+					_bdp3SwfLoader.content['sendNotification'](BdpEventTypes.DO_PAUSE);
+				}
+				PopUpManager.removePopUp(this);
+			}
+
+
+			private function onCreationComplete():void {
+				this.mx_internal::closeButton.buttonMode = true;
+				_refreshRequired = false;
+				loadBdp();
+			}
+
+
+			private function loadBdp():void {
+				//if this is the second time we open the content
+				if (_bdp3SwfLoader && _bdp3SwfLoader.content) {
+					var bdp3LoaderParent:DisplayObjectContainer = bdp3Loader.parent;
+
+					bdp3LoaderParent.addChildAt(_bdp3SwfLoader, bdp3LoaderParent.getChildIndex(bdp3Loader));
+					bdp3LoaderParent.removeChild(bdp3Loader);
+					//listen to bdp ready to show it because on the second time if we won't do that we will see the prev thumb
+					//because this is static BDP (due to performance issue that we fixed)
+					_bdp3SwfLoader.visible = false;
+					_bdp3SwfLoader.content.addEventListener(BdpEventTypes.ENTRY_READY, showBDP);
+					_bdp3SwfLoader.content.addEventListener(BdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+					_bdp3SwfLoader.content["sendNotification"](BdpEventTypes.CHANGE_MEDIA, {entryId: _selectedEntry.id});
+				}
+				else {
+					var newUrl:String = context.protocol + context.cdnHost + "/bwidget/wid/_" + context.kc.partnerId + "/ui_conf_id/" + context.captureThumbnailUiconf + "/nowrapper/1/a";
+					bdp3Loader.scaleContent = false;
+					bdp3Loader.loaderContext = new LoaderContext(true, new ApplicationDomain()/* , SecurityDomain.currentDomain */);
+					bdp3Loader.load(newUrl);
+				}
+			}
+
+
+			private function showBDP(event:Event = null):void {
+				_bdp3SwfLoader.visible = true;
+			}
+
+
+			/**
+			 * Bdp loaded, initialize it.
+			 */
+			private function onBDP3Loaded(event:Event):void {
+				_bdp3SwfLoader = bdp3Loader;
+
+				//set bdp params
+				var params:Object = new Object();
+				params.entryId = _selectedEntry.id;
+				params.ks = context.kc.ks;
+				params.partnerId = context.kc.partnerId;
+				params.subpId = context.kc.partnerId + "00";
+				params.cdnHost = context.cdnHost;
+				params.host = context.rootUrl;
+				params.debugMode = context.debugMode;
+				params.allowCookies = true;
+				params = overrideBDPStrings(params);
+				
+				_bdp3SwfLoader.content.addEventListener(BdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+				_bdp3SwfLoader.content["flashvars"] = params;
+				//start the loading sqeunce of the bdp	
+				_bdp3SwfLoader.content["init"]();
+
+			}
+			
+			
+			/**
+			 * override the messages BDP shows for captureThumbnail.
+			 * first get all en_US strings (last locale in chain), then override whatever appears in any previous locale
+			 * @param params	BDP parameters object
+			 * @return	adjusted parameters object with required strings, if they appear in locale file.
+			 * */
+			private function overrideBDPStrings(params:Object):Object {
+				var rb:ResourceBundle;
+				// get the first locale that has this resource bundle
+				for (var i:int = resourceManager.localeChain.length-1; i>=0; i--) {
+					rb = resourceManager.getResourceBundle(resourceManager.localeChain[i], 'capturethumbs') as ResourceBundle;
+					if (rb) {
+						// set strings
+						for (var key:String in rb.content) {
+							params["captureThumbnail." + key] = rb.content[key];							
+						}
+					}
+				}
+				return params;
+			}
+
+
+			private function onThumbnailSaved(event:Event):void {
+				_bdp3SwfLoader.content.removeEventListener(BdpEventTypes.CAPTURE_THUMBNAIL, onThumbnailSaved)
+				_refreshRequired = true;
+				GoogleAnalyticsTracker.getInstance().sendToGA(GoogleAnalyticsConsts.CONTENT_DRILLDOWN_THUMBNAIL_ADD, GoogleAnalyticsConsts.CONTENT);
+			}
+		]]>
+	</mx:Script>
+	<mx:VBox width="300" height="285" verticalAlign="middle" horizontalAlign="center">
+		<mx:SWFLoader id="bdp3Loader" width="300" height="255" complete="{onBDP3Loaded(event)}"/>
+	</mx:VBox>
+
+	<mx:Text width="300" text="{resourceManager.getString('drilldown','grabFromVideoText')}"/>
+
+</containers:ConfinedTitleWindow>

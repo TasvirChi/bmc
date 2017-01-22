@@ -3,35 +3,35 @@
 Captions tab of EntryDetailsWin
 -->
 <mx:Module layout="vertical" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
-		   xmlns:validators="com.kaltura.validators.*"
-		   implements="com.kaltura.edw.business.IDrilldownPanel"
+		   xmlns:validators="com.borhan.validators.*"
+		   implements="com.borhan.edw.business.IDrilldownPanel"
 		   creationComplete="onCreationComplete(event)"
-		   xmlns:captionsComponents="com.kaltura.edw.view.captions.*" xmlns:control="com.kaltura.edw.control.*"
+		   xmlns:captionsComponents="com.borhan.edw.view.captions.*" xmlns:control="com.borhan.edw.control.*"
 		   label="{resourceManager.getString('drilldown','captions')}">
 	
 	<mx:Metadata>
-		[Event(name="validationComplete", type="com.kaltura.edw.events.ValidationResultEvent")] 
-		[Event(name="panelDataSaved", type="com.kaltura.edw.events.InternalKedEvent")] 
+		[Event(name="validationComplete", type="com.borhan.edw.events.ValidationResultEvent")] 
+		[Event(name="panelDataSaved", type="com.borhan.edw.events.InternalKedEvent")] 
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			import com.kaltura.analytics.GoogleAnalyticsConsts;
-			import com.kaltura.analytics.GoogleAnalyticsTracker;
-			import com.kaltura.edw.business.permissions.PermissionManager;
-			import com.kaltura.edw.constants.PanelConsts;
-			import com.kaltura.edw.control.events.CaptionsEvent;
-			import com.kaltura.edw.events.GeneralNonCairngormEvent;
-			import com.kaltura.edw.events.InternalKedEvent;
-			import com.kaltura.edw.events.ValidationResultEvent;
-			import com.kaltura.edw.model.datapacks.CaptionsDataPack;
-			import com.kaltura.edw.vo.EntryCaptionVO;
-			import com.kaltura.edw.vo.EntryDetailsValidationError;
-			import com.kaltura.kmvc.model.IDataPackRepository;
-			import com.kaltura.types.KalturaCaptionType;
-			import com.kaltura.types.KalturaNullableBoolean;
-			import com.kaltura.utils.KLanguageUtil;
-			import com.kaltura.vo.KalturaBaseEntry;
-			import com.kaltura.vo.KalturaCaptionAsset;
+			import com.borhan.analytics.GoogleAnalyticsConsts;
+			import com.borhan.analytics.GoogleAnalyticsTracker;
+			import com.borhan.edw.business.permissions.PermissionManager;
+			import com.borhan.edw.constants.PanelConsts;
+			import com.borhan.edw.control.events.CaptionsEvent;
+			import com.borhan.edw.events.GeneralNonCairngormEvent;
+			import com.borhan.edw.events.InternalKedEvent;
+			import com.borhan.edw.events.ValidationResultEvent;
+			import com.borhan.edw.model.datapacks.CaptionsDataPack;
+			import com.borhan.edw.vo.EntryCaptionVO;
+			import com.borhan.edw.vo.EntryDetailsValidationError;
+			import com.borhan.bmvc.model.IDataPackRepository;
+			import com.borhan.types.BorhanCaptionType;
+			import com.borhan.types.BorhanNullableBoolean;
+			import com.borhan.utils.KLanguageUtil;
+			import com.borhan.vo.BorhanBaseEntry;
+			import com.borhan.vo.BorhanCaptionAsset;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.events.FlexEvent;
@@ -43,14 +43,14 @@ Captions tab of EntryDetailsWin
 			/**
 			 * @copy #selectedEntry
 			 * */
-			private var _selectedEntry:KalturaBaseEntry;
+			private var _selectedEntry:BorhanBaseEntry;
 			private var _dpModel:IDataPackRepository;
 			
-			public function get selectedEntry():KalturaBaseEntry {
+			public function get selectedEntry():BorhanBaseEntry {
 				return _selectedEntry;
 			}
 			
-			public function set selectedEntry(value:KalturaBaseEntry):void {
+			public function set selectedEntry(value:BorhanBaseEntry):void {
 				_selectedEntry = value;
 			}
 			
@@ -145,9 +145,9 @@ Captions tab of EntryDetailsWin
 			 * */
 			private function addCaption():void {
 				var captionVO:EntryCaptionVO = new EntryCaptionVO();
-				captionVO.caption = new KalturaCaptionAsset();
-				captionVO.caption.format = KalturaCaptionType.SRT;  // srt is the default value
-				captionVO.kmcStatus = EntryCaptionVO.EMPTY;
+				captionVO.caption = new BorhanCaptionAsset();
+				captionVO.caption.format = BorhanCaptionType.SRT;  // srt is the default value
+				captionVO.bmcStatus = EntryCaptionVO.EMPTY;
 				// add it to the dp
 				entryCaptionsArr.push(captionVO);
 				captionsTable.invalidateList();
@@ -214,7 +214,7 @@ Captions tab of EntryDetailsWin
 			 * */
 			private function validateCaption(vo:EntryCaptionVO):EntryDetailsValidationError {
 				var error:EntryDetailsValidationError = new EntryDetailsValidationError();
-				if (vo.kmcStatus != EntryCaptionVO.UPLOADING && !vo.isNewUploaded) {
+				if (vo.bmcStatus != EntryCaptionVO.UPLOADING && !vo.isNewUploaded) {
 					if (vo.resourceUrl) {
 						// if text never changed, vo.resourceUrl is null but there is no reason to validate the value.
 						var singleResult:mx.events.ValidationResultEvent = urlValidator.validate(vo.resourceUrl); 
@@ -243,7 +243,7 @@ Captions tab of EntryDetailsWin
 				}
 				
 				// did the default caption change?
-				if (_defaultCaption && _defaultCaption.caption.isDefault != KalturaNullableBoolean.TRUE_VALUE) {
+				if (_defaultCaption && _defaultCaption.caption.isDefault != BorhanNullableBoolean.TRUE_VALUE) {
 					return true;
 				}
 				

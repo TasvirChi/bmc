@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ir:FlavorAssetRendererBase xmlns="com.borhan.bmc.modules.content.view.window.entrydetailswindowsections.renderers.*"
+							xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
+							xmlns:ir="com.borhan.edw.view.ir.*">
+
+	<mx:Label enabled="{data.borhanFlavorAssetWithParams.flavorAsset != null}" selectable="true"
+			  text="{data.borhanFlavorAssetWithParams.flavorParams.name}" 
+			  toolTip="{data.borhanFlavorAssetWithParams.flavorParams.name}"/>
+</ir:FlavorAssetRendererBase>
